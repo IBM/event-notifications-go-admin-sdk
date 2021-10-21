@@ -22,7 +22,7 @@ import (
 )
 
 const (
-	sdkName = "my-go-sdk"
+	sdkName             = "ibm-event-notifications-go-admin-sdk"
 	headerNameUserAgent = "User-Agent"
 )
 
