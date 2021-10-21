@@ -38,7 +38,7 @@ import (
 
 var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
-	const externalConfigFile = "../event_notifications_v1.env"
+	const externalConfigFile = "../event_notifications.env"
 
 	var (
 		err                       error

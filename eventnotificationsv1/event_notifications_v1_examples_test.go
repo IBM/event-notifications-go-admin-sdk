@@ -40,7 +40,7 @@ import (
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-const externalConfigFile = "../event_notifications_v1.env"
+const externalConfigFile = "../event_notifications.env"
 
 var (
 	eventNotificationsService *eventnotificationsv1.EventNotificationsV1
