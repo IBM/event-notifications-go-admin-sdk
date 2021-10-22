@@ -27,8 +27,8 @@ script:
 
 # To publish code coverage information, uncomment this section.
 # (requires CODECOV_TOKEN env var in travis build settings)
-# after_success:
-#  - build/publishCodeCoverage.sh
+after_success:
+ - build/publishCodeCoverage.sh
 
 # To enable semantic-release, uncomment these sections.
 before_deploy:
