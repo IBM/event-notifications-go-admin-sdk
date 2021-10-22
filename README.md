@@ -75,7 +75,6 @@ func initInstance() *eventnotificationsv1.EventNotificationsV1 {
     // IAM API key based authentication
 	authenticator := &core.IamAuthenticator{
 		ApiKey: <apikey>,
-		URL:    <IBM Cloud URL to generate Token>,
 	}
 
 	// Set the options for the Event notification instance.
