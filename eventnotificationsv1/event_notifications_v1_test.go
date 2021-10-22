@@ -19,6 +19,7 @@ package eventnotificationsv1_test
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -4462,6 +4463,276 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesWebhookAttributes(signingEnabled)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
+			})
+
+			It(`Test UnmarshalDestination success`, func() {
+
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{
+					"id":  "xxx-xxxzzzx-zzz-xx",
+					"name": "unmarshal_destination",
+					"description": "UnmarshalDestination",
+					"type": "webhook",
+					"config": {
+						"url":  "https://gcm.com",
+						"verb": "get",
+						"custom_headers": {
+							"gcm_apikey": "xxx-xxx-xxx"
+						},
+						"sensitive_headers": [
+							"gcm_apikey"
+						]
+					},
+					"updated_at":"2021-10-21T18:37:25.706445Z",
+					"subscription_count": 0,
+					"subscription_names": []
+				  }`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var unmarshalDestination *eventnotificationsv1.Destination
+
+				err = eventnotificationsv1.UnmarshalDestination(dataMap, &unmarshalDestination)
+
+				Expect(err).To(BeNil())
+				Expect(unmarshalDestination).ToNot(BeNil())
+				Expect(unmarshalDestination.Name).To(Equal(core.StringPtr("unmarshal_destination")))
+				Expect(unmarshalDestination.Type).To(Equal(core.StringPtr("webhook")))
+			})
+			It(`Test UnmarshalRules success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{
+					"enabled":  true,
+					"event_type_filter": "event_type_filter",
+					"notification_filter": "notification_filter"
+				  }`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var unmarshalRules *eventnotificationsv1.Rules
+
+				err = eventnotificationsv1.UnmarshalRules(dataMap, &unmarshalRules)
+
+				Expect(err).To(BeNil())
+				Expect(unmarshalRules).ToNot(BeNil())
+				Expect(unmarshalRules.Enabled).To(Equal(core.BoolPtr(true)))
+				Expect(unmarshalRules.EventTypeFilter).To(Equal(core.StringPtr("event_type_filter")))
+			})
+
+			It(`Test UnmarshalDestinationConfigParamsWebhookDestinationConfig success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{
+					"url":  "https://gcm.com",
+					"verb": "get",
+					"custom_headers": {
+						"gcm_apikey": "xxx-xxx-xxx"
+					},
+					"sensitive_headers": [
+						"gcm_apikey"
+					]
+				}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig
+
+				err = eventnotificationsv1.UnmarshalDestinationConfigParamsWebhookDestinationConfig(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.Verb).To(Equal(core.StringPtr("get")))
+				Expect(destinationConfig.URL).To(Equal(core.StringPtr("https://gcm.com")))
+			})
+
+			It(`Test UnmarshalSubscriptionAttributesEmailAttributesResponse success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{"to": ["testEmail@some.com"], "add_notification_payload": true, "reply_to": "reply@ibm.com", "recipient_selection":"only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionAttributesEmailAttributesResponse
+
+				err = eventnotificationsv1.UnmarshalSubscriptionAttributesEmailAttributesResponse(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.AddNotificationPayload).To(Equal(core.BoolPtr(true)))
+				Expect(destinationConfig.To).To(Equal([]string{"testEmail@some.com"}))
+			})
+			It(`Test UnmarshalSubscriptionAttributesSmsAttributesResponse success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{"to": ["To"], "recipient_selection": "only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionAttributesSmsAttributesResponse
+
+				err = eventnotificationsv1.UnmarshalSubscriptionAttributesSmsAttributesResponse(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.RecipientSelection).To(Equal(core.StringPtr("only_destination")))
+				Expect(destinationConfig.To).To(Equal([]string{"To"}))
+			})
+			It(`Test UnmarshalSubscriptionAttributesWebhookAttributesResponse success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{"signing_enabled": true}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionAttributesWebhookAttributesResponse
+
+				err = eventnotificationsv1.UnmarshalSubscriptionAttributesWebhookAttributesResponse(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.SigningEnabled).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionCreateAttributesEmailAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["test128@gmail.com", "lol@in.ibm.com"],
+					"add_notification_payload": true, "reply_to": "en@gm.com", "recipient_selection": "only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesEmailAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.AddNotificationPayload).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionCreateAttributesSmsAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["+91999xxxxx"],"recipient_selection": "only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionCreateAttributesSmsAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesSmsAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+			})
+
+			It(`Test UnmarshalSubscriptionCreateAttributesWebhookAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "signing_enabled" : true}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionCreateAttributesWebhookAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesWebhookAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.SigningEnabled).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionUpdateAttributesEmailAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["test128@gmail.com", "lol@in.ibm.com"],
+					"add_notification_payload": true, "reply_to": "en@gm.com", "recipient_selection": "only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionUpdateAttributesEmailAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesEmailAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.AddNotificationPayload).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionUpdateAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["test128@gmail.com", "lol@in.ibm.com"],
+					"add_notification_payload": true, "reply_to": "en@gm.com", "recipient_selection": "only_destination", "signing_enabled": true}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionUpdateAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.AddNotificationPayload).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionCreateAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["test128@gmail.com", "lol@in.ibm.com"],
+					"add_notification_payload": true, "reply_to": "en@gm.com", "recipient_selection": "only_destination", "signing_enabled": true}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionCreateAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.AddNotificationPayload).To(Equal(core.BoolPtr(true)))
+			})
+
+			It(`Test UnmarshalSubscriptionUpdateAttributesSmsAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "to" :["+91999xxxxx"],"recipient_selection": "only_destination"}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesSmsAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+			})
+			It(`Test UnmarshalSubscriptionUpdateAttributesWebhookAttributes success`, func() {
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ "signing_enabled" : false}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var destinationConfig *eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes
+
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesWebhookAttributes(dataMap, &destinationConfig)
+				Expect(err).To(BeNil())
+				Expect(destinationConfig).ToNot(BeNil())
+				Expect(destinationConfig.SigningEnabled).To(Equal(core.BoolPtr(false)))
+			})
+			It(`Test Subscription MarshalJSON success`, func() {
+
+				subscription := eventnotificationsv1.Subscription{
+					ID:              core.StringPtr("Id1"),
+					Name:            core.StringPtr("name"),
+					Description:     core.StringPtr("Description"),
+					UpdatedAt:       core.StringPtr("2021-10-21T18:37:25.706445Z"),
+					From:            core.StringPtr("test"),
+					DestinationType: core.StringPtr("type"),
+					DestinationID:   core.StringPtr("DestinationID"),
+					DestinationName: core.StringPtr("DestinationName"),
+					TopicID:         core.StringPtr("TopicID"),
+					TopicName:       core.StringPtr("TopicName"),
+					Attributes: &eventnotificationsv1.SubscriptionAttributes{
+						To:                     []string{"test"},
+						RecipientSelection:     core.StringPtr("only_destination"),
+						AddNotificationPayload: core.BoolPtr(true),
+						ReplyTo:                core.StringPtr("reply"),
+						SigningEnabled:         core.BoolPtr(true),
+					},
+				}
+
+				attributes := map[string]interface{}{
+					"key2": "value2",
+				}
+				Expect(subscription).ToNot(BeNil())
+				subscription.SetProperty("key1", "value1")
+				Expect(subscription.GetProperty("key1")).To(Equal("value1"))
+				subscription.SetProperties(attributes)
+				Expect(subscription.GetProperty("key2")).To(Equal("value2"))
+				Expect(subscription.GetProperties()).ToNot(BeNil())
+
+				arr, err := subscription.MarshalJSON()
+				Expect(err).To(BeNil())
+				Expect(arr).ToNot(BeNil())
+
 			})
 		})
 	})
