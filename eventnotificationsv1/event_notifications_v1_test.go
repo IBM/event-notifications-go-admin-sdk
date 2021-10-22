@@ -4699,25 +4699,29 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Test Subscription MarshalJSON success`, func() {
 
-				subscription := eventnotificationsv1.Subscription{
-					ID:              core.StringPtr("Id1"),
-					Name:            core.StringPtr("name"),
-					Description:     core.StringPtr("Description"),
-					UpdatedAt:       core.StringPtr("2021-10-21T18:37:25.706445Z"),
-					From:            core.StringPtr("test"),
-					DestinationType: core.StringPtr("type"),
-					DestinationID:   core.StringPtr("DestinationID"),
-					DestinationName: core.StringPtr("DestinationName"),
-					TopicID:         core.StringPtr("TopicID"),
-					TopicName:       core.StringPtr("TopicName"),
-					Attributes: &eventnotificationsv1.SubscriptionAttributes{
-						To:                     []string{"test"},
-						RecipientSelection:     core.StringPtr("only_destination"),
-						AddNotificationPayload: core.BoolPtr(true),
-						ReplyTo:                core.StringPtr("reply"),
-						SigningEnabled:         core.BoolPtr(true),
-					},
-				}
+				var dataMap map[string]json.RawMessage
+				var data = []byte(`{ 
+					"id" : "Id1",
+					"name": "name",
+					"description": "Description",
+					"updated_at": "2021-10-21T18:37:25.706445Z",
+					"from": "test",
+					"destination_type": "type",
+					"destination_id": "destination_id",
+					"destination_name": "destination_name",
+					"topic_id": "topic_id",
+					"topic_name": "topic_name",
+					"attributes": { "to" :["test128@gmail.com", "lol@in.ibm.com"],
+					"add_notification_payload": true, "reply_to": "en@gm.com", "recipient_selection": "only_destination", "signing_enabled": true},
+					"additional_properties": {"key2": "value2"}
+					}`)
+				err := json.Unmarshal(data, &dataMap)
+				Expect(err).To(BeNil())
+
+				var subscription *eventnotificationsv1.Subscription
+
+				err = eventnotificationsv1.UnmarshalSubscription(dataMap, &subscription)
+				Expect(err).To(BeNil())
 
 				attributes := map[string]interface{}{
 					"key2": "value2",
