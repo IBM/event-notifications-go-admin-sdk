@@ -3,25 +3,8 @@ language: go
 dist: bionic
 
 go:
-- 1.14.x
 - 1.16.x
 - 1.17.x
-
-
-# After creating your SDK project from this template repository,
-# remove this entire "jobs" section as this is only applicable
-# to the template repo's travis build.
-jobs:
-  include:
-    - stage: Build and run tests
-    - stage: Run system test with template
-      before_install:
-        - echo -e "machine github.com\n  login $GITHUB_OAUTH_TOKEN" > ~/.netrc
-      script:
-        - git clone https://github.com/CloudEngineering/sdkgen-systest.git
-        - cd sdkgen-systest
-        - ./install_scripts/install_deps_ubuntu.sh
-        - ./setup_and_generate.sh -l ibm-go -t $TRAVIS_BRANCH -s
 
 notifications:
   email: true
@@ -56,11 +39,11 @@ script:
 #   - npm install @semantic-release/git
 #   - npm install @semantic-release/github
 #   - pip install --user bump2version
-#
+
 # deploy:
 #   - provider: script
 #     script: npx semantic-release
 #     skip_cleanup: true
 #     on:
-#       go: '1.14.x'
+#       go: '1.16.x'
 #       branch: main
