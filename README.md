@@ -2,8 +2,6 @@
 # IBM Cloud Event Notifications Go Admin SDK 0.0.2
 Go client library to interact with the various [IBM Cloud Event Notifications APIs](https://cloud.ibm.com/apidocs?category=event-notifications).
 
-Disclaimer: this SDK is being released initially as a **pre-release** version.
-Changes might occur which impact applications that use this SDK.
 
 ## Table of Contents
 
@@ -74,7 +72,7 @@ func initInstance() *eventnotificationsv1.EventNotificationsV1 {
 
     // IAM API key based authentication
 	authenticator := &core.IamAuthenticator{
-		ApiKey: <apikey>,
+		ApiKey: <apikey>, // Event notifications service instance APIKey
 	}
 
 	// Set the options for the Event notification instance.
@@ -82,11 +80,11 @@ func initInstance() *eventnotificationsv1.EventNotificationsV1 {
 		Authenticator: authenticator,
 		URL:           "https://" + region + ".event-notifications.cloud.ibm.com/event-notifications",
 	}
-	eventNotificationsAPIService, err := eventnotificationsv1.NewEventNotificationsV1(options)
+	eventNotificationsService, err := eventnotificationsv1.NewEventNotificationsV1(options)
 	if err != nil {
 		panic(err)
 	}
-	return eventNotificationsAPIService
+	return eventNotificationsService
 
 }
 ```
@@ -125,11 +123,11 @@ SDK Methods to consume
 ### List Sources
 
 ```go
-listSourcesOptions := eventNotificationsAPIService.NewListSourcesOptions(
+listSourcesOptions := eventNotificationsService.NewListSourcesOptions(
 	<instance-id>, // Event notifications service instance GUID
 )
 
-sourceList, response, err := eventNotificationsAPIService.ListSource(listSourcesOptions)
+sourceList, response, err := eventNotificationsService.ListSource(listSourcesOptions)
 
 if err != nil {
 	panic(err)
@@ -142,12 +140,12 @@ fmt.Println(string(b))
 ### Get Sources
 
 ```go
-getSourceOptions := eventNotificationsAPIService.NewGetSourceOptions(
+getSourceOptions := eventNotificationsService.NewGetSourceOptions(
 	<instance-id>, // Event notifications service instance GUID
 	<source-id>,   // Event notifications service instance Source ID
 )
 
-source, response, err := eventNotificationsAPIService.GetSource(getSourceOptions)
+source, response, err := eventNotificationsService.GetSource(getSourceOptions)
 
 if err != nil {
 	panic(err)
@@ -180,7 +178,7 @@ createTopicOptions := &eventnotificationsv1.CreateTopicOptions{
 	Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
 }
 
-topic, response, err := eventNotificationsAPIService.CreateTopic(createTopicOptions)
+topic, response, err := eventNotificationsService.CreateTopic(createTopicOptions)
 
 if err != nil {
 	panic(err)
@@ -193,11 +191,11 @@ fmt.Println(string(b))
 ### List Topics
 
 ```go
-listTopicsOptions := eventNotificationsAPIService.NewListTopicsOptions(
+listTopicsOptions := eventNotificationsService.NewListTopicsOptions(
 	<instance-id>,
 )
 
-topicList, response, err := eventNotificationsAPIService.ListTopic(listTopicsOptions)
+topicList, response, err := eventNotificationsService.ListTopic(listTopicsOptions)
 
 if err != nil {
 	panic(err)
@@ -210,12 +208,12 @@ fmt.Println(string(b))
 ### Get Topic
 
 ```go
-getTopicOptions := eventNotificationsAPIService.NewGetTopicOptions(
+getTopicOptions := eventNotificationsService.NewGetTopicOptions(
 	<instance-id>, // Event notifications service instance GUID
 	<topic-id>, // Event notifications service instance Topic ID
 )
 
-topic, response, err := eventNotificationsAPIService.GetTopic(getTopicOptions)
+topic, response, err := eventNotificationsService.GetTopic(getTopicOptions)
 
 if err != nil {
 	panic(err)
@@ -259,12 +257,12 @@ fmt.Println(string(b))
 ```
 ### Delete Topic
 ```go
-deleteTopicOptions := eventNotificationsAPIService.NewDeleteTopicOptions(
+deleteTopicOptions := eventNotificationsService.NewDeleteTopicOptions(
 	<instance-id>,
 	<topic-id>,
 )
 
-response, err := eventNotificationsAPIService.DeleteTopic(deleteTopicOptions)
+response, err := eventNotificationsService.DeleteTopic(deleteTopicOptions)
 
 if err != nil {
 	panic(err)
@@ -276,7 +274,7 @@ if err != nil {
 ### Create Destination
 
 ```go
-createDestinationOptions := eventNotificationsAPIService.NewCreateDestinationOptions(
+createDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 	<instance-id>,
 	<destination-name>,
 	<destination-type>,
@@ -292,7 +290,7 @@ destinationConfigModel := &eventnotificationsv1.DestinationConfig{
 }
 createDestinationOptions.SetConfig(destinationConfigModel)
 
-destination, response, err := eventNotificationsAPIService.CreateDestination(createDestinationOptions)
+destination, response, err := eventNotificationsService.CreateDestination(createDestinationOptions)
 
 if err != nil {
 	panic(err)
@@ -305,11 +303,11 @@ fmt.Println(string(b))
 ### List Destinations
 
 ```go
-listDestinationsOptions := eventNotificationsAPIService.NewListDestinationsOptions(
+listDestinationsOptions := eventNotificationsService.NewListDestinationsOptions(
 	<instance-id>,
 )
 
-destinationList, response, err := eventNotificationsAPIService.ListDestinations(listDestinationsOptions)
+destinationList, response, err := eventNotificationsService.ListDestinations(listDestinationsOptions)
 if err != nil {
 	panic(err)
 }
@@ -321,12 +319,12 @@ fmt.Println(string(b))
 ### Get Destination
 
 ```go
-getDestinationOptions := eventNotificationsAPIService.NewGetDestinationOptions(
+getDestinationOptions := eventNotificationsService.NewGetDestinationOptions(
 	<instance-id>,       // Event notifications service instance GUID
 	<destination-id>,    // Event notifications service instance Destination ID
 )
 
-destination, response, err := eventNotificationsAPIService.GetDestination(getDestinationOptions)
+destination, response, err := eventNotificationsService.GetDestination(getDestinationOptions)
 
 if err != nil {
 	panic(err)
@@ -349,7 +347,7 @@ destinationConfigModel := &eventnotificationsv1.DestinationConfig{
 	Params: destinationConfigParamsModel,
 }
 
-updateDestinationOptions := eventNotificationsAPIService.NewUpdateDestinationOptions(
+updateDestinationOptions := eventNotificationsService.NewUpdateDestinationOptions(
 	<instance-id>,      // Event notifications service instance GUID
 	<destination-id>,   // Event notifications service instance Destination ID
 )
@@ -358,7 +356,7 @@ updateDestinationOptions.SetName(<destination-update-name>)
 updateDestinationOptions.SetDescription(<destination-update-description>)
 updateDestinationOptions.SetConfig(destinationConfigModel)
 
-destination, response, err := eventNotificationsAPIService.UpdateDestination(updateDestinationOptions)
+destination, response, err := eventNotificationsService.UpdateDestination(updateDestinationOptions)
 
 if err != nil {
 	panic(err)
@@ -370,12 +368,12 @@ fmt.Println(string(b))
 ```
 ### Delete Destination
 ```go
-deleteDestinationOptions := eventNotificationsAPIService.NewDeleteDestinationOptions(
+deleteDestinationOptions := eventNotificationsService.NewDeleteDestinationOptions(
 	<instance-id>,		// Event notifications service instance GUID
 	<destination-id>,	// Event notifications service instance Destination ID
 )
 
-response, err := eventNotificationsAPIService.DeleteDestination(deleteDestinationOptions)
+response, err := eventNotificationsService.DeleteDestination(deleteDestinationOptions)
 
 if err != nil {
 	panic(err)
@@ -389,7 +387,7 @@ if err != nil {
 ```go
 `While Creating Subscription use any of one option from webhook, email or Sms`
 
-createSubscriptionOptions := eventNotificationsAPIService.NewCreateSubscriptionOptions(
+createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
 	<instance-id>,	// Event notifications service instance GUID
 )
 
@@ -403,7 +401,7 @@ createSubscriptionOptions.SetDestinationID(<destination-id>)	// Event notificati
 createSubscriptionOptions.SetName(<subscription-name>)
 createSubscriptionOptions.SetTopicID(<topic-id>)	// Event notifications service instance Topic ID
 
-subscription, response, err := eventNotificationsAPIService.CreateSubscription(createSubscriptionOptions)
+subscription, response, err := eventNotificationsService.CreateSubscription(createSubscriptionOptions)
 
 if err != nil {
 	panic(err)
@@ -416,11 +414,11 @@ fmt.Println(string(b))
 ### List Subscriptions
 
 ```go
-listSubscriptionsOptions := eventNotificationsAPIService.NewListSubscriptionsOptions(
+listSubscriptionsOptions := eventNotificationsService.NewListSubscriptionsOptions(
 	<instance-id>,	// Event notifications service instance GUID
 )
 
-subscriptionList, response, err := eventNotificationsAPIService.ListSubscriptions(listSubscriptionsOptions)
+subscriptionList, response, err := eventNotificationsService.ListSubscriptions(listSubscriptionsOptions)
 
 if err != nil {
 	panic(err)
@@ -433,12 +431,12 @@ fmt.Println(string(b))
 ### Get Subscription
 
 ```go
-getSubscriptionOptions := eventNotificationsAPIService.NewGetSubscriptionOptions(
+getSubscriptionOptions := eventNotificationsService.NewGetSubscriptionOptions(
 	<instance-id>,	// Event notifications service instance GUID
 	<subscription-id>,	// Event notifications service instance Subscription ID
 )
 
-subscription, response, err := eventNotificationsAPIService.GetSubscription(getSubscriptionOptions)
+subscription, response, err := eventNotificationsService.GetSubscription(getSubscriptionOptions)
 
 if err != nil {
 	panic(err)
@@ -451,7 +449,7 @@ fmt.Println(string(b))
 ### Update Subscription
 ```go
 
-updateSubscriptionOptions := eventNotificationsAPIService.NewUpdateSubscriptionOptions(
+updateSubscriptionOptions := eventNotificationsService.NewUpdateSubscriptionOptions(
 	<instance-id>,	// Event notifications service instance GUID
 	<subscription-id>,	// Event notifications service instance Subscription ID
 )
@@ -464,7 +462,7 @@ updateSubscriptionOptions.SetAttributes(subscriptionUpdateAttributesModel)
 updateSubscriptionOptions.SetDescription(<subscription-update-description>)
 updateSubscriptionOptions.SetName(<subscription-update-name>)
 
-subscription, response, err := eventNotificationsAPIService.UpdateSubscription(updateSubscriptionOptions)
+subscription, response, err := eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
 
 if err != nil {
 	panic(err)
@@ -476,12 +474,12 @@ fmt.Println(string(b))
 ```
 ### Delete Subscription
 ```go
-deleteSubscriptionOptions := eventNotificationsAPIService.NewDeleteSubscriptionOptions(
+deleteSubscriptionOptions := eventNotificationsService.NewDeleteSubscriptionOptions(
 	<instance-id>,	// Event notifications service instance GUID
 	<subscription-id>,	// Event notifications service instance Subscriptions ID
 )
 
-response, err := eventNotificationsAPIService.DeleteSubscription(deleteSubscriptionOptions)
+response, err := eventNotificationsService.DeleteSubscription(deleteSubscriptionOptions)
 
 if err != nil {
 	panic(err)
@@ -490,7 +488,7 @@ if err != nil {
 
 ## Set Environment
 
-Find `event_notifications.env.hide` in the repo and rename it to `event_notifications.env`. After that add the values for,
+Find [event_notifications.env.hide](https://github.com/IBM/event-notifications-go-admin-sdk/blob/main/event_notifications.env.hide) in the repo and rename it to `event_notifications.env`. After that add the values for,
 
 - `EVENT_NOTIFICATIONS_URL` - Add the Event Notifications service instance Url.
 - `EVENT_NOTIFICATIONS_APIKEY` - Add the Event Notifications service instance apikey.
