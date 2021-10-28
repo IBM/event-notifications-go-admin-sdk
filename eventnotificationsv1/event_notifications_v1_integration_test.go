@@ -79,14 +79,13 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			if serviceURL == "" {
 				Skip("Unable to load service URL configuration property, skipping tests")
 			}
+			fmt.Printf("Service URL: %s\n", serviceURL)
 
 			instanceID = config["GUID"]
 			if instanceID == "" {
 				Skip("Unable to load service InstanceID configuration property, skipping tests")
 			}
 			fmt.Printf("Service GUID: %s\n", instanceID)
-
-			fmt.Printf("Service URL: %s\n", serviceURL)
 			shouldSkipTest = func() {}
 		})
 	})
