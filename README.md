@@ -385,21 +385,21 @@ if err != nil {
 ### Create Subscription
 
 ```go
-`While Creating Subscription use any of one option from webhook, email or Sms`
-
-createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
-	<instance-id>,	// Event notifications service instance GUID
-)
+`While Creating Subscription use any of one option from webhook or email`
 
 subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
 	SigningEnabled: core.BoolPtr(false),
 }
 
-createSubscriptionOptions.SetAttributes(subscriptionCreateAttributesModel)
+createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
+	<instance-id>,	// Event notifications service instance GUID
+	<subscription-name>,
+	<destination-id>, // Event notifications service instance Destination ID
+	<topic-id>,  // Event notifications service instance Topic ID
+	subscriptionCreateAttributesModel,
+)
+
 createSubscriptionOptions.SetDescription(<subscription-description>)
-createSubscriptionOptions.SetDestinationID(<destination-id>)	// Event notifications service instance Destination ID
-createSubscriptionOptions.SetName(<subscription-name>)
-createSubscriptionOptions.SetTopicID(<topic-id>)	// Event notifications service instance Topic ID
 
 subscription, response, err := eventNotificationsService.CreateSubscription(createSubscriptionOptions)
 

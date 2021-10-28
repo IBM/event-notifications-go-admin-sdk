@@ -127,9 +127,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ := json.MarshalIndent(sourceList, "", "  ")
 			fmt.Println(string(b))
 
-			sourceID = string(*sourceList.Sources[len(sourceList.Sources)-1].ID)
-
 			// end-list_sources
+
+			sourceID = string(*sourceList.Sources[len(sourceList.Sources)-1].ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -188,9 +188,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ := json.MarshalIndent(topicResponse, "", "  ")
 			fmt.Println(string(b))
 
-			topicID = string(*topicResponse.ID)
-
 			// end-create_topic
+
+			topicID = string(*topicResponse.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -312,11 +312,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
-			destinationID = string(*destinationResponse.ID)
 			b, _ := json.MarshalIndent(destinationResponse, "", "  ")
 			fmt.Println(string(b))
 
 			// end-create_destination
+
+			destinationID = string(*destinationResponse.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -426,11 +427,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
-			subscriptionID = string(*subscription.ID)
 			b, _ := json.MarshalIndent(subscription, "", "  ")
 			fmt.Println(string(b))
 
 			// end-create_subscription
+
+			subscriptionID = string(*subscription.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
