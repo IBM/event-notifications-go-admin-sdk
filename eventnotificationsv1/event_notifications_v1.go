@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.41.0-f1ef0102-20211018-193503
+ * IBM OpenAPI SDK Code Generator Version: 3.42.0-8746aaa4-20211102-213344
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -1633,7 +1633,7 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/Webhook.
+	// Destination type Email/SMS/Webhook.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -1650,9 +1650,10 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/Webhook.
+// Destination type Email/SMS/Webhook.
 const (
 	DestinationTypeSMTPIBMConst = "smtp_ibm"
+	DestinationTypeSmsIBMConst = "sms_ibm"
 	DestinationTypeWebhookConst = "webhook"
 )
 
@@ -1785,7 +1786,7 @@ type DestinationLisItem struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/Webhook.
+	// Destination type Email/SMS/Webhook.
 	Type *string `json:"type" validate:"required"`
 
 	// Subscription count.
@@ -1799,9 +1800,10 @@ type DestinationLisItem struct {
 }
 
 // Constants associated with the DestinationLisItem.Type property.
-// Destination type Email/Webhook.
+// Destination type Email/SMS/Webhook.
 const (
 	DestinationLisItemTypeSMTPIBMConst = "smtp_ibm"
+	DestinationLisItemTypeSmsIBMConst = "sms_ibm"
 	DestinationLisItemTypeWebhookConst = "webhook"
 )
 
@@ -1889,7 +1891,7 @@ type DestinationResponse struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/Webhook.
+	// Destination type Email/SMS/Webhook.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -1900,7 +1902,7 @@ type DestinationResponse struct {
 }
 
 // Constants associated with the DestinationResponse.Type property.
-// Destination type Email/Webhook.
+// Destination type Email/SMS/Webhook.
 const (
 	DestinationResponseTypeWebhookConst = "webhook"
 )
@@ -2672,6 +2674,7 @@ type Subscription struct {
 // The type of destination.
 const (
 	SubscriptionDestinationTypeSMTPIBMConst = "smtp_ibm"
+	SubscriptionDestinationTypeSmsIBMConst = "sms_ibm"
 	SubscriptionDestinationTypeWebhookConst = "webhook"
 )
 
@@ -2819,20 +2822,27 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 
 // SubscriptionAttributes : SubscriptionAttributes struct
 // Models which "extend" this model:
+// - SubscriptionAttributesSmsAttributesResponse
 // - SubscriptionAttributesEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
 type SubscriptionAttributes struct {
-	// The email id string.
+	// The phone number to send the SMS to.
 	To []string `json:"to,omitempty"`
+
+	// The recipient selection method.
+	RecipientSelection *string `json:"recipient_selection,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
 
-	// The recipient selection method.
-	RecipientSelection *string `json:"recipient_selection,omitempty"`
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -2852,15 +2862,23 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
 	if err != nil {
 		return
 	}
@@ -2874,17 +2892,24 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 
 // SubscriptionCreateAttributes : SubscriptionCreateAttributes struct
 // Models which "extend" this model:
+// - SubscriptionCreateAttributesSmsAttributes
 // - SubscriptionCreateAttributesEmailAttributes
 // - SubscriptionCreateAttributesWebhookAttributes
 type SubscriptionCreateAttributes struct {
-	// The email id string.
+	// The phone number to send the SMS to.
 	To []string `json:"to,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -2908,7 +2933,15 @@ func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
 	if err != nil {
 		return
 	}
@@ -2992,6 +3025,7 @@ type SubscriptionListItem struct {
 // The type of destination.
 const (
 	SubscriptionListItemDestinationTypeSMTPIBMConst = "smtp_ibm"
+	SubscriptionListItemDestinationTypeSmsIBMConst = "sms_ibm"
 	SubscriptionListItemDestinationTypeWebhookConst = "webhook"
 )
 
@@ -3040,17 +3074,24 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 
 // SubscriptionUpdateAttributes : SubscriptionUpdateAttributes struct
 // Models which "extend" this model:
+// - SubscriptionUpdateAttributesSmsAttributes
 // - SubscriptionUpdateAttributesEmailAttributes
 // - SubscriptionUpdateAttributesWebhookAttributes
 type SubscriptionUpdateAttributes struct {
-	// The email id string.
+	// The phone number to send the SMS to.
 	To []string `json:"to,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -3074,7 +3115,15 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
 	if err != nil {
 		return
 	}
@@ -3544,7 +3593,13 @@ type SubscriptionAttributesEmailAttributesResponse struct {
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to" validate:"required"`
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 
 	// The recipient selection method.
 	RecipientSelection *string `json:"recipient_selection" validate:"required"`
@@ -3565,7 +3620,44 @@ func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.Ra
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesSmsAttributesResponse : SMS attributes object.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesSmsAttributesResponse struct {
+	// The phone number to send the SMS to.
+	To []string `json:"to" validate:"required"`
+
+	// The recipient selection method.
+	RecipientSelection *string `json:"recipient_selection" validate:"required"`
+}
+
+func (*SubscriptionAttributesSmsAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionAttributesSmsAttributesResponse unmarshals an instance of SubscriptionAttributesSmsAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesSmsAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesSmsAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
@@ -3616,7 +3708,13 @@ type SubscriptionCreateAttributesEmailAttributes struct {
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 }
 
 // NewSubscriptionCreateAttributesEmailAttributes : Instantiate SubscriptionCreateAttributesEmailAttributes (Generic Model Constructor)
@@ -3644,7 +3742,46 @@ func UnmarshalSubscriptionCreateAttributesEmailAttributes(m map[string]json.RawM
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionCreateAttributesSmsAttributes : SMS attributes object.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesSmsAttributes struct {
+	// The phone number to send the SMS to.
+	To []string `json:"to" validate:"required"`
+}
+
+// NewSubscriptionCreateAttributesSmsAttributes : Instantiate SubscriptionCreateAttributesSmsAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionCreateAttributesSmsAttributes(to []string) (_model *SubscriptionCreateAttributesSmsAttributes, err error) {
+	_model = &SubscriptionCreateAttributesSmsAttributes{
+		To: to,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*SubscriptionCreateAttributesSmsAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesSmsAttributes unmarshals an instance of SubscriptionCreateAttributesSmsAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesSmsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesSmsAttributes)
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
@@ -3693,7 +3830,13 @@ type SubscriptionUpdateAttributesEmailAttributes struct {
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
 
 	// The email address to reply to.
-	ReplyTo *string `json:"reply_to,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
 }
 
 // NewSubscriptionUpdateAttributesEmailAttributes : Instantiate SubscriptionUpdateAttributesEmailAttributes (Generic Model Constructor)
@@ -3721,7 +3864,46 @@ func UnmarshalSubscriptionUpdateAttributesEmailAttributes(m map[string]json.RawM
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to", &obj.ReplyTo)
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionUpdateAttributesSmsAttributes : SMS attributes object.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesSmsAttributes struct {
+	// The phone number to send the SMS to.
+	To []string `json:"to" validate:"required"`
+}
+
+// NewSubscriptionUpdateAttributesSmsAttributes : Instantiate SubscriptionUpdateAttributesSmsAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionUpdateAttributesSmsAttributes(to []string) (_model *SubscriptionUpdateAttributesSmsAttributes, err error) {
+	_model = &SubscriptionUpdateAttributesSmsAttributes{
+		To: to,
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*SubscriptionUpdateAttributesSmsAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesSmsAttributes unmarshals an instance of SubscriptionUpdateAttributesSmsAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesSmsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesSmsAttributes)
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
