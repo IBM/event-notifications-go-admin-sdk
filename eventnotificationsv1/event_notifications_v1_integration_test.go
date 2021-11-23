@@ -587,6 +587,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionCreateAttributesModel = &eventnotificationsv1.SubscriptionCreateAttributes{
 				To:                     []string{"tester1@gmail.com", "tester3@ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("tester1@gmail.com"),
+				ReplyToName:            core.StringPtr("sender"),
+				FromName:               core.StringPtr("IBM"),
 			}
 			name = core.StringPtr("subscription_web_2")
 			description = core.StringPtr("Subscription 2 for web")
