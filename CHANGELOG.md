@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.4...v0.0.5) (2021-12-10)
+
+
+### Bug Fixes
+
+* add email schema changes ([#12](https://github.com/IBM/event-notifications-go-admin-sdk/issues/12)) ([7cc2876](https://github.com/IBM/event-notifications-go-admin-sdk/commit/7cc2876a9f9259e6cf85ac4728ceb0d3ed322569))
+
 ## [0.0.4](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.3...v0.0.4) (2021-11-23)
 
 
