@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.42.0-8746aaa4-20211102-213344
+ * IBM OpenAPI SDK Code Generator Version: 3.43.0-49eab5c7-20211117-152138
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -1938,6 +1938,47 @@ func UnmarshalDestinationResponse(m map[string]json.RawMessage, result interface
 	return
 }
 
+// EmailUpdateAttributesTo : The email ids.
+type EmailUpdateAttributesTo struct {
+	// The email ids.
+	Add []string `json:"add,omitempty"`
+
+	// The email ids for removal.
+	Remove []string `json:"remove,omitempty"`
+}
+
+// UnmarshalEmailUpdateAttributesTo unmarshals an instance of EmailUpdateAttributesTo from the specified map of raw messages.
+func UnmarshalEmailUpdateAttributesTo(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EmailUpdateAttributesTo)
+	err = core.UnmarshalPrimitive(m, "add", &obj.Add)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "remove", &obj.Remove)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// EmailUpdateAttributesUnsubscribed : The email ids.
+type EmailUpdateAttributesUnsubscribed struct {
+	// The email ids unsubscribed.
+	Remove []string `json:"remove,omitempty"`
+}
+
+// UnmarshalEmailUpdateAttributesUnsubscribed unmarshals an instance of EmailUpdateAttributesUnsubscribed from the specified map of raw messages.
+func UnmarshalEmailUpdateAttributesUnsubscribed(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EmailUpdateAttributesUnsubscribed)
+	err = core.UnmarshalPrimitive(m, "remove", &obj.Remove)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // GetDestinationOptions : The GetDestination options.
 type GetDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2826,26 +2867,14 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
 type SubscriptionAttributes struct {
-	// The phone number to send the SMS to.
-	To []string `json:"to,omitempty"`
-
-	// The recipient selection method.
-	RecipientSelection *string `json:"recipient_selection,omitempty"`
-
-	// Whether to add the notification payload to the email.
-	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
-
-	// The email address to reply to.
-	ReplyToMail *string `json:"reply_to_mail,omitempty"`
-
-	// The email name to reply to.
-	ReplyToName *string `json:"reply_to_name,omitempty"`
-
-	// The email name of From.
-	FromName *string `json:"from_name,omitempty"`
-
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
+
+	// Decision for Notification Payload to be added.
+	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
 }
 func (*SubscriptionAttributes) isaSubscriptionAttributes() bool {
 	return true
@@ -2853,38 +2882,77 @@ func (*SubscriptionAttributes) isaSubscriptionAttributes() bool {
 
 type SubscriptionAttributesIntf interface {
 	isaSubscriptionAttributes() bool
+	SetProperty(key string, value interface{})
+	SetProperties(m map[string]interface{})
+	GetProperty(key string) interface{}
+	GetProperties() map[string]interface{}
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributes
+func (o *SubscriptionAttributes) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributes
+func (o *SubscriptionAttributes) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributes
+func (o *SubscriptionAttributes) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributes
+func (o *SubscriptionAttributes) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributes
+func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.SigningEnabled != nil {
+		m["signing_enabled"] = o.SigningEnabled
+	}
+	if o.AddNotificationPayload != nil {
+		m["add_notification_payload"] = o.AddNotificationPayload
+	}
+	buffer, err = json.Marshal(m)
+	return
 }
 
 // UnmarshalSubscriptionAttributes unmarshals an instance of SubscriptionAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributes)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
-	if err != nil {
-		return
-	}
+	delete(m, "signing_enabled")
 	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
-	if err != nil {
-		return
+	delete(m, "add_notification_payload")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -3075,7 +3143,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // SubscriptionUpdateAttributes : SubscriptionUpdateAttributes struct
 // Models which "extend" this model:
 // - SubscriptionUpdateAttributesSmsAttributes
-// - SubscriptionUpdateAttributesEmailAttributes
+// - SubscriptionUpdateAttributesEmailUpdateAttributes
 // - SubscriptionUpdateAttributesWebhookAttributes
 type SubscriptionUpdateAttributes struct {
 	// The phone number to send the SMS to.
@@ -3092,6 +3160,12 @@ type SubscriptionUpdateAttributes struct {
 
 	// The email name of From.
 	FromName *string `json:"from_name,omitempty"`
+
+	// The email ids invited.
+	Invited []string `json:"invited,omitempty"`
+
+	// The email ids.
+	Unsubscribed *EmailUpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -3124,6 +3198,14 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "invited", &obj.Invited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalEmailUpdateAttributesUnsubscribed)
 	if err != nil {
 		return
 	}
@@ -3583,58 +3665,67 @@ func UnmarshalDestinationConfigParamsWebhookDestinationConfig(m map[string]json.
 	return
 }
 
-// SubscriptionAttributesEmailAttributesResponse : The attributes for an email notification.
+// SubscriptionAttributesEmailAttributesResponse : The attributes reponse for an email destination.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesEmailAttributesResponse struct {
-	// The email id string.
-	To []string `json:"to" validate:"required"`
 
-	// Whether to add the notification payload to the email.
-	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
-
-	// The email address to reply to.
-	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
-
-	// The email name to reply to.
-	ReplyToName *string `json:"reply_to_name,omitempty"`
-
-	// The email name of From.
-	FromName *string `json:"from_name,omitempty"`
-
-	// The recipient selection method.
-	RecipientSelection *string `json:"recipient_selection" validate:"required"`
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
 }
 
 func (*SubscriptionAttributesEmailAttributesResponse) isaSubscriptionAttributes() bool {
 	return true
 }
 
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesEmailAttributesResponse
+func (o *SubscriptionAttributesEmailAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesEmailAttributesResponse
+func (o *SubscriptionAttributesEmailAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesEmailAttributesResponse
+func (o *SubscriptionAttributesEmailAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesEmailAttributesResponse
+func (o *SubscriptionAttributesEmailAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesEmailAttributesResponse
+func (o *SubscriptionAttributesEmailAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	buffer, err = json.Marshal(m)
+	return
+}
+
 // UnmarshalSubscriptionAttributesEmailAttributesResponse unmarshals an instance of SubscriptionAttributesEmailAttributesResponse from the specified map of raw messages.
 func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributesEmailAttributesResponse)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
-	if err != nil {
-		return
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -3643,27 +3734,64 @@ func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.Ra
 // SubscriptionAttributesSmsAttributesResponse : SMS attributes object.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesSmsAttributesResponse struct {
-	// The phone number to send the SMS to.
-	To []string `json:"to" validate:"required"`
 
-	// The recipient selection method.
-	RecipientSelection *string `json:"recipient_selection" validate:"required"`
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
 }
 
 func (*SubscriptionAttributesSmsAttributesResponse) isaSubscriptionAttributes() bool {
 	return true
 }
 
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesSmsAttributesResponse
+func (o *SubscriptionAttributesSmsAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesSmsAttributesResponse
+func (o *SubscriptionAttributesSmsAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesSmsAttributesResponse
+func (o *SubscriptionAttributesSmsAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesSmsAttributesResponse
+func (o *SubscriptionAttributesSmsAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesSmsAttributesResponse
+func (o *SubscriptionAttributesSmsAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	buffer, err = json.Marshal(m)
+	return
+}
+
 // UnmarshalSubscriptionAttributesSmsAttributesResponse unmarshals an instance of SubscriptionAttributesSmsAttributesResponse from the specified map of raw messages.
 func UnmarshalSubscriptionAttributesSmsAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributesSmsAttributesResponse)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "recipient_selection", &obj.RecipientSelection)
-	if err != nil {
-		return
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -3677,10 +3805,57 @@ type SubscriptionAttributesWebhookAttributesResponse struct {
 
 	// Decision for Notification Payload to be added.
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
 }
 
 func (*SubscriptionAttributesWebhookAttributesResponse) isaSubscriptionAttributes() bool {
 	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesWebhookAttributesResponse
+func (o *SubscriptionAttributesWebhookAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesWebhookAttributesResponse
+func (o *SubscriptionAttributesWebhookAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesWebhookAttributesResponse
+func (o *SubscriptionAttributesWebhookAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesWebhookAttributesResponse
+func (o *SubscriptionAttributesWebhookAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesWebhookAttributesResponse
+func (o *SubscriptionAttributesWebhookAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.SigningEnabled != nil {
+		m["signing_enabled"] = o.SigningEnabled
+	}
+	if o.AddNotificationPayload != nil {
+		m["add_notification_payload"] = o.AddNotificationPayload
+	}
+	buffer, err = json.Marshal(m)
+	return
 }
 
 // UnmarshalSubscriptionAttributesWebhookAttributesResponse unmarshals an instance of SubscriptionAttributesWebhookAttributesResponse from the specified map of raw messages.
@@ -3690,9 +3865,20 @@ func UnmarshalSubscriptionAttributesWebhookAttributesResponse(m map[string]json.
 	if err != nil {
 		return
 	}
+	delete(m, "signing_enabled")
 	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
 	if err != nil {
 		return
+	}
+	delete(m, "add_notification_payload")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -3708,20 +3894,23 @@ type SubscriptionCreateAttributesEmailAttributes struct {
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
 
 	// The email address to reply to.
-	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
 
 	// The email name to reply to.
-	ReplyToName *string `json:"reply_to_name,omitempty"`
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
 
 	// The email name of From.
-	FromName *string `json:"from_name,omitempty"`
+	FromName *string `json:"from_name" validate:"required"`
 }
 
 // NewSubscriptionCreateAttributesEmailAttributes : Instantiate SubscriptionCreateAttributesEmailAttributes (Generic Model Constructor)
-func (*EventNotificationsV1) NewSubscriptionCreateAttributesEmailAttributes(to []string, addNotificationPayload bool) (_model *SubscriptionCreateAttributesEmailAttributes, err error) {
+func (*EventNotificationsV1) NewSubscriptionCreateAttributesEmailAttributes(to []string, addNotificationPayload bool, replyToMail string, replyToName string, fromName string) (_model *SubscriptionCreateAttributesEmailAttributes, err error) {
 	_model = &SubscriptionCreateAttributesEmailAttributes{
 		To: to,
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
+		ReplyToMail: core.StringPtr(replyToMail),
+		ReplyToName: core.StringPtr(replyToName),
+		FromName: core.StringPtr(fromName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -3820,43 +4009,52 @@ func UnmarshalSubscriptionCreateAttributesWebhookAttributes(m map[string]json.Ra
 	return
 }
 
-// SubscriptionUpdateAttributesEmailAttributes : The attributes for an email notification.
+// SubscriptionUpdateAttributesEmailUpdateAttributes : The attributes for an email notification.
 // This model "extends" SubscriptionUpdateAttributes
-type SubscriptionUpdateAttributesEmailAttributes struct {
-	// The email id string.
-	To []string `json:"to" validate:"required"`
+type SubscriptionUpdateAttributesEmailUpdateAttributes struct {
+	// The email ids.
+	To *EmailUpdateAttributesTo `json:"to" validate:"required"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
 
 	// The email address to reply to.
-	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
 
 	// The email name to reply to.
-	ReplyToName *string `json:"reply_to_name,omitempty"`
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
 
 	// The email name of From.
-	FromName *string `json:"from_name,omitempty"`
+	FromName *string `json:"from_name" validate:"required"`
+
+	// The email ids invited.
+	Invited []string `json:"invited,omitempty"`
+
+	// The email ids.
+	Unsubscribed *EmailUpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
 }
 
-// NewSubscriptionUpdateAttributesEmailAttributes : Instantiate SubscriptionUpdateAttributesEmailAttributes (Generic Model Constructor)
-func (*EventNotificationsV1) NewSubscriptionUpdateAttributesEmailAttributes(to []string, addNotificationPayload bool) (_model *SubscriptionUpdateAttributesEmailAttributes, err error) {
-	_model = &SubscriptionUpdateAttributesEmailAttributes{
+// NewSubscriptionUpdateAttributesEmailUpdateAttributes : Instantiate SubscriptionUpdateAttributesEmailUpdateAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionUpdateAttributesEmailUpdateAttributes(to *EmailUpdateAttributesTo, addNotificationPayload bool, replyToMail string, replyToName string, fromName string) (_model *SubscriptionUpdateAttributesEmailUpdateAttributes, err error) {
+	_model = &SubscriptionUpdateAttributesEmailUpdateAttributes{
 		To: to,
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
+		ReplyToMail: core.StringPtr(replyToMail),
+		ReplyToName: core.StringPtr(replyToName),
+		FromName: core.StringPtr(fromName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
 }
 
-func (*SubscriptionUpdateAttributesEmailAttributes) isaSubscriptionUpdateAttributes() bool {
+func (*SubscriptionUpdateAttributesEmailUpdateAttributes) isaSubscriptionUpdateAttributes() bool {
 	return true
 }
 
-// UnmarshalSubscriptionUpdateAttributesEmailAttributes unmarshals an instance of SubscriptionUpdateAttributesEmailAttributes from the specified map of raw messages.
-func UnmarshalSubscriptionUpdateAttributesEmailAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(SubscriptionUpdateAttributesEmailAttributes)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+// UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes unmarshals an instance of SubscriptionUpdateAttributesEmailUpdateAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesEmailUpdateAttributes)
+	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalEmailUpdateAttributesTo)
 	if err != nil {
 		return
 	}
@@ -3873,6 +4071,14 @@ func UnmarshalSubscriptionUpdateAttributesEmailAttributes(m map[string]json.RawM
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "invited", &obj.Invited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalEmailUpdateAttributesUnsubscribed)
 	if err != nil {
 		return
 	}

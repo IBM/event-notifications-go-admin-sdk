@@ -47,16 +47,18 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		config                    map[string]string
 
 		// Test related configurations values for EN
-		instanceID      string
-		search          string = ""
-		topicName       string = "GCMTopic"
-		sourceID        string
-		topicID         string
-		topicID2        string
-		destinationID   string
-		destinationID2  string
-		subscriptionID  string
-		subscriptionID2 string
+		instanceID        string
+		search            string = ""
+		topicName         string = "GCMTopic"
+		sourceID          string
+		topicID           string
+		topicID2          string
+		destinationID     string
+		destinationID2    string
+		destinationIDSMS  string
+		subscriptionID    string
+		subscriptionID2   string
+		subscriptionIDSMS string
 	)
 
 	var shouldSkipTest = func() {
@@ -455,7 +457,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				for _, ID := range destinationList.Destinations {
 					if destinationID != *ID.ID && *ID.Type == "smtp_ibm" {
 						destinationID2 = *ID.ID
-						break
+					} else if destinationID != *ID.ID && *ID.Type == "sms_ibm" {
+						destinationIDSMS = *ID.ID
 					}
 				}
 
@@ -584,7 +587,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(name))
 			subscriptionID = *subscription.ID
 
-			subscriptionCreateAttributesModel = &eventnotificationsv1.SubscriptionCreateAttributes{
+			subscriptionCreateAttributesModelNew := &eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes{
 				To:                     []string{"tester1@gmail.com", "tester3@ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
 				ReplyToMail:            core.StringPtr("tester1@gmail.com"),
@@ -599,8 +602,10 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Description:   description,
 				DestinationID: core.StringPtr(destinationID2),
 				TopicID:       core.StringPtr(topicID),
-				Attributes:    subscriptionCreateAttributesModel,
+				Attributes:    subscriptionCreateAttributesModelNew,
 			}
+
+			//var subscriptionNew eventnotificationsv1.SubscriptionAttributesEmailAttributesResponse
 
 			subscription, response, err = eventNotificationsService.CreateSubscription(createSubscriptionOptions)
 
@@ -613,6 +618,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionID2 = *subscription.ID
 
 			Expect(subscriptionID2).ToNot(Equal(subscriptionID))
+
+			subscriptionCreateAttributesModel = &eventnotificationsv1.SubscriptionCreateAttributes{
+				To: []string{"+12048089972", "+12014222730"},
+			}
+			name = core.StringPtr("subscription_sms")
+			description = core.StringPtr("Subscription for sms")
+			createSubscriptionOptions = &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          name,
+				Description:   description,
+				DestinationID: core.StringPtr(destinationIDSMS),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.Attributes).ToNot(BeNil())
+			Expect(subscription.Description).To(Equal(description))
+			Expect(subscription.Name).To(Equal(name))
+			subscriptionIDSMS = *subscription.ID
 
 			//
 			// The following status codes aren't covered by tests.
@@ -727,6 +756,64 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(name))
 			Expect(subscription.Description).To(Equal(description))
 
+			// update email
+
+			subscriptionUpdateEmailAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesEmailUpdateAttributes{
+				To: &eventnotificationsv1.EmailUpdateAttributesTo{
+					Add:    []string{"testereq1@gmail.com", "tester553@ibm.com"},
+					Remove: []string{"tester1@gmail.com"},
+				},
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("tester1@gmail.com"),
+				ReplyToName:            core.StringPtr("sender"),
+				FromName:               core.StringPtr("IBM"),
+				Unsubscribed: &eventnotificationsv1.EmailUpdateAttributesUnsubscribed{
+					Remove: []string{"tester3@ibm.com"},
+				},
+			}
+
+			name = core.StringPtr("subscription_email_3")
+			description = core.StringPtr("Update email subscription")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionID2),
+				Name:        name,
+				Description: description,
+				Attributes:  subscriptionUpdateEmailAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID2)))
+			Expect(subscription.Name).To(Equal(name))
+			Expect(subscription.Description).To(Equal(description))
+
+			// SMS update
+			subscriptionUpdateSMSAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes{
+				To: []string{"+120480009972", "+1201499990"},
+			}
+			name = core.StringPtr("subscription_sms+1")
+			description = core.StringPtr("update Subscription for sms")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionIDSMS),
+				Name:        name,
+				Description: description,
+				Attributes:  subscriptionUpdateSMSAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionIDSMS)))
+			Expect(subscription.Name).To(Equal(name))
+			Expect(subscription.Description).To(Equal(description))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -747,7 +834,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionIDSMS} {
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
