@@ -111,12 +111,8 @@ SDK Methods to consume
 	- [Update Destination](#update-destination)
 	- [Delete Destination](#delete-destination)
 - [Destination Devices](#destination-device)
-	- [Create Destination device](#create-destination-device)
 	- [List Destination device](#list-destination-devices)
 	- [Get Destination device report](#get-destination-device-report)
-	- [Get Destination device](#get-destination-device)
-	- [Update Destination device](#update-destination-device)
-	- [Delete Destination device](#delete-destination-device)
 	- [Create Destination tag subscription](#create-destination-tag-subscription)
 	- [List Destination tag subscription](#list-destination-tag-subscription)
 	- [List Destination device tag subscriptions](#list-destination-device-tag-subscriptions)
@@ -395,25 +391,6 @@ if err != nil {
 
 ## Destination Devices
 
-### Create Destination device
-
-```go
-createDestinationDevicesOptions := eventNotificationsService.NewCreateDestinationDevicesOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-	<device-id>,		// Event notifications service device ID
-	<device-token>,		// Event notifications service instance device token
-	<device-platform>,  // Event notifications service instance device platform
-)
-createDestinationDevicesOptions.SetUserID(*core.StringPtr(<user-id>))
-
-destinationDeviceResponse, response, err := eventNotificationsServiceCreateDestinationDevices(createDestinationDevicesOptions)
-
-if err != nil {
-	panic(err)
-}
-```
-
 ### List Destination device
 
 ```go
@@ -439,56 +416,6 @@ getDestinationDevicesReportOptions := eventNotificationsService.NewGetDestinatio
 
 destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
 
-if err != nil {
-	panic(err)
-}
-```
-
-### Get Destination device
-
-```go
-getDestinationDeviceOptions := eventNotificationsService.NewGetDestinationDeviceOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-	<destination-device-id>,	// Event notifications service instance Destination device ID
-)
-
-destinationDevice, response, err := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptions)
-			
-if err != nil {
-	panic(err)
-}
-```
-
-### Update Destination device
-
-```go
-updateDestinationDevicesOptions := eventNotificationsService.NewUpdateDestinationDevicesOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-	<device-id>,		// Event notifications service device ID
-	<device-token>,		// Event notifications service instance device token
-	<device-platform>,  // Event notifications service instance device platform
-)
-updateDestinationDevicesOptions.SetNewUserID(*core.StringPtr(<user-id>))
-
-destinationDevice, response, err := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptions)
-
-if err != nil {
-	panic(err)
-}
-```
-
-### Delete Destination device
-
-```go
-deleteDestinationDevicesOptions := eventNotificationsService.NewDeleteDestinationDevicesOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-	<device-id>,		// Event notifications service device ID
-)
-
-response, err := eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptions)
 if err != nil {
 	panic(err)
 }

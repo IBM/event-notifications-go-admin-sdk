@@ -67,13 +67,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
+				})
 				Expect(eventNotificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,7 +103,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
+				})
 				err := eventNotificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
@@ -120,12 +122,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
+			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
+			})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(eventNotificationsService).To(BeNil())
@@ -136,7 +139,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_AUTH_TYPE": "NOAuth",
+				"EVENT_NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -3734,275 +3737,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
-	Describe(`CreateDestinationDevices(createDestinationDevicesOptions *CreateDestinationDevicesOptions) - Operation response error`, func() {
-		createDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createDestinationDevicesPath))
-					Expect(req.Method).To(Equal("POST"))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke CreateDestinationDevices with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				createDestinationDevicesOptionsModel := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				createDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Token = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Platform = core.StringPtr("webhook")
-				createDestinationDevicesOptionsModel.UserID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`CreateDestinationDevices(createDestinationDevicesOptions *CreateDestinationDevicesOptions)`, func() {
-		createDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createDestinationDevicesPath))
-					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "token": "Token", "created_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke CreateDestinationDevices successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				createDestinationDevicesOptionsModel := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				createDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Token = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Platform = core.StringPtr("webhook")
-				createDestinationDevicesOptionsModel.UserID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.CreateDestinationDevicesWithContext(ctx, createDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.CreateDestinationDevicesWithContext(ctx, createDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createDestinationDevicesPath))
-					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "token": "Token", "created_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke CreateDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.CreateDestinationDevices(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				createDestinationDevicesOptionsModel := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				createDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Token = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Platform = core.StringPtr("webhook")
-				createDestinationDevicesOptionsModel.UserID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke CreateDestinationDevices with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				createDestinationDevicesOptionsModel := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				createDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Token = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Platform = core.StringPtr("webhook")
-				createDestinationDevicesOptionsModel.UserID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the CreateDestinationDevicesOptions model with no property values
-				createDestinationDevicesOptionsModelNew := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(201)
-				}))
-			})
-			It(`Invoke CreateDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				createDestinationDevicesOptionsModel := new(eventnotificationsv1.CreateDestinationDevicesOptions)
-				createDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Token = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Platform = core.StringPtr("webhook")
-				createDestinationDevicesOptionsModel.UserID = core.StringPtr("testString")
-				createDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
 	Describe(`GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions) - Operation response error`, func() {
 		getDestinationDevicesReportPath := "/v1/instances/testString/destinations/testString/devices/report"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
@@ -4228,22 +3962,25 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
-	Describe(`GetDestinationDevice(getDestinationDeviceOptions *GetDestinationDeviceOptions) - Operation response error`, func() {
-		getDestinationDevicePath := "/v1/instances/testString/destinations/testString/devices/testString"
+	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) - Operation response error`, func() {
+		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
+					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
 					fmt.Fprintf(res, `} this is not valid json {`)
 				}))
 			})
-			It(`Invoke GetDestinationDevice with error: Operation response processing error`, func() {
+			It(`Invoke ListTagsSubscriptionsDevice with error: Operation response processing error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -4251,21 +3988,24 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the GetDestinationDeviceOptions model
-				getDestinationDeviceOptionsModel := new(eventnotificationsv1.GetDestinationDeviceOptions)
-				getDestinationDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
+				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
 				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -4275,27 +4015,30 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
-	Describe(`GetDestinationDevice(getDestinationDeviceOptions *GetDestinationDeviceOptions)`, func() {
-		getDestinationDevicePath := "/v1/instances/testString/destinations/testString/devices/testString"
+	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
+		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
 
+					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "platform": "webhook", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
-			It(`Invoke GetDestinationDevice successfully with retries`, func() {
+			It(`Invoke ListTagsSubscriptionsDevice successfully with retries`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -4304,23 +4047,26 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the GetDestinationDeviceOptions model
-				getDestinationDeviceOptionsModel := new(eventnotificationsv1.GetDestinationDeviceOptions)
-				getDestinationDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
+				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.GetDestinationDeviceWithContext(ctx, getDestinationDeviceOptionsModel)
+				_, _, operationErr := eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
 				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -4328,7 +4074,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.GetDestinationDeviceWithContext(ctx, getDestinationDeviceOptionsModel)
+				_, _, operationErr = eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -4342,16 +4088,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
 
+					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "platform": "webhook", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
-			It(`Invoke GetDestinationDevice successfully`, func() {
+			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -4360,26 +4109,29 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.GetDestinationDevice(nil)
+				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the GetDestinationDeviceOptions model
-				getDestinationDeviceOptionsModel := new(eventnotificationsv1.GetDestinationDeviceOptions)
-				getDestinationDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
+				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke GetDestinationDevice with error: Operation validation and request error`, func() {
+			It(`Invoke ListTagsSubscriptionsDevice with error: Operation validation and request error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -4387,24 +4139,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the GetDestinationDeviceOptions model
-				getDestinationDeviceOptionsModel := new(eventnotificationsv1.GetDestinationDeviceOptions)
-				getDestinationDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
+				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
-				// Construct a second instance of the GetDestinationDeviceOptions model with no property values
-				getDestinationDeviceOptionsModelNew := new(eventnotificationsv1.GetDestinationDeviceOptions)
+				// Construct a second instance of the ListTagsSubscriptionsDeviceOptions model with no property values
+				listTagsSubscriptionsDeviceOptionsModelNew := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModelNew)
+				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -4422,7 +4177,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 				}))
 			})
-			It(`Invoke GetDestinationDevice successfully`, func() {
+			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -4430,361 +4185,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the GetDestinationDeviceOptions model
-				getDestinationDeviceOptionsModel := new(eventnotificationsv1.GetDestinationDeviceOptions)
-				getDestinationDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getDestinationDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
+				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
-				result, response, operationErr := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
 				// Verify a nil result
 				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`UpdateDestinationDevices(updateDestinationDevicesOptions *UpdateDestinationDevicesOptions) - Operation response error`, func() {
-		updateDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices/testString"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(updateDestinationDevicesPath))
-					Expect(req.Method).To(Equal("PUT"))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke UpdateDestinationDevices with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				updateDestinationDevicesOptionsModel := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				updateDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewToken = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewPlatform = core.StringPtr("webhook")
-				updateDestinationDevicesOptionsModel.NewUserID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`UpdateDestinationDevices(updateDestinationDevicesOptions *UpdateDestinationDevicesOptions)`, func() {
-		updateDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices/testString"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(updateDestinationDevicesPath))
-					Expect(req.Method).To(Equal("PUT"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "platform": "webhook", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke UpdateDestinationDevices successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				updateDestinationDevicesOptionsModel := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				updateDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewToken = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewPlatform = core.StringPtr("webhook")
-				updateDestinationDevicesOptionsModel.NewUserID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.UpdateDestinationDevicesWithContext(ctx, updateDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.UpdateDestinationDevicesWithContext(ctx, updateDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(updateDestinationDevicesPath))
-					Expect(req.Method).To(Equal("PUT"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "user_id": "UserID", "platform": "webhook", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke UpdateDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.UpdateDestinationDevices(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				updateDestinationDevicesOptionsModel := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				updateDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewToken = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewPlatform = core.StringPtr("webhook")
-				updateDestinationDevicesOptionsModel.NewUserID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke UpdateDestinationDevices with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				updateDestinationDevicesOptionsModel := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				updateDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewToken = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewPlatform = core.StringPtr("webhook")
-				updateDestinationDevicesOptionsModel.NewUserID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the UpdateDestinationDevicesOptions model with no property values
-				updateDestinationDevicesOptionsModelNew := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(201)
-				}))
-			})
-			It(`Invoke UpdateDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				updateDestinationDevicesOptionsModel := new(eventnotificationsv1.UpdateDestinationDevicesOptions)
-				updateDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewToken = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.NewPlatform = core.StringPtr("webhook")
-				updateDestinationDevicesOptionsModel.NewUserID = core.StringPtr("testString")
-				updateDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`DeleteDestinationDevices(deleteDestinationDevicesOptions *DeleteDestinationDevicesOptions)`, func() {
-		deleteDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices/testString"
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(deleteDestinationDevicesPath))
-					Expect(req.Method).To(Equal("DELETE"))
-
-					res.WriteHeader(204)
-				}))
-			})
-			It(`Invoke DeleteDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				response, operationErr := eventNotificationsService.DeleteDestinationDevices(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-
-				// Construct an instance of the DeleteDestinationDevicesOptions model
-				deleteDestinationDevicesOptionsModel := new(eventnotificationsv1.DeleteDestinationDevicesOptions)
-				deleteDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				response, operationErr = eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-			})
-			It(`Invoke DeleteDestinationDevices with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the DeleteDestinationDevicesOptions model
-				deleteDestinationDevicesOptionsModel := new(eventnotificationsv1.DeleteDestinationDevicesOptions)
-				deleteDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.DeviceID = core.StringPtr("testString")
-				deleteDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				response, operationErr := eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				// Construct a second instance of the DeleteDestinationDevicesOptions model with no property values
-				deleteDestinationDevicesOptionsModelNew := new(eventnotificationsv1.DeleteDestinationDevicesOptions)
-				// Invoke operation with invalid model (negative test)
-				response, operationErr = eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
 			})
 			AfterEach(func() {
 				testServer.Close()
@@ -5385,252 +4802,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				response, operationErr = eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) - Operation response error`, func() {
-		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke ListTagsSubscriptionsDevice with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
-		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke ListTagsSubscriptionsDevice with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the ListTagsSubscriptionsDeviceOptions model with no property values
-				listTagsSubscriptionsDeviceOptionsModelNew := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
 			})
 			AfterEach(func() {
 				testServer.Close()
@@ -6739,30 +5910,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				URL:           "http://eventnotificationsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
-			It(`Invoke NewCreateDestinationDevicesOptions successfully`, func() {
-				// Construct an instance of the CreateDestinationDevicesOptions model
-				instanceID := "testString"
-				id := "testString"
-				createDestinationDevicesOptionsDeviceID := "testString"
-				createDestinationDevicesOptionsToken := "testString"
-				createDestinationDevicesOptionsPlatform := "webhook"
-				createDestinationDevicesOptionsModel := eventNotificationsService.NewCreateDestinationDevicesOptions(instanceID, id, createDestinationDevicesOptionsDeviceID, createDestinationDevicesOptionsToken, createDestinationDevicesOptionsPlatform)
-				createDestinationDevicesOptionsModel.SetInstanceID("testString")
-				createDestinationDevicesOptionsModel.SetID("testString")
-				createDestinationDevicesOptionsModel.SetDeviceID("testString")
-				createDestinationDevicesOptionsModel.SetToken("testString")
-				createDestinationDevicesOptionsModel.SetPlatform("webhook")
-				createDestinationDevicesOptionsModel.SetUserID("testString")
-				createDestinationDevicesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(createDestinationDevicesOptionsModel).ToNot(BeNil())
-				Expect(createDestinationDevicesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(createDestinationDevicesOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(createDestinationDevicesOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(createDestinationDevicesOptionsModel.Token).To(Equal(core.StringPtr("testString")))
-				Expect(createDestinationDevicesOptionsModel.Platform).To(Equal(core.StringPtr("webhook")))
-				Expect(createDestinationDevicesOptionsModel.UserID).To(Equal(core.StringPtr("testString")))
-				Expect(createDestinationDevicesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
 			It(`Invoke NewCreateDestinationOptions successfully`, func() {
 				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
 				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
@@ -6884,22 +6031,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}))
 				Expect(createTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewDeleteDestinationDevicesOptions successfully`, func() {
-				// Construct an instance of the DeleteDestinationDevicesOptions model
-				instanceID := "testString"
-				id := "testString"
-				deviceID := "testString"
-				deleteDestinationDevicesOptionsModel := eventNotificationsService.NewDeleteDestinationDevicesOptions(instanceID, id, deviceID)
-				deleteDestinationDevicesOptionsModel.SetInstanceID("testString")
-				deleteDestinationDevicesOptionsModel.SetID("testString")
-				deleteDestinationDevicesOptionsModel.SetDeviceID("testString")
-				deleteDestinationDevicesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(deleteDestinationDevicesOptionsModel).ToNot(BeNil())
-				Expect(deleteDestinationDevicesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(deleteDestinationDevicesOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(deleteDestinationDevicesOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(deleteDestinationDevicesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
 			It(`Invoke NewDeleteDestinationOptions successfully`, func() {
 				// Construct an instance of the DeleteDestinationOptions model
 				instanceID := "testString"
@@ -6960,22 +6091,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				var params eventnotificationsv1.DestinationConfigParamsIntf = nil
 				_, err := eventNotificationsService.NewDestinationConfig(params)
 				Expect(err).ToNot(BeNil())
-			})
-			It(`Invoke NewGetDestinationDeviceOptions successfully`, func() {
-				// Construct an instance of the GetDestinationDeviceOptions model
-				instanceID := "testString"
-				id := "testString"
-				deviceID := "testString"
-				getDestinationDeviceOptionsModel := eventNotificationsService.NewGetDestinationDeviceOptions(instanceID, id, deviceID)
-				getDestinationDeviceOptionsModel.SetInstanceID("testString")
-				getDestinationDeviceOptionsModel.SetID("testString")
-				getDestinationDeviceOptionsModel.SetDeviceID("testString")
-				getDestinationDeviceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(getDestinationDeviceOptionsModel).ToNot(BeNil())
-				Expect(getDestinationDeviceOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(getDestinationDeviceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(getDestinationDeviceOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(getDestinationDeviceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetDestinationDevicesReportOptions successfully`, func() {
 				// Construct an instance of the GetDestinationDevicesReportOptions model
@@ -7380,30 +6495,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_model, err := eventNotificationsService.NewTopicUpdateSourcesItem(id, rules)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
-			})
-			It(`Invoke NewUpdateDestinationDevicesOptions successfully`, func() {
-				// Construct an instance of the UpdateDestinationDevicesOptions model
-				instanceID := "testString"
-				id := "testString"
-				deviceID := "testString"
-				updateDestinationDevicesOptionsNewToken := "testString"
-				updateDestinationDevicesOptionsNewPlatform := "webhook"
-				updateDestinationDevicesOptionsModel := eventNotificationsService.NewUpdateDestinationDevicesOptions(instanceID, id, deviceID, updateDestinationDevicesOptionsNewToken, updateDestinationDevicesOptionsNewPlatform)
-				updateDestinationDevicesOptionsModel.SetInstanceID("testString")
-				updateDestinationDevicesOptionsModel.SetID("testString")
-				updateDestinationDevicesOptionsModel.SetDeviceID("testString")
-				updateDestinationDevicesOptionsModel.SetNewToken("testString")
-				updateDestinationDevicesOptionsModel.SetNewPlatform("webhook")
-				updateDestinationDevicesOptionsModel.SetNewUserID("testString")
-				updateDestinationDevicesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(updateDestinationDevicesOptionsModel).ToNot(BeNil())
-				Expect(updateDestinationDevicesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(updateDestinationDevicesOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(updateDestinationDevicesOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(updateDestinationDevicesOptionsModel.NewToken).To(Equal(core.StringPtr("testString")))
-				Expect(updateDestinationDevicesOptionsModel.NewPlatform).To(Equal(core.StringPtr("webhook")))
-				Expect(updateDestinationDevicesOptionsModel.NewUserID).To(Equal(core.StringPtr("testString")))
-				Expect(updateDestinationDevicesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewUpdateDestinationOptions successfully`, func() {
 				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model

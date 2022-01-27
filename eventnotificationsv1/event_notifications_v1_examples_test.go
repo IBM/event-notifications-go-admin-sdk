@@ -53,9 +53,7 @@ var (
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
-	destinationDeviceID       string
 	subscriptionID            string
-	tagSubscriptionID         string
 	fcmServerKey              string
 	fcmSenderId               string
 )
@@ -417,39 +415,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 		})
-		It(`CreateDestinationDevices request example`, func() {
-			fmt.Println("\nCreateDestinationDevices() result:")
-
-			deviceId := "9bb4b029-a684-4a2e-baf5-19275e4002fd"
-			deviceToken := "9bb4b029-a684-4a2e-baf5-19275e4002fd"
-			userId := "example_user"
-			// begin-create_destination_devices
-
-			createDestinationDevicesOptions := eventNotificationsService.NewCreateDestinationDevicesOptions(
-				instanceID,
-				destinationID,
-				deviceId,
-				deviceToken,
-				"G",
-			)
-			createDestinationDevicesOptions.SetUserID(*core.StringPtr(userId))
-
-			destinationDeviceResponse, response, err := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptions)
-			if err != nil {
-				panic(err)
-			}
-			destinationDeviceID = string(*destinationDeviceResponse.ID)
-
-			b, _ := json.MarshalIndent(destinationDeviceResponse, "", "  ")
-			fmt.Println(string(b))
-
-			// end-create_destination_devices
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(destinationDeviceResponse).ToNot(BeNil())
-
-		})
 		It(`ListDestinationDevices request example`, func() {
 			fmt.Println("\nListDestinationDevices() result:")
 			// begin-list_destination_devices
@@ -496,139 +461,85 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationDevicesReport).ToNot(BeNil())
 
 		})
-		It(`GetDestinationDevice request example`, func() {
-			fmt.Println("\nGetDestinationDevice() result:")
+		/*
+			It(`CreateTagsSubscription request example`, func() {
+				fmt.Println("\nCreateTagsSubscription() result:")
 
-			// begin-get_destination_device
+				tagName := "IBM_test"
+				// begin-create_tags_subscription
 
-			getDestinationDeviceOptions := eventNotificationsService.NewGetDestinationDeviceOptions(
-				instanceID,
-				destinationID,
-				destinationDeviceID,
-			)
+				createTagsSubscriptionOptions := eventNotificationsService.NewCreateTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+					destinationDeviceID,
+					tagName,
+				)
 
-			destinationDevice, response, err := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(destinationDevice, "", "  ")
-			fmt.Println(string(b))
+				destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(destinationTagsSubscriptionResponse, "", "  ")
+				fmt.Println(string(b))
 
-			// end-get_destination_device
+				// end-create_tags_subscription
 
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevice).ToNot(BeNil())
+				tagSubscriptionID = string(*destinationTagsSubscriptionResponse.ID)
 
-		})
-		It(`UpdateDestinationDevices request example`, func() {
-			fmt.Println("\nUpdateDestinationDevices() result:")
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(201))
+				Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
 
-			newDeviceToken := "9bb4b029-a684-4a2e-baf5-19275e4002fd-fds"
-			newUserId := "new_userId"
-			// begin-update_destination_devices
+			})
+			It(`ListTagsSubscription request example`, func() {
+				fmt.Println("\nListTagsSubscription() result:")
+				// begin-list_tags_subscription
 
-			updateDestinationDevicesOptions := eventNotificationsService.NewUpdateDestinationDevicesOptions(
-				instanceID,
-				destinationID,
-				destinationDeviceID,
-				newDeviceToken,
-				"G",
-			)
+				listTagsSubscriptionOptions := eventNotificationsService.NewListTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+				)
 
-			updateDestinationDevicesOptions.SetNewUserID(*core.StringPtr(newUserId))
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
+				fmt.Println(string(b))
 
-			destinationDevice, response, err := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(destinationDevice, "", "  ")
-			fmt.Println(string(b))
+				// end-list_tags_subscription
 
-			// end-update_destination_devices
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
 
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevice).ToNot(BeNil())
+			})
 
-		})
-		It(`CreateTagsSubscription request example`, func() {
-			fmt.Println("\nCreateTagsSubscription() result:")
+			It(`ListTagsSubscriptionsDevice request example`, func() {
+				fmt.Println("\nListTagsSubscriptionsDevice() result:")
+				// begin-list_tags_subscriptions_device
 
-			tagName := "IBM_test"
-			// begin-create_tags_subscription
+				listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
+					instanceID,
+					destinationID,
+					destinationDeviceID,
+				)
 
-			createTagsSubscriptionOptions := eventNotificationsService.NewCreateTagsSubscriptionOptions(
-				instanceID,
-				destinationID,
-				destinationDeviceID,
-				tagName,
-			)
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
+				fmt.Println(string(b))
 
-			destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(destinationTagsSubscriptionResponse, "", "  ")
-			fmt.Println(string(b))
+				// end-list_tags_subscriptions_device
 
-			// end-create_tags_subscription
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
 
-			tagSubscriptionID = string(*destinationTagsSubscriptionResponse.ID)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
-
-		})
-		It(`ListTagsSubscription request example`, func() {
-			fmt.Println("\nListTagsSubscription() result:")
-			// begin-list_tags_subscription
-
-			listTagsSubscriptionOptions := eventNotificationsService.NewListTagsSubscriptionOptions(
-				instanceID,
-				destinationID,
-			)
-
-			tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
-			fmt.Println(string(b))
-
-			// end-list_tags_subscription
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(tagsSubscriptionList).ToNot(BeNil())
-
-		})
-
-		It(`ListTagsSubscriptionsDevice request example`, func() {
-			fmt.Println("\nListTagsSubscriptionsDevice() result:")
-			// begin-list_tags_subscriptions_device
-
-			listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
-				instanceID,
-				destinationID,
-				destinationDeviceID,
-			)
-
-			tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
-			fmt.Println(string(b))
-
-			// end-list_tags_subscriptions_device
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(tagsSubscriptionList).ToNot(BeNil())
-
-		})
+			})
+		*/
 		It(`CreateSubscription request example`, func() {
 			fmt.Println("\nCreateSubscription() result:")
 
@@ -824,51 +735,31 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(204))
 
 		})
-		It(`DeleteTagsSubscription request example`, func() {
+		/*
+			It(`DeleteTagsSubscription request example`, func() {
 
-			tagName := "IBM_test"
-			// begin-delete_tags_subscription
+				tagName := "IBM_test"
+				// begin-delete_tags_subscription
 
-			deleteTagsSubscriptionOptions := eventNotificationsService.NewDeleteTagsSubscriptionOptions(
-				instanceID,
-				destinationID,
-			)
+				deleteTagsSubscriptionOptions := eventNotificationsService.NewDeleteTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+				)
 
-			deleteTagsSubscriptionOptions.SetDeviceID(destinationDeviceID)
-			deleteTagsSubscriptionOptions.SetTagName(tagName)
-			response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
-			if err != nil {
-				panic(err)
-			}
+				deleteTagsSubscriptionOptions.SetDeviceID(destinationDeviceID)
+				deleteTagsSubscriptionOptions.SetTagName(tagName)
+				response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
 
-			// end-delete_tags_subscription
-			fmt.Printf("\nDeleteTagsSubscription() response status code: %d\n", response.StatusCode)
+				// end-delete_tags_subscription
+				fmt.Printf("\nDeleteTagsSubscription() response status code: %d\n", response.StatusCode)
 
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(204))
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
 
-		})
-		It(`DeleteDestinationDevices request example`, func() {
-			// begin-delete_destination_devices
-
-			deleteDestinationDevicesOptions := eventNotificationsService.NewDeleteDestinationDevicesOptions(
-				instanceID,
-				destinationID,
-				destinationDeviceID,
-			)
-
-			response, err := eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptions)
-			if err != nil {
-				panic(err)
-			}
-
-			// end-delete_destination_devices
-			fmt.Printf("\nDeleteDestinationDevices() response status code: %d\n", response.StatusCode)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(204))
-
-		})
+			})*/
 		It(`DeleteDestination request example`, func() {
 			// begin-delete_destination
 

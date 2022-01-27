@@ -55,7 +55,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID             string
 		destinationID2            string
 		destinationID3            string
-		destinationDeviceID       string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
@@ -652,49 +651,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`CreateDestinationDevices - Create a new Destination device`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`CreateDestinationDevices(createDestinationDevicesOptions *CreateDestinationDevicesOptions)`, func() {
-
-			deviceId := "9bb4b029-a684-4a2e-baf5-19275e4002fd"
-			deviceToken := "9bb4b029-a684-4a2e-baf5-19275e4002fd"
-			userId := "example_user"
-			// begin-create_destination_devices
-
-			createDestinationDevicesOptions := eventNotificationsService.NewCreateDestinationDevicesOptions(
-				instanceID,
-				destinationID3,
-				deviceId,
-				deviceToken,
-				"G",
-			)
-			createDestinationDevicesOptions.SetUserID(*core.StringPtr(userId))
-
-			destinationDeviceResponse, response, err := eventNotificationsService.CreateDestinationDevices(createDestinationDevicesOptions)
-			if err != nil {
-				panic(err)
-			}
-			destinationDeviceID = string(*destinationDeviceResponse.ID)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(destinationDeviceResponse).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 400
-			// 401
-			// 409
-			// 415
-			// 500
-			//
-		})
-	})
-
 	Describe(`ListDestinationDevices - Get list of Destination devices`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -755,158 +711,94 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetDestinationDevice - Get details of a Destination device`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
+	/*
+		Describe(`CreateTagsSubscription - Create a new Tag subscription`, func() {
+			BeforeEach(func() {
+				shouldSkipTest()
+			})
+			It(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions)`, func() {
+
+				tagName := "IBM_test"
+				createTagsSubscriptionOptions := &eventnotificationsv1.CreateTagsSubscriptionOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(destinationID3),
+					DeviceID:   core.StringPtr(destinationDeviceID),
+					TagName:    core.StringPtr(tagName),
+				}
+
+				destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(201))
+				Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
+
+				//
+				// The following status codes aren't covered by tests.
+				// Please provide integration tests for these too.
+				//
+				// 400
+				// 401
+				// 409
+				// 415
+				// 500
+				//
+			})
 		})
-		It(`GetDestinationDevice(getDestinationDeviceOptions *GetDestinationDeviceOptions)`, func() {
+		Describe(`ListTagsSubscription - List all Tag Subscriptions`, func() {
+			BeforeEach(func() {
+				shouldSkipTest()
+			})
+			It(`ListTagsSubscription(listTagsSubscriptionOptions *ListTagsSubscriptionOptions)`, func() {
 
-			getDestinationDeviceOptions := &eventnotificationsv1.GetDestinationDeviceOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				DeviceID:   core.StringPtr(destinationDeviceID),
-			}
+				listTagsSubscriptionOptions := &eventnotificationsv1.ListTagsSubscriptionOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(destinationID3),
+				}
 
-			destinationDevice, response, err := eventNotificationsService.GetDestinationDevice(getDestinationDeviceOptions)
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
 
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevice).ToNot(BeNil())
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
 
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 404
-			// 500
-			//
+				//
+				// The following status codes aren't covered by tests.
+				// Please provide integration tests for these too.
+				//
+				// 401
+				// 500
+				//
+			})
 		})
-	})
 
-	Describe(`UpdateDestinationDevices - Update a Destination device`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
+		Describe(`ListTagsSubscriptionsDevice - List all Tag Subscriptions for a device`, func() {
+			BeforeEach(func() {
+				shouldSkipTest()
+			})
+			It(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
+
+				listTagsSubscriptionsDeviceOptions := &eventnotificationsv1.ListTagsSubscriptionsDeviceOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(destinationID3),
+					DeviceID:   core.StringPtr(destinationDeviceID),
+				}
+
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
+
+				//
+				// The following status codes aren't covered by tests.
+				// Please provide integration tests for these too.
+				//
+				// 401
+				// 500
+				//
+			})
 		})
-		It(`UpdateDestinationDevices(updateDestinationDevicesOptions *UpdateDestinationDevicesOptions)`, func() {
-
-			newDeviceToken := "9bb4b029-a684-4a2e-baf5-19275e4002fd-fds"
-			newUserId := "new_userId"
-
-			updateDestinationDevicesOptions := &eventnotificationsv1.UpdateDestinationDevicesOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(destinationID3),
-				DeviceID:    core.StringPtr(destinationDeviceID),
-				NewToken:    core.StringPtr(newDeviceToken),
-				NewPlatform: core.StringPtr("G"),
-				NewUserID:   core.StringPtr(newUserId),
-			}
-
-			destinationDevice, response, err := eventNotificationsService.UpdateDestinationDevices(updateDestinationDevicesOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevice).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 400
-			// 401
-			// 409
-			// 415
-			// 500
-			//
-		})
-	})
-	Describe(`CreateTagsSubscription - Create a new Tag subscription`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions)`, func() {
-
-			tagName := "IBM_test"
-			createTagsSubscriptionOptions := &eventnotificationsv1.CreateTagsSubscriptionOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				DeviceID:   core.StringPtr(destinationDeviceID),
-				TagName:    core.StringPtr(tagName),
-			}
-
-			destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 400
-			// 401
-			// 409
-			// 415
-			// 500
-			//
-		})
-	})
-	Describe(`ListTagsSubscription - List all Tag Subscriptions`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`ListTagsSubscription(listTagsSubscriptionOptions *ListTagsSubscriptionOptions)`, func() {
-
-			listTagsSubscriptionOptions := &eventnotificationsv1.ListTagsSubscriptionOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-			}
-
-			tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(tagsSubscriptionList).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 500
-			//
-		})
-	})
-
-	Describe(`ListTagsSubscriptionsDevice - List all Tag Subscriptions for a device`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
-
-			listTagsSubscriptionsDeviceOptions := &eventnotificationsv1.ListTagsSubscriptionsDeviceOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				DeviceID:   core.StringPtr(destinationDeviceID),
-			}
-
-			tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(tagsSubscriptionList).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 500
-			//
-		})
-	})
-
+	*/
 	Describe(`CreateSubscription - Create a new Subscription`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -1266,64 +1158,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//
 		})
 	})
-	Describe(`DeleteTagsSubscription - Delete a Tag subcription`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`DeleteTagsSubscription(deleteTagsSubscriptionOptions *DeleteTagsSubscriptionOptions)`, func() {
-
-			tagName := "IBM_test"
-			deleteTagsSubscriptionOptions := &eventnotificationsv1.DeleteTagsSubscriptionOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				DeviceID:   core.StringPtr(destinationDeviceID),
-				TagName:    core.StringPtr(tagName),
-			}
-
-			response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(204))
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 404
-			// 500
-			//
-		})
-	})
-
-	Describe(`DeleteDestinationDevices - Delete a Destination device`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`DeleteDestinationDevices(deleteDestinationDevicesOptions *DeleteDestinationDevicesOptions)`, func() {
-
-			deleteDestinationDevicesOptions := &eventnotificationsv1.DeleteDestinationDevicesOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				DeviceID:   core.StringPtr(destinationDeviceID),
-			}
-
-			response, err := eventNotificationsService.DeleteDestinationDevices(deleteDestinationDevicesOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(204))
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 404
-			// 500
-			//
-		})
-	})
-
 	Describe(`DeleteDestination - Delete a Destination`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()

@@ -1144,86 +1144,6 @@ func (eventNotifications *EventNotificationsV1) ListDestinationDevicesWithContex
 	return
 }
 
-// CreateDestinationDevices : Create a new Destination device
-// Create a new Destination device.
-func (eventNotifications *EventNotificationsV1) CreateDestinationDevices(createDestinationDevicesOptions *CreateDestinationDevicesOptions) (result *DestinationDeviceResponse, response *core.DetailedResponse, err error) {
-	return eventNotifications.CreateDestinationDevicesWithContext(context.Background(), createDestinationDevicesOptions)
-}
-
-// CreateDestinationDevicesWithContext is an alternate form of the CreateDestinationDevices method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) CreateDestinationDevicesWithContext(ctx context.Context, createDestinationDevicesOptions *CreateDestinationDevicesOptions) (result *DestinationDeviceResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(createDestinationDevicesOptions, "createDestinationDevicesOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(createDestinationDevicesOptions, "createDestinationDevicesOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *createDestinationDevicesOptions.InstanceID,
-		"id":          *createDestinationDevicesOptions.ID,
-	}
-
-	builder := core.NewRequestBuilder(core.POST)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range createDestinationDevicesOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateDestinationDevices")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if createDestinationDevicesOptions.DeviceID != nil {
-		body["device_id"] = createDestinationDevicesOptions.DeviceID
-	}
-	if createDestinationDevicesOptions.Token != nil {
-		body["token"] = createDestinationDevicesOptions.Token
-	}
-	if createDestinationDevicesOptions.Platform != nil {
-		body["platform"] = createDestinationDevicesOptions.Platform
-	}
-	if createDestinationDevicesOptions.UserID != nil {
-		body["user_id"] = createDestinationDevicesOptions.UserID
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationDeviceResponse)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
 // GetDestinationDevicesReport : Retrieves report of destination devices registered
 // Retrieves report of destination devices registered.
 func (eventNotifications *EventNotificationsV1) GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions) (result *DestinationDevicesReport, response *core.DetailedResponse, err error) {
@@ -1289,126 +1209,55 @@ func (eventNotifications *EventNotificationsV1) GetDestinationDevicesReportWithC
 	return
 }
 
-// GetDestinationDevice : Get details of a Destination device
-// Get details of a Destination device.
-func (eventNotifications *EventNotificationsV1) GetDestinationDevice(getDestinationDeviceOptions *GetDestinationDeviceOptions) (result *DestinationDevice, response *core.DetailedResponse, err error) {
-	return eventNotifications.GetDestinationDeviceWithContext(context.Background(), getDestinationDeviceOptions)
+// ListTagsSubscriptionsDevice : List all Tag Subscriptions for a device
+// List all Tag Subscriptions for a device.
+func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
+	return eventNotifications.ListTagsSubscriptionsDeviceWithContext(context.Background(), listTagsSubscriptionsDeviceOptions)
 }
 
-// GetDestinationDeviceWithContext is an alternate form of the GetDestinationDevice method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) GetDestinationDeviceWithContext(ctx context.Context, getDestinationDeviceOptions *GetDestinationDeviceOptions) (result *DestinationDevice, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(getDestinationDeviceOptions, "getDestinationDeviceOptions cannot be nil")
+// ListTagsSubscriptionsDeviceWithContext is an alternate form of the ListTagsSubscriptionsDevice method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDeviceWithContext(ctx context.Context, listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions cannot be nil")
 	if err != nil {
 		return
 	}
-	err = core.ValidateStruct(getDestinationDeviceOptions, "getDestinationDeviceOptions")
+	err = core.ValidateStruct(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"instance_id": *getDestinationDeviceOptions.InstanceID,
-		"id":          *getDestinationDeviceOptions.ID,
-		"device_id":   *getDestinationDeviceOptions.DeviceID,
+		"instance_id": *listTagsSubscriptionsDeviceOptions.InstanceID,
+		"id":          *listTagsSubscriptionsDeviceOptions.ID,
+		"device_id":   *listTagsSubscriptionsDeviceOptions.DeviceID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices/{device_id}`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions/devices/{device_id}`, pathParamsMap)
 	if err != nil {
 		return
 	}
 
-	for headerName, headerValue := range getDestinationDeviceOptions.Headers {
+	for headerName, headerValue := range listTagsSubscriptionsDeviceOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetDestinationDevice")
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListTagsSubscriptionsDevice")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	request, err := builder.Build()
-	if err != nil {
-		return
+	if listTagsSubscriptionsDeviceOptions.TagName != nil {
+		builder.AddQuery("tag_name", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.TagName))
 	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
+	if listTagsSubscriptionsDeviceOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Limit))
 	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationDevice)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// UpdateDestinationDevices : Update a Destination device
-// Update a Destination device.
-func (eventNotifications *EventNotificationsV1) UpdateDestinationDevices(updateDestinationDevicesOptions *UpdateDestinationDevicesOptions) (result *DestinationDevice, response *core.DetailedResponse, err error) {
-	return eventNotifications.UpdateDestinationDevicesWithContext(context.Background(), updateDestinationDevicesOptions)
-}
-
-// UpdateDestinationDevicesWithContext is an alternate form of the UpdateDestinationDevices method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) UpdateDestinationDevicesWithContext(ctx context.Context, updateDestinationDevicesOptions *UpdateDestinationDevicesOptions) (result *DestinationDevice, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(updateDestinationDevicesOptions, "updateDestinationDevicesOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(updateDestinationDevicesOptions, "updateDestinationDevicesOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *updateDestinationDevicesOptions.InstanceID,
-		"id":          *updateDestinationDevicesOptions.ID,
-		"device_id":   *updateDestinationDevicesOptions.DeviceID,
-	}
-
-	builder := core.NewRequestBuilder(core.PUT)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices/{device_id}`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range updateDestinationDevicesOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateDestinationDevices")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if updateDestinationDevicesOptions.DeviceID != nil {
-		body["device_id"] = updateDestinationDevicesOptions.DeviceID
-	}
-	if updateDestinationDevicesOptions.NewToken != nil {
-		body["token"] = updateDestinationDevicesOptions.NewToken
-	}
-	if updateDestinationDevicesOptions.NewPlatform != nil {
-		body["platform"] = updateDestinationDevicesOptions.NewPlatform
-	}
-	if updateDestinationDevicesOptions.NewUserID != nil {
-		body["user_id"] = updateDestinationDevicesOptions.NewUserID
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
+	if listTagsSubscriptionsDeviceOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Offset))
 	}
 
 	request, err := builder.Build()
@@ -1422,62 +1271,12 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationDevicesWithCont
 		return
 	}
 	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationDevice)
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTagsSubscriptionList)
 		if err != nil {
 			return
 		}
 		response.Result = result
 	}
-
-	return
-}
-
-// DeleteDestinationDevices : Delete a Destination device
-// Delete a Destination device.
-func (eventNotifications *EventNotificationsV1) DeleteDestinationDevices(deleteDestinationDevicesOptions *DeleteDestinationDevicesOptions) (response *core.DetailedResponse, err error) {
-	return eventNotifications.DeleteDestinationDevicesWithContext(context.Background(), deleteDestinationDevicesOptions)
-}
-
-// DeleteDestinationDevicesWithContext is an alternate form of the DeleteDestinationDevices method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) DeleteDestinationDevicesWithContext(ctx context.Context, deleteDestinationDevicesOptions *DeleteDestinationDevicesOptions) (response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(deleteDestinationDevicesOptions, "deleteDestinationDevicesOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(deleteDestinationDevicesOptions, "deleteDestinationDevicesOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *deleteDestinationDevicesOptions.InstanceID,
-		"id":          *deleteDestinationDevicesOptions.ID,
-		"device_id":   *deleteDestinationDevicesOptions.DeviceID,
-	}
-
-	builder := core.NewRequestBuilder(core.DELETE)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices/{device_id}`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range deleteDestinationDevicesOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "DeleteDestinationDevices")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	response, err = eventNotifications.Service.Request(request, nil)
 
 	return
 }
@@ -1688,78 +1487,6 @@ func (eventNotifications *EventNotificationsV1) DeleteTagsSubscriptionWithContex
 	}
 
 	response, err = eventNotifications.Service.Request(request, nil)
-
-	return
-}
-
-// ListTagsSubscriptionsDevice : List all Tag Subscriptions for a device
-// List all Tag Subscriptions for a device.
-func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
-	return eventNotifications.ListTagsSubscriptionsDeviceWithContext(context.Background(), listTagsSubscriptionsDeviceOptions)
-}
-
-// ListTagsSubscriptionsDeviceWithContext is an alternate form of the ListTagsSubscriptionsDevice method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDeviceWithContext(ctx context.Context, listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *listTagsSubscriptionsDeviceOptions.InstanceID,
-		"id":          *listTagsSubscriptionsDeviceOptions.ID,
-		"device_id":   *listTagsSubscriptionsDeviceOptions.DeviceID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions/devices/{device_id}`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range listTagsSubscriptionsDeviceOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListTagsSubscriptionsDevice")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-
-	if listTagsSubscriptionsDeviceOptions.TagName != nil {
-		builder.AddQuery("tag_name", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.TagName))
-	}
-	if listTagsSubscriptionsDeviceOptions.Limit != nil {
-		builder.AddQuery("limit", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Limit))
-	}
-	if listTagsSubscriptionsDeviceOptions.Offset != nil {
-		builder.AddQuery("offset", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Offset))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTagsSubscriptionList)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
 
 	return
 }
@@ -2103,90 +1830,6 @@ func (eventNotifications *EventNotificationsV1) UpdateSubscriptionWithContext(ct
 	return
 }
 
-// CreateDestinationDevicesOptions : The CreateDestinationDevices options.
-type CreateDestinationDevicesOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// Unique identifier of the device.
-	DeviceID *string `json:"device_id" validate:"required"`
-
-	// Destination device token.
-	Token *string `json:"token" validate:"required"`
-
-	// Destination platform.
-	Platform *string `json:"platform" validate:"required"`
-
-	// Destination userId.
-	UserID *string `json:"user_id,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// Constants associated with the CreateDestinationDevicesOptions.Platform property.
-// Destination platform.
-const (
-	CreateDestinationDevicesOptionsPlatformGConst       = "G"
-	CreateDestinationDevicesOptionsPlatformWebhookConst = "webhook"
-)
-
-// NewCreateDestinationDevicesOptions : Instantiate CreateDestinationDevicesOptions
-func (*EventNotificationsV1) NewCreateDestinationDevicesOptions(instanceID string, id string, deviceID string, token string, platform string) *CreateDestinationDevicesOptions {
-	return &CreateDestinationDevicesOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-		DeviceID:   core.StringPtr(deviceID),
-		Token:      core.StringPtr(token),
-		Platform:   core.StringPtr(platform),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *CreateDestinationDevicesOptions) SetInstanceID(instanceID string) *CreateDestinationDevicesOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *CreateDestinationDevicesOptions) SetID(id string) *CreateDestinationDevicesOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDeviceID : Allow user to set DeviceID
-func (_options *CreateDestinationDevicesOptions) SetDeviceID(deviceID string) *CreateDestinationDevicesOptions {
-	_options.DeviceID = core.StringPtr(deviceID)
-	return _options
-}
-
-// SetToken : Allow user to set Token
-func (_options *CreateDestinationDevicesOptions) SetToken(token string) *CreateDestinationDevicesOptions {
-	_options.Token = core.StringPtr(token)
-	return _options
-}
-
-// SetPlatform : Allow user to set Platform
-func (_options *CreateDestinationDevicesOptions) SetPlatform(platform string) *CreateDestinationDevicesOptions {
-	_options.Platform = core.StringPtr(platform)
-	return _options
-}
-
-// SetUserID : Allow user to set UserID
-func (_options *CreateDestinationDevicesOptions) SetUserID(userID string) *CreateDestinationDevicesOptions {
-	_options.UserID = core.StringPtr(userID)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *CreateDestinationDevicesOptions) SetHeaders(param map[string]string) *CreateDestinationDevicesOptions {
-	options.Headers = param
-	return options
-}
-
 // CreateDestinationOptions : The CreateDestination options.
 type CreateDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2445,54 +2088,6 @@ func (_options *CreateTopicOptions) SetSources(sources []TopicUpdateSourcesItem)
 
 // SetHeaders : Allow user to set Headers
 func (options *CreateTopicOptions) SetHeaders(param map[string]string) *CreateTopicOptions {
-	options.Headers = param
-	return options
-}
-
-// DeleteDestinationDevicesOptions : The DeleteDestinationDevices options.
-type DeleteDestinationDevicesOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// DeviceID of the destination.
-	DeviceID *string `json:"device_id" validate:"required,ne="`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewDeleteDestinationDevicesOptions : Instantiate DeleteDestinationDevicesOptions
-func (*EventNotificationsV1) NewDeleteDestinationDevicesOptions(instanceID string, id string, deviceID string) *DeleteDestinationDevicesOptions {
-	return &DeleteDestinationDevicesOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-		DeviceID:   core.StringPtr(deviceID),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *DeleteDestinationDevicesOptions) SetInstanceID(instanceID string) *DeleteDestinationDevicesOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *DeleteDestinationDevicesOptions) SetID(id string) *DeleteDestinationDevicesOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDeviceID : Allow user to set DeviceID
-func (_options *DeleteDestinationDevicesOptions) SetDeviceID(deviceID string) *DeleteDestinationDevicesOptions {
-	_options.DeviceID = core.StringPtr(deviceID)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *DeleteDestinationDevicesOptions) SetHeaders(param map[string]string) *DeleteDestinationDevicesOptions {
 	options.Headers = param
 	return options
 }
@@ -2830,96 +2425,6 @@ func UnmarshalDestinationConfigParams(m map[string]json.RawMessage, result inter
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "sender_id", &obj.SenderID)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DestinationDevice : Response describing a destination device.
-type DestinationDevice struct {
-	// device ID.
-	ID *string `json:"id" validate:"required"`
-
-	// user ID.
-	UserID *string `json:"user_id,omitempty"`
-
-	// Destination platform.
-	Platform *string `json:"platform" validate:"required"`
-
-	// Destination device token.
-	Token *string `json:"token" validate:"required"`
-
-	// Updated at.
-	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
-}
-
-// Constants associated with the DestinationDevice.Platform property.
-// Destination platform.
-const (
-	DestinationDevicePlatformGConst       = "G"
-	DestinationDevicePlatformWebhookConst = "webhook"
-)
-
-// UnmarshalDestinationDevice unmarshals an instance of DestinationDevice from the specified map of raw messages.
-func UnmarshalDestinationDevice(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationDevice)
-	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "user_id", &obj.UserID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "platform", &obj.Platform)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "token", &obj.Token)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DestinationDeviceResponse : Response describing a destination device create request.
-type DestinationDeviceResponse struct {
-	// device ID.
-	ID *string `json:"id" validate:"required"`
-
-	// user ID.
-	UserID *string `json:"user_id,omitempty"`
-
-	// Destination device token.
-	Token *string `json:"token" validate:"required"`
-
-	// Last updated time.
-	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
-}
-
-// UnmarshalDestinationDeviceResponse unmarshals an instance of DestinationDeviceResponse from the specified map of raw messages.
-func UnmarshalDestinationDeviceResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationDeviceResponse)
-	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "user_id", &obj.UserID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "token", &obj.Token)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
 	if err != nil {
 		return
 	}
@@ -3317,54 +2822,6 @@ func UnmarshalEmailUpdateAttributesUnsubscribed(m map[string]json.RawMessage, re
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
-}
-
-// GetDestinationDeviceOptions : The GetDestinationDevice options.
-type GetDestinationDeviceOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// DeviceID of the destination.
-	DeviceID *string `json:"device_id" validate:"required,ne="`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewGetDestinationDeviceOptions : Instantiate GetDestinationDeviceOptions
-func (*EventNotificationsV1) NewGetDestinationDeviceOptions(instanceID string, id string, deviceID string) *GetDestinationDeviceOptions {
-	return &GetDestinationDeviceOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-		DeviceID:   core.StringPtr(deviceID),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *GetDestinationDeviceOptions) SetInstanceID(instanceID string) *GetDestinationDeviceOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *GetDestinationDeviceOptions) SetID(id string) *GetDestinationDeviceOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDeviceID : Allow user to set DeviceID
-func (_options *GetDestinationDeviceOptions) SetDeviceID(deviceID string) *GetDestinationDeviceOptions {
-	_options.DeviceID = core.StringPtr(deviceID)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *GetDestinationDeviceOptions) SetHeaders(param map[string]string) *GetDestinationDeviceOptions {
-	options.Headers = param
-	return options
 }
 
 // GetDestinationDevicesReportOptions : The GetDestinationDevicesReport options.
@@ -5784,90 +5241,6 @@ func UnmarshalTopicsListItem(m map[string]json.RawMessage, result interface{}) (
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
-}
-
-// UpdateDestinationDevicesOptions : The UpdateDestinationDevices options.
-type UpdateDestinationDevicesOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// DeviceID of the destination.
-	DeviceID *string `json:"-" validate:"required,ne="`
-
-	// Destination device token.
-	NewToken *string `json:"token" validate:"required"`
-
-	// Destination platform.
-	NewPlatform *string `json:"platform" validate:"required"`
-
-	// Destination userId.
-	NewUserID *string `json:"user_id,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// Constants associated with the UpdateDestinationDevicesOptions.NewPlatform property.
-// Destination platform.
-const (
-	UpdateDestinationDevicesOptionsNewPlatformGConst       = "G"
-	UpdateDestinationDevicesOptionsNewPlatformWebhookConst = "webhook"
-)
-
-// NewUpdateDestinationDevicesOptions : Instantiate UpdateDestinationDevicesOptions
-func (*EventNotificationsV1) NewUpdateDestinationDevicesOptions(instanceID string, id string, deviceID string, newToken string, newPlatform string) *UpdateDestinationDevicesOptions {
-	return &UpdateDestinationDevicesOptions{
-		InstanceID:  core.StringPtr(instanceID),
-		ID:          core.StringPtr(id),
-		DeviceID:    core.StringPtr(deviceID),
-		NewToken:    core.StringPtr(newToken),
-		NewPlatform: core.StringPtr(newPlatform),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *UpdateDestinationDevicesOptions) SetInstanceID(instanceID string) *UpdateDestinationDevicesOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *UpdateDestinationDevicesOptions) SetID(id string) *UpdateDestinationDevicesOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDeviceID : Allow user to set DeviceID
-func (_options *UpdateDestinationDevicesOptions) SetDeviceID(deviceID string) *UpdateDestinationDevicesOptions {
-	_options.DeviceID = core.StringPtr(deviceID)
-	return _options
-}
-
-// SetNewToken : Allow user to set NewToken
-func (_options *UpdateDestinationDevicesOptions) SetNewToken(newToken string) *UpdateDestinationDevicesOptions {
-	_options.NewToken = core.StringPtr(newToken)
-	return _options
-}
-
-// SetNewPlatform : Allow user to set NewPlatform
-func (_options *UpdateDestinationDevicesOptions) SetNewPlatform(newPlatform string) *UpdateDestinationDevicesOptions {
-	_options.NewPlatform = core.StringPtr(newPlatform)
-	return _options
-}
-
-// SetNewUserID : Allow user to set NewUserID
-func (_options *UpdateDestinationDevicesOptions) SetNewUserID(newUserID string) *UpdateDestinationDevicesOptions {
-	_options.NewUserID = core.StringPtr(newUserID)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *UpdateDestinationDevicesOptions) SetHeaders(param map[string]string) *UpdateDestinationDevicesOptions {
-	options.Headers = param
-	return options
 }
 
 // UpdateDestinationOptions : The UpdateDestination options.
