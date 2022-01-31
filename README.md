@@ -110,7 +110,7 @@ SDK Methods to consume
 	- [Get Destination](#get-destination)
 	- [Update Destination](#update-destination)
 	- [Delete Destination](#delete-destination)
-- [Destination Devices](#destination-device)
+- [Destination Devices](#destination-devices)
 	- [List Destination device](#list-destination-devices)
 	- [Get Destination device report](#get-destination-device-report)
 	- [Create Destination tag subscription](#create-destination-tag-subscription)
@@ -391,7 +391,7 @@ if err != nil {
 
 ## Destination Devices
 
-### List Destination device
+### List Destination devices
 
 ```go
 listDestinationDevicesOptions := eventNotificationsService.NewListDestinationDevicesOptions(
