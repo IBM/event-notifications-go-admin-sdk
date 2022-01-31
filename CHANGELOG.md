@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.5...v0.0.6) (2022-01-31)
+
+
+### Bug Fixes
+
+* enable fcm push notifications  ([#14](https://github.com/IBM/event-notifications-go-admin-sdk/issues/14)) ([58aee41](https://github.com/IBM/event-notifications-go-admin-sdk/commit/58aee41caf10f537458af87c6188fe5d56042ba4))
+
 ## [0.0.5](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.4...v0.0.5) (2021-12-10)
 
 
