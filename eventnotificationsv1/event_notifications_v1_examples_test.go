@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2021.
+ * (C) Copyright IBM Corp. 2022.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/IBM/event-notifications-go-admin-sdk/eventnotificationsv1"
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -40,7 +42,7 @@ import (
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
 //
-const externalConfigFile = "../event_notifications.env"
+const externalConfigFile = "../event_notifications_v1.env"
 
 var (
 	eventNotificationsService *eventnotificationsv1.EventNotificationsV1
@@ -52,6 +54,8 @@ var (
 	topicID                   string
 	destinationID             string
 	subscriptionID            string
+	fcmServerKey              string
+	fcmSenderId               string
 )
 
 func shouldSkipTest() {
@@ -80,6 +84,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load service InstanceID configuration property, skipping tests")
 			}
 			fmt.Printf("Service GUID: %s\n", instanceID)
+
+			fcmServerKey = config["FCM_KEY"]
+			if fcmServerKey == "" {
+				Skip("Unable to load service FCM_KEY configuration property, skipping tests")
+			}
+			fmt.Printf("Service fcmServerKey: %s\n", fcmServerKey)
+
+			fcmSenderId = config["FCM_ID"]
+			if fcmSenderId == "" {
+				Skip("Unable to load service fcmSenderId configuration property, skipping tests")
+			}
+			fmt.Printf("Service fcmSenderId: %s\n", fcmSenderId)
 
 			configLoaded = len(config) > 0
 		})
@@ -128,7 +144,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println(string(b))
 
 			// end-list_sources
-
 			sourceID = string(*sourceList.Sources[len(sourceList.Sources)-1].ID)
 
 			Expect(err).To(BeNil())
@@ -185,12 +200,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
+			topicID = string(*topicResponse.ID)
+
 			b, _ := json.MarshalIndent(topicResponse, "", "  ")
 			fmt.Println(string(b))
 
 			// end-create_topic
-
-			topicID = string(*topicResponse.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -247,9 +262,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// begin-replace_topic
 
 			rulesModel := &eventnotificationsv1.Rules{
-				Enabled:            core.BoolPtr(true),
-				EventTypeFilter:    core.StringPtr("$.notification_event_info.event_type == 'core_cert_manager'"),
-				NotificationFilter: core.StringPtr("$.notification.findings[0].severity == 'MODERATE'"),
+				Enabled:         core.BoolPtr(true),
+				EventTypeFilter: core.StringPtr("$.*"),
 			}
 
 			topicUpdateSourcesItemModel := &eventnotificationsv1.TopicUpdateSourcesItem{
@@ -257,16 +271,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Rules: []eventnotificationsv1.Rules{*rulesModel},
 			}
 
-			description := core.StringPtr("Updated Topic for GCM notifications")
-			name := core.StringPtr("Updated Admin Topic Compliance")
-
-			replaceTopicOptions := &eventnotificationsv1.ReplaceTopicOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(topicID),
-				Name:        name,
-				Description: description,
-				Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
-			}
+			replaceTopicOptions := eventNotificationsService.NewReplaceTopicOptions(
+				instanceID,
+				topicID,
+			)
+			replaceTopicOptions.SetSources([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel})
+			replaceTopicOptions.SetName("Updated Admin Topic Compliance")
 
 			topic, response, err := eventNotificationsService.ReplaceTopic(replaceTopicOptions)
 			if err != nil {
@@ -289,17 +299,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			createDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"GCM_destination",
-				"webhook",
+				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
 			)
 
-			customHeaders := map[string]string{
-				"Authorization": "aaa-r-t-fdsfs-55kfjsd-fsdfs",
-			}
-			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
-				URL:              core.StringPtr("https://gcm.com"),
-				Verb:             core.StringPtr("get"),
-				CustomHeaders:    customHeaders,
-				SensitiveHeaders: []string{"Authorization"},
+			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsFcmDestinationConfig{
+				ServerKey: core.StringPtr(fcmServerKey),
+				SenderID:  core.StringPtr(fcmSenderId),
 			}
 
 			destinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -312,12 +317,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
+			destinationID = string(*destinationResponse.ID)
+
 			b, _ := json.MarshalIndent(destinationResponse, "", "  ")
 			fmt.Println(string(b))
 
 			// end-create_destination
-
-			destinationID = string(*destinationResponse.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -373,12 +378,16 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nUpdateDestination() result:")
 			// begin-update_destination
 
-			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
-				URL:              core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
-				Verb:             core.StringPtr("post"),
-				SensitiveHeaders: []string{"authorization"},
-			}
+			// destinationConfigParamsModel1 := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
+			// 	URL:              core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
+			// 	Verb:             core.StringPtr("post"),
+			// 	SensitiveHeaders: []string{"authorization"},
+			// }
 
+			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsFcmDestinationConfig{
+				ServerKey: core.StringPtr(fcmServerKey),
+				SenderID:  core.StringPtr(fcmSenderId),
+			}
 			destinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsModel,
 			}
@@ -388,8 +397,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				destinationID,
 			)
 
-			updateDestinationOptions.SetName("Admin Webhook Compliance")
-			updateDestinationOptions.SetDescription("This destination is for creating admin webhook to receive compliance notifications")
+			updateDestinationOptions.SetName("Admin FCM Compliance")
+			updateDestinationOptions.SetDescription("This destination is for creating admin FCM to receive compliance notifications")
 			updateDestinationOptions.SetConfig(destinationConfigModel)
 
 			destination, response, err := eventNotificationsService.UpdateDestination(updateDestinationOptions)
@@ -406,33 +415,154 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 		})
+		It(`ListDestinationDevices request example`, func() {
+			fmt.Println("\nListDestinationDevices() result:")
+			// begin-list_destination_devices
+
+			listDestinationDevicesOptions := eventNotificationsService.NewListDestinationDevicesOptions(
+				instanceID,
+				destinationID,
+			)
+
+			destinationDevicesList, response, err := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(destinationDevicesList, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_destination_devices
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destinationDevicesList).ToNot(BeNil())
+
+		})
+		It(`GetDestinationDevicesReport request example`, func() {
+			fmt.Println("\nGetDestinationDevicesReport() result:")
+			// begin-get_destination_devices_report
+
+			getDestinationDevicesReportOptions := eventNotificationsService.NewGetDestinationDevicesReportOptions(
+				instanceID,
+				destinationID,
+			)
+
+			destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(destinationDevicesReport, "", "  ")
+			fmt.Println(string(b))
+
+			// end-get_destination_devices_report
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destinationDevicesReport).ToNot(BeNil())
+
+		})
+		/*
+			It(`CreateTagsSubscription request example`, func() {
+				fmt.Println("\nCreateTagsSubscription() result:")
+
+				tagName := "IBM_test"
+				// begin-create_tags_subscription
+
+				createTagsSubscriptionOptions := eventNotificationsService.NewCreateTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+					destinationDeviceID,
+					tagName,
+				)
+
+				destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(destinationTagsSubscriptionResponse, "", "  ")
+				fmt.Println(string(b))
+
+				// end-create_tags_subscription
+
+				tagSubscriptionID = string(*destinationTagsSubscriptionResponse.ID)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(201))
+				Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
+
+			})
+			It(`ListTagsSubscription request example`, func() {
+				fmt.Println("\nListTagsSubscription() result:")
+				// begin-list_tags_subscription
+
+				listTagsSubscriptionOptions := eventNotificationsService.NewListTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+				)
+
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
+				fmt.Println(string(b))
+
+				// end-list_tags_subscription
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
+
+			})
+
+			It(`ListTagsSubscriptionsDevice request example`, func() {
+				fmt.Println("\nListTagsSubscriptionsDevice() result:")
+				// begin-list_tags_subscriptions_device
+
+				listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
+					instanceID,
+					destinationID,
+					destinationDeviceID,
+				)
+
+				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
+				if err != nil {
+					panic(err)
+				}
+				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
+				fmt.Println(string(b))
+
+				// end-list_tags_subscriptions_device
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+				Expect(tagsSubscriptionList).ToNot(BeNil())
+
+			})
+		*/
 		It(`CreateSubscription request example`, func() {
 			fmt.Println("\nCreateSubscription() result:")
-			// begin-create_subscription
 
-			subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
-				SigningEnabled: core.BoolPtr(false),
-			}
+			subscriptionName := "FCM subscription"
+			// begin-create_subscription
 
 			createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
 				instanceID,
-				"subscription_web",
+				subscriptionName,
 				destinationID,
 				topicID,
-				subscriptionCreateAttributesModel,
 			)
-			createSubscriptionOptions.SetDescription("Subscription for the web")
+			createSubscriptionOptions.SetDescription("Subscription for the FCM")
 
 			subscription, response, err := eventNotificationsService.CreateSubscription(createSubscriptionOptions)
 			if err != nil {
 				panic(err)
 			}
+			subscriptionID = string(*subscription.ID)
 			b, _ := json.MarshalIndent(subscription, "", "  ")
 			fmt.Println(string(b))
 
 			// end-create_subscription
-
-			subscriptionID = string(*subscription.ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -493,13 +623,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				subscriptionID,
 			)
 
-			subscriptionUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
-				SigningEnabled: core.BoolPtr(true),
-			}
-
-			updateSubscriptionOptions.SetAttributes(subscriptionUpdateAttributesModel)
-			updateSubscriptionOptions.SetDescription("Update GCM subscription")
-			updateSubscriptionOptions.SetName("GCM_sub_updated")
+			updateSubscriptionOptions.SetDescription("Update FCM subscription")
+			updateSubscriptionOptions.SetName("Update_FCM_subscription")
 
 			subscription, response, err := eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
 			if err != nil {
@@ -513,6 +638,61 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscription).ToNot(BeNil())
+
+		})
+
+		It(`SendNotifications request example`, func() {
+			fmt.Println("\nSendNotifications() result:")
+
+			notificationID := "1234-1234-sdfs-234"
+			notificationSubject := "FCM_Subject"
+			notificationSeverity := "MEDIUM"
+			typeValue := "com.acme.offer:new"
+			now := time.Now()
+			date := strfmt.DateTime(now)
+			userId := "userId"
+			alertMessage := "Message"
+			notificationsSouce := "1234-1234-sdfs-234:test"
+
+			// begin-send_notifications
+
+			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
+				instanceID,
+				notificationSubject,
+				notificationSeverity,
+				notificationID,
+				notificationsSouce,
+				sourceID,
+				typeValue,
+				&date,
+			)
+
+			sendNotificationsOptions.PushTo = &eventnotificationsv1.NotificationFcmDevices{
+				UserIds: []string{userId},
+			}
+
+			sendNotificationsOptions.MessageFcmBody = &eventnotificationsv1.NotificationFcmBody{
+				&eventnotificationsv1.NotificationFcmBodyMessage{
+					Data: &eventnotificationsv1.NotificationFcmBodyMessageData{
+						Alert:          core.StringPtr(alertMessage),
+						DelayWhileIdle: core.BoolPtr(true),
+						TimeToLive:     core.Int64Ptr(100),
+					},
+				},
+			}
+
+			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(notificationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-send_notifications
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(notificationResponse).ToNot(BeNil())
 
 		})
 		It(`DeleteSubscription request example`, func() {
@@ -555,6 +735,31 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(204))
 
 		})
+		/*
+			It(`DeleteTagsSubscription request example`, func() {
+
+				tagName := "IBM_test"
+				// begin-delete_tags_subscription
+
+				deleteTagsSubscriptionOptions := eventNotificationsService.NewDeleteTagsSubscriptionOptions(
+					instanceID,
+					destinationID,
+				)
+
+				deleteTagsSubscriptionOptions.SetDeviceID(destinationDeviceID)
+				deleteTagsSubscriptionOptions.SetTagName(tagName)
+				response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
+				if err != nil {
+					panic(err)
+				}
+
+				// end-delete_tags_subscription
+				fmt.Printf("\nDeleteTagsSubscription() response status code: %d\n", response.StatusCode)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
+
+			})*/
 		It(`DeleteDestination request example`, func() {
 			// begin-delete_destination
 

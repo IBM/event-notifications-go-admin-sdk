@@ -110,12 +110,21 @@ SDK Methods to consume
 	- [Get Destination](#get-destination)
 	- [Update Destination](#update-destination)
 	- [Delete Destination](#delete-destination)
+- [Destination Devices](#destination-device)
+	- [List Destination device](#list-destination-devices)
+	- [Get Destination device report](#get-destination-device-report)
+	- [Create Destination tag subscription](#create-destination-tag-subscription)
+	- [List Destination tag subscription](#list-destination-tag-subscription)
+	- [List Destination device tag subscriptions](#list-destination-device-tag-subscriptions)
+	- [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
 	- [Create Subscription](#create-subscription)
 	- [List Subscriptions](#list-subscriptions)
 	- [Get Subscription](#get-subscription)
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
+- [Send Notifications](#send-notifications)
+
 
 
 ## Source 
@@ -380,6 +389,102 @@ if err != nil {
 }
 ```
 
+## Destination Devices
+
+### List Destination device
+
+```go
+listDestinationDevicesOptions := eventNotificationsService.NewListDestinationDevicesOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+)
+
+destinationDevicesList, response, err := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptions)
+
+if err != nil {
+	panic(err)
+}
+```
+
+### Get Destination device report
+
+```go
+getDestinationDevicesReportOptions := eventNotificationsService.NewGetDestinationDevicesReportOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+)
+
+destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
+
+if err != nil {
+	panic(err)
+}
+```
+
+### Create Destination tag subscription
+
+```go
+createTagsSubscriptionOptions := eventNotificationsService.NewCreateTagsSubscriptionOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+	<device-id>,		// Event notifications service device ID
+	<tag-name>,			// Event notifications service tag name
+)
+
+destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
+
+if err != nil {
+	panic(err)
+}
+```
+
+### List Destination tag subscription
+
+```go
+listTagsSubscriptionOptions := eventNotificationsService.NewListTagsSubscriptionOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+)
+
+tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
+
+if err != nil {
+	panic(err)
+}
+```
+
+### List Destination device tag subscriptions
+
+```go
+listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+	<device-id>,		// Event notifications service device ID
+)
+
+tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
+
+if err != nil {
+	panic(err)
+}
+```
+
+### Delete Destination device tag subscription
+
+```go
+deleteTagsSubscriptionOptions := eventNotificationsService.NewDeleteTagsSubscriptionOptions(
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+)
+
+deleteTagsSubscriptionOptions.SetDeviceID(<device-id>)
+deleteTagsSubscriptionOptions.SetTagName(<tag-name>)
+response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
+if err != nil {
+	panic(err)
+}
+```
+
 ## Subscriptions 
 
 ### Create Subscription
@@ -486,16 +591,96 @@ if err != nil {
 }
 ```
 
+## Send Notifications
+
+```go
+notificationFcmDevicesModel := &eventnotificationsv1.NotificationFcmDevices{
+	UserIds: []string{"<user-ids>"},
+	FcmDevices: []string{"<device-ids>"},
+	Tags: []string{"<tag-names>"},
+	Platforms: []string{"<device-platforms>"},
+}
+
+lightsModel := &eventnotificationsv1.Lights{
+	LedArgb:  core.StringPtr("<color-name>"),
+	LedOnMs:  core.Int64Ptr(int64(0)),
+	LedOffMs: core.StringPtr(""),
+}
+
+styleModel := &eventnotificationsv1.Style{
+	Type:  core.StringPtr("<notification-style>"),
+	Title: core.StringPtr("<notification-title>"),
+	URL:   core.StringPtr("<notification-url>"),
+}
+
+notificationFcmBodyMessageDataModel := &eventnotificationsv1.NotificationFcmBodyMessageData{
+	Alert:               core.StringPtr("<notification-alert>"),
+	CollapseKey:         core.StringPtr("<notification-collapse_key>"),
+	InteractiveCategory: core.StringPtr("<notification-category>"),
+	Icon:                core.StringPtr("<notification-icon>"),
+	DelayWhileIdle:      core.BoolPtr(true),
+	Sync:                core.BoolPtr(true),
+	Visibility:          core.StringPtr("<notification-visibility>"),
+	Redact:              core.StringPtr("<notification-redact>"),
+	Payload:             make(map[string]interface{}),
+	Priority:            core.StringPtr("<notification-priority>"),
+	Sound:               core.StringPtr("<notification-sound>"),
+	TimeToLive:          core.Int64Ptr(int64(0)),
+	Lights:              lightsModel,
+	AndroidTitle:        core.StringPtr("<notification-title>"),
+	GroupID:             core.StringPtr("<notification-group-id>"),
+	Style:               styleModel,
+	Type:                core.StringPtr("<notification-type>"),
+}
+
+notificationFcmBodyMessageModel := &eventnotificationsv1.NotificationFcmBodyMessage{
+	Data: notificationFcmBodyMessageDataModel,
+}
+
+notificationFcmBodyModel := &eventnotificationsv1.NotificationFcmBody{
+	Message: notificationFcmBodyMessageModel,
+}
+
+notificationID := "<notification-id>"
+notificationSubject := "<notification-subject>"
+notificationSeverity := "<notification-severity>"
+typeValue := "<notification-type>"
+notificationsSouce := "<notification-source>"
+
+sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
+	InstanceID:      core.StringPtr(instanceID),
+	Subject:         core.StringPtr(notificationSubject),
+	Severity:        core.StringPtr(notificationSeverity),
+	ID:              core.StringPtr(notificationID),
+	Source:          core.StringPtr(notificationsSouce),
+	EnSourceID:      core.StringPtr(sourceID),
+	Type:            core.StringPtr(typeValue),
+	Time:            "<notification-time>",
+	Data:            make(map[string]interface{}),
+	PushTo:          notificationFcmDevicesModel,
+	MessageFcmBody:  notificationFcmBodyModel,
+	Datacontenttype: core.StringPtr("application/json"),
+	Specversion:     core.StringPtr("1.0"),
+}
+
+notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+if err != nil {
+	panic(err)
+}
+```
+
 ## Set Environment
 
-Find [event_notifications.env.hide](https://github.com/IBM/event-notifications-go-admin-sdk/blob/main/event_notifications.env.hide) in the repo and rename it to `event_notifications.env`. After that add the values for,
+Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notifications-go-admin-sdk/blob/main/event_notifications_v1.env.hide) in the repo and rename it to `event_notifications_v1.env`. After that add the values for,
 
 - `EVENT_NOTIFICATIONS_URL` - Add the Event Notifications service instance Url.
 - `EVENT_NOTIFICATIONS_APIKEY` - Add the Event Notifications service instance apikey.
 - `EVENT_NOTIFICATIONS_GUID` - Add the Event Notifications service instance GUID.
 
-Optional 
+**Optional**
 - `EVENT_NOTIFICATIONS_AUTH_URL` - Add the IAM url if you are using IBM test cloud.
+- `EVENT_NOTIFICATIONS_FCM_KEY` - Add firebase server key for Android FCM destination.
+- `EVENT_NOTIFICATIONS_FCM_ID` - Add firebase sender Id for Android FCM destination.
 
 
 ## Questions
