@@ -669,6 +669,71 @@ if err != nil {
 }
 ```
 
+<details open>
+<summary>Send Notifications Variables</summary>
+<br>
+
+- **FCM Target NotificationFcmDevices** - Set up the the push notifications tragets.
+  - *UserIds* (Array of **String**) - Send notification to the specified userIds.
+  - *FcmDevices* (Array of **String**) - Send notification to the list of specified devices.
+  - *Tags* (Array of **String**) - Send notification to the devices that have subscribed to any of
+these tags.
+  - *Platforms* (Array of **String**) - Send notification to the devices of the specified platforms. Pass 'G' for google (Android) devices.
+- **Android Lights** - Allows setting the notification LED color on receiving push notification.
+  - *LedArgb* (**String**) - The color of the led. The hardware will do its best approximation. Ex: `Red`
+  - *LedOnMs* (**Integer**) - The number of milliseconds for the LED to be on while it's flashing. The hardware will do its best approximation.
+  - *LedOffMs* (**String**) - The number of milliseconds for the LED to be off while it's flashing. The hardware will do its best approximation.
+- **Android Style** - Options to specify for Android expandable notifications. The types of expandable notifications are *picture_notification*, *bigtext_notification*, and *inbox_notification*.
+  - *Type* (**String**) - Specifies the type of expandable notifications. The possible values are *picture_notification*, *bigtext_notification*, and *inbox_notification*
+  - *Title* (**String**) - Specifies the title of the notification. The title is displayed when the notification is expanded. Title must be specified for all three expandable notification.
+  - *URL* (**String**) - An URL from which the picture has to be obtained for the notification. Must be specified for *picture_notification*.
+  - *Text* (**String**) - The big text that needs to be displayed on expanding a *bigtext_notification*. Must be specified for *bigtext_notification*.
+  - *Lines* (**String**) - An array of strings that is to be displayed in inbox style for inbox_notification. Must be specified for inbox_notification.
+- **Android NotificationFcmBodyMessageData** - Settings specific to Android platform payload.
+  - *Alert* (**String**) - The notification message to be shown to the user.
+  - *CollapseKey* (**String**) - Dozed devices to display only the latest notification and discard old low priority notifications.
+  - *InteractiveCategory* (**String**) - The category identifier to be used for the interactive push notifications.
+  - *Icon* (**String**) - Specify the name of the icon to be displayed for the notification. Make sure the icon is already packaged with the client application.
+  - *DelayWhileIdle* (**Bool**) - When this parameter is set to true, it indicates that the
+message should not be sent until the device becomes active.
+  - *Sync* (**Bool**) - Device group messaging makes it possible for every app instance in a group to reflect the latest messaging state
+  - *Visibility* (**String**) - private/public - Visibility of this notification, which affects how and when the notifications are revealed on a secure locked screen.
+  - *Redact* (**String**) - Content specified will show up on a secure locked screen on the device when visibility is set to Private
+  - *Payload* (**map[string]interface{}**) - 	
+Custom JSON payload that will be sent as part of the notification message.
+  - *Priority* (**String**) - A string value that indicates the priority of this notification. Allowed values are 'max', 'high', 'default', 'low' and 'min'. High/Max priority notifications along with 'sound' field may be used for Heads up notification in Android 5.0 or higher.sampleval='low'.
+  - *Sound* (**String**) - The sound file (on device) that will be attempted to play when the notification arrives on the device.
+  - *TimeToLive* (**Integer**) - This parameter specifies how long (in seconds) the message
+should be kept in GCM storage if the device is offline.
+  - *Lights* (**Lights**) - Allows setting the notification LED color on receiving push notification.
+  - *AndroidTitle* (**String**) - The title of Rich Push notifications.
+  - *GroupID* (**String**) - Set this notification to be part of a group of notifications sharing the same key. Grouped notifications may display in a cluster or stack on devices which support such rendering.
+  - *Style* (**Style**) - Options to specify for Android expandable notifications. The types of expandable notifications are *picture_notification*, *bigtext_notification*, and *inbox_notification*..
+  - *Type* (**String**) - The notification Type value. The types are *DEFAULT* and *SILENT* .
+
+- **FCM NotificationFcmBodyMessage** - Settings specific to Android platform data field.
+  - *Data* (**NotificationFcmBodyMessageData**) - The `data` field for FCM notifications [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/concept-options)].
+
+- **FCM NotificationFcmBody** - Settings specific to Android platform data field.
+  - *Message* (**NotificationFcmBodyMessage**) - The `message` field for FCM notifications [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/concept-options)] 
+
+- **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
+  - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
+  - *Subject* (**String**) - Subject for the notifications. 
+  - *Severity* (**String**) - Severity for the notifications. 
+  - *ID* (**ID**) - ID for the notifications. 
+  - *Source* (**String**) - Source of the notifications. 
+  - *EnSourceID* (**String**) - Event Notificaitons instance Source ID. 
+  - *Type* (**String**) - Type for the notifications. 
+  - *Time* (**String**) - Time of the notifications. 
+  - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
+  - *PushTo* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
+  - *MessageFcmBody* (**NotificationFcmBodyMessage**) - Message body for the FCM notifications. 
+  - *Datacontenttype* (**String**) - Data content type of the notifications. 
+  - *Specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
+
+</details>
+
 ## Set Environment
 
 Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notifications-go-admin-sdk/blob/main/event_notifications_v1.env.hide) in the repo and rename it to `event_notifications_v1.env`. After that add the values for,
