@@ -176,7 +176,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke SendNotifications with error: Operation response processing error`, func() {
@@ -187,12 +187,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -229,13 +230,37 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationFcmBodyMessageDataModel.Style = styleModel
 				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -248,8 +273,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.PushTo = notificationFcmDevicesModel
+				sendNotificationsOptionsModel.PushTo = notificationDevicesModel
 				sendNotificationsOptionsModel.MessageFcmBody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.MessageApnsHeaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.MessageApnsBody = notificationApnsBodyModel
 				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
 				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -316,12 +343,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -358,13 +386,37 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationFcmBodyMessageDataModel.Style = styleModel
 				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -377,8 +429,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.PushTo = notificationFcmDevicesModel
+				sendNotificationsOptionsModel.PushTo = notificationDevicesModel
 				sendNotificationsOptionsModel.MessageFcmBody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.MessageApnsHeaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.MessageApnsBody = notificationApnsBodyModel
 				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
 				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -453,12 +507,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -495,13 +550,37 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationFcmBodyMessageDataModel.Style = styleModel
 				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -514,8 +593,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.PushTo = notificationFcmDevicesModel
+				sendNotificationsOptionsModel.PushTo = notificationDevicesModel
 				sendNotificationsOptionsModel.MessageFcmBody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.MessageApnsHeaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.MessageApnsBody = notificationApnsBodyModel
 				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
 				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -535,12 +616,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -577,13 +659,37 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationFcmBodyMessageDataModel.Style = styleModel
 				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -596,8 +702,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.PushTo = notificationFcmDevicesModel
+				sendNotificationsOptionsModel.PushTo = notificationDevicesModel
 				sendNotificationsOptionsModel.MessageFcmBody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.MessageApnsHeaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.MessageApnsBody = notificationApnsBodyModel
 				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
 				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -638,12 +746,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -680,13 +789,37 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationFcmBodyMessageDataModel.Style = styleModel
 				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -699,8 +832,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.PushTo = notificationFcmDevicesModel
+				sendNotificationsOptionsModel.PushTo = notificationDevicesModel
 				sendNotificationsOptionsModel.MessageFcmBody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.MessageApnsHeaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.MessageApnsBody = notificationApnsBodyModel
 				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
 				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -733,7 +868,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListSources with error: Operation response processing error`, func() {
@@ -966,7 +1101,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("GET"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke GetSource with error: Operation response processing error`, func() {
@@ -1183,7 +1318,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke CreateTopic with error: Operation response processing error`, func() {
@@ -1500,7 +1635,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListTopics with error: Operation response processing error`, func() {
@@ -1734,7 +1869,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["include"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke GetTopic with error: Operation response processing error`, func() {
@@ -1958,7 +2093,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("PUT"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ReplaceTopic with error: Operation response processing error`, func() {
@@ -2347,7 +2482,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke CreateDestination with error: Operation response processing error`, func() {
@@ -2376,6 +2511,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createDestinationOptionsModel.Type = core.StringPtr("webhook")
 				createDestinationOptionsModel.Description = core.StringPtr("testString")
 				createDestinationOptionsModel.Config = destinationConfigModel
+				createDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				createDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				createDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.CreateDestination(createDestinationOptionsModel)
@@ -2405,22 +2542,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createDestinationPath))
 					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
@@ -2458,6 +2579,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createDestinationOptionsModel.Type = core.StringPtr("webhook")
 				createDestinationOptionsModel.Description = core.StringPtr("testString")
 				createDestinationOptionsModel.Config = destinationConfigModel
+				createDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				createDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				createDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -2493,22 +2616,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createDestinationPath))
 					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
@@ -2548,6 +2655,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createDestinationOptionsModel.Type = core.StringPtr("webhook")
 				createDestinationOptionsModel.Description = core.StringPtr("testString")
 				createDestinationOptionsModel.Config = destinationConfigModel
+				createDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				createDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				createDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -2583,6 +2692,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createDestinationOptionsModel.Type = core.StringPtr("webhook")
 				createDestinationOptionsModel.Description = core.StringPtr("testString")
 				createDestinationOptionsModel.Config = destinationConfigModel
+				createDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				createDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				createDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -2639,6 +2750,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createDestinationOptionsModel.Type = core.StringPtr("webhook")
 				createDestinationOptionsModel.Description = core.StringPtr("testString")
 				createDestinationOptionsModel.Config = destinationConfigModel
+				createDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				createDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				createDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -2669,7 +2782,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListDestinations with error: Operation response processing error`, func() {
@@ -2902,7 +3015,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("GET"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke GetDestination with error: Operation response processing error`, func() {
@@ -3119,7 +3232,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("PATCH"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke UpdateDestination with error: Operation response processing error`, func() {
@@ -3148,6 +3261,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.Name = core.StringPtr("testString")
 				updateDestinationOptionsModel.Description = core.StringPtr("testString")
 				updateDestinationOptionsModel.Config = destinationConfigModel
+				updateDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				updateDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				updateDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.UpdateDestination(updateDestinationOptionsModel)
@@ -3177,22 +3292,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(updateDestinationPath))
 					Expect(req.Method).To(Equal("PATCH"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
@@ -3230,6 +3329,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.Name = core.StringPtr("testString")
 				updateDestinationOptionsModel.Description = core.StringPtr("testString")
 				updateDestinationOptionsModel.Config = destinationConfigModel
+				updateDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				updateDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				updateDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -3265,22 +3366,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(updateDestinationPath))
 					Expect(req.Method).To(Equal("PATCH"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
@@ -3320,6 +3405,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.Name = core.StringPtr("testString")
 				updateDestinationOptionsModel.Description = core.StringPtr("testString")
 				updateDestinationOptionsModel.Config = destinationConfigModel
+				updateDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				updateDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				updateDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -3328,6 +3415,22 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
+			})
+			It(`Invoke UpdateDestination with error: Param validation error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:  testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateDestinationOptions model
+				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
+				// Invoke operation with invalid options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateDestination(updateDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
 			})
 			It(`Invoke UpdateDestination with error: Operation validation and request error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
@@ -3355,6 +3458,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.Name = core.StringPtr("testString")
 				updateDestinationOptionsModel.Description = core.StringPtr("testString")
 				updateDestinationOptionsModel.Config = destinationConfigModel
+				updateDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				updateDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				updateDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -3411,6 +3516,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.Name = core.StringPtr("testString")
 				updateDestinationOptionsModel.Description = core.StringPtr("testString")
 				updateDestinationOptionsModel.Config = destinationConfigModel
+				updateDestinationOptionsModel.Certificate = CreateMockReader("This is a mock file.")
+				updateDestinationOptionsModel.CertificateContentType = core.StringPtr("testString")
 				updateDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -3511,7 +3618,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListDestinationDevices with error: Operation response processing error`, func() {
@@ -3750,7 +3857,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// TODO: Add check for days query parameter
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke GetDestinationDevicesReport with error: Operation response processing error`, func() {
@@ -3977,7 +4084,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// TODO: Add check for offset query parameter
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListTagsSubscriptionsDevice with error: Operation response processing error`, func() {
@@ -4226,7 +4333,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListTagsSubscription with error: Operation response processing error`, func() {
@@ -4485,7 +4592,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke CreateTagsSubscription with error: Operation response processing error`, func() {
@@ -4820,7 +4927,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke CreateSubscription with error: Operation response processing error`, func() {
@@ -5112,7 +5219,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke ListSubscriptions with error: Operation response processing error`, func() {
@@ -5345,7 +5452,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("GET"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke GetSubscription with error: Operation response processing error`, func() {
@@ -5632,7 +5739,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Method).To(Equal("PATCH"))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, `} this is not valid json {`)
+					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
 			It(`Invoke UpdateSubscription with error: Operation response processing error`, func() {
@@ -5931,14 +6038,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the CreateDestinationOptions model
 				instanceID := "testString"
-				createDestinationOptionsName := "testString"
-				createDestinationOptionsType := "webhook"
-				createDestinationOptionsModel := eventNotificationsService.NewCreateDestinationOptions(instanceID, createDestinationOptionsName, createDestinationOptionsType)
+				name := "testString"
+				typeVar := "webhook"
+				createDestinationOptionsModel := eventNotificationsService.NewCreateDestinationOptions(instanceID, name, typeVar)
 				createDestinationOptionsModel.SetInstanceID("testString")
 				createDestinationOptionsModel.SetName("testString")
 				createDestinationOptionsModel.SetType("webhook")
 				createDestinationOptionsModel.SetDescription("testString")
 				createDestinationOptionsModel.SetConfig(destinationConfigModel)
+				createDestinationOptionsModel.SetCertificate(CreateMockReader("This is a mock file."))
+				createDestinationOptionsModel.SetCertificateContentType("testString")
 				createDestinationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createDestinationOptionsModel).ToNot(BeNil())
 				Expect(createDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
@@ -5946,6 +6055,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createDestinationOptionsModel.Type).To(Equal(core.StringPtr("webhook")))
 				Expect(createDestinationOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(createDestinationOptionsModel.Config).To(Equal(destinationConfigModel))
+				Expect(createDestinationOptionsModel.Certificate).To(Equal(CreateMockReader("This is a mock file.")))
+				Expect(createDestinationOptionsModel.CertificateContentType).To(Equal(core.StringPtr("testString")))
 				Expect(createDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateSubscriptionOptions successfully`, func() {
@@ -6291,15 +6402,11 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTopicsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTopicsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewNotificationFcmBody successfully`, func() {
-				var message *eventnotificationsv1.NotificationFcmBodyMessage = nil
-				_, err := eventNotificationsService.NewNotificationFcmBody(message)
-				Expect(err).ToNot(BeNil())
-			})
-			It(`Invoke NewNotificationFcmBodyMessage successfully`, func() {
-				var data *eventnotificationsv1.NotificationFcmBodyMessageData = nil
-				_, err := eventNotificationsService.NewNotificationFcmBodyMessage(data)
-				Expect(err).ToNot(BeNil())
+			It(`Invoke NewNotificationApnsBodyMessageData successfully`, func() {
+				alert := "testString"
+				_model, err := eventNotificationsService.NewNotificationApnsBodyMessageData(alert)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewNotificationFcmBodyMessageData successfully`, func() {
 				alert := "testString"
@@ -6351,17 +6458,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSendNotificationsOptions successfully`, func() {
-				// Construct an instance of the NotificationFcmDevices model
-				notificationFcmDevicesModel := new(eventnotificationsv1.NotificationFcmDevices)
-				Expect(notificationFcmDevicesModel).ToNot(BeNil())
-				notificationFcmDevicesModel.FcmDevices = []string{"testString"}
-				notificationFcmDevicesModel.UserIds = []string{"testString"}
-				notificationFcmDevicesModel.Tags = []string{"testString"}
-				notificationFcmDevicesModel.Platforms = []string{"testString"}
-				Expect(notificationFcmDevicesModel.FcmDevices).To(Equal([]string{"testString"}))
-				Expect(notificationFcmDevicesModel.UserIds).To(Equal([]string{"testString"}))
-				Expect(notificationFcmDevicesModel.Tags).To(Equal([]string{"testString"}))
-				Expect(notificationFcmDevicesModel.Platforms).To(Equal([]string{"testString"}))
+				// Construct an instance of the NotificationDevices model
+				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
+				Expect(notificationDevicesModel).ToNot(BeNil())
+				notificationDevicesModel.FcmDevices = []string{"testString"}
+				notificationDevicesModel.ApnsDevices = []string{"testString"}
+				notificationDevicesModel.UserIds = []string{"testString"}
+				notificationDevicesModel.Tags = []string{"testString"}
+				notificationDevicesModel.Platforms = []string{"testString"}
+				Expect(notificationDevicesModel.FcmDevices).To(Equal([]string{"testString"}))
+				Expect(notificationDevicesModel.ApnsDevices).To(Equal([]string{"testString"}))
+				Expect(notificationDevicesModel.UserIds).To(Equal([]string{"testString"}))
+				Expect(notificationDevicesModel.Tags).To(Equal([]string{"testString"}))
+				Expect(notificationDevicesModel.Platforms).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the Lights model
 				lightsModel := new(eventnotificationsv1.Lights)
@@ -6437,17 +6546,83 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationFcmBodyMessageDataModel.Style).To(Equal(styleModel))
 				Expect(notificationFcmBodyMessageDataModel.Type).To(Equal(core.StringPtr("DEFAULT")))
 
-				// Construct an instance of the NotificationFcmBodyMessage model
-				notificationFcmBodyMessageModel := new(eventnotificationsv1.NotificationFcmBodyMessage)
-				Expect(notificationFcmBodyMessageModel).ToNot(BeNil())
-				notificationFcmBodyMessageModel.Data = notificationFcmBodyMessageDataModel
-				Expect(notificationFcmBodyMessageModel.Data).To(Equal(notificationFcmBodyMessageDataModel))
-
-				// Construct an instance of the NotificationFcmBody model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBody)
+				// Construct an instance of the NotificationFcmBodyMessageEnData model
+				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
 				Expect(notificationFcmBodyModel).ToNot(BeNil())
-				notificationFcmBodyModel.Message = notificationFcmBodyMessageModel
-				Expect(notificationFcmBodyModel.Message).To(Equal(notificationFcmBodyMessageModel))
+				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
+				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationFcmBodyModel.EnData).To(Equal(notificationFcmBodyMessageDataModel))
+				Expect(notificationFcmBodyModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationFcmBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				notificationFcmBodyModel.SetProperties(nil)
+				Expect(notificationFcmBodyModel.GetProperties()).To(BeEmpty())
+
+				notificationFcmBodyModelExpectedMap := make(map[string]interface{})
+				notificationFcmBodyModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationFcmBodyModel.SetProperties(notificationFcmBodyModelExpectedMap)
+				notificationFcmBodyModelActualMap := notificationFcmBodyModel.GetProperties()
+				Expect(notificationFcmBodyModelActualMap).To(Equal(notificationFcmBodyModelExpectedMap))
+
+				// Construct an instance of the NotificationApnsBodyMessageData model
+				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
+				Expect(notificationApnsBodyMessageDataModel).ToNot(BeNil())
+				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
+				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
+				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
+				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
+				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
+				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
+				Expect(notificationApnsBodyMessageDataModel.Alert).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.Badge).To(Equal(core.Int64Ptr(int64(38))))
+				Expect(notificationApnsBodyMessageDataModel.InteractiveCategory).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.IosActionKey).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.Payload).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
+				Expect(notificationApnsBodyMessageDataModel.Sound).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.TitleLocKey).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.LocKey).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.LaunchImage).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.TitleLocArgs).To(Equal([]string{"testString"}))
+				Expect(notificationApnsBodyMessageDataModel.LocArgs).To(Equal([]string{"testString"}))
+				Expect(notificationApnsBodyMessageDataModel.Title).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.Subtitle).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.AttachmentURL).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.Type).To(Equal(core.StringPtr("DEFAULT")))
+				Expect(notificationApnsBodyMessageDataModel.ApnsCollapseID).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.ApnsThreadID).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg).To(Equal(core.StringPtr("testString")))
+				Expect(notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount).To(Equal(core.Int64Ptr(int64(38))))
+
+				// Construct an instance of the NotificationApnsBodyMessageEnData model
+				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
+				Expect(notificationApnsBodyModel).ToNot(BeNil())
+				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
+				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationApnsBodyModel.EnData).To(Equal(notificationApnsBodyMessageDataModel))
+				Expect(notificationApnsBodyModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationApnsBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				notificationApnsBodyModel.SetProperties(nil)
+				Expect(notificationApnsBodyModel.GetProperties()).To(BeEmpty())
+
+				notificationApnsBodyModelExpectedMap := make(map[string]interface{})
+				notificationApnsBodyModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationApnsBodyModel.SetProperties(notificationApnsBodyModelExpectedMap)
+				notificationApnsBodyModelActualMap := notificationApnsBodyModel.GetProperties()
+				Expect(notificationApnsBodyModelActualMap).To(Equal(notificationApnsBodyModelExpectedMap))
 
 				// Construct an instance of the SendNotificationsOptions model
 				instanceID := "testString"
@@ -6468,8 +6643,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel.SetType("testString")
 				sendNotificationsOptionsModel.SetTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				sendNotificationsOptionsModel.SetData(make(map[string]interface{}))
-				sendNotificationsOptionsModel.SetPushTo(notificationFcmDevicesModel)
+				sendNotificationsOptionsModel.SetPushTo(notificationDevicesModel)
 				sendNotificationsOptionsModel.SetMessageFcmBody(notificationFcmBodyModel)
+				sendNotificationsOptionsModel.SetMessageApnsHeaders(make(map[string]interface{}))
+				sendNotificationsOptionsModel.SetMessageApnsBody(notificationApnsBodyModel)
 				sendNotificationsOptionsModel.SetDatacontenttype("application/json")
 				sendNotificationsOptionsModel.SetSpecversion("1.0")
 				sendNotificationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -6483,8 +6660,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(sendNotificationsOptionsModel.Type).To(Equal(core.StringPtr("testString")))
 				Expect(sendNotificationsOptionsModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(sendNotificationsOptionsModel.Data).To(Equal(make(map[string]interface{})))
-				Expect(sendNotificationsOptionsModel.PushTo).To(Equal(notificationFcmDevicesModel))
+				Expect(sendNotificationsOptionsModel.PushTo).To(Equal(notificationDevicesModel))
 				Expect(sendNotificationsOptionsModel.MessageFcmBody).To(Equal(notificationFcmBodyModel))
+				Expect(sendNotificationsOptionsModel.MessageApnsHeaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsOptionsModel.MessageApnsBody).To(Equal(notificationApnsBodyModel))
 				Expect(sendNotificationsOptionsModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
 				Expect(sendNotificationsOptionsModel.Specversion).To(Equal(core.StringPtr("1.0")))
 				Expect(sendNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -6524,6 +6703,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateDestinationOptionsModel.SetName("testString")
 				updateDestinationOptionsModel.SetDescription("testString")
 				updateDestinationOptionsModel.SetConfig(destinationConfigModel)
+				updateDestinationOptionsModel.SetCertificate(CreateMockReader("This is a mock file."))
+				updateDestinationOptionsModel.SetCertificateContentType("testString")
 				updateDestinationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateDestinationOptionsModel).ToNot(BeNil())
 				Expect(updateDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
@@ -6531,6 +6712,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateDestinationOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(updateDestinationOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(updateDestinationOptionsModel.Config).To(Equal(destinationConfigModel))
+				Expect(updateDestinationOptionsModel.Certificate).To(Equal(CreateMockReader("This is a mock file.")))
+				Expect(updateDestinationOptionsModel.CertificateContentType).To(Equal(core.StringPtr("testString")))
 				Expect(updateDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewUpdateSubscriptionOptions successfully`, func() {
@@ -6562,6 +6745,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				serverKey := "testString"
 				senderID := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigParamsFcmDestinationConfig(serverKey, senderID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigParamsIosDestinationConfig successfully`, func() {
+				certType := "p8"
+				isSandbox := false
+				_model, err := eventNotificationsService.NewDestinationConfigParamsIosDestinationConfig(certType, isSandbox)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
