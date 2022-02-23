@@ -53,8 +53,6 @@ var (
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
-	destinationID1            string
-	destinationID2            string
 	subscriptionID            string
 	fcmServerKey              string
 	fcmSenderId               string
