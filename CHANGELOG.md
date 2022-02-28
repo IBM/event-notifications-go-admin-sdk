@@ -1,3 +1,10 @@
+## [0.0.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.6...v0.0.7) (2022-02-28)
+
+
+### Bug Fixes
+
+* enable apns push notifications ([250bef7](https://github.com/IBM/event-notifications-go-admin-sdk/commit/250bef7dafe4d501f54b64a6c92503d59d69b5c1))
+
 ## [0.0.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.5...v0.0.6) (2022-01-31)
 
 
