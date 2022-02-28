@@ -83,6 +83,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load service URL configuration property, skipping tests")
 			}
 
+			fmt.Printf("Service URL: %s\n", serviceURL)
+
 			instanceID = config["GUID"]
 			if instanceID == "" {
 				Skip("Unable to load service InstanceID configuration property, skipping tests")
@@ -101,7 +103,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 			fmt.Printf("Service fcmSenderId: %s\n", fcmSenderId)
 
-			fmt.Printf("Service URL: %s\n", serviceURL)
 			shouldSkipTest = func() {}
 		})
 	})
@@ -589,7 +590,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -744,6 +744,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				//
 			})
 		})
+
 		Describe(`ListTagsSubscription - List all Tag Subscriptions`, func() {
 			BeforeEach(func() {
 				shouldSkipTest()
@@ -799,6 +800,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			})
 		})
 	*/
+
 	Describe(`CreateSubscription - Create a new Subscription`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -876,7 +878,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID3 = string(*subscription.ID)
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -955,7 +956,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscription).ToNot(BeNil())
-
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1016,7 +1016,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`SendNotifications(sendNotificationsOptions *SendNotificationsOptions)`, func() {
 
-			notificationFcmDevicesModel := &eventnotificationsv1.NotificationFcmDevices{
+			notificationDevicesModel := &eventnotificationsv1.NotificationDevices{
 				UserIds: []string{"userId"},
 			}
 
@@ -1032,6 +1032,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				URL:   core.StringPtr("url.ibm.com"),
 			}
 
+			// FCM EN Data
 			notificationFcmBodyMessageDataModel := &eventnotificationsv1.NotificationFcmBodyMessageData{
 				Alert:               core.StringPtr("Alert message"),
 				CollapseKey:         core.StringPtr("collapse_key"),
@@ -1052,12 +1053,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Type:                core.StringPtr("DEFAULT"),
 			}
 
-			notificationFcmBodyMessageModel := &eventnotificationsv1.NotificationFcmBodyMessage{
-				Data: notificationFcmBodyMessageDataModel,
+			notificationFcmBodyModel := &eventnotificationsv1.NotificationFcmBodyMessageEnData{
+				EnData: notificationFcmBodyMessageDataModel,
 			}
 
-			notificationFcmBodyModel := &eventnotificationsv1.NotificationFcmBody{
-				Message: notificationFcmBodyMessageModel,
+			notificationApnsBodyMessageDataModel := &eventnotificationsv1.NotificationApnsBodyMessageData{
+				Alert:                    core.StringPtr("Alert message"),
+				Badge:                    core.Int64Ptr(int64(38)),
+				InteractiveCategory:      core.StringPtr("InteractiveCategory"),
+				IosActionKey:             core.StringPtr("IosActionKey"),
+				Payload:                  map[string]interface{}{"testKey": "testValue"},
+				Sound:                    core.StringPtr("sound.wav"),
+				TitleLocKey:              core.StringPtr("TitleLocKey"),
+				LocKey:                   core.StringPtr("LocKey"),
+				LaunchImage:              core.StringPtr("image.png"),
+				TitleLocArgs:             []string{"TitleLocArgs1", "TitleLocArgs2"},
+				LocArgs:                  []string{"LocArgs1", "LocArgs2"},
+				Title:                    core.StringPtr("Message Title"),
+				Subtitle:                 core.StringPtr("Message SubTitle"),
+				AttachmentURL:            core.StringPtr("https://testimage.sub.png"),
+				Type:                     core.StringPtr("DEFAULT"),
+				ApnsCollapseID:           core.StringPtr("ApnsCollapseID"),
+				ApnsThreadID:             core.StringPtr("ApnsThreadID"),
+				ApnsGroupSummaryArg:      core.StringPtr("ApnsGroupSummaryArg"),
+				ApnsGroupSummaryArgCount: core.Int64Ptr(int64(38)),
+			}
+
+			notificationCreateMessageApnsBodyModel := &eventnotificationsv1.NotificationApnsBodyMessageEnData{
+				EnData: notificationApnsBodyMessageDataModel,
 			}
 
 			notificationID := "1234-1234-sdfs-234"
@@ -1076,13 +1099,43 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Type:            core.StringPtr(typeValue),
 				Time:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Data:            make(map[string]interface{}),
-				PushTo:          notificationFcmDevicesModel,
+				PushTo:          notificationDevicesModel,
 				MessageFcmBody:  notificationFcmBodyModel,
+				MessageApnsBody: notificationCreateMessageApnsBodyModel,
 				Datacontenttype: core.StringPtr("application/json"),
 				Specversion:     core.StringPtr("1.0"),
 			}
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(notificationResponse).ToNot(BeNil())
+
+			apnsOptions := &eventnotificationsv1.NotificationApnsBody{}
+			fcmOptions := &eventnotificationsv1.NotificationFcmBody{}
+
+			apnsOptions.SetProperties(map[string]interface{}{
+				"aps": map[string]interface{}{
+					"alert": "Game Request",
+					"badge": 5,
+				},
+			})
+			fcmOptions.SetProperties(map[string]interface{}{
+				"notification": map[string]interface{}{
+					"title": "Portugal vs. Denmark",
+					"body":  "great match!",
+				},
+			})
+
+			apnsHeaders := map[string]interface{}{
+				"apns-collapse-id": "123",
+			}
+
+			sendNotificationsOptions.MessageFcmBody = fcmOptions
+			sendNotificationsOptions.MessageApnsBody = apnsOptions
+			sendNotificationsOptions.MessageApnsHeaders = apnsHeaders
+			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
@@ -1135,7 +1188,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`DeleteTopic(deleteTopicOptions *DeleteTopicOptions)`, func() {
-
 			for _, ID := range []string{topicID, topicID2, topicID3} {
 				deleteTopicOptions := &eventnotificationsv1.DeleteTopicOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -1158,6 +1210,38 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//
 		})
 	})
+
+	/*
+		Describe(`DeleteTagsSubscription - Delete a Tag subcription`, func() {
+			BeforeEach(func() {
+				shouldSkipTest()
+			})
+			It(`DeleteTagsSubscription(deleteTagsSubscriptionOptions *DeleteTagsSubscriptionOptions)`, func() {
+
+				deleteTagsSubscriptionOptions := &eventnotificationsv1.DeleteTagsSubscriptionOptions{
+					InstanceID: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					DeviceID:   core.StringPtr("testString"),
+					TagName:    core.StringPtr("testString"),
+				}
+
+				response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
+
+				//
+				// The following status codes aren't covered by tests.
+				// Please provide integration tests for these too.
+				//
+				// 401
+				// 404
+				// 500
+				//
+			})
+		})
+	*/
+
 	Describe(`DeleteDestination - Delete a Destination`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -1187,3 +1271,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 })
+
+//
+// Utility functions are declared in the unit test file
+//
