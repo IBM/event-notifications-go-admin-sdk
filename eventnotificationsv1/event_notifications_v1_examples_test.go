@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/*
+ * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+ */
+
 package eventnotificationsv1_test
 
 import (
@@ -129,6 +133,34 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			shouldSkipTest()
 		})
 
+		It(`CreateSources request example`, func() {
+			fmt.Println("\nCreateSources() result:")
+			// begin-create_sources
+
+			createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
+				instanceID,
+				"Event Notification Create Source Acme",
+				"This source is used for Acme Bank",
+			)
+			createSourcesOptions.SetEnabled(false)
+
+			sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(sourceResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-create_sources
+
+			sourceID = *sourceResponse.ID
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(sourceResponse).ToNot(BeNil())
+
+		})
+
 		It(`ListSources request example`, func() {
 			fmt.Println("\nListSources() result:")
 			// begin-list_sources
@@ -145,7 +177,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println(string(b))
 
 			// end-list_sources
-			sourceID = string(*sourceList.Sources[len(sourceList.Sources)-1].ID)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -175,6 +206,34 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(source).ToNot(BeNil())
 
 		})
+
+		It(`UpdateSource request example`, func() {
+			fmt.Println("\nUpdateSource() result:")
+			// begin-update_source
+
+			updateSourceOptions := eventNotificationsService.NewUpdateSourceOptions(
+				instanceID,
+				sourceID,
+			)
+			updateSourceOptions.SetName(*core.StringPtr("Event Notification update Source Acme"))
+			updateSourceOptions.SetDescription(*core.StringPtr("This source is used for updated Acme Bank"))
+			updateSourceOptions.SetEnabled(true)
+
+			source, response, err := eventNotificationsService.UpdateSource(updateSourceOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(source, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_source
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(source).ToNot(BeNil())
+
+		})
+
 		It(`CreateTopic request example`, func() {
 			fmt.Println("\nCreateTopic() result:")
 			// begin-create_topic
@@ -457,85 +516,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		})
 
-		/*
-			It(`CreateTagsSubscription request example`, func() {
-				fmt.Println("\nCreateTagsSubscription() result:")
-
-				tagName := "IBM_test"
-				// begin-create_tags_subscription
-
-				createTagsSubscriptionOptions := eventNotificationsService.NewCreateTagsSubscriptionOptions(
-					instanceID,
-					destinationID,
-					destinationDeviceID,
-					tagName,
-				)
-
-				destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
-				if err != nil {
-					panic(err)
-				}
-				b, _ := json.MarshalIndent(destinationTagsSubscriptionResponse, "", "  ")
-				fmt.Println(string(b))
-
-				// end-create_tags_subscription
-
-				tagSubscriptionID = string(*destinationTagsSubscriptionResponse.ID)
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(201))
-				Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
-
-			})
-			It(`ListTagsSubscription request example`, func() {
-				fmt.Println("\nListTagsSubscription() result:")
-				// begin-list_tags_subscription
-
-				listTagsSubscriptionOptions := eventNotificationsService.NewListTagsSubscriptionOptions(
-					instanceID,
-					destinationID,
-				)
-
-				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
-				if err != nil {
-					panic(err)
-				}
-				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
-				fmt.Println(string(b))
-
-				// end-list_tags_subscription
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(tagsSubscriptionList).ToNot(BeNil())
-
-			})
-
-			It(`ListTagsSubscriptionsDevice request example`, func() {
-				fmt.Println("\nListTagsSubscriptionsDevice() result:")
-				// begin-list_tags_subscriptions_device
-
-				listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
-					instanceID,
-					destinationID,
-					destinationDeviceID,
-				)
-
-				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
-				if err != nil {
-					panic(err)
-				}
-				b, _ := json.MarshalIndent(tagsSubscriptionList, "", "  ")
-				fmt.Println(string(b))
-
-				// end-list_tags_subscriptions_device
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(tagsSubscriptionList).ToNot(BeNil())
-
-			})
-		*/
 		It(`CreateSubscription request example`, func() {
 			fmt.Println("\nCreateSubscription() result:")
 
@@ -652,16 +632,16 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSubject,
 				notificationSeverity,
+				sourceID,
+				notificationSubject,
 				notificationID,
 				notificationsSouce,
-				sourceID,
 				typeValue,
 				&date,
 			)
 
-			sendNotificationsOptions.PushTo = &eventnotificationsv1.NotificationDevices{
+			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
 				UserIds: []string{userId},
 			}
 
@@ -685,9 +665,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				"apns-collapse-id": "<collapse-id>",
 			}
 
-			sendNotificationsOptions.MessageFcmBody = fcmOptions
-			sendNotificationsOptions.MessageApnsBody = apnsOptions
-			sendNotificationsOptions.MessageApnsHeaders = apnsHeaders
+			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
+			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
+			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -721,16 +701,16 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSubject,
 				notificationSeverity,
+				sourceID,
+				notificationSubject,
 				notificationID,
 				notificationsSouce,
-				sourceID,
 				typeValue,
 				&date,
 			)
 
-			sendNotificationsOptions.PushTo = &eventnotificationsv1.NotificationDevices{
+			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
 				UserIds: []string{userId},
 			}
 
@@ -741,7 +721,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 					"body":  "great match!",
 				},
 			})
-			sendNotificationsOptions.MessageFcmBody = fcmOptions
+			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -799,33 +779,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(204))
 
 		})
-		/*
-			It(`DeleteTagsSubscription request example`, func() {
-				// begin-delete_tags_subscription
-
-				tagName := "IBM_test"
-					// begin-delete_tags_subscription
-
-					deleteTagsSubscriptionOptions := eventNotificationsService.NewDeleteTagsSubscriptionOptions(
-						instanceID,
-						destinationID,
-					)
-
-					deleteTagsSubscriptionOptions.SetDeviceID(destinationDeviceID)
-					deleteTagsSubscriptionOptions.SetTagName(tagName)
-					response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
-					if err != nil {
-						panic(err)
-					}
-
-
-				// end-delete_tags_subscription
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(204))
-
-			})
-		*/
 
 		It(`DeleteDestination request example`, func() {
 			// begin-delete_destination
@@ -841,6 +794,29 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			// end-delete_destination
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+		})
+
+		It(`DeleteSource request example`, func() {
+			// begin-delete_source
+
+			deleteSourceOptions := eventNotificationsService.NewDeleteSourceOptions(
+				instanceID,
+				sourceID,
+			)
+
+			response, err := eventNotificationsService.DeleteSource(deleteSourceOptions)
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from DeleteSource(): %d\n", response.StatusCode)
+			}
+
+			// end-delete_source
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))

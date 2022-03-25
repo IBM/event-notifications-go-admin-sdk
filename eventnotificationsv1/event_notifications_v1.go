@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.45.1-632ec580-20220210-190638
+ * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -162,40 +162,40 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 	eventNotifications.Service.DisableRetries()
 }
 
-// SendNotifications : Send a notification
-// Send a notification.
-func (eventNotifications *EventNotificationsV1) SendNotifications(sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
-	return eventNotifications.SendNotificationsWithContext(context.Background(), sendNotificationsOptions)
+// CreateSources : Create a new API Source
+// Create a new API Source.
+func (eventNotifications *EventNotificationsV1) CreateSources(createSourcesOptions *CreateSourcesOptions) (result *SourceResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.CreateSourcesWithContext(context.Background(), createSourcesOptions)
 }
 
-// SendNotificationsWithContext is an alternate form of the SendNotifications method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx context.Context, sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(sendNotificationsOptions, "sendNotificationsOptions cannot be nil")
+// CreateSourcesWithContext is an alternate form of the CreateSources method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) CreateSourcesWithContext(ctx context.Context, createSourcesOptions *CreateSourcesOptions) (result *SourceResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createSourcesOptions, "createSourcesOptions cannot be nil")
 	if err != nil {
 		return
 	}
-	err = core.ValidateStruct(sendNotificationsOptions, "sendNotificationsOptions")
+	err = core.ValidateStruct(createSourcesOptions, "createSourcesOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"instance_id": *sendNotificationsOptions.InstanceID,
+		"instance_id": *createSourcesOptions.InstanceID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
 	builder = builder.WithContext(ctx)
 	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/notifications`, pathParamsMap)
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/sources`, pathParamsMap)
 	if err != nil {
 		return
 	}
 
-	for headerName, headerValue := range sendNotificationsOptions.Headers {
+	for headerName, headerValue := range createSourcesOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "SendNotifications")
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateSources")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
@@ -203,54 +203,14 @@ func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx
 	builder.AddHeader("Content-Type", "application/json")
 
 	body := make(map[string]interface{})
-	if sendNotificationsOptions.Subject != nil {
-		body["subject"] = sendNotificationsOptions.Subject
+	if createSourcesOptions.Name != nil {
+		body["name"] = createSourcesOptions.Name
 	}
-	if sendNotificationsOptions.Severity != nil {
-		body["severity"] = sendNotificationsOptions.Severity
+	if createSourcesOptions.Description != nil {
+		body["description"] = createSourcesOptions.Description
 	}
-	if sendNotificationsOptions.ID != nil {
-		body["id"] = sendNotificationsOptions.ID
-	}
-	if sendNotificationsOptions.Source != nil {
-		body["source"] = sendNotificationsOptions.Source
-	}
-	if sendNotificationsOptions.EnSourceID != nil {
-		body["en_source_id"] = sendNotificationsOptions.EnSourceID
-	}
-	if sendNotificationsOptions.Type != nil {
-		body["type"] = sendNotificationsOptions.Type
-	}
-	if sendNotificationsOptions.Time != nil {
-		body["time"] = sendNotificationsOptions.Time
-	}
-	body["data"] = make(map[string]interface{})
-	if sendNotificationsOptions.Data != nil {
-		body["data"] = sendNotificationsOptions.Data
-	}
-	if sendNotificationsOptions.PushTo != nil {
-		pushToJson, _ := json.Marshal(sendNotificationsOptions.PushTo)
-		body["push_to"] = string(pushToJson)
-	}
-	if sendNotificationsOptions.MessageFcmBody != nil {
-		pushBodyJson, _ := json.Marshal(sendNotificationsOptions.MessageFcmBody)
-		body["message_fcm_body"] = string(pushBodyJson)
-	}
-	if sendNotificationsOptions.MessageApnsHeaders != nil {
-		pushHeaderJson, _ := json.Marshal(sendNotificationsOptions.MessageApnsHeaders)
-		body["message_apns_headers"] = string(pushHeaderJson)
-	}
-	if sendNotificationsOptions.MessageApnsBody != nil {
-		pushBodyJson, _ := json.Marshal(sendNotificationsOptions.MessageApnsBody)
-		body["message_apns_body"] = string(pushBodyJson)
-	}
-	body["datacontenttype"] = "application/json"
-	if sendNotificationsOptions.Datacontenttype != nil {
-		body["datacontenttype"] = sendNotificationsOptions.Datacontenttype
-	}
-	body["specversion"] = "1.0"
-	if sendNotificationsOptions.Specversion != nil {
-		body["specversion"] = sendNotificationsOptions.Specversion
+	if createSourcesOptions.Enabled != nil {
+		body["enabled"] = createSourcesOptions.Enabled
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
@@ -268,7 +228,7 @@ func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx
 		return
 	}
 	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalNotificationResponse)
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSourceResponse)
 		if err != nil {
 			return
 		}
@@ -387,6 +347,132 @@ func (eventNotifications *EventNotificationsV1) GetSourceWithContext(ctx context
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSource)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// DeleteSource : Delete a Source
+// Delete a Source.
+func (eventNotifications *EventNotificationsV1) DeleteSource(deleteSourceOptions *DeleteSourceOptions) (response *core.DetailedResponse, err error) {
+	return eventNotifications.DeleteSourceWithContext(context.Background(), deleteSourceOptions)
+}
+
+// DeleteSourceWithContext is an alternate form of the DeleteSource method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) DeleteSourceWithContext(ctx context.Context, deleteSourceOptions *DeleteSourceOptions) (response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(deleteSourceOptions, "deleteSourceOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(deleteSourceOptions, "deleteSourceOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *deleteSourceOptions.InstanceID,
+		"id":          *deleteSourceOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.DELETE)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/sources/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range deleteSourceOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "DeleteSource")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	response, err = eventNotifications.Service.Request(request, nil)
+
+	return
+}
+
+// UpdateSource : Update details of a Source
+// Update details of a Source.
+func (eventNotifications *EventNotificationsV1) UpdateSource(updateSourceOptions *UpdateSourceOptions) (result *Source, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateSourceWithContext(context.Background(), updateSourceOptions)
+}
+
+// UpdateSourceWithContext is an alternate form of the UpdateSource method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateSourceWithContext(ctx context.Context, updateSourceOptions *UpdateSourceOptions) (result *Source, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateSourceOptions, "updateSourceOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateSourceOptions, "updateSourceOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateSourceOptions.InstanceID,
+		"id":          *updateSourceOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/sources/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateSourceOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateSource")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if updateSourceOptions.Name != nil {
+		body["name"] = updateSourceOptions.Name
+	}
+	if updateSourceOptions.Description != nil {
+		body["description"] = updateSourceOptions.Description
+	}
+	if updateSourceOptions.Enabled != nil {
+		body["enabled"] = updateSourceOptions.Enabled
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
 
 	request, err := builder.Build()
 	if err != nil {
@@ -1927,6 +2013,63 @@ func (options *CreateDestinationOptions) SetHeaders(param map[string]string) *Cr
 	return options
 }
 
+// CreateSourcesOptions : The CreateSources options.
+type CreateSourcesOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Name of the source.
+	Name *string `json:"name" validate:"required"`
+
+	// Description of the source.
+	Description *string `json:"description" validate:"required"`
+
+	// Whether the source is enabled or not.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewCreateSourcesOptions : Instantiate CreateSourcesOptions
+func (*EventNotificationsV1) NewCreateSourcesOptions(instanceID string, name string, description string) *CreateSourcesOptions {
+	return &CreateSourcesOptions{
+		InstanceID:  core.StringPtr(instanceID),
+		Name:        core.StringPtr(name),
+		Description: core.StringPtr(description),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateSourcesOptions) SetInstanceID(instanceID string) *CreateSourcesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *CreateSourcesOptions) SetName(name string) *CreateSourcesOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *CreateSourcesOptions) SetDescription(description string) *CreateSourcesOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetEnabled : Allow user to set Enabled
+func (_options *CreateSourcesOptions) SetEnabled(enabled bool) *CreateSourcesOptions {
+	_options.Enabled = core.BoolPtr(enabled)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *CreateSourcesOptions) SetHeaders(param map[string]string) *CreateSourcesOptions {
+	options.Headers = param
+	return options
+}
+
 // CreateSubscriptionOptions : The CreateSubscription options.
 type CreateSubscriptionOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2150,6 +2293,44 @@ func (_options *DeleteDestinationOptions) SetID(id string) *DeleteDestinationOpt
 
 // SetHeaders : Allow user to set Headers
 func (options *DeleteDestinationOptions) SetHeaders(param map[string]string) *DeleteDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// DeleteSourceOptions : The DeleteSource options.
+type DeleteSourceOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Source.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewDeleteSourceOptions : Instantiate DeleteSourceOptions
+func (*EventNotificationsV1) NewDeleteSourceOptions(instanceID string, id string) *DeleteSourceOptions {
+	return &DeleteSourceOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteSourceOptions) SetInstanceID(instanceID string) *DeleteSourceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *DeleteSourceOptions) SetID(id string) *DeleteSourceOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *DeleteSourceOptions) SetHeaders(param map[string]string) *DeleteSourceOptions {
 	options.Headers = param
 	return options
 }
@@ -4340,166 +4521,6 @@ func UnmarshalRulesGet(m map[string]json.RawMessage, result interface{}) (err er
 	return
 }
 
-// SendNotificationsOptions : The SendNotifications options.
-type SendNotificationsOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// The Notifications subject.
-	Subject *string `json:"subject" validate:"required"`
-
-	// The Notifications severity.
-	Severity *string `json:"severity" validate:"required"`
-
-	// The Notifications id.
-	ID *string `json:"id" validate:"required"`
-
-	// The source of Notifications.
-	Source *string `json:"source" validate:"required"`
-
-	// The Event Notifications source id.
-	EnSourceID *string `json:"en_source_id" validate:"required"`
-
-	// The Notifications type.
-	Type *string `json:"type" validate:"required"`
-
-	// The Notifications time.
-	Time *strfmt.DateTime `json:"time" validate:"required"`
-
-	// The Notifications data for webhook.
-	Data map[string]interface{} `json:"data,omitempty"`
-
-	// Payload describing a FCM Notifications targets.
-	PushTo *NotificationDevices `json:"push_to,omitempty"`
-
-	MessageFcmBody NotificationFcmBodyIntf `json:"message_fcm_body,omitempty"`
-
-	// The attributes for an FCM/APNs notification.
-	MessageApnsHeaders map[string]interface{} `json:"message_apns_headers,omitempty"`
-
-	// Payload describing a APNs Notifications body.
-	MessageApnsBody NotificationApnsBodyIntf `json:"message_apns_body,omitempty"`
-
-	// The Notifications content type.
-	Datacontenttype *string `json:"datacontenttype,omitempty"`
-
-	// The Notifications specversion.
-	Specversion *string `json:"specversion,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewSendNotificationsOptions : Instantiate SendNotificationsOptions
-func (*EventNotificationsV1) NewSendNotificationsOptions(instanceID string, subject string, severity string, id string, source string, enSourceID string, typeVar string, time *strfmt.DateTime) *SendNotificationsOptions {
-	return &SendNotificationsOptions{
-		InstanceID: core.StringPtr(instanceID),
-		Subject:    core.StringPtr(subject),
-		Severity:   core.StringPtr(severity),
-		ID:         core.StringPtr(id),
-		Source:     core.StringPtr(source),
-		EnSourceID: core.StringPtr(enSourceID),
-		Type:       core.StringPtr(typeVar),
-		Time:       time,
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *SendNotificationsOptions) SetInstanceID(instanceID string) *SendNotificationsOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetSubject : Allow user to set Subject
-func (_options *SendNotificationsOptions) SetSubject(subject string) *SendNotificationsOptions {
-	_options.Subject = core.StringPtr(subject)
-	return _options
-}
-
-// SetSeverity : Allow user to set Severity
-func (_options *SendNotificationsOptions) SetSeverity(severity string) *SendNotificationsOptions {
-	_options.Severity = core.StringPtr(severity)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *SendNotificationsOptions) SetID(id string) *SendNotificationsOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetSource : Allow user to set Source
-func (_options *SendNotificationsOptions) SetSource(source string) *SendNotificationsOptions {
-	_options.Source = core.StringPtr(source)
-	return _options
-}
-
-// SetEnSourceID : Allow user to set EnSourceID
-func (_options *SendNotificationsOptions) SetEnSourceID(enSourceID string) *SendNotificationsOptions {
-	_options.EnSourceID = core.StringPtr(enSourceID)
-	return _options
-}
-
-// SetType : Allow user to set Type
-func (_options *SendNotificationsOptions) SetType(typeVar string) *SendNotificationsOptions {
-	_options.Type = core.StringPtr(typeVar)
-	return _options
-}
-
-// SetTime : Allow user to set Time
-func (_options *SendNotificationsOptions) SetTime(time *strfmt.DateTime) *SendNotificationsOptions {
-	_options.Time = time
-	return _options
-}
-
-// SetData : Allow user to set Data
-func (_options *SendNotificationsOptions) SetData(data map[string]interface{}) *SendNotificationsOptions {
-	_options.Data = data
-	return _options
-}
-
-// SetPushTo : Allow user to set PushTo
-func (_options *SendNotificationsOptions) SetPushTo(pushTo *NotificationDevices) *SendNotificationsOptions {
-	_options.PushTo = pushTo
-	return _options
-}
-
-// SetMessageFcmBody : Allow user to set MessageFcmBody
-func (_options *SendNotificationsOptions) SetMessageFcmBody(messageFcmBody NotificationFcmBodyIntf) *SendNotificationsOptions {
-	_options.MessageFcmBody = messageFcmBody
-	return _options
-}
-
-// SetMessageApnsHeaders : Allow user to set MessageApnsHeaders
-func (_options *SendNotificationsOptions) SetMessageApnsHeaders(messageApnsHeaders map[string]interface{}) *SendNotificationsOptions {
-	_options.MessageApnsHeaders = messageApnsHeaders
-	return _options
-}
-
-// SetMessageApnsBody : Allow user to set MessageApnsBody
-func (_options *SendNotificationsOptions) SetMessageApnsBody(messageApnsBody NotificationApnsBodyIntf) *SendNotificationsOptions {
-	_options.MessageApnsBody = messageApnsBody
-	return _options
-}
-
-// SetDatacontenttype : Allow user to set Datacontenttype
-func (_options *SendNotificationsOptions) SetDatacontenttype(datacontenttype string) *SendNotificationsOptions {
-	_options.Datacontenttype = core.StringPtr(datacontenttype)
-	return _options
-}
-
-// SetSpecversion : Allow user to set Specversion
-func (_options *SendNotificationsOptions) SetSpecversion(specversion string) *SendNotificationsOptions {
-	_options.Specversion = core.StringPtr(specversion)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *SendNotificationsOptions) SetHeaders(param map[string]string) *SendNotificationsOptions {
-	options.Headers = param
-	return options
-}
-
 // Source : Payload describing a source generate request.
 type Source struct {
 	// The id of the source.
@@ -4656,6 +4677,51 @@ func UnmarshalSourceListItem(m map[string]json.RawMessage, result interface{}) (
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "topic_count", &obj.TopicCount)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SourceResponse : Payload describing a source.
+type SourceResponse struct {
+	// ID of the source.
+	ID *string `json:"id" validate:"required"`
+
+	// Name of the source.
+	Name *string `json:"name" validate:"required"`
+
+	// Description of the source.
+	Description *string `json:"description" validate:"required"`
+
+	// Whether the source is enabled or not.
+	Enabled *bool `json:"enabled" validate:"required"`
+
+	// Time of the created.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+}
+
+// UnmarshalSourceResponse unmarshals an instance of SourceResponse from the specified map of raw messages.
+func UnmarshalSourceResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SourceResponse)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "enabled", &obj.Enabled)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
 	if err != nil {
 		return
 	}
@@ -5752,6 +5818,71 @@ func (_options *UpdateDestinationOptions) SetCertificateContentType(certificateC
 
 // SetHeaders : Allow user to set Headers
 func (options *UpdateDestinationOptions) SetHeaders(param map[string]string) *UpdateDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateSourceOptions : The UpdateSource options.
+type UpdateSourceOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Source.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Name of the source.
+	Name *string `json:"name,omitempty"`
+
+	// Description of the source.
+	Description *string `json:"description,omitempty"`
+
+	// Whether the source is enabled or not.
+	Enabled *bool `json:"enabled,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateSourceOptions : Instantiate UpdateSourceOptions
+func (*EventNotificationsV1) NewUpdateSourceOptions(instanceID string, id string) *UpdateSourceOptions {
+	return &UpdateSourceOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateSourceOptions) SetInstanceID(instanceID string) *UpdateSourceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateSourceOptions) SetID(id string) *UpdateSourceOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *UpdateSourceOptions) SetName(name string) *UpdateSourceOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *UpdateSourceOptions) SetDescription(description string) *UpdateSourceOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetEnabled : Allow user to set Enabled
+func (_options *UpdateSourceOptions) SetEnabled(enabled bool) *UpdateSourceOptions {
+	_options.Enabled = core.BoolPtr(enabled)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateSourceOptions) SetHeaders(param map[string]string) *UpdateSourceOptions {
 	options.Headers = param
 	return options
 }
