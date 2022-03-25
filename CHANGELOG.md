@@ -1,3 +1,10 @@
+## [0.0.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.7...v0.0.8) (2022-03-25)
+
+
+### Bug Fixes
+
+* add source creation apis and new send notification payload ([ee76484](https://github.com/IBM/event-notifications-go-admin-sdk/commit/ee76484172164cba6000a48caaf79a873240e19c))
+
 ## [0.0.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.6...v0.0.7) (2022-02-28)
 
 
