@@ -96,8 +96,11 @@ func initInstance() *eventnotificationsv1.EventNotificationsV1 {
 SDK Methods to consume
 
 - [Source](#source)
+	- [Create Source](#create-source)
 	- [List Sources](#list-sources)
 	- [Get Source](#get-sources)
+	- [Update Source](#update-source)
+	- [Delete Source](#delete-source)
 - [Topics](#topics)
 	- [Create Topics](#create-topic)
 	- [List Topics](#list-topic)
@@ -128,6 +131,19 @@ SDK Methods to consume
 
 
 ## Source 
+
+### Create Source
+
+```go
+createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
+	    <instance-id>, // Event notifications service instance GUID
+		<source-name>,
+		<source-description>,
+	)
+createSourcesOptions.SetEnabled(false)
+
+sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
+```
 
 ### List Sources
 
@@ -162,6 +178,31 @@ if err != nil {
 
 b, _ := json.MarshalIndent(source, "", "  ")
 fmt.Println(string(b))
+```
+
+### Update Source
+
+```go
+updateSourceOptions := eventNotificationsService.NewUpdateSourceOptions(
+		<instance-id>, // Event notifications service instance GUID
+	    <source-id>,   // Event notifications service instance Source ID
+	)
+updateSourceOptions.SetName(*core.StringPtr(<source-updated-name>))
+updateSourceOptions.SetDescription(*core.StringPtr(<source-updated-description>))
+updateSourceOptions.SetEnabled(true)
+
+source, response, err := eventNotificationsService.UpdateSource(updateSourceOptions)
+```
+
+### Delete Source
+
+```go
+deleteSourceOptions := eventNotificationsService.NewDeleteSourceOptions(
+	<instance-id>, // Event notifications service instance GUID
+	<source-id>,   // Event notifications service instance Source ID
+)
+
+response, err := eventNotificationsService.DeleteSource(deleteSourceOptions)
 ```
 
 ## Topics 
@@ -630,17 +671,17 @@ notificationsSouce := "<notification-source>"
 sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 	InstanceID:      core.StringPtr(instanceID),
 	Subject:         core.StringPtr(notificationSubject),
-	Severity:        core.StringPtr(notificationSeverity),
+	Ibmenseverity:        core.StringPtr(notificationSeverity),
 	ID:              core.StringPtr(notificationID),
 	Source:          core.StringPtr(notificationsSouce),
-	EnSourceID:      core.StringPtr(sourceID),
+	Ibmensourceid:      core.StringPtr(sourceID),
 	Type:            core.StringPtr(typeValue),
 	Time:            "<notification-time>",
 	Data:            make(map[string]interface{}),
-	PushTo:          notificationevicesModel,
-	MessageFcmBody:  notificationFcmBodyModel,
-	MessageApnsBody: notificationApnsBodyModel,
-	MessageApnsHeaders: notificationApnsHeaders,
+	Ibmenpushto:     notificationevicesModel,
+	Ibmenfcmbody:    notificationFcmBodyModel,
+	Ibmenapnsbody:   notificationApnsBodyModel,
+	Ibmenapnsheaders: notificationApnsHeaders
 	Datacontenttype: core.StringPtr("application/json"),
 	Specversion:     core.StringPtr("1.0"),
 }
@@ -666,17 +707,17 @@ if err != nil {
 - **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
   - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
   - *Subject* (**String**) - Subject for the notifications. 
-  - *Severity* (**String**) - Severity for the notifications. 
+  - *Ibmenseverity* (**String**) - Severity for the notifications. 
   - *ID* (**ID**) - ID for the notifications. 
   - *Source* (**String**) - Source of the notifications. 
-  - *EnSourceID* (**String**) - Event Notificaitons instance Source ID. 
+  - *Ibmensourceid* (**String**) - Event Notificaitons instance Source ID. 
   - *Type* (**String**) - Type for the notifications. 
   - *Time* (**String**) - Time of the notifications. 
   - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
-  - *PushTo* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
-  - *MessageFcmBody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
-  - *MessageApnsBody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
-  - *MessageApnsHeaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
+  - *Ibmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
+  - *Ibmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
+  - *Ibmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
+  - *Ibmenapnsheaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
   - *Datacontenttype* (**String**) - Data content type of the notifications. 
   - *Specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
 

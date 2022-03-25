@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/*
+ * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+ */
+
 package eventnotificationsv1_test
 
 import (
@@ -126,6 +130,41 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
+	Describe(`CreateSources - Create a new API Source`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateSources(createSourcesOptions *CreateSourcesOptions)`, func() {
+
+			createSourcesOptions := &eventnotificationsv1.CreateSourcesOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr("Event Notification Create Source Acme"),
+				Description: core.StringPtr("This source is used for Acme Bank"),
+				Enabled:     core.BoolPtr(false),
+			}
+
+			sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(sourceResponse).ToNot(BeNil())
+
+			sourceID = *sourceResponse.ID
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 400
+			// 401
+			// 404
+			// 409
+			// 415
+			// 500
+			//
+		})
+	})
+
 	Describe(`ListSources - List all Sources`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -144,24 +183,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(sourceList).ToNot(BeNil())
-			//	Expect(sourceList.TotalCount).To(Equal(core.Int64Ptr(3)))
-			sourceID = *sourceList.Sources[len(sourceList.Sources)-1].ID
-
-			listSourcesOptions = &eventnotificationsv1.ListSourcesOptions{
-				InstanceID: core.StringPtr(instanceID),
-				Limit:      core.Int64Ptr(int64(1)),
-				Offset:     core.Int64Ptr(int64(1)),
-				Search:     core.StringPtr(search),
-			}
-
-			sourceList, response, err = eventNotificationsService.ListSources(listSourcesOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(sourceList).ToNot(BeNil())
-			sourceID1 := *sourceList.Sources[len(sourceList.Sources)-1].ID
-
-			Expect(sourceID).ToNot(Equal(sourceID1))
 
 			//
 			// The following status codes aren't covered by tests.
@@ -196,6 +217,40 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//
 			// 401
 			// 404
+			// 500
+			//
+		})
+	})
+
+	Describe(`UpdateSource - Update details of a Source`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateSource(updateSourceOptions *UpdateSourceOptions)`, func() {
+
+			updateSourceOptions := &eventnotificationsv1.UpdateSourceOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(sourceID),
+				Name:        core.StringPtr("Event Notification update Source Acme"),
+				Description: core.StringPtr("This source is used for updated Acme Bank"),
+				Enabled:     core.BoolPtr(true),
+			}
+
+			source, response, err := eventNotificationsService.UpdateSource(updateSourceOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(source).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 400
+			// 401
+			// 404
+			// 409
+			// 415
 			// 500
 			//
 		})
@@ -711,96 +766,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	/*
-		Describe(`CreateTagsSubscription - Create a new Tag subscription`, func() {
-			BeforeEach(func() {
-				shouldSkipTest()
-			})
-			It(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions)`, func() {
-
-				tagName := "IBM_test"
-				createTagsSubscriptionOptions := &eventnotificationsv1.CreateTagsSubscriptionOptions{
-					InstanceID: core.StringPtr(instanceID),
-					ID:         core.StringPtr(destinationID3),
-					DeviceID:   core.StringPtr(destinationDeviceID),
-					TagName:    core.StringPtr(tagName),
-				}
-
-				destinationTagsSubscriptionResponse, response, err := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptions)
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(201))
-				Expect(destinationTagsSubscriptionResponse).ToNot(BeNil())
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 400
-				// 401
-				// 409
-				// 415
-				// 500
-				//
-			})
-		})
-
-		Describe(`ListTagsSubscription - List all Tag Subscriptions`, func() {
-			BeforeEach(func() {
-				shouldSkipTest()
-			})
-			It(`ListTagsSubscription(listTagsSubscriptionOptions *ListTagsSubscriptionOptions)`, func() {
-
-				listTagsSubscriptionOptions := &eventnotificationsv1.ListTagsSubscriptionOptions{
-					InstanceID: core.StringPtr(instanceID),
-					ID:         core.StringPtr(destinationID3),
-				}
-
-				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptions)
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(tagsSubscriptionList).ToNot(BeNil())
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			})
-		})
-
-		Describe(`ListTagsSubscriptionsDevice - List all Tag Subscriptions for a device`, func() {
-			BeforeEach(func() {
-				shouldSkipTest()
-			})
-			It(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
-
-				listTagsSubscriptionsDeviceOptions := &eventnotificationsv1.ListTagsSubscriptionsDeviceOptions{
-					InstanceID: core.StringPtr(instanceID),
-					ID:         core.StringPtr(destinationID3),
-					DeviceID:   core.StringPtr(destinationDeviceID),
-				}
-
-				tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(200))
-				Expect(tagsSubscriptionList).ToNot(BeNil())
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 500
-				//
-			})
-		})
-	*/
-
 	Describe(`CreateSubscription - Create a new Subscription`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -1092,16 +1057,16 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 				InstanceID:      core.StringPtr(instanceID),
 				Subject:         core.StringPtr(notificationSubject),
-				Severity:        core.StringPtr(notificationSeverity),
+				Ibmenseverity:   core.StringPtr(notificationSeverity),
 				ID:              core.StringPtr(notificationID),
 				Source:          core.StringPtr(notificationsSouce),
-				EnSourceID:      core.StringPtr(sourceID),
+				Ibmensourceid:   core.StringPtr(sourceID),
 				Type:            core.StringPtr(typeValue),
 				Time:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
 				Data:            make(map[string]interface{}),
-				PushTo:          notificationDevicesModel,
-				MessageFcmBody:  notificationFcmBodyModel,
-				MessageApnsBody: notificationCreateMessageApnsBodyModel,
+				Ibmenpushto:     notificationDevicesModel,
+				Ibmenfcmbody:    notificationFcmBodyModel,
+				Ibmenapnsbody:   notificationCreateMessageApnsBodyModel,
 				Datacontenttype: core.StringPtr("application/json"),
 				Specversion:     core.StringPtr("1.0"),
 			}
@@ -1132,9 +1097,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				"apns-collapse-id": "123",
 			}
 
-			sendNotificationsOptions.MessageFcmBody = fcmOptions
-			sendNotificationsOptions.MessageApnsBody = apnsOptions
-			sendNotificationsOptions.MessageApnsHeaders = apnsHeaders
+			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
+			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
+			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
 			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
 			Expect(err).To(BeNil())
@@ -1211,37 +1176,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	/*
-		Describe(`DeleteTagsSubscription - Delete a Tag subcription`, func() {
-			BeforeEach(func() {
-				shouldSkipTest()
-			})
-			It(`DeleteTagsSubscription(deleteTagsSubscriptionOptions *DeleteTagsSubscriptionOptions)`, func() {
-
-				deleteTagsSubscriptionOptions := &eventnotificationsv1.DeleteTagsSubscriptionOptions{
-					InstanceID: core.StringPtr("testString"),
-					ID:         core.StringPtr("testString"),
-					DeviceID:   core.StringPtr("testString"),
-					TagName:    core.StringPtr("testString"),
-				}
-
-				response, err := eventNotificationsService.DeleteTagsSubscription(deleteTagsSubscriptionOptions)
-
-				Expect(err).To(BeNil())
-				Expect(response.StatusCode).To(Equal(204))
-
-				//
-				// The following status codes aren't covered by tests.
-				// Please provide integration tests for these too.
-				//
-				// 401
-				// 404
-				// 500
-				//
-			})
-		})
-	*/
-
 	Describe(`DeleteDestination - Delete a Destination`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -1259,6 +1193,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Expect(err).To(BeNil())
 				Expect(response.StatusCode).To(Equal(204))
 			}
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 401
+			// 404
+			// 500
+			//
+		})
+	})
+
+	Describe(`DeleteSource - Delete a Source`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteSource(deleteSourceOptions *DeleteSourceOptions)`, func() {
+
+			deleteSourceOptions := &eventnotificationsv1.DeleteSourceOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(sourceID),
+			}
+
+			response, err := eventNotificationsService.DeleteSource(deleteSourceOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
 
 			//
 			// The following status codes aren't covered by tests.

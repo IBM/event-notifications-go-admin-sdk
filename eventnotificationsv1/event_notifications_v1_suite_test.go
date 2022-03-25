@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
+/*
+ * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+ */
+
 package eventnotificationsv1_test
 
 import (
