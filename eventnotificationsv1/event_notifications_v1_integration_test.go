@@ -1049,26 +1049,22 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			notificationsSouce := "1234-1234-sdfs-234:test"
 
 			sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 				InstanceID:      core.StringPtr(instanceID),
-				Subject:         core.StringPtr(notificationSubject),
-				Ibmenseverity:   core.StringPtr(notificationSeverity),
-				ID:              core.StringPtr(notificationID),
-				Source:          core.StringPtr(notificationsSouce),
-				Ibmensourceid:   core.StringPtr(sourceID),
-				Type:            core.StringPtr(typeValue),
-				Time:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Data:            make(map[string]interface{}),
-				Ibmenpushto:     notificationDevicesModel,
-				Ibmenfcmbody:    notificationFcmBodyModel,
-				Ibmenapnsbody:   notificationCreateMessageApnsBodyModel,
-				Datacontenttype: core.StringPtr("application/json"),
-				Specversion:     core.StringPtr("1.0"),
+				CeIbmenseverity: core.StringPtr(notificationSeverity),
+				CeID:            core.StringPtr(notificationID),
+				CeSource:        core.StringPtr(notificationsSouce),
+				CeIbmensourceid: core.StringPtr(sourceID),
+				CeType:          core.StringPtr(typeValue),
+				CeTime:          CreateMockDateTime("2019-01-01T12:00:00.000Z"),
+				CeIbmenpushto:   notificationDevicesModel,
+				CeIbmenfcmbody:  notificationFcmBodyModel,
+				CeIbmenapnsbody: notificationCreateMessageApnsBodyModel,
+				CeSpecversion:   core.StringPtr("1.0"),
 			}
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
@@ -1097,9 +1093,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				"apns-collapse-id": "123",
 			}
 
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
-			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
-			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
+			sendNotificationsOptions.CeIbmenfcmbody = fcmOptions
+			sendNotificationsOptions.CeIbmenapnsbody = apnsOptions
+			sendNotificationsOptions.CeIbmenapnsheaders = apnsHeaders
 			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
 			Expect(err).To(BeNil())

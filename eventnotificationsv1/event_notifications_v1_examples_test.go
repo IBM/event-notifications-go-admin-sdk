@@ -620,28 +620,29 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
 			date := strfmt.DateTime(now)
 			userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
+			specVersion := "1.0"
 
 			// begin-send_notifications
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSeverity,
-				sourceID,
-				notificationSubject,
-				notificationID,
-				notificationsSouce,
-				typeValue,
-				&date,
 			)
 
-			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
+			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+			sendNotificationsOptions.CeID = &notificationID
+			sendNotificationsOptions.CeSource = &notificationsSouce
+			sendNotificationsOptions.CeIbmensourceid = &sourceID
+			sendNotificationsOptions.CeType = &typeValue
+			sendNotificationsOptions.CeTime = &date
+			sendNotificationsOptions.CeSpecversion = &specVersion
+
+			sendNotificationsOptions.CeIbmenpushto = &eventnotificationsv1.NotificationDevices{
 				UserIds: []string{userId},
 			}
 
@@ -665,9 +666,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				"apns-collapse-id": "<collapse-id>",
 			}
 
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
-			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
-			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
+			sendNotificationsOptions.CeIbmenfcmbody = fcmOptions
+			sendNotificationsOptions.CeIbmenapnsbody = apnsOptions
+			sendNotificationsOptions.CeIbmenapnsheaders = apnsHeaders
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -689,28 +690,29 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
 			date := strfmt.DateTime(now)
 			userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
+			spectVersion := "1.0"
 
 			// begin-send_notifications
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSeverity,
-				sourceID,
-				notificationSubject,
-				notificationID,
-				notificationsSouce,
-				typeValue,
-				&date,
 			)
 
-			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
+			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+			sendNotificationsOptions.CeID = &notificationID
+			sendNotificationsOptions.CeSource = &notificationsSouce
+			sendNotificationsOptions.CeIbmensourceid = &sourceID
+			sendNotificationsOptions.CeType = &typeValue
+			sendNotificationsOptions.CeTime = &date
+			sendNotificationsOptions.CeSpecversion = &spectVersion
+
+			sendNotificationsOptions.CeIbmenpushto = &eventnotificationsv1.NotificationDevices{
 				UserIds: []string{userId},
 			}
 
@@ -721,7 +723,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 					"body":  "great match!",
 				},
 			})
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
+			sendNotificationsOptions.CeIbmenfcmbody = fcmOptions
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 

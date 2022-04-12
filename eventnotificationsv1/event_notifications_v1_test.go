@@ -67,14 +67,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				Expect(eventNotificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +102,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				err := eventNotificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
@@ -122,13 +120,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-			})
+			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(eventNotificationsService).To(BeNil())
@@ -139,7 +136,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
+				"EVENT_NOTIFICATIONS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -174,6 +171,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(sendNotificationsPath))
 					Expect(req.Method).To(Equal("POST"))
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFcmBodyModel)))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", notificationApnsBodyModel)))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", notificationDevicesModel)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", notificationChromeBodyModel)))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFirefoxBodyModel)))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", CreateMockDateTime("2019-01-01T12:00:00.000Z"))))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
 					fmt.Fprint(res, `} this is not valid json {`)
@@ -262,23 +293,77 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationDevicesModel.Tags = []string{"testString"}
 				notificationDevicesModel.Platforms = []string{"testString"}
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = sendNotificationsRequestModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.CeIbmenapnsbody = notificationApnsBodyModel
+				sendNotificationsOptionsModel.CeIbmenpushto = notificationDevicesModel
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenchromebody = notificationChromeBodyModel
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
@@ -325,6 +410,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFcmBodyModel)))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", notificationApnsBodyModel)))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", notificationDevicesModel)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", notificationChromeBodyModel)))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFirefoxBodyModel)))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", CreateMockDateTime("2019-01-01T12:00:00.000Z"))))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -418,23 +537,77 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationDevicesModel.Tags = []string{"testString"}
 				notificationDevicesModel.Platforms = []string{"testString"}
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = sendNotificationsRequestModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.CeIbmenapnsbody = notificationApnsBodyModel
+				sendNotificationsOptionsModel.CeIbmenpushto = notificationDevicesModel
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenchromebody = notificationChromeBodyModel
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -487,6 +660,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFcmBodyModel)))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", notificationApnsBodyModel)))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", notificationDevicesModel)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", notificationChromeBodyModel)))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", notificationFirefoxBodyModel)))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					//Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", make(map[string]interface{}))))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", CreateMockDateTime("2019-01-01T12:00:00.000Z"))))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
@@ -582,23 +789,77 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationDevicesModel.Tags = []string{"testString"}
 				notificationDevicesModel.Platforms = []string{"testString"}
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = sendNotificationsRequestModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.CeIbmenapnsbody = notificationApnsBodyModel
+				sendNotificationsOptionsModel.CeIbmenpushto = notificationDevicesModel
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenchromebody = notificationChromeBodyModel
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -691,23 +952,77 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationDevicesModel.Tags = []string{"testString"}
 				notificationDevicesModel.Platforms = []string{"testString"}
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = sendNotificationsRequestModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.CeIbmenapnsbody = notificationApnsBodyModel
+				sendNotificationsOptionsModel.CeIbmenpushto = notificationDevicesModel
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenchromebody = notificationChromeBodyModel
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -821,23 +1136,77 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationDevicesModel.Tags = []string{"testString"}
 				notificationDevicesModel.Platforms = []string{"testString"}
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = sendNotificationsRequestModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = notificationFcmBodyModel
+				sendNotificationsOptionsModel.CeIbmenapnsbody = notificationApnsBodyModel
+				sendNotificationsOptionsModel.CeIbmenpushto = notificationDevicesModel
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenchromebody = notificationChromeBodyModel
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -4011,7 +4380,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Invoke UpdateDestination with error: Param validation error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:  testServer.URL,
+					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
@@ -7032,9 +7401,21 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewNotificationChromeBodyMessageData successfully`, func() {
+				alert := "testString"
+				_model, err := eventNotificationsService.NewNotificationChromeBodyMessageData(alert)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewNotificationFcmBodyMessageData successfully`, func() {
 				alert := "testString"
 				_model, err := eventNotificationsService.NewNotificationFcmBodyMessageData(alert)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewNotificationFirefoxBodyMessageData successfully`, func() {
+				alert := "testString"
+				_model, err := eventNotificationsService.NewNotificationFirefoxBodyMessageData(alert)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -7248,48 +7629,169 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationDevicesModel.Tags).To(Equal([]string{"testString"}))
 				Expect(notificationDevicesModel.Platforms).To(Equal([]string{"testString"}))
 
+				// Construct an instance of the NotificationChromeBodyMessageData model
+				notificationChromeBodyMessageDataModel := new(eventnotificationsv1.NotificationChromeBodyMessageData)
+				Expect(notificationChromeBodyMessageDataModel).ToNot(BeNil())
+				notificationChromeBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationChromeBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationChromeBodyMessageDataModel.Payload = make(map[string]interface{})
+				Expect(notificationChromeBodyMessageDataModel.Alert).To(Equal(core.StringPtr("testString")))
+				Expect(notificationChromeBodyMessageDataModel.Title).To(Equal(core.StringPtr("testString")))
+				Expect(notificationChromeBodyMessageDataModel.IconURL).To(Equal(core.StringPtr("testString")))
+				Expect(notificationChromeBodyMessageDataModel.TimeToLive).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(notificationChromeBodyMessageDataModel.Payload).To(Equal(make(map[string]interface{})))
+
+				// Construct an instance of the NotificationChromeBodyMessageEnData model
+				notificationChromeBodyModel := new(eventnotificationsv1.NotificationChromeBodyMessageEnData)
+				Expect(notificationChromeBodyModel).ToNot(BeNil())
+				notificationChromeBodyModel.EnData = notificationChromeBodyMessageDataModel
+				notificationChromeBodyModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationChromeBodyModel.EnData).To(Equal(notificationChromeBodyMessageDataModel))
+				Expect(notificationChromeBodyModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationChromeBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				notificationChromeBodyModel.SetProperties(nil)
+				Expect(notificationChromeBodyModel.GetProperties()).To(BeEmpty())
+
+				notificationChromeBodyModelExpectedMap := make(map[string]interface{})
+				notificationChromeBodyModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationChromeBodyModel.SetProperties(notificationChromeBodyModelExpectedMap)
+				notificationChromeBodyModelActualMap := notificationChromeBodyModel.GetProperties()
+				Expect(notificationChromeBodyModelActualMap).To(Equal(notificationChromeBodyModelExpectedMap))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageData model
+				notificationFirefoxBodyMessageDataModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageData)
+				Expect(notificationFirefoxBodyMessageDataModel).ToNot(BeNil())
+				notificationFirefoxBodyMessageDataModel.Alert = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.Title = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.IconURL = core.StringPtr("testString")
+				notificationFirefoxBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
+				notificationFirefoxBodyMessageDataModel.Payload = make(map[string]interface{})
+				Expect(notificationFirefoxBodyMessageDataModel.Alert).To(Equal(core.StringPtr("testString")))
+				Expect(notificationFirefoxBodyMessageDataModel.Title).To(Equal(core.StringPtr("testString")))
+				Expect(notificationFirefoxBodyMessageDataModel.IconURL).To(Equal(core.StringPtr("testString")))
+				Expect(notificationFirefoxBodyMessageDataModel.TimeToLive).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(notificationFirefoxBodyMessageDataModel.Payload).To(Equal(make(map[string]interface{})))
+
+				// Construct an instance of the NotificationFirefoxBodyMessageEnData model
+				notificationFirefoxBodyModel := new(eventnotificationsv1.NotificationFirefoxBodyMessageEnData)
+				Expect(notificationFirefoxBodyModel).ToNot(BeNil())
+				notificationFirefoxBodyModel.EnData = notificationFirefoxBodyMessageDataModel
+				notificationFirefoxBodyModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationFirefoxBodyModel.EnData).To(Equal(notificationFirefoxBodyMessageDataModel))
+				Expect(notificationFirefoxBodyModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationFirefoxBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				notificationFirefoxBodyModel.SetProperties(nil)
+				Expect(notificationFirefoxBodyModel.GetProperties()).To(BeEmpty())
+
+				notificationFirefoxBodyModelExpectedMap := make(map[string]interface{})
+				notificationFirefoxBodyModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationFirefoxBodyModel.SetProperties(notificationFirefoxBodyModelExpectedMap)
+				notificationFirefoxBodyModelActualMap := notificationFirefoxBodyModel.GetProperties()
+				Expect(notificationFirefoxBodyModelActualMap).To(Equal(notificationFirefoxBodyModelExpectedMap))
+
+				// Construct an instance of the SendNotificationsRequestNotificationCreate model
+				sendNotificationsRequestModel := new(eventnotificationsv1.SendNotificationsRequestNotificationCreate)
+				Expect(sendNotificationsRequestModel).ToNot(BeNil())
+				sendNotificationsRequestModel.Data = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenseverity = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenfcmbody = notificationFcmBodyModel
+				sendNotificationsRequestModel.Ibmenapnsbody = notificationApnsBodyModel
+				sendNotificationsRequestModel.Ibmenpushto = notificationDevicesModel
+				sendNotificationsRequestModel.Ibmenapnsheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmendefaultshort = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmendefaultlong = core.StringPtr("testString")
+				sendNotificationsRequestModel.Ibmenchromebody = notificationChromeBodyModel
+				sendNotificationsRequestModel.Ibmenfirefoxbody = notificationFirefoxBodyModel
+				sendNotificationsRequestModel.Ibmenchromeheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmenfirefoxheaders = make(map[string]interface{})
+				sendNotificationsRequestModel.Ibmensourceid = core.StringPtr("testString")
+				sendNotificationsRequestModel.Datacontenttype = core.StringPtr("application/json")
+				sendNotificationsRequestModel.Subject = core.StringPtr("testString")
+				sendNotificationsRequestModel.ID = core.StringPtr("testString")
+				sendNotificationsRequestModel.Source = core.StringPtr("testString")
+				sendNotificationsRequestModel.Type = core.StringPtr("testString")
+				sendNotificationsRequestModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsRequestModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				sendNotificationsRequestModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(sendNotificationsRequestModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsRequestModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Ibmenfcmbody).To(Equal(notificationFcmBodyModel))
+				Expect(sendNotificationsRequestModel.Ibmenapnsbody).To(Equal(notificationApnsBodyModel))
+				Expect(sendNotificationsRequestModel.Ibmenpushto).To(Equal(notificationDevicesModel))
+				Expect(sendNotificationsRequestModel.Ibmenapnsheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsRequestModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Ibmenchromebody).To(Equal(notificationChromeBodyModel))
+				Expect(sendNotificationsRequestModel.Ibmenfirefoxbody).To(Equal(notificationFirefoxBodyModel))
+				Expect(sendNotificationsRequestModel.Ibmenchromeheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsRequestModel.Ibmenfirefoxheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsRequestModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
+				Expect(sendNotificationsRequestModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Source).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Type).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsRequestModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(sendNotificationsRequestModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(sendNotificationsRequestModel.GetProperties()).ToNot(BeEmpty())
+				Expect(sendNotificationsRequestModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				sendNotificationsRequestModel.SetProperties(nil)
+				Expect(sendNotificationsRequestModel.GetProperties()).To(BeEmpty())
+
+				sendNotificationsRequestModelExpectedMap := make(map[string]interface{})
+				sendNotificationsRequestModelExpectedMap["foo"] = core.StringPtr("testString")
+				sendNotificationsRequestModel.SetProperties(sendNotificationsRequestModelExpectedMap)
+				sendNotificationsRequestModelActualMap := sendNotificationsRequestModel.GetProperties()
+				Expect(sendNotificationsRequestModelActualMap).To(Equal(sendNotificationsRequestModelExpectedMap))
+
 				// Construct an instance of the SendNotificationsOptions model
 				instanceID := "testString"
-				sendNotificationsOptionsIbmenseverity := "testString"
-				sendNotificationsOptionsIbmensourceid := "testString"
-				sendNotificationsOptionsSubject := "testString"
-				sendNotificationsOptionsID := "testString"
-				sendNotificationsOptionsSource := "testString"
-				sendNotificationsOptionsType := "testString"
-				sendNotificationsOptionsTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel := eventNotificationsService.NewSendNotificationsOptions(instanceID, sendNotificationsOptionsIbmenseverity, sendNotificationsOptionsIbmensourceid, sendNotificationsOptionsSubject, sendNotificationsOptionsID, sendNotificationsOptionsSource, sendNotificationsOptionsType, sendNotificationsOptionsTime)
+				sendNotificationsOptionsModel := eventNotificationsService.NewSendNotificationsOptions(instanceID)
 				sendNotificationsOptionsModel.SetInstanceID("testString")
-				sendNotificationsOptionsModel.SetIbmenseverity("testString")
-				sendNotificationsOptionsModel.SetIbmensourceid("testString")
-				sendNotificationsOptionsModel.SetSubject("testString")
-				sendNotificationsOptionsModel.SetID("testString")
-				sendNotificationsOptionsModel.SetSource("testString")
-				sendNotificationsOptionsModel.SetType("testString")
-				sendNotificationsOptionsModel.SetTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
-				sendNotificationsOptionsModel.SetData(make(map[string]interface{}))
-				sendNotificationsOptionsModel.SetIbmenfcmbody(notificationFcmBodyModel)
-				sendNotificationsOptionsModel.SetIbmenapnsbody(notificationApnsBodyModel)
-				sendNotificationsOptionsModel.SetIbmenpushto(notificationDevicesModel)
-				sendNotificationsOptionsModel.SetIbmenapnsheaders(make(map[string]interface{}))
-				sendNotificationsOptionsModel.SetDatacontenttype("application/json")
-				sendNotificationsOptionsModel.SetSpecversion("1.0")
+				sendNotificationsOptionsModel.SetBody(sendNotificationsRequestModel)
+				sendNotificationsOptionsModel.SetCeIbmenseverity("testString")
+				sendNotificationsOptionsModel.SetCeIbmendefaultshort("testString")
+				sendNotificationsOptionsModel.SetCeIbmendefaultlong("testString")
+				sendNotificationsOptionsModel.SetCeIbmenfcmbody(notificationFcmBodyModel)
+				sendNotificationsOptionsModel.SetCeIbmenapnsbody(notificationApnsBodyModel)
+				sendNotificationsOptionsModel.SetCeIbmenpushto(notificationDevicesModel)
+				sendNotificationsOptionsModel.SetCeIbmenapnsheaders(make(map[string]interface{}))
+				sendNotificationsOptionsModel.SetCeIbmenchromebody(notificationChromeBodyModel)
+				sendNotificationsOptionsModel.SetCeIbmenfirefoxbody(notificationFirefoxBodyModel)
+				sendNotificationsOptionsModel.SetCeIbmenchromeheaders(make(map[string]interface{}))
+				sendNotificationsOptionsModel.SetCeIbmenfirefoxheaders(make(map[string]interface{}))
+				sendNotificationsOptionsModel.SetCeIbmensourceid("testString")
+				sendNotificationsOptionsModel.SetCeID("testString")
+				sendNotificationsOptionsModel.SetCeSource("testString")
+				sendNotificationsOptionsModel.SetCeType("testString")
+				sendNotificationsOptionsModel.SetCeSpecversion("1.0")
+				sendNotificationsOptionsModel.SetCeTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
 				sendNotificationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(sendNotificationsOptionsModel).ToNot(BeNil())
 				Expect(sendNotificationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Subject).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Source).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
-				Expect(sendNotificationsOptionsModel.Data).To(Equal(make(map[string]interface{})))
-				Expect(sendNotificationsOptionsModel.Ibmenfcmbody).To(Equal(notificationFcmBodyModel))
-				Expect(sendNotificationsOptionsModel.Ibmenapnsbody).To(Equal(notificationApnsBodyModel))
-				Expect(sendNotificationsOptionsModel.Ibmenpushto).To(Equal(notificationDevicesModel))
-				Expect(sendNotificationsOptionsModel.Ibmenapnsheaders).To(Equal(make(map[string]interface{})))
-				Expect(sendNotificationsOptionsModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
-				Expect(sendNotificationsOptionsModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(sendNotificationsOptionsModel.Body).To(Equal(sendNotificationsRequestModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenfcmbody).To(Equal(notificationFcmBodyModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenapnsbody).To(Equal(notificationApnsBodyModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenpushto).To(Equal(notificationDevicesModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenapnsheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsOptionsModel.CeIbmenchromebody).To(Equal(notificationChromeBodyModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxbody).To(Equal(notificationFirefoxBodyModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenchromeheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxheaders).To(Equal(make(map[string]interface{})))
+				Expect(sendNotificationsOptionsModel.CeIbmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeID).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeSource).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeType).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeSpecversion).To(Equal(core.StringPtr("1.0")))
+				Expect(sendNotificationsOptionsModel.CeTime).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(sendNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewTopicUpdateSourcesItem successfully`, func() {
@@ -7384,10 +7886,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSubscriptionOptionsModel.Attributes).To(Equal(subscriptionUpdateAttributesModel))
 				Expect(updateSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewDestinationConfigParamsChromeDestinationConfig successfully`, func() {
+				apiKey := "testString"
+				websiteURL := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsChromeDestinationConfig(apiKey, websiteURL)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigParamsFcmDestinationConfig successfully`, func() {
 				serverKey := "testString"
 				senderID := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigParamsFcmDestinationConfig(serverKey, senderID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigParamsFirefoxDestinationConfig successfully`, func() {
+				websiteURL := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsFirefoxDestinationConfig(websiteURL)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -7402,6 +7917,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				url := "testString"
 				verb := "get"
 				_model, err := eventNotificationsService.NewDestinationConfigParamsWebhookDestinationConfig(url, verb)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewSendNotificationsRequestNotificationCreate successfully`, func() {
+				ibmenseverity := "testString"
+				ibmensourceid := "testString"
+				id := "testString"
+				source := "testString"
+				typeVar := "testString"
+				time := CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				_model, err := eventNotificationsService.NewSendNotificationsRequestNotificationCreate(ibmenseverity, ibmensourceid, id, source, typeVar, time)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

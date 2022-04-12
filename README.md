@@ -670,19 +670,15 @@ notificationsSouce := "<notification-source>"
 
 sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 	InstanceID:      core.StringPtr(instanceID),
-	Subject:         core.StringPtr(notificationSubject),
-	Ibmenseverity:        core.StringPtr(notificationSeverity),
-	ID:              core.StringPtr(notificationID),
-	Source:          core.StringPtr(notificationsSouce),
-	Ibmensourceid:      core.StringPtr(sourceID),
-	Type:            core.StringPtr(typeValue),
-	Time:            "<notification-time>",
-	Data:            make(map[string]interface{}),
-	Ibmenpushto:     notificationevicesModel,
-	Ibmenfcmbody:    notificationFcmBodyModel,
-	Ibmenapnsbody:   notificationApnsBodyModel,
-	Ibmenapnsheaders: notificationApnsHeaders
-	Datacontenttype: core.StringPtr("application/json"),
+	CeIbmenseverity:        core.StringPtr(notificationSeverity),
+	CeID:              core.StringPtr(notificationID),
+	CeSource:          core.StringPtr(notificationsSouce),
+	CeIbmensourceid:      core.StringPtr(sourceID),
+	CeType:            core.StringPtr(typeValue),
+	CeTime:            "<notification-time>",
+	CeIbmenpushto:     notificationevicesModel,
+	CeIbmenfcmbody:    notificationFcmBodyModel,
+	CeIbmenapnsbody:   notificationApnsBodyModel,
 	Specversion:     core.StringPtr("1.0"),
 }
 
@@ -706,19 +702,15 @@ if err != nil {
 - **APNs MessageApnsHeaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
 - **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
   - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
-  - *Subject* (**String**) - Subject for the notifications. 
-  - *Ibmenseverity* (**String**) - Severity for the notifications. 
-  - *ID* (**ID**) - ID for the notifications. 
-  - *Source* (**String**) - Source of the notifications. 
-  - *Ibmensourceid* (**String**) - Event Notificaitons instance Source ID. 
-  - *Type* (**String**) - Type for the notifications. 
-  - *Time* (**String**) - Time of the notifications. 
-  - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
-  - *Ibmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
-  - *Ibmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
-  - *Ibmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
-  - *Ibmenapnsheaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
-  - *Datacontenttype* (**String**) - Data content type of the notifications. 
+  - *CeIbmenseverity* (**String**) - Severity for the notifications. 
+  - *CeID* (**ID**) - ID for the notifications. 
+  - *CeSource* (**String**) - Source of the notifications. 
+  - *CeIbmensourceid* (**String**) - Event Notificaitons instance Source ID. 
+  - *CeType* (**String**) - Type for the notifications. 
+  - *CeTime* (**String**) - Time of the notifications. 
+  - *CeIbmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
+  - *CeIbmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
+  - *CeIbmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
   - *Specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
 
 </details>
