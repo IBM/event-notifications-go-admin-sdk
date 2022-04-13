@@ -1005,7 +1005,7 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 		builder.AddFormData("config", "", "application/json", createDestinationOptions.Config)
 	}
 	if createDestinationOptions.Certificate != nil {
-		builder.AddFormData("certificate", "",
+		builder.AddFormData("certificate", "filename",
 			core.StringNilMapper(createDestinationOptions.CertificateContentType), createDestinationOptions.Certificate)
 	}
 
@@ -1215,7 +1215,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 		builder.AddFormData("config", "", "application/json", updateDestinationOptions.Config)
 	}
 	if updateDestinationOptions.Certificate != nil {
-		builder.AddFormData("certificate", "",
+		builder.AddFormData("certificate", "filename",
 			core.StringNilMapper(updateDestinationOptions.CertificateContentType), updateDestinationOptions.Certificate)
 	}
 
@@ -4012,10 +4012,10 @@ type NotificationApnsBodyMessageData struct {
 	Badge *int64 `json:"badge,omitempty"`
 
 	// The category identifier to be used for the interactive push notifications.
-	InteractiveCategory *string `json:"interactiveCategory,omitempty"`
+	InteractiveCategory *string `json:"interactive_category,omitempty"`
 
 	// The title for the Action key.
-	IosActionKey *string `json:"iosActionKey,omitempty"`
+	IosActionKey *string `json:"ios_action_key,omitempty"`
 
 	// Custom JSON payload that will be sent as part of the notification message.
 	Payload interface{} `json:"payload,omitempty"`
@@ -4025,22 +4025,22 @@ type NotificationApnsBodyMessageData struct {
 
 	// The key to a title string in the Localizable.strings file for the current localization. The key string can be
 	// formatted with %@ and %n$@ specifiers to take the variables specified in the titleLocArgs array.
-	TitleLocKey *string `json:"titleLocKey,omitempty"`
+	TitleLocKey *string `json:"title_loc_key,omitempty"`
 
 	// A key to an alert-message string in a Localizabl.strings file for the current localization (which is set by the
 	// userÃ¢â‚¬â„¢s language preference).
 	//   The key string can be formatted with %@ and %n$@ specifiers to take the variables specified in the locArgs array.
-	LocKey *string `json:"locKey,omitempty"`
+	LocKey *string `json:"loc_key,omitempty"`
 
 	// The filename of an image file in the app bundle, with or without the filename extension. The image is used as the
 	// launch image when users tap the action button or move the action slider.
-	LaunchImage *string `json:"launchImage,omitempty"`
+	LaunchImage *string `json:"launch_image,omitempty"`
 
 	// Variable string values to appear in place of the format specifiers in title-loc-key.
-	TitleLocArgs []string `json:"titleLocArgs,omitempty"`
+	TitleLocArgs []string `json:"title_loc_args,omitempty"`
 
 	// Variable string values to appear in place of the format specifiers in locKey.
-	LocArgs []string `json:"locArgs,omitempty"`
+	LocArgs []string `json:"loc_args,omitempty"`
 
 	// The title of Rich Push notifications (Supported only on iOS 10 and above).
 	Title *string `json:"title,omitempty"`
@@ -4049,22 +4049,22 @@ type NotificationApnsBodyMessageData struct {
 	Subtitle *string `json:"subtitle,omitempty"`
 
 	// The link to the iOS notifications media (video, audio, GIF, images - Supported only on iOS 10 and above).
-	AttachmentURL *string `json:"attachmentUrl,omitempty"`
+	AttachmentURL *string `json:"attachment_url,omitempty"`
 
 	Type *string `json:"type,omitempty"`
 
 	// Multiple notifications with the same collapse identifier are displayed to the user as a single notification.
-	ApnsCollapseID *string `json:"apnsCollapseId,omitempty"`
+	ApnsCollapseID *string `json:"apns_collapse_id,omitempty"`
 
 	// An app-specific identifier for grouping related notifications. This value corresponds to the threadIdentifier
 	// property in the UNNotificationContent object.
-	ApnsThreadID *string `json:"apnsThreadId,omitempty"`
+	ApnsThreadID *string `json:"apns_thread_id,omitempty"`
 
 	// The string the notification adds to the category's summary format string.
-	ApnsGroupSummaryArg *string `json:"apnsGroupSummaryArg,omitempty"`
+	ApnsGroupSummaryArg *string `json:"apns_group_summary_arg,omitempty"`
 
 	// The number of items the notification adds to the category's summary format string.
-	ApnsGroupSummaryArgCount *int64 `json:"apnsGroupSummaryArgCount,omitempty"`
+	ApnsGroupSummaryArgCount *int64 `json:"apns_group_summary_arg_count,omitempty"`
 }
 
 // Constants associated with the NotificationApnsBodyMessageData.Type property.
@@ -4094,11 +4094,11 @@ func UnmarshalNotificationApnsBodyMessageData(m map[string]json.RawMessage, resu
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "interactiveCategory", &obj.InteractiveCategory)
+	err = core.UnmarshalPrimitive(m, "interactive_category", &obj.InteractiveCategory)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "iosActionKey", &obj.IosActionKey)
+	err = core.UnmarshalPrimitive(m, "ios_action_key", &obj.IosActionKey)
 	if err != nil {
 		return
 	}
@@ -4110,23 +4110,23 @@ func UnmarshalNotificationApnsBodyMessageData(m map[string]json.RawMessage, resu
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "titleLocKey", &obj.TitleLocKey)
+	err = core.UnmarshalPrimitive(m, "title_loc_key", &obj.TitleLocKey)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "locKey", &obj.LocKey)
+	err = core.UnmarshalPrimitive(m, "loc_key", &obj.LocKey)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "launchImage", &obj.LaunchImage)
+	err = core.UnmarshalPrimitive(m, "launch_image", &obj.LaunchImage)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "titleLocArgs", &obj.TitleLocArgs)
+	err = core.UnmarshalPrimitive(m, "title_loc_args", &obj.TitleLocArgs)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "locArgs", &obj.LocArgs)
+	err = core.UnmarshalPrimitive(m, "loc_args", &obj.LocArgs)
 	if err != nil {
 		return
 	}
@@ -4138,7 +4138,7 @@ func UnmarshalNotificationApnsBodyMessageData(m map[string]json.RawMessage, resu
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "attachmentUrl", &obj.AttachmentURL)
+	err = core.UnmarshalPrimitive(m, "attachment_url", &obj.AttachmentURL)
 	if err != nil {
 		return
 	}
@@ -4146,19 +4146,19 @@ func UnmarshalNotificationApnsBodyMessageData(m map[string]json.RawMessage, resu
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "apnsCollapseId", &obj.ApnsCollapseID)
+	err = core.UnmarshalPrimitive(m, "apns_collapse_id", &obj.ApnsCollapseID)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "apnsThreadId", &obj.ApnsThreadID)
+	err = core.UnmarshalPrimitive(m, "apns_thread_id", &obj.ApnsThreadID)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "apnsGroupSummaryArg", &obj.ApnsGroupSummaryArg)
+	err = core.UnmarshalPrimitive(m, "apns_group_summary_arg", &obj.ApnsGroupSummaryArg)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "apnsGroupSummaryArgCount", &obj.ApnsGroupSummaryArgCount)
+	err = core.UnmarshalPrimitive(m, "apns_group_summary_arg_count", &obj.ApnsGroupSummaryArgCount)
 	if err != nil {
 		return
 	}
