@@ -1005,7 +1005,7 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 		builder.AddFormData("config", "", "application/json", createDestinationOptions.Config)
 	}
 	if createDestinationOptions.Certificate != nil {
-		builder.AddFormData("certificate", "filename",
+		builder.AddFormData("certificate", "",
 			core.StringNilMapper(createDestinationOptions.CertificateContentType), createDestinationOptions.Certificate)
 	}
 
@@ -1215,7 +1215,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 		builder.AddFormData("config", "", "application/json", updateDestinationOptions.Config)
 	}
 	if updateDestinationOptions.Certificate != nil {
-		builder.AddFormData("certificate", "filename",
+		builder.AddFormData("certificate", "",
 			core.StringNilMapper(updateDestinationOptions.CertificateContentType), updateDestinationOptions.Certificate)
 	}
 
