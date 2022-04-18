@@ -679,7 +679,7 @@ sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 	CeIbmenpushto:     notificationevicesModel,
 	CeIbmenfcmbody:    notificationFcmBodyModel,
 	CeIbmenapnsbody:   notificationApnsBodyModel,
-	Specversion:     core.StringPtr("1.0"),
+	CeSpecversion:     core.StringPtr("1.0"),
 }
 
 notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
