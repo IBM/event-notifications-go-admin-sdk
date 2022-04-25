@@ -174,6 +174,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(sendNotificationsPath))
 					Expect(req.Method).To(Equal("POST"))
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
 					fmt.Fprint(res, `} this is not valid json {`)
@@ -187,98 +221,51 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = notificationCreateModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
@@ -325,6 +312,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -343,98 +364,51 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = notificationCreateModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -487,6 +461,40 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
+					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
+					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
+					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
@@ -507,98 +515,51 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = notificationCreateModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -616,98 +577,51 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = notificationCreateModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -746,98 +660,51 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Ibmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Subject = core.StringPtr("testString")
-				sendNotificationsOptionsModel.ID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Source = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Type = core.StringPtr("testString")
-				sendNotificationsOptionsModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel.Data = make(map[string]interface{})
-				sendNotificationsOptionsModel.Ibmenfcmbody = notificationFcmBodyModel
-				sendNotificationsOptionsModel.Ibmenapnsbody = notificationApnsBodyModel
-				sendNotificationsOptionsModel.Ibmenpushto = notificationDevicesModel
-				sendNotificationsOptionsModel.Ibmenapnsheaders = make(map[string]interface{})
-				sendNotificationsOptionsModel.Datacontenttype = core.StringPtr("application/json")
-				sendNotificationsOptionsModel.Specversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.Body = notificationCreateModel
+				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
+				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
+				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -7026,18 +6893,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTopicsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTopicsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewNotificationApnsBodyMessageData successfully`, func() {
-				alert := "testString"
-				_model, err := eventNotificationsService.NewNotificationApnsBodyMessageData(alert)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
-			It(`Invoke NewNotificationFcmBodyMessageData successfully`, func() {
-				alert := "testString"
-				_model, err := eventNotificationsService.NewNotificationFcmBodyMessageData(alert)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewReplaceTopicOptions successfully`, func() {
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
@@ -7082,214 +6937,105 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSendNotificationsOptions successfully`, func() {
-				// Construct an instance of the Lights model
-				lightsModel := new(eventnotificationsv1.Lights)
-				Expect(lightsModel).ToNot(BeNil())
-				lightsModel.LedArgb = core.StringPtr("testString")
-				lightsModel.LedOnMs = core.Int64Ptr(int64(0))
-				lightsModel.LedOffMs = core.StringPtr("testString")
-				Expect(lightsModel.LedArgb).To(Equal(core.StringPtr("testString")))
-				Expect(lightsModel.LedOnMs).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(lightsModel.LedOffMs).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				Expect(notificationCreateModel).ToNot(BeNil())
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
+				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Source).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Type).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(notificationCreateModel.Time).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
 
-				// Construct an instance of the Style model
-				styleModel := new(eventnotificationsv1.Style)
-				Expect(styleModel).ToNot(BeNil())
-				styleModel.Type = core.StringPtr("testString")
-				styleModel.Title = core.StringPtr("testString")
-				styleModel.URL = core.StringPtr("testString")
-				styleModel.Text = core.StringPtr("testString")
-				styleModel.Lines = []string{"testString"}
-				styleModel.SetProperty("foo", core.StringPtr("testString"))
-				Expect(styleModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(styleModel.Title).To(Equal(core.StringPtr("testString")))
-				Expect(styleModel.URL).To(Equal(core.StringPtr("testString")))
-				Expect(styleModel.Text).To(Equal(core.StringPtr("testString")))
-				Expect(styleModel.Lines).To(Equal([]string{"testString"}))
-				Expect(styleModel.GetProperties()).ToNot(BeEmpty())
-				Expect(styleModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+				notificationCreateModel.SetProperties(nil)
+				Expect(notificationCreateModel.GetProperties()).To(BeEmpty())
 
-				styleModel.SetProperties(nil)
-				Expect(styleModel.GetProperties()).To(BeEmpty())
-
-				styleModelExpectedMap := make(map[string]interface{})
-				styleModelExpectedMap["foo"] = core.StringPtr("testString")
-				styleModel.SetProperties(styleModelExpectedMap)
-				styleModelActualMap := styleModel.GetProperties()
-				Expect(styleModelActualMap).To(Equal(styleModelExpectedMap))
-
-				// Construct an instance of the NotificationFcmBodyMessageData model
-				notificationFcmBodyMessageDataModel := new(eventnotificationsv1.NotificationFcmBodyMessageData)
-				Expect(notificationFcmBodyMessageDataModel).ToNot(BeNil())
-				notificationFcmBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.CollapseKey = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Icon = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.DelayWhileIdle = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Sync = core.BoolPtr(true)
-				notificationFcmBodyMessageDataModel.Visibility = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Redact = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Payload = make(map[string]interface{})
-				notificationFcmBodyMessageDataModel.Priority = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.TimeToLive = core.Int64Ptr(int64(0))
-				notificationFcmBodyMessageDataModel.Lights = lightsModel
-				notificationFcmBodyMessageDataModel.AndroidTitle = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.GroupID = core.StringPtr("testString")
-				notificationFcmBodyMessageDataModel.Style = styleModel
-				notificationFcmBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				Expect(notificationFcmBodyMessageDataModel.Alert).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.CollapseKey).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.InteractiveCategory).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.Icon).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.DelayWhileIdle).To(Equal(core.BoolPtr(true)))
-				Expect(notificationFcmBodyMessageDataModel.Sync).To(Equal(core.BoolPtr(true)))
-				Expect(notificationFcmBodyMessageDataModel.Visibility).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.Redact).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.Payload).To(Equal(make(map[string]interface{})))
-				Expect(notificationFcmBodyMessageDataModel.Priority).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.Sound).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.TimeToLive).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(notificationFcmBodyMessageDataModel.Lights).To(Equal(lightsModel))
-				Expect(notificationFcmBodyMessageDataModel.AndroidTitle).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.GroupID).To(Equal(core.StringPtr("testString")))
-				Expect(notificationFcmBodyMessageDataModel.Style).To(Equal(styleModel))
-				Expect(notificationFcmBodyMessageDataModel.Type).To(Equal(core.StringPtr("DEFAULT")))
-
-				// Construct an instance of the NotificationFcmBodyMessageEnData model
-				notificationFcmBodyModel := new(eventnotificationsv1.NotificationFcmBodyMessageEnData)
-				Expect(notificationFcmBodyModel).ToNot(BeNil())
-				notificationFcmBodyModel.EnData = notificationFcmBodyMessageDataModel
-				notificationFcmBodyModel.SetProperty("foo", core.StringPtr("testString"))
-				Expect(notificationFcmBodyModel.EnData).To(Equal(notificationFcmBodyMessageDataModel))
-				Expect(notificationFcmBodyModel.GetProperties()).ToNot(BeEmpty())
-				Expect(notificationFcmBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
-
-				notificationFcmBodyModel.SetProperties(nil)
-				Expect(notificationFcmBodyModel.GetProperties()).To(BeEmpty())
-
-				notificationFcmBodyModelExpectedMap := make(map[string]interface{})
-				notificationFcmBodyModelExpectedMap["foo"] = core.StringPtr("testString")
-				notificationFcmBodyModel.SetProperties(notificationFcmBodyModelExpectedMap)
-				notificationFcmBodyModelActualMap := notificationFcmBodyModel.GetProperties()
-				Expect(notificationFcmBodyModelActualMap).To(Equal(notificationFcmBodyModelExpectedMap))
-
-				// Construct an instance of the NotificationApnsBodyMessageData model
-				notificationApnsBodyMessageDataModel := new(eventnotificationsv1.NotificationApnsBodyMessageData)
-				Expect(notificationApnsBodyMessageDataModel).ToNot(BeNil())
-				notificationApnsBodyMessageDataModel.Alert = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Badge = core.Int64Ptr(int64(38))
-				notificationApnsBodyMessageDataModel.InteractiveCategory = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.IosActionKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Payload = map[string]interface{}{"anyKey": "anyValue"}
-				notificationApnsBodyMessageDataModel.Sound = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LocKey = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.LaunchImage = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.TitleLocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.LocArgs = []string{"testString"}
-				notificationApnsBodyMessageDataModel.Title = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Subtitle = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.AttachmentURL = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.Type = core.StringPtr("DEFAULT")
-				notificationApnsBodyMessageDataModel.ApnsCollapseID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsThreadID = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg = core.StringPtr("testString")
-				notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount = core.Int64Ptr(int64(38))
-				Expect(notificationApnsBodyMessageDataModel.Alert).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.Badge).To(Equal(core.Int64Ptr(int64(38))))
-				Expect(notificationApnsBodyMessageDataModel.InteractiveCategory).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.IosActionKey).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.Payload).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
-				Expect(notificationApnsBodyMessageDataModel.Sound).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.TitleLocKey).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.LocKey).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.LaunchImage).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.TitleLocArgs).To(Equal([]string{"testString"}))
-				Expect(notificationApnsBodyMessageDataModel.LocArgs).To(Equal([]string{"testString"}))
-				Expect(notificationApnsBodyMessageDataModel.Title).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.Subtitle).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.AttachmentURL).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.Type).To(Equal(core.StringPtr("DEFAULT")))
-				Expect(notificationApnsBodyMessageDataModel.ApnsCollapseID).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.ApnsThreadID).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.ApnsGroupSummaryArg).To(Equal(core.StringPtr("testString")))
-				Expect(notificationApnsBodyMessageDataModel.ApnsGroupSummaryArgCount).To(Equal(core.Int64Ptr(int64(38))))
-
-				// Construct an instance of the NotificationApnsBodyMessageEnData model
-				notificationApnsBodyModel := new(eventnotificationsv1.NotificationApnsBodyMessageEnData)
-				Expect(notificationApnsBodyModel).ToNot(BeNil())
-				notificationApnsBodyModel.EnData = notificationApnsBodyMessageDataModel
-				notificationApnsBodyModel.SetProperty("foo", core.StringPtr("testString"))
-				Expect(notificationApnsBodyModel.EnData).To(Equal(notificationApnsBodyMessageDataModel))
-				Expect(notificationApnsBodyModel.GetProperties()).ToNot(BeEmpty())
-				Expect(notificationApnsBodyModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
-
-				notificationApnsBodyModel.SetProperties(nil)
-				Expect(notificationApnsBodyModel.GetProperties()).To(BeEmpty())
-
-				notificationApnsBodyModelExpectedMap := make(map[string]interface{})
-				notificationApnsBodyModelExpectedMap["foo"] = core.StringPtr("testString")
-				notificationApnsBodyModel.SetProperties(notificationApnsBodyModelExpectedMap)
-				notificationApnsBodyModelActualMap := notificationApnsBodyModel.GetProperties()
-				Expect(notificationApnsBodyModelActualMap).To(Equal(notificationApnsBodyModelExpectedMap))
-
-				// Construct an instance of the NotificationDevices model
-				notificationDevicesModel := new(eventnotificationsv1.NotificationDevices)
-				Expect(notificationDevicesModel).ToNot(BeNil())
-				notificationDevicesModel.FcmDevices = []string{"testString"}
-				notificationDevicesModel.ApnsDevices = []string{"testString"}
-				notificationDevicesModel.UserIds = []string{"testString"}
-				notificationDevicesModel.Tags = []string{"testString"}
-				notificationDevicesModel.Platforms = []string{"testString"}
-				Expect(notificationDevicesModel.FcmDevices).To(Equal([]string{"testString"}))
-				Expect(notificationDevicesModel.ApnsDevices).To(Equal([]string{"testString"}))
-				Expect(notificationDevicesModel.UserIds).To(Equal([]string{"testString"}))
-				Expect(notificationDevicesModel.Tags).To(Equal([]string{"testString"}))
-				Expect(notificationDevicesModel.Platforms).To(Equal([]string{"testString"}))
+				notificationCreateModelExpectedMap := make(map[string]interface{})
+				notificationCreateModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationCreateModel.SetProperties(notificationCreateModelExpectedMap)
+				notificationCreateModelActualMap := notificationCreateModel.GetProperties()
+				Expect(notificationCreateModelActualMap).To(Equal(notificationCreateModelExpectedMap))
 
 				// Construct an instance of the SendNotificationsOptions model
 				instanceID := "testString"
-				sendNotificationsOptionsIbmenseverity := "testString"
-				sendNotificationsOptionsIbmensourceid := "testString"
-				sendNotificationsOptionsSubject := "testString"
-				sendNotificationsOptionsID := "testString"
-				sendNotificationsOptionsSource := "testString"
-				sendNotificationsOptionsType := "testString"
-				sendNotificationsOptionsTime := CreateMockDateTime("2019-01-01T12:00:00.000Z")
-				sendNotificationsOptionsModel := eventNotificationsService.NewSendNotificationsOptions(instanceID, sendNotificationsOptionsIbmenseverity, sendNotificationsOptionsIbmensourceid, sendNotificationsOptionsSubject, sendNotificationsOptionsID, sendNotificationsOptionsSource, sendNotificationsOptionsType, sendNotificationsOptionsTime)
+				sendNotificationsOptionsModel := eventNotificationsService.NewSendNotificationsOptions(instanceID)
 				sendNotificationsOptionsModel.SetInstanceID("testString")
-				sendNotificationsOptionsModel.SetIbmenseverity("testString")
-				sendNotificationsOptionsModel.SetIbmensourceid("testString")
-				sendNotificationsOptionsModel.SetSubject("testString")
-				sendNotificationsOptionsModel.SetID("testString")
-				sendNotificationsOptionsModel.SetSource("testString")
-				sendNotificationsOptionsModel.SetType("testString")
-				sendNotificationsOptionsModel.SetTime(CreateMockDateTime("2019-01-01T12:00:00.000Z"))
-				sendNotificationsOptionsModel.SetData(make(map[string]interface{}))
-				sendNotificationsOptionsModel.SetIbmenfcmbody(notificationFcmBodyModel)
-				sendNotificationsOptionsModel.SetIbmenapnsbody(notificationApnsBodyModel)
-				sendNotificationsOptionsModel.SetIbmenpushto(notificationDevicesModel)
-				sendNotificationsOptionsModel.SetIbmenapnsheaders(make(map[string]interface{}))
-				sendNotificationsOptionsModel.SetDatacontenttype("application/json")
-				sendNotificationsOptionsModel.SetSpecversion("1.0")
+				sendNotificationsOptionsModel.SetBody(notificationCreateModel)
+				sendNotificationsOptionsModel.SetCeIbmenseverity("testString")
+				sendNotificationsOptionsModel.SetCeIbmendefaultshort("testString")
+				sendNotificationsOptionsModel.SetCeIbmendefaultlong("testString")
+				sendNotificationsOptionsModel.SetCeIbmenfcmbody("testString")
+				sendNotificationsOptionsModel.SetCeIbmenapnsbody("testString")
+				sendNotificationsOptionsModel.SetCeIbmenpushto(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				sendNotificationsOptionsModel.SetCeIbmenapnsheaders("testString")
+				sendNotificationsOptionsModel.SetCeIbmenchromebody("testString")
+				sendNotificationsOptionsModel.SetCeIbmenfirefoxbody("testString")
+				sendNotificationsOptionsModel.SetCeIbmenchromeheaders("testString")
+				sendNotificationsOptionsModel.SetCeIbmenfirefoxheaders("testString")
+				sendNotificationsOptionsModel.SetCeIbmensourceid("testString")
+				sendNotificationsOptionsModel.SetCeID("testString")
+				sendNotificationsOptionsModel.SetCeSource("testString")
+				sendNotificationsOptionsModel.SetCeType("testString")
+				sendNotificationsOptionsModel.SetCeSpecversion("1.0")
+				sendNotificationsOptionsModel.SetCeTime("testString")
 				sendNotificationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(sendNotificationsOptionsModel).ToNot(BeNil())
 				Expect(sendNotificationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Subject).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Source).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
-				Expect(sendNotificationsOptionsModel.Data).To(Equal(make(map[string]interface{})))
-				Expect(sendNotificationsOptionsModel.Ibmenfcmbody).To(Equal(notificationFcmBodyModel))
-				Expect(sendNotificationsOptionsModel.Ibmenapnsbody).To(Equal(notificationApnsBodyModel))
-				Expect(sendNotificationsOptionsModel.Ibmenpushto).To(Equal(notificationDevicesModel))
-				Expect(sendNotificationsOptionsModel.Ibmenapnsheaders).To(Equal(make(map[string]interface{})))
-				Expect(sendNotificationsOptionsModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
-				Expect(sendNotificationsOptionsModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(sendNotificationsOptionsModel.Body).To(Equal(notificationCreateModel))
+				Expect(sendNotificationsOptionsModel.CeIbmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenfcmbody).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenapnsbody).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+				Expect(sendNotificationsOptionsModel.CeIbmenapnsheaders).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenchromebody).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxbody).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenchromeheaders).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeIbmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeID).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeSource).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeType).To(Equal(core.StringPtr("testString")))
+				Expect(sendNotificationsOptionsModel.CeSpecversion).To(Equal(core.StringPtr("1.0")))
+				Expect(sendNotificationsOptionsModel.CeTime).To(Equal(core.StringPtr("testString")))
 				Expect(sendNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewTopicUpdateSourcesItem successfully`, func() {
@@ -7384,10 +7130,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSubscriptionOptionsModel.Attributes).To(Equal(subscriptionUpdateAttributesModel))
 				Expect(updateSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewDestinationConfigParamsChromeDestinationConfig successfully`, func() {
+				apiKey := "testString"
+				websiteURL := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsChromeDestinationConfig(apiKey, websiteURL)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigParamsFcmDestinationConfig successfully`, func() {
 				serverKey := "testString"
 				senderID := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigParamsFcmDestinationConfig(serverKey, senderID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigParamsFirefoxDestinationConfig successfully`, func() {
+				websiteURL := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsFirefoxDestinationConfig(websiteURL)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

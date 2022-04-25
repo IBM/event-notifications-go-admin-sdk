@@ -635,56 +635,65 @@ if err != nil {
 ## Send Notifications
 
 ```go
-notificationevicesModel := &eventnotificationsv1.NotificationDevices{
+notificationevicesModel := map[string]interface{}{
 	UserIds: []string{"<user-ids>"},
 	FcmDevices: []string{"<fcm-device-ids>"},
 	ApnsDevices: []string{"<apns-device-ids>"},
 	Tags: []string{"<tag-names>"},
 	Platforms: []string{"<device-platforms>"},
 }
+devicesbody, _ := json.Marshal(notificationevicesModel)
+devicesbodyString := string(devicesbody)
 
-notificationApnsBodyModel := &eventnotificationsv1.NotificationApnsBody{}
-notificationFcmBodyModel := &eventnotificationsv1.NotificationFcmBody{}
-
-notificationApnsBodyModel.SetProperties(map[string]interface{}{
+apnsOptions := map[string]interface{}{
 	"aps": map[string]interface{}{
 		"alert": "<notification-message>",
 		"badge": 5,
 	},
 })
-notificationFcmBodyModel.SetProperties(map[string]interface{}{
+ibmenapnsbody, _ := json.Marshal(apnsOptions)
+ibmenapnsbodyString := string(ibmenapnsbody)
+
+fcmOptions := map[string]interface{}{
 	"notification": map[string]interface{}{
 		"title": "<notification-title>",
 		"body":  "<notification-message>",
 	},
 })
+ibmenfcmbody, _ := json.Marshal(fcmOptions)
+ibmenfcmbodyString := string(ibmenfcmbody)
+
 notificationApnsHeaders := map[string]interface{}{
 	"apns-collapse-id": "<apns-apns-collapse-id-value>",
 }
+ibmenapnsheaderbody, _ := json.Marshal(notificationApnsHeaders)
+ibmenapnsheaderstring := string(ibmenapnsheaderbody)
+
 
 notificationID := "<notification-id>"
-notificationSubject := "<notification-subject>"
 notificationSeverity := "<notification-severity>"
 typeValue := "<notification-type>"
 notificationsSouce := "<notification-source>"
+specVersion := "1.0"
+now := time.Now()
+date := strfmt.DateTime(now).String()
 
 sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
 	InstanceID:      core.StringPtr(instanceID),
-	Subject:         core.StringPtr(notificationSubject),
-	Ibmenseverity:        core.StringPtr(notificationSeverity),
-	ID:              core.StringPtr(notificationID),
-	Source:          core.StringPtr(notificationsSouce),
-	Ibmensourceid:      core.StringPtr(sourceID),
-	Type:            core.StringPtr(typeValue),
-	Time:            "<notification-time>",
-	Data:            make(map[string]interface{}),
-	Ibmenpushto:     notificationevicesModel,
-	Ibmenfcmbody:    notificationFcmBodyModel,
-	Ibmenapnsbody:   notificationApnsBodyModel,
-	Ibmenapnsheaders: notificationApnsHeaders
-	Datacontenttype: core.StringPtr("application/json"),
-	Specversion:     core.StringPtr("1.0"),
 }
+
+sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+sendNotificationsOptions.CeID = &notificationID
+sendNotificationsOptions.CeSource = &notificationsSouce
+sendNotificationsOptions.CeIbmensourceid = &sourceID
+sendNotificationsOptions.CeType = &typeValue
+sendNotificationsOptions.CeTime = &date
+sendNotificationsOptions.CeSpecversion = &specVersion
+
+sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
+sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
+sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
+sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
 
 notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 if err != nil {
@@ -696,30 +705,38 @@ if err != nil {
 <summary>Send Notifications Variables</summary>
 <br>
 
-- **FCM Target NotificationFcmDevices** - Set up the the push notifications tragets.
-  - *UserIds* (Array of **String**) - Send notification to the specified userIds.
-  - *FcmDevices* (Array of **String**) - Send notification to the list of specified devices.
-  - *Tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
-  - *Platforms* (Array of **String**) - Send notification to the devices of the specified platforms. Pass 'G' for google (Android) devices. Pass 'A' for iOS  devices.
-- **FCM MessageFcmBody** - Set payload specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. We support `notification` and `data` keys in FCM.
-- **iOS MessageApnsBody** - Set payload specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
-- **APNs MessageApnsHeaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
+- **CeIbmenpushto** - Set up the the push notifications tragets.
+  - *user_ids* (Array of **String**) - Send notification to the specified userIds.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified Android devices.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified iOS devices.
+  - *_devices* (Array of **String**) - Send notification to the list of specified Chrome devices.
+  - *firefox_devices* (Array of **String**) - Send notification to the list of specified Firefox devices.
+  - *tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
+  - *platforms* (Array of **String**) - Send notification to the devices of the specified platforms. 
+  	- Pass 'G' for google (Android) devices.
+	- Pass 'A' for iOS devices.
+	- Pass 'WEB_FIREFOX' for Firefox browser.
+	- Pass 'WEB_CHROME' for Chrome browser.
+- **CeIbmenfcmbody** - Set payload specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
+- **CeIbmenfcmbody** - Set payload specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+- **CeIbmenapnsheaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
 - **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
   - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
-  - *Subject* (**String**) - Subject for the notifications. 
-  - *Ibmenseverity* (**String**) - Severity for the notifications. 
-  - *ID* (**ID**) - ID for the notifications. 
-  - *Source* (**String**) - Source of the notifications. 
-  - *Ibmensourceid* (**String**) - Event Notificaitons instance Source ID. 
-  - *Type* (**String**) - Type for the notifications. 
-  - *Time* (**String**) - Time of the notifications. 
-  - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
-  - *Ibmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
-  - *Ibmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
-  - *Ibmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
-  - *Ibmenapnsheaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
-  - *Datacontenttype* (**String**) - Data content type of the notifications. 
-  - *Specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
+  - *CeIbmenseverity* (**String**) - Severity for the notifications. 
+  - *CeID* (**String**) - ID for the notifications. 
+  - *CeSource* (**String**) - Source of the notifications. 
+  - *CeIbmensourceid* (**String**) - Event Notificaitons instance Source ID. 
+  - *CeType* (**String**) - Type for the notifications. 
+  - *CeTime* (**String**) - Time of the notifications. 
+  - *CeIbmenpushto* (**string**) - Targets for the FCM notifications. 
+  - *CeIbmenfcmbody* (**string**) - Message body for the FCM notifications. 
+  - *CeIbmenapnsbody* (**string**) - Message body for the APNs notifications. 
+  - *CeIbmenapnsheaders* (**string**) - Headers for the APNs notifications. 
+  - *CeIbmenchromebody* (**string**) - Message body for the Chrome notifications. 
+  - *CeIbmenfirefoxbody* (**string**) - Message body for the Firefox notifications. 
+  - *CeIbmenchromeheaders* (**string**) - Headers for the Chrome notifications. 
+  - *CeIbmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. 
+  - *CeSpecversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
 
 </details>
 
