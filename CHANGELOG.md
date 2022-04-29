@@ -1,3 +1,10 @@
+# [0.1.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.8...v0.1.0) (2022-04-29)
+
+
+### Features
+
+*  web push support and breaking changes for send notification method. ([e882e08](https://github.com/IBM/event-notifications-go-admin-sdk/commit/e882e08abdcc18aecc1305822f6ce89aba3a0d76))
+
 ## [0.0.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.7...v0.0.8) (2022-03-25)
 
 
