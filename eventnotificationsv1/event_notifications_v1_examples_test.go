@@ -620,54 +620,64 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
-			date := strfmt.DateTime(now)
+			date := strfmt.DateTime(now).String()
 			userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
+			specVersion := "1.0"
 
 			// begin-send_notifications
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSeverity,
-				sourceID,
-				notificationSubject,
-				notificationID,
-				notificationsSouce,
-				typeValue,
-				&date,
 			)
 
-			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
-				UserIds: []string{userId},
+			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+			sendNotificationsOptions.CeID = &notificationID
+			sendNotificationsOptions.CeSource = &notificationsSouce
+			sendNotificationsOptions.CeIbmensourceid = &sourceID
+			sendNotificationsOptions.CeType = &typeValue
+			sendNotificationsOptions.CeTime = &date
+			sendNotificationsOptions.CeSpecversion = &specVersion
+
+			devices := map[string]interface{}{
+				"user_id": userId,
 			}
+			devicesbody, _ := json.Marshal(devices)
+			devicesbodyString := string(devicesbody)
 
-			apnsOptions := &eventnotificationsv1.NotificationApnsBody{}
-			fcmOptions := &eventnotificationsv1.NotificationFcmBody{}
+			sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
 
-			apnsOptions.SetProperties(map[string]interface{}{
+			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
-					"alert": "<alert message>",
+					"alert": "alert message",
 					"badge": 5,
 				},
-			})
-			fcmOptions.SetProperties(map[string]interface{}{
-				"notification": map[string]interface{}{
-					"title": "<alert title>",
-					"body":  "<alert message>",
-				},
-			})
-
-			apnsHeaders := map[string]interface{}{
-				"apns-collapse-id": "<collapse-id>",
 			}
 
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
-			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
-			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
+			ibmenapnsbody, _ := json.Marshal(apnsOptions)
+			ibmenapnsbodyString := string(ibmenapnsbody)
+
+			fcmOptions := map[string]interface{}{
+				"notification": map[string]interface{}{
+					"title": "alert title",
+					"body":  "alert message",
+				},
+			}
+			ibmenfcmbody, _ := json.Marshal(fcmOptions)
+			ibmenfcmbodyString := string(ibmenfcmbody)
+
+			apnsHeaders := map[string]interface{}{
+				"apns-collapse-id": "collapse-id",
+			}
+			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
+			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
+
+			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
+			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
+			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -689,39 +699,63 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
-			date := strfmt.DateTime(now)
+			date := strfmt.DateTime(now).String()
 			userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
-
+			specVersion := "1.0"
 			// begin-send_notifications
 
 			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
 				instanceID,
-				notificationSeverity,
-				sourceID,
-				notificationSubject,
-				notificationID,
-				notificationsSouce,
-				typeValue,
-				&date,
 			)
 
-			sendNotificationsOptions.Ibmenpushto = &eventnotificationsv1.NotificationDevices{
-				UserIds: []string{userId},
+			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+			sendNotificationsOptions.CeID = &notificationID
+			sendNotificationsOptions.CeSource = &notificationsSouce
+			sendNotificationsOptions.CeIbmensourceid = &sourceID
+			sendNotificationsOptions.CeType = &typeValue
+			sendNotificationsOptions.CeTime = &date
+			sendNotificationsOptions.CeSpecversion = &specVersion
+
+			devices := map[string]interface{}{
+				"user_id": userId,
+			}
+			devicesbody, _ := json.Marshal(devices)
+			devicesbodyString := string(devicesbody)
+
+			sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
+
+			apnsOptions := map[string]interface{}{
+				"aps": map[string]interface{}{
+					"alert": "alert message",
+					"badge": 5,
+				},
 			}
 
-			fcmOptions := &eventnotificationsv1.NotificationFcmBody{}
-			fcmOptions.SetProperties(map[string]interface{}{
+			ibmenapnsbody, _ := json.Marshal(apnsOptions)
+			ibmenapnsbodyString := string(ibmenapnsbody)
+
+			fcmOptions := map[string]interface{}{
 				"notification": map[string]interface{}{
-					"title": "Portugal vs. Denmark",
-					"body":  "great match!",
+					"title": "alert title",
+					"body":  "alert message",
 				},
-			})
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
+			}
+			ibmenfcmbody, _ := json.Marshal(fcmOptions)
+			ibmenfcmbodyString := string(ibmenfcmbody)
+
+			apnsHeaders := map[string]interface{}{
+				"apns-collapse-id": "collapse-id",
+			}
+			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
+			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
+
+			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
+			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
+			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 

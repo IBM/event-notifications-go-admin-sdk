@@ -21,6 +21,7 @@
 package eventnotificationsv1_test
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -28,6 +29,7 @@ import (
 
 	"github.com/IBM/event-notifications-go-admin-sdk/eventnotificationsv1"
 	"github.com/IBM/go-sdk-core/v5/core"
+	"github.com/go-openapi/strfmt"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 )
@@ -489,9 +491,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`CreateDestination(createDestinationOptions *CreateDestinationOptions)`, func() {
 
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
-				URL:              core.StringPtr("https://gcm.com"),
-				Verb:             core.StringPtr("get"),
-				CustomHeaders:    make(map[string]string),
+				URL:  core.StringPtr("https://gcm.com"),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"gcm_apikey": "api_key_value",
+				},
 				SensitiveHeaders: []string{"gcm_apikey"},
 			}
 
@@ -663,9 +667,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`UpdateDestination(updateDestinationOptions *UpdateDestinationOptions)`, func() {
 
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
-				URL:              core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
-				Verb:             core.StringPtr("post"),
-				CustomHeaders:    make(map[string]string),
+				URL:  core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
+				Verb: core.StringPtr("post"),
+				CustomHeaders: map[string]string{
+					"authorization": "authorization key",
+				},
 				SensitiveHeaders: []string{"authorization"},
 			}
 
@@ -981,95 +987,32 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`SendNotifications(sendNotificationsOptions *SendNotificationsOptions)`, func() {
 
-			notificationDevicesModel := &eventnotificationsv1.NotificationDevices{
-				UserIds: []string{"userId"},
-			}
+			notificationDevicesModel := "{\"user_ids\": \"userId\"}"
 
-			lightsModel := &eventnotificationsv1.Lights{
-				LedArgb:  core.StringPtr("RED"),
-				LedOnMs:  core.Int64Ptr(int64(0)),
-				LedOffMs: core.StringPtr("20"),
-			}
-
-			styleModel := &eventnotificationsv1.Style{
-				Type:  core.StringPtr("picture_notification"),
-				Title: core.StringPtr("hello"),
-				URL:   core.StringPtr("url.ibm.com"),
-			}
-
-			// FCM EN Data
-			notificationFcmBodyMessageDataModel := &eventnotificationsv1.NotificationFcmBodyMessageData{
-				Alert:               core.StringPtr("Alert message"),
-				CollapseKey:         core.StringPtr("collapse_key"),
-				InteractiveCategory: core.StringPtr("category_test"),
-				Icon:                core.StringPtr("test.png"),
-				DelayWhileIdle:      core.BoolPtr(true),
-				Sync:                core.BoolPtr(true),
-				Visibility:          core.StringPtr("0"),
-				Redact:              core.StringPtr("redact test alert"),
-				Payload:             make(map[string]interface{}),
-				Priority:            core.StringPtr("MIN"),
-				Sound:               core.StringPtr("newSound"),
-				TimeToLive:          core.Int64Ptr(int64(0)),
-				Lights:              lightsModel,
-				AndroidTitle:        core.StringPtr("IBM test title"),
-				GroupID:             core.StringPtr("Group_ID_1"),
-				Style:               styleModel,
-				Type:                core.StringPtr("DEFAULT"),
-			}
-
-			notificationFcmBodyModel := &eventnotificationsv1.NotificationFcmBodyMessageEnData{
-				EnData: notificationFcmBodyMessageDataModel,
-			}
-
-			notificationApnsBodyMessageDataModel := &eventnotificationsv1.NotificationApnsBodyMessageData{
-				Alert:                    core.StringPtr("Alert message"),
-				Badge:                    core.Int64Ptr(int64(38)),
-				InteractiveCategory:      core.StringPtr("InteractiveCategory"),
-				IosActionKey:             core.StringPtr("IosActionKey"),
-				Payload:                  map[string]interface{}{"testKey": "testValue"},
-				Sound:                    core.StringPtr("sound.wav"),
-				TitleLocKey:              core.StringPtr("TitleLocKey"),
-				LocKey:                   core.StringPtr("LocKey"),
-				LaunchImage:              core.StringPtr("image.png"),
-				TitleLocArgs:             []string{"TitleLocArgs1", "TitleLocArgs2"},
-				LocArgs:                  []string{"LocArgs1", "LocArgs2"},
-				Title:                    core.StringPtr("Message Title"),
-				Subtitle:                 core.StringPtr("Message SubTitle"),
-				AttachmentURL:            core.StringPtr("https://testimage.sub.png"),
-				Type:                     core.StringPtr("DEFAULT"),
-				ApnsCollapseID:           core.StringPtr("ApnsCollapseID"),
-				ApnsThreadID:             core.StringPtr("ApnsThreadID"),
-				ApnsGroupSummaryArg:      core.StringPtr("ApnsGroupSummaryArg"),
-				ApnsGroupSummaryArgCount: core.Int64Ptr(int64(38)),
-			}
-
-			notificationCreateMessageApnsBodyModel := &eventnotificationsv1.NotificationApnsBodyMessageEnData{
-				EnData: notificationApnsBodyMessageDataModel,
-			}
+			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSubject := "FCM_Subject"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			notificationsSouce := "1234-1234-sdfs-234:test"
+			now := time.Now()
+			date := strfmt.DateTime(now).String()
+			specVersion := "1.0"
 
 			sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
-				InstanceID:      core.StringPtr(instanceID),
-				Subject:         core.StringPtr(notificationSubject),
-				Ibmenseverity:   core.StringPtr(notificationSeverity),
-				ID:              core.StringPtr(notificationID),
-				Source:          core.StringPtr(notificationsSouce),
-				Ibmensourceid:   core.StringPtr(sourceID),
-				Type:            core.StringPtr(typeValue),
-				Time:            CreateMockDateTime("2019-01-01T12:00:00.000Z"),
-				Data:            make(map[string]interface{}),
-				Ibmenpushto:     notificationDevicesModel,
-				Ibmenfcmbody:    notificationFcmBodyModel,
-				Ibmenapnsbody:   notificationCreateMessageApnsBodyModel,
-				Datacontenttype: core.StringPtr("application/json"),
-				Specversion:     core.StringPtr("1.0"),
+				InstanceID: core.StringPtr(instanceID),
 			}
+			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
+			sendNotificationsOptions.CeID = &notificationID
+			sendNotificationsOptions.CeSource = &notificationsSouce
+			sendNotificationsOptions.CeIbmensourceid = &sourceID
+			sendNotificationsOptions.CeType = &typeValue
+			sendNotificationsOptions.CeTime = &date
+			sendNotificationsOptions.CeSpecversion = &specVersion
+			sendNotificationsOptions.CeIbmenfcmbody = &notificationFcmBodyModel
+			sendNotificationsOptions.CeIbmenapnsbody = &notificationAPNsBodyModel
+			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -1077,29 +1020,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(202))
 			Expect(notificationResponse).ToNot(BeNil())
 
-			apnsOptions := &eventnotificationsv1.NotificationApnsBody{}
-			fcmOptions := &eventnotificationsv1.NotificationFcmBody{}
-
-			apnsOptions.SetProperties(map[string]interface{}{
+			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
-					"alert": "Game Request",
+					"alert": "alert message",
 					"badge": 5,
 				},
-			})
-			fcmOptions.SetProperties(map[string]interface{}{
+			}
+			ibmenapnsbody, _ := json.Marshal(apnsOptions)
+			ibmenapnsbodyString := string(ibmenapnsbody)
+
+			fcmOptions := map[string]interface{}{
 				"notification": map[string]interface{}{
-					"title": "Portugal vs. Denmark",
-					"body":  "great match!",
+					"title": "alert title",
+					"body":  "alert message",
 				},
-			})
+			}
+			ibmenfcmbody, _ := json.Marshal(fcmOptions)
+			ibmenfcmbodyString := string(ibmenfcmbody)
 
 			apnsHeaders := map[string]interface{}{
-				"apns-collapse-id": "123",
+				"apns-collapse-id": "collapse-id",
 			}
+			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
+			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
 
-			sendNotificationsOptions.Ibmenfcmbody = fcmOptions
-			sendNotificationsOptions.Ibmenapnsbody = apnsOptions
-			sendNotificationsOptions.Ibmenapnsheaders = apnsHeaders
+			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
+			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
+			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
+
 			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
 			Expect(err).To(BeNil())

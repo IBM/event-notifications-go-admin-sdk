@@ -162,6 +162,124 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 	eventNotifications.Service.DisableRetries()
 }
 
+// SendNotifications : Send a notification
+func (eventNotifications *EventNotificationsV1) SendNotifications(sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.SendNotificationsWithContext(context.Background(), sendNotificationsOptions)
+}
+
+// SendNotificationsWithContext is an alternate form of the SendNotifications method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx context.Context, sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(sendNotificationsOptions, "sendNotificationsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(sendNotificationsOptions, "sendNotificationsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *sendNotificationsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/notifications`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range sendNotificationsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "SendNotifications")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+	if sendNotificationsOptions.CeIbmenseverity != nil {
+		builder.AddHeader("ce-ibmenseverity", fmt.Sprint(*sendNotificationsOptions.CeIbmenseverity))
+	}
+	if sendNotificationsOptions.CeIbmendefaultshort != nil {
+		builder.AddHeader("ce-ibmendefaultshort", fmt.Sprint(*sendNotificationsOptions.CeIbmendefaultshort))
+	}
+	if sendNotificationsOptions.CeIbmendefaultlong != nil {
+		builder.AddHeader("ce-ibmendefaultlong", fmt.Sprint(*sendNotificationsOptions.CeIbmendefaultlong))
+	}
+	if sendNotificationsOptions.CeIbmenfcmbody != nil {
+		builder.AddHeader("ce-ibmenfcmbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenfcmbody))
+	}
+	if sendNotificationsOptions.CeIbmenapnsbody != nil {
+		builder.AddHeader("ce-ibmenapnsbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenapnsbody))
+	}
+	if sendNotificationsOptions.CeIbmenpushto != nil {
+		builder.AddHeader("ce-ibmenpushto", fmt.Sprint(*sendNotificationsOptions.CeIbmenpushto))
+	}
+	if sendNotificationsOptions.CeIbmenapnsheaders != nil {
+		builder.AddHeader("ce-ibmenapnsheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenapnsheaders))
+	}
+	if sendNotificationsOptions.CeIbmenchromebody != nil {
+		builder.AddHeader("ce-ibmenchromebody", fmt.Sprint(*sendNotificationsOptions.CeIbmenchromebody))
+	}
+	if sendNotificationsOptions.CeIbmenfirefoxbody != nil {
+		builder.AddHeader("ce-ibmenfirefoxbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenfirefoxbody))
+	}
+	if sendNotificationsOptions.CeIbmenchromeheaders != nil {
+		builder.AddHeader("ce-ibmenchromeheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenchromeheaders))
+	}
+	if sendNotificationsOptions.CeIbmenfirefoxheaders != nil {
+		builder.AddHeader("ce-ibmenfirefoxheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenfirefoxheaders))
+	}
+	if sendNotificationsOptions.CeIbmensourceid != nil {
+		builder.AddHeader("ce-ibmensourceid", fmt.Sprint(*sendNotificationsOptions.CeIbmensourceid))
+	}
+	if sendNotificationsOptions.CeID != nil {
+		builder.AddHeader("ce-id", fmt.Sprint(*sendNotificationsOptions.CeID))
+	}
+	if sendNotificationsOptions.CeSource != nil {
+		builder.AddHeader("ce-source", fmt.Sprint(*sendNotificationsOptions.CeSource))
+	}
+	if sendNotificationsOptions.CeType != nil {
+		builder.AddHeader("ce-type", fmt.Sprint(*sendNotificationsOptions.CeType))
+	}
+	if sendNotificationsOptions.CeSpecversion != nil {
+		builder.AddHeader("ce-specversion", fmt.Sprint(*sendNotificationsOptions.CeSpecversion))
+	}
+	if sendNotificationsOptions.CeTime != nil {
+		builder.AddHeader("ce-time", fmt.Sprint(*sendNotificationsOptions.CeTime))
+	}
+
+	if sendNotificationsOptions.Body != nil {
+		_, err = builder.SetBodyContentJSON(sendNotificationsOptions.Body)
+		if err != nil {
+			return
+		}
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalNotificationResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // CreateSources : Create a new API Source
 // Create a new API Source.
 func (eventNotifications *EventNotificationsV1) CreateSources(createSourcesOptions *CreateSourcesOptions) (result *SourceResponse, response *core.DetailedResponse, err error) {
@@ -1952,6 +2070,8 @@ type CreateDestinationOptions struct {
 // The type of Destination Webhook.
 const (
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
+	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
+	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
@@ -2573,6 +2693,8 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigParamsWebhookDestinationConfig
 // - DestinationConfigParamsFcmDestinationConfig
 // - DestinationConfigParamsIosDestinationConfig
+// - DestinationConfigParamsChromeDestinationConfig
+// - DestinationConfigParamsFirefoxDestinationConfig
 type DestinationConfigParams struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -2609,6 +2731,15 @@ type DestinationConfigParams struct {
 
 	// Bundle ID for token (Required when cert_type is p8).
 	BundleID *string `json:"bundle_id,omitempty"`
+
+	// FCM api_key.
+	APIKey *string `json:"api_key,omitempty"`
+
+	// Website url.
+	WebsiteURL *string `json:"website_url,omitempty"`
+
+	// Chrome VAPID public key.
+	PublicKey *string `json:"public_key,omitempty"`
 }
 
 // Constants associated with the DestinationConfigParams.Verb property.
@@ -2674,6 +2805,18 @@ func UnmarshalDestinationConfigParams(m map[string]json.RawMessage, result inter
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "bundle_id", &obj.BundleID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "api_key", &obj.APIKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "website_url", &obj.WebsiteURL)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
 	if err != nil {
 		return
 	}
@@ -3284,37 +3427,6 @@ func (options *GetTopicOptions) SetHeaders(param map[string]string) *GetTopicOpt
 	return options
 }
 
-// Lights : Allows setting the notification LED color on receiving push notification .
-type Lights struct {
-	// The color of the led. The hardware will do its best approximation.
-	LedArgb *string `json:"led_argb,omitempty"`
-
-	// The number of milliseconds for the LED to be on while it's flashing. The hardware will do its best approximation.
-	LedOnMs *int64 `json:"led_on_ms,omitempty"`
-
-	// The number of milliseconds for the LED to be off while it's flashing. The hardware will do its best approximation.
-	LedOffMs *string `json:"led_off_ms,omitempty"`
-}
-
-// UnmarshalLights unmarshals an instance of Lights from the specified map of raw messages.
-func UnmarshalLights(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Lights)
-	err = core.UnmarshalPrimitive(m, "led_argb", &obj.LedArgb)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "led_on_ms", &obj.LedOnMs)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "led_off_ms", &obj.LedOffMs)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // ListDestinationDevicesOptions : The ListDestinationDevices options.
 type ListDestinationDevicesOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3767,79 +3879,273 @@ func (options *ListTopicsOptions) SetHeaders(param map[string]string) *ListTopic
 	return options
 }
 
-// NotificationApnsBody : Payload describing a APNs Notifications body.
-// Models which "extend" this model:
-// - NotificationApnsBodyMessageEnData
-// - NotificationApnsBodyNotificationPayload
-type NotificationApnsBody struct {
-	// Payload describing a apns notifications body message Data.
-	EnData *NotificationApnsBodyMessageData `json:"en_data,omitempty"`
+// NotificationCreate : Payload describing a notification create request.
+type NotificationCreate struct {
+	// The Notifications data for webhook.
+	Data map[string]interface{} `json:"data,omitempty"`
+
+	// The Notifications id.
+	Ibmenseverity *string `json:"ibmenseverity,omitempty"`
+
+	// The Notifications FCM body.
+	Ibmenfcmbody *string `json:"ibmenfcmbody,omitempty"`
+
+	// The Notifications APNS body.
+	Ibmenapnsbody *string `json:"ibmenapnsbody,omitempty"`
+
+	// Payload describing a FCM Notifications targets.
+	Ibmenpushto *string `json:"ibmenpushto,omitempty"`
+
+	// Headers for an APNs notification.
+	Ibmenapnsheaders *string `json:"ibmenapnsheaders,omitempty"`
+
+	// Default short text for the message.
+	Ibmendefaultshort *string `json:"ibmendefaultshort,omitempty"`
+
+	// Default long text for the message.
+	Ibmendefaultlong *string `json:"ibmendefaultlong,omitempty"`
+
+	// The Notifications Chrome body.
+	Ibmenchromebody *string `json:"ibmenchromebody,omitempty"`
+
+	// The Notifications Firefox body.
+	Ibmenfirefoxbody *string `json:"ibmenfirefoxbody,omitempty"`
+
+	// Headers for a Chrome notification.
+	Ibmenchromeheaders *string `json:"ibmenchromeheaders,omitempty"`
+
+	// Headers for an FireFox notification.
+	Ibmenfirefoxheaders *string `json:"ibmenfirefoxheaders,omitempty"`
+
+	// The Event Notifications source id.
+	Ibmensourceid *string `json:"ibmensourceid,omitempty"`
+
+	// The Notifications content type.
+	Datacontenttype *string `json:"datacontenttype,omitempty"`
+
+	// The Notifications subject.
+	Subject *string `json:"subject,omitempty"`
+
+	// The Notifications id.
+	ID *string `json:"id,omitempty"`
+
+	// The source of Notifications.
+	Source *string `json:"source,omitempty"`
+
+	// The Notifications type.
+	Type *string `json:"type,omitempty"`
+
+	// The Notifications specversion.
+	Specversion *string `json:"specversion,omitempty"`
+
+	// The Notifications time.
+	Time *string `json:"time,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
 }
 
-func (*NotificationApnsBody) isaNotificationApnsBody() bool {
-	return true
-}
-
-type NotificationApnsBodyIntf interface {
-	isaNotificationApnsBody() bool
-	SetProperty(key string, value interface{})
-	SetProperties(m map[string]interface{})
-	GetProperty(key string) interface{}
-	GetProperties() map[string]interface{}
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationApnsBody
-func (o *NotificationApnsBody) SetProperty(key string, value interface{}) {
+// SetProperty allows the user to set an arbitrary property on an instance of NotificationCreate
+func (o *NotificationCreate) SetProperty(key string, value interface{}) {
 	if o.additionalProperties == nil {
 		o.additionalProperties = make(map[string]interface{})
 	}
 	o.additionalProperties[key] = value
 }
 
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationApnsBody
-func (o *NotificationApnsBody) SetProperties(m map[string]interface{}) {
+// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationCreate
+func (o *NotificationCreate) SetProperties(m map[string]interface{}) {
 	o.additionalProperties = make(map[string]interface{})
 	for k, v := range m {
 		o.additionalProperties[k] = v
 	}
 }
 
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationApnsBody
-func (o *NotificationApnsBody) GetProperty(key string) interface{} {
+// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationCreate
+func (o *NotificationCreate) GetProperty(key string) interface{} {
 	return o.additionalProperties[key]
 }
 
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationApnsBody
-func (o *NotificationApnsBody) GetProperties() map[string]interface{} {
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationCreate
+func (o *NotificationCreate) GetProperties() map[string]interface{} {
 	return o.additionalProperties
 }
 
-// MarshalJSON performs custom serialization for instances of NotificationApnsBody
-func (o *NotificationApnsBody) MarshalJSON() (buffer []byte, err error) {
+// MarshalJSON performs custom serialization for instances of NotificationCreate
+func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	m := make(map[string]interface{})
 	if len(o.additionalProperties) > 0 {
 		for k, v := range o.additionalProperties {
 			m[k] = v
 		}
 	}
-	if o.EnData != nil {
-		m["en_data"] = o.EnData
+	if o.Data != nil {
+		m["data"] = o.Data
+	}
+	if o.Ibmenseverity != nil {
+		m["ibmenseverity"] = o.Ibmenseverity
+	}
+	if o.Ibmenfcmbody != nil {
+		m["ibmenfcmbody"] = o.Ibmenfcmbody
+	}
+	if o.Ibmenapnsbody != nil {
+		m["ibmenapnsbody"] = o.Ibmenapnsbody
+	}
+	if o.Ibmenpushto != nil {
+		m["ibmenpushto"] = o.Ibmenpushto
+	}
+	if o.Ibmenapnsheaders != nil {
+		m["ibmenapnsheaders"] = o.Ibmenapnsheaders
+	}
+	if o.Ibmendefaultshort != nil {
+		m["ibmendefaultshort"] = o.Ibmendefaultshort
+	}
+	if o.Ibmendefaultlong != nil {
+		m["ibmendefaultlong"] = o.Ibmendefaultlong
+	}
+	if o.Ibmenchromebody != nil {
+		m["ibmenchromebody"] = o.Ibmenchromebody
+	}
+	if o.Ibmenfirefoxbody != nil {
+		m["ibmenfirefoxbody"] = o.Ibmenfirefoxbody
+	}
+	if o.Ibmenchromeheaders != nil {
+		m["ibmenchromeheaders"] = o.Ibmenchromeheaders
+	}
+	if o.Ibmenfirefoxheaders != nil {
+		m["ibmenfirefoxheaders"] = o.Ibmenfirefoxheaders
+	}
+	if o.Ibmensourceid != nil {
+		m["ibmensourceid"] = o.Ibmensourceid
+	}
+	if o.Datacontenttype != nil {
+		m["datacontenttype"] = o.Datacontenttype
+	}
+	if o.Subject != nil {
+		m["subject"] = o.Subject
+	}
+	if o.ID != nil {
+		m["id"] = o.ID
+	}
+	if o.Source != nil {
+		m["source"] = o.Source
+	}
+	if o.Type != nil {
+		m["type"] = o.Type
+	}
+	if o.Specversion != nil {
+		m["specversion"] = o.Specversion
+	}
+	if o.Time != nil {
+		m["time"] = o.Time
 	}
 	buffer, err = json.Marshal(m)
 	return
 }
 
-// UnmarshalNotificationApnsBody unmarshals an instance of NotificationApnsBody from the specified map of raw messages.
-func UnmarshalNotificationApnsBody(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationApnsBody)
-	err = core.UnmarshalModel(m, "en_data", &obj.EnData, UnmarshalNotificationApnsBodyMessageData)
+// UnmarshalNotificationCreate unmarshals an instance of NotificationCreate from the specified map of raw messages.
+func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(NotificationCreate)
+	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
 	if err != nil {
 		return
 	}
-	delete(m, "en_data")
+	delete(m, "data")
+	err = core.UnmarshalPrimitive(m, "ibmenseverity", &obj.Ibmenseverity)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenseverity")
+	err = core.UnmarshalPrimitive(m, "ibmenfcmbody", &obj.Ibmenfcmbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfcmbody")
+	err = core.UnmarshalPrimitive(m, "ibmenapnsbody", &obj.Ibmenapnsbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenapnsbody")
+	err = core.UnmarshalPrimitive(m, "ibmenpushto", &obj.Ibmenpushto)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenpushto")
+	err = core.UnmarshalPrimitive(m, "ibmenapnsheaders", &obj.Ibmenapnsheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenapnsheaders")
+	err = core.UnmarshalPrimitive(m, "ibmendefaultshort", &obj.Ibmendefaultshort)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmendefaultshort")
+	err = core.UnmarshalPrimitive(m, "ibmendefaultlong", &obj.Ibmendefaultlong)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmendefaultlong")
+	err = core.UnmarshalPrimitive(m, "ibmenchromebody", &obj.Ibmenchromebody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenchromebody")
+	err = core.UnmarshalPrimitive(m, "ibmenfirefoxbody", &obj.Ibmenfirefoxbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfirefoxbody")
+	err = core.UnmarshalPrimitive(m, "ibmenchromeheaders", &obj.Ibmenchromeheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenchromeheaders")
+	err = core.UnmarshalPrimitive(m, "ibmenfirefoxheaders", &obj.Ibmenfirefoxheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfirefoxheaders")
+	err = core.UnmarshalPrimitive(m, "ibmensourceid", &obj.Ibmensourceid)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmensourceid")
+	err = core.UnmarshalPrimitive(m, "datacontenttype", &obj.Datacontenttype)
+	if err != nil {
+		return
+	}
+	delete(m, "datacontenttype")
+	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
+	if err != nil {
+		return
+	}
+	delete(m, "subject")
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	delete(m, "id")
+	err = core.UnmarshalPrimitive(m, "source", &obj.Source)
+	if err != nil {
+		return
+	}
+	delete(m, "source")
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	delete(m, "type")
+	err = core.UnmarshalPrimitive(m, "specversion", &obj.Specversion)
+	if err != nil {
+		return
+	}
+	delete(m, "specversion")
+	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	if err != nil {
+		return
+	}
+	delete(m, "time")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -3848,453 +4154,6 @@ func UnmarshalNotificationApnsBody(m map[string]json.RawMessage, result interfac
 			return
 		}
 		obj.SetProperty(k, v)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationApnsBodyMessageData : Payload describing a apns notifications body message Data.
-type NotificationApnsBodyMessageData struct {
-	// The notification message to be shown to the user.
-	Alert *string `json:"alert" validate:"required"`
-
-	// The number to display as the badge of the application icon.
-	Badge *int64 `json:"badge,omitempty"`
-
-	// The category identifier to be used for the interactive push notifications.
-	InteractiveCategory *string `json:"interactiveCategory,omitempty"`
-
-	// The title for the Action key.
-	IosActionKey *string `json:"iosActionKey,omitempty"`
-
-	// Custom JSON payload that will be sent as part of the notification message.
-	Payload interface{} `json:"payload,omitempty"`
-
-	// The name of the sound file in the application bundle. The sound of this file is played as an alert.
-	Sound *string `json:"sound,omitempty"`
-
-	// The key to a title string in the Localizable.strings file for the current localization. The key string can be
-	// formatted with %@ and %n$@ specifiers to take the variables specified in the titleLocArgs array.
-	TitleLocKey *string `json:"titleLocKey,omitempty"`
-
-	// A key to an alert-message string in a Localizabl.strings file for the current localization (which is set by the
-	// userÃ¢â‚¬â„¢s language preference).
-	//   The key string can be formatted with %@ and %n$@ specifiers to take the variables specified in the locArgs array.
-	LocKey *string `json:"locKey,omitempty"`
-
-	// The filename of an image file in the app bundle, with or without the filename extension. The image is used as the
-	// launch image when users tap the action button or move the action slider.
-	LaunchImage *string `json:"launchImage,omitempty"`
-
-	// Variable string values to appear in place of the format specifiers in title-loc-key.
-	TitleLocArgs []string `json:"titleLocArgs,omitempty"`
-
-	// Variable string values to appear in place of the format specifiers in locKey.
-	LocArgs []string `json:"locArgs,omitempty"`
-
-	// The title of Rich Push notifications (Supported only on iOS 10 and above).
-	Title *string `json:"title,omitempty"`
-
-	// The subtitle of the Rich Notifications.(Supported only on iOS 10 and above).
-	Subtitle *string `json:"subtitle,omitempty"`
-
-	// The link to the iOS notifications media (video, audio, GIF, images - Supported only on iOS 10 and above).
-	AttachmentURL *string `json:"attachmentUrl,omitempty"`
-
-	Type *string `json:"type,omitempty"`
-
-	// Multiple notifications with the same collapse identifier are displayed to the user as a single notification.
-	ApnsCollapseID *string `json:"apnsCollapseId,omitempty"`
-
-	// An app-specific identifier for grouping related notifications. This value corresponds to the threadIdentifier
-	// property in the UNNotificationContent object.
-	ApnsThreadID *string `json:"apnsThreadId,omitempty"`
-
-	// The string the notification adds to the category's summary format string.
-	ApnsGroupSummaryArg *string `json:"apnsGroupSummaryArg,omitempty"`
-
-	// The number of items the notification adds to the category's summary format string.
-	ApnsGroupSummaryArgCount *int64 `json:"apnsGroupSummaryArgCount,omitempty"`
-}
-
-// Constants associated with the NotificationApnsBodyMessageData.Type property.
-const (
-	NotificationApnsBodyMessageDataTypeDefaultConst = "DEFAULT"
-	NotificationApnsBodyMessageDataTypeMixedConst   = "MIXED"
-	NotificationApnsBodyMessageDataTypeSilentConst  = "SILENT"
-)
-
-// NewNotificationApnsBodyMessageData : Instantiate NotificationApnsBodyMessageData (Generic Model Constructor)
-func (*EventNotificationsV1) NewNotificationApnsBodyMessageData(alert string) (_model *NotificationApnsBodyMessageData, err error) {
-	_model = &NotificationApnsBodyMessageData{
-		Alert: core.StringPtr(alert),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-// UnmarshalNotificationApnsBodyMessageData unmarshals an instance of NotificationApnsBodyMessageData from the specified map of raw messages.
-func UnmarshalNotificationApnsBodyMessageData(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationApnsBodyMessageData)
-	err = core.UnmarshalPrimitive(m, "alert", &obj.Alert)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "badge", &obj.Badge)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "interactiveCategory", &obj.InteractiveCategory)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "iosActionKey", &obj.IosActionKey)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "payload", &obj.Payload)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "sound", &obj.Sound)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "titleLocKey", &obj.TitleLocKey)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "locKey", &obj.LocKey)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "launchImage", &obj.LaunchImage)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "titleLocArgs", &obj.TitleLocArgs)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "locArgs", &obj.LocArgs)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "title", &obj.Title)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "subtitle", &obj.Subtitle)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "attachmentUrl", &obj.AttachmentURL)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "apnsCollapseId", &obj.ApnsCollapseID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "apnsThreadId", &obj.ApnsThreadID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "apnsGroupSummaryArg", &obj.ApnsGroupSummaryArg)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "apnsGroupSummaryArgCount", &obj.ApnsGroupSummaryArgCount)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationDevices : Payload describing a FCM Notifications targets.
-type NotificationDevices struct {
-	// List of FCM deviceIds.
-	FcmDevices []string `json:"fcm_devices,omitempty"`
-
-	// List of APNs deviceIds.
-	ApnsDevices []string `json:"apns_devices,omitempty"`
-
-	// List of userIds.
-	UserIds []string `json:"user_ids,omitempty"`
-
-	// List of tags.
-	Tags []string `json:"tags,omitempty"`
-
-	// List of platforms.
-	Platforms []string `json:"platforms,omitempty"`
-}
-
-// UnmarshalNotificationDevices unmarshals an instance of NotificationDevices from the specified map of raw messages.
-func UnmarshalNotificationDevices(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationDevices)
-	err = core.UnmarshalPrimitive(m, "fcm_devices", &obj.FcmDevices)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "apns_devices", &obj.ApnsDevices)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "user_ids", &obj.UserIds)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "tags", &obj.Tags)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "platforms", &obj.Platforms)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationFcmBody : NotificationFcmBody struct
-// Models which "extend" this model:
-// - NotificationFcmBodyMessageEnData
-// - NotificationFcmBodyNotificationPayload
-type NotificationFcmBody struct {
-	// Payload describing a fcm notifications body message Data.
-	EnData *NotificationFcmBodyMessageData `json:"en_data,omitempty"`
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-func (*NotificationFcmBody) isaNotificationFcmBody() bool {
-	return true
-}
-
-type NotificationFcmBodyIntf interface {
-	isaNotificationFcmBody() bool
-	SetProperty(key string, value interface{})
-	SetProperties(m map[string]interface{})
-	GetProperty(key string) interface{}
-	GetProperties() map[string]interface{}
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationFcmBody
-func (o *NotificationFcmBody) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationFcmBody
-func (o *NotificationFcmBody) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationFcmBody
-func (o *NotificationFcmBody) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationFcmBody
-func (o *NotificationFcmBody) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationFcmBody
-func (o *NotificationFcmBody) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	if o.EnData != nil {
-		m["en_data"] = o.EnData
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalNotificationFcmBody unmarshals an instance of NotificationFcmBody from the specified map of raw messages.
-func UnmarshalNotificationFcmBody(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationFcmBody)
-	err = core.UnmarshalModel(m, "en_data", &obj.EnData, UnmarshalNotificationFcmBodyMessageData)
-	if err != nil {
-		return
-	}
-	delete(m, "en_data")
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationFcmBodyMessageData : Payload describing a fcm notifications body message Data.
-type NotificationFcmBodyMessageData struct {
-	// The notification message to be shown to the user.
-	Alert *string `json:"alert" validate:"required"`
-
-	// Dozed devices to display only the latest notification and discard old low priority notifications.
-	CollapseKey *string `json:"collapse_key,omitempty"`
-
-	// The category identifier to be used for the interactive push notifications.
-	InteractiveCategory *string `json:"interactive_category,omitempty"`
-
-	// Specify the name of the icon to be displayed for the notification. Make sure the icon is already packaged with the
-	// client application.
-	Icon *string `json:"icon,omitempty"`
-
-	// When this parameter is set to true, it indicates that the
-	//   message should not be sent until the device becomes active.
-	DelayWhileIdle *bool `json:"delay_while_idle,omitempty"`
-
-	// Device group messaging makes it possible for every app instance in a group to reflect the latest messaging state.
-	Sync *bool `json:"sync,omitempty"`
-
-	// private/public - Visibility of this notification, which affects how and when the notifications are revealed on a
-	// secure locked screen.
-	Visibility *string `json:"visibility,omitempty"`
-
-	// Content specified will show up on a secure locked screen on the device when visibility is set to Private.
-	Redact *string `json:"redact,omitempty"`
-
-	// Custom JSON payload that will be sent as part of the notification message.
-	Payload map[string]interface{} `json:"payload,omitempty"`
-
-	// A string value that indicates the priority of this notification. Allowed values are 'max', 'high', 'default', 'low'
-	// and 'min'. High/Max priority notifications along with 'sound' field may be used for Heads up notification in Android
-	// 5.0 or higher.sampleval='low'.
-	Priority *string `json:"priority,omitempty"`
-
-	// The sound file (on device) that will be attempted to play when the notification arrives on the device.
-	Sound *string `json:"sound,omitempty"`
-
-	// This parameter specifies how long (in seconds) the message
-	//   should be kept in GCM storage if the device is offline.
-	TimeToLive *int64 `json:"time_to_live,omitempty"`
-
-	// Allows setting the notification LED color on receiving push notification .
-	Lights *Lights `json:"lights,omitempty"`
-
-	// The title of Rich Push notifications.
-	AndroidTitle *string `json:"android_title,omitempty"`
-
-	// Set this notification to be part of a group of notifications sharing the same key. Grouped notifications may display
-	// in a cluster or stack on devices which support such rendering.
-	GroupID *string `json:"group_id,omitempty"`
-
-	// Options to specify for Android expandable notifications. The types of expandable notifications are
-	// picture_notification, bigtext_notification, inbox_notification.
-	Style *Style `json:"style,omitempty"`
-
-	// Notification type.
-	Type *string `json:"type,omitempty"`
-}
-
-// Constants associated with the NotificationFcmBodyMessageData.Type property.
-// Notification type.
-const (
-	NotificationFcmBodyMessageDataTypeDefaultConst = "DEFAULT"
-	NotificationFcmBodyMessageDataTypeSilentConst  = "SILENT"
-)
-
-// NewNotificationFcmBodyMessageData : Instantiate NotificationFcmBodyMessageData (Generic Model Constructor)
-func (*EventNotificationsV1) NewNotificationFcmBodyMessageData(alert string) (_model *NotificationFcmBodyMessageData, err error) {
-	_model = &NotificationFcmBodyMessageData{
-		Alert: core.StringPtr(alert),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-// UnmarshalNotificationFcmBodyMessageData unmarshals an instance of NotificationFcmBodyMessageData from the specified map of raw messages.
-func UnmarshalNotificationFcmBodyMessageData(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationFcmBodyMessageData)
-	err = core.UnmarshalPrimitive(m, "alert", &obj.Alert)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "collapse_key", &obj.CollapseKey)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "interactive_category", &obj.InteractiveCategory)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "icon", &obj.Icon)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "delay_while_idle", &obj.DelayWhileIdle)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "sync", &obj.Sync)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "visibility", &obj.Visibility)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "redact", &obj.Redact)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "payload", &obj.Payload)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "priority", &obj.Priority)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "sound", &obj.Sound)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "time_to_live", &obj.TimeToLive)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "lights", &obj.Lights, UnmarshalLights)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "android_title", &obj.AndroidTitle)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "group_id", &obj.GroupID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "style", &obj.Style, UnmarshalStyle)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
-	if err != nil {
-		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -4303,51 +4162,7 @@ func UnmarshalNotificationFcmBodyMessageData(m map[string]json.RawMessage, resul
 // NotificationResponse : Payload describing a notifications response.
 type NotificationResponse struct {
 	// Notification ID.
-	NotificationID *string `json:"notification_id" validate:"required"`
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationResponse
-func (o *NotificationResponse) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationResponse
-func (o *NotificationResponse) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationResponse
-func (o *NotificationResponse) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationResponse
-func (o *NotificationResponse) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationResponse
-func (o *NotificationResponse) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	if o.NotificationID != nil {
-		m["notification_id"] = o.NotificationID
-	}
-	buffer, err = json.Marshal(m)
-	return
+	NotificationID *string `json:"notification_id,omitempty"`
 }
 
 // UnmarshalNotificationResponse unmarshals an instance of NotificationResponse from the specified map of raw messages.
@@ -4356,16 +4171,6 @@ func UnmarshalNotificationResponse(m map[string]json.RawMessage, result interfac
 	err = core.UnmarshalPrimitive(m, "notification_id", &obj.NotificationID)
 	if err != nil {
 		return
-	}
-	delete(m, "notification_id")
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -4519,6 +4324,196 @@ func UnmarshalRulesGet(m map[string]json.RawMessage, result interface{}) (err er
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
+}
+
+// SendNotificationsOptions : The SendNotifications options.
+type SendNotificationsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Payload describing a notification create request.
+	Body *NotificationCreate `json:"body,omitempty"`
+
+	// The Notification severity.
+	CeIbmenseverity *string `json:"ce-ibmenseverity,omitempty"`
+
+	// The Notification default short text.
+	CeIbmendefaultshort *string `json:"ce-ibmendefaultshort,omitempty"`
+
+	// The Notification default long text.
+	CeIbmendefaultlong *string `json:"ce-ibmendefaultlong,omitempty"`
+
+	// The FCM Notification body.
+	CeIbmenfcmbody *string `json:"ce-ibmenfcmbody,omitempty"`
+
+	// The APNS Notification body.
+	CeIbmenapnsbody *string `json:"ce-ibmenapnsbody,omitempty"`
+
+	// Push Notifications Targets.
+	CeIbmenpushto *string `json:"ce-ibmenpushto,omitempty"`
+
+	// Push Notifications APNS Headers.
+	CeIbmenapnsheaders *string `json:"ce-ibmenapnsheaders,omitempty"`
+
+	// Push Notifications Chrome body.
+	CeIbmenchromebody *string `json:"ce-ibmenchromebody,omitempty"`
+
+	// Push Notifications Firefox body.
+	CeIbmenfirefoxbody *string `json:"ce-ibmenfirefoxbody,omitempty"`
+
+	// Push Notifications Chrome Headers.
+	CeIbmenchromeheaders *string `json:"ce-ibmenchromeheaders,omitempty"`
+
+	// Push Notifications Firefox Headers.
+	CeIbmenfirefoxheaders *string `json:"ce-ibmenfirefoxheaders,omitempty"`
+
+	// Event Notifications Target source ID.
+	CeIbmensourceid *string `json:"ce-ibmensourceid,omitempty"`
+
+	// custom ID to track notifications from client side (Mandatory identifier for the binary mode).
+	CeID *string `json:"ce-id,omitempty"`
+
+	// custom source odentifier from the client side.
+	CeSource *string `json:"ce-source,omitempty"`
+
+	// Type identifier for source filters.
+	CeType *string `json:"ce-type,omitempty"`
+
+	// Version of the Cloud Event specification (Mandatory header to make the request Binary Mode).
+	CeSpecversion *string `json:"ce-specversion,omitempty"`
+
+	// The time of the notification.
+	CeTime *string `json:"ce-time,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewSendNotificationsOptions : Instantiate SendNotificationsOptions
+func (*EventNotificationsV1) NewSendNotificationsOptions(instanceID string) *SendNotificationsOptions {
+	return &SendNotificationsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *SendNotificationsOptions) SetInstanceID(instanceID string) *SendNotificationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetBody : Allow user to set Body
+func (_options *SendNotificationsOptions) SetBody(body *NotificationCreate) *SendNotificationsOptions {
+	_options.Body = body
+	return _options
+}
+
+// SetCeIbmenseverity : Allow user to set CeIbmenseverity
+func (_options *SendNotificationsOptions) SetCeIbmenseverity(ceIbmenseverity string) *SendNotificationsOptions {
+	_options.CeIbmenseverity = core.StringPtr(ceIbmenseverity)
+	return _options
+}
+
+// SetCeIbmendefaultshort : Allow user to set CeIbmendefaultshort
+func (_options *SendNotificationsOptions) SetCeIbmendefaultshort(ceIbmendefaultshort string) *SendNotificationsOptions {
+	_options.CeIbmendefaultshort = core.StringPtr(ceIbmendefaultshort)
+	return _options
+}
+
+// SetCeIbmendefaultlong : Allow user to set CeIbmendefaultlong
+func (_options *SendNotificationsOptions) SetCeIbmendefaultlong(ceIbmendefaultlong string) *SendNotificationsOptions {
+	_options.CeIbmendefaultlong = core.StringPtr(ceIbmendefaultlong)
+	return _options
+}
+
+// SetCeIbmenfcmbody : Allow user to set CeIbmenfcmbody
+func (_options *SendNotificationsOptions) SetCeIbmenfcmbody(ceIbmenfcmbody string) *SendNotificationsOptions {
+	_options.CeIbmenfcmbody = core.StringPtr(ceIbmenfcmbody)
+	return _options
+}
+
+// SetCeIbmenapnsbody : Allow user to set CeIbmenapnsbody
+func (_options *SendNotificationsOptions) SetCeIbmenapnsbody(ceIbmenapnsbody string) *SendNotificationsOptions {
+	_options.CeIbmenapnsbody = core.StringPtr(ceIbmenapnsbody)
+	return _options
+}
+
+// SetCeIbmenpushto : Allow user to set CeIbmenpushto
+func (_options *SendNotificationsOptions) SetCeIbmenpushto(ceIbmenpushto string) *SendNotificationsOptions {
+	_options.CeIbmenpushto = core.StringPtr(ceIbmenpushto)
+	return _options
+}
+
+// SetCeIbmenapnsheaders : Allow user to set CeIbmenapnsheaders
+func (_options *SendNotificationsOptions) SetCeIbmenapnsheaders(ceIbmenapnsheaders string) *SendNotificationsOptions {
+	_options.CeIbmenapnsheaders = core.StringPtr(ceIbmenapnsheaders)
+	return _options
+}
+
+// SetCeIbmenchromebody : Allow user to set CeIbmenchromebody
+func (_options *SendNotificationsOptions) SetCeIbmenchromebody(ceIbmenchromebody string) *SendNotificationsOptions {
+	_options.CeIbmenchromebody = core.StringPtr(ceIbmenchromebody)
+	return _options
+}
+
+// SetCeIbmenfirefoxbody : Allow user to set CeIbmenfirefoxbody
+func (_options *SendNotificationsOptions) SetCeIbmenfirefoxbody(ceIbmenfirefoxbody string) *SendNotificationsOptions {
+	_options.CeIbmenfirefoxbody = core.StringPtr(ceIbmenfirefoxbody)
+	return _options
+}
+
+// SetCeIbmenchromeheaders : Allow user to set CeIbmenchromeheaders
+func (_options *SendNotificationsOptions) SetCeIbmenchromeheaders(ceIbmenchromeheaders string) *SendNotificationsOptions {
+	_options.CeIbmenchromeheaders = core.StringPtr(ceIbmenchromeheaders)
+	return _options
+}
+
+// SetCeIbmenfirefoxheaders : Allow user to set CeIbmenfirefoxheaders
+func (_options *SendNotificationsOptions) SetCeIbmenfirefoxheaders(ceIbmenfirefoxheaders string) *SendNotificationsOptions {
+	_options.CeIbmenfirefoxheaders = core.StringPtr(ceIbmenfirefoxheaders)
+	return _options
+}
+
+// SetCeIbmensourceid : Allow user to set CeIbmensourceid
+func (_options *SendNotificationsOptions) SetCeIbmensourceid(ceIbmensourceid string) *SendNotificationsOptions {
+	_options.CeIbmensourceid = core.StringPtr(ceIbmensourceid)
+	return _options
+}
+
+// SetCeID : Allow user to set CeID
+func (_options *SendNotificationsOptions) SetCeID(ceID string) *SendNotificationsOptions {
+	_options.CeID = core.StringPtr(ceID)
+	return _options
+}
+
+// SetCeSource : Allow user to set CeSource
+func (_options *SendNotificationsOptions) SetCeSource(ceSource string) *SendNotificationsOptions {
+	_options.CeSource = core.StringPtr(ceSource)
+	return _options
+}
+
+// SetCeType : Allow user to set CeType
+func (_options *SendNotificationsOptions) SetCeType(ceType string) *SendNotificationsOptions {
+	_options.CeType = core.StringPtr(ceType)
+	return _options
+}
+
+// SetCeSpecversion : Allow user to set CeSpecversion
+func (_options *SendNotificationsOptions) SetCeSpecversion(ceSpecversion string) *SendNotificationsOptions {
+	_options.CeSpecversion = core.StringPtr(ceSpecversion)
+	return _options
+}
+
+// SetCeTime : Allow user to set CeTime
+func (_options *SendNotificationsOptions) SetCeTime(ceTime string) *SendNotificationsOptions {
+	_options.CeTime = core.StringPtr(ceTime)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *SendNotificationsOptions) SetHeaders(param map[string]string) *SendNotificationsOptions {
+	options.Headers = param
+	return options
 }
 
 // Source : Payload describing a source generate request.
@@ -4755,126 +4750,6 @@ func UnmarshalSourcesListItem(m map[string]json.RawMessage, result interface{}) 
 	err = core.UnmarshalModel(m, "rules", &obj.Rules, UnmarshalRulesGet)
 	if err != nil {
 		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// Style : Options to specify for Android expandable notifications. The types of expandable notifications are
-// picture_notification, bigtext_notification, inbox_notification.
-type Style struct {
-	// Specifies the type of expandable notifications.  The possible values are bigtext_notification, picture_notification,
-	// inbox_notification.
-	Type *string `json:"type,omitempty"`
-
-	// Specifies the title of the notification.  The title is displayed when the notification is expanded.  Title must be
-	// specified for all three expandable notification.
-	Title *string `json:"title,omitempty"`
-
-	// An URL from which the picture has to be obtained for the notification.  Must be specified for picture_notification.
-	URL *string `json:"url,omitempty"`
-
-	// The big text that needs to be displayed on expanding a bigtext_notification.  Must be specified for
-	// bigtext_notification.
-	Text *string `json:"text,omitempty"`
-
-	// An array of strings that is to be displayed in inbox style for inbox_notification.  Must be specified for
-	// inbox_notification.
-	Lines []string `json:"lines,omitempty"`
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of Style
-func (o *Style) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of Style
-func (o *Style) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of Style
-func (o *Style) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of Style
-func (o *Style) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of Style
-func (o *Style) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	if o.Type != nil {
-		m["type"] = o.Type
-	}
-	if o.Title != nil {
-		m["title"] = o.Title
-	}
-	if o.URL != nil {
-		m["url"] = o.URL
-	}
-	if o.Text != nil {
-		m["text"] = o.Text
-	}
-	if o.Lines != nil {
-		m["lines"] = o.Lines
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalStyle unmarshals an instance of Style from the specified map of raw messages.
-func UnmarshalStyle(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(Style)
-	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
-	if err != nil {
-		return
-	}
-	delete(m, "type")
-	err = core.UnmarshalPrimitive(m, "title", &obj.Title)
-	if err != nil {
-		return
-	}
-	delete(m, "title")
-	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
-	if err != nil {
-		return
-	}
-	delete(m, "url")
-	err = core.UnmarshalPrimitive(m, "text", &obj.Text)
-	if err != nil {
-		return
-	}
-	delete(m, "text")
-	err = core.UnmarshalPrimitive(m, "lines", &obj.Lines)
-	if err != nil {
-		return
-	}
-	delete(m, "lines")
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -5951,6 +5826,52 @@ func (options *UpdateSubscriptionOptions) SetHeaders(param map[string]string) *U
 	return options
 }
 
+// DestinationConfigParamsChromeDestinationConfig : Payload describing a Chrome destination configuration.
+// This model "extends" DestinationConfigParams
+type DestinationConfigParamsChromeDestinationConfig struct {
+	// FCM api_key.
+	APIKey *string `json:"api_key" validate:"required"`
+
+	// Website url.
+	WebsiteURL *string `json:"website_url" validate:"required"`
+
+	// Chrome VAPID public key.
+	PublicKey *string `json:"public_key,omitempty"`
+}
+
+// NewDestinationConfigParamsChromeDestinationConfig : Instantiate DestinationConfigParamsChromeDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigParamsChromeDestinationConfig(apiKey string, websiteURL string) (_model *DestinationConfigParamsChromeDestinationConfig, err error) {
+	_model = &DestinationConfigParamsChromeDestinationConfig{
+		APIKey:     core.StringPtr(apiKey),
+		WebsiteURL: core.StringPtr(websiteURL),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigParamsChromeDestinationConfig) isaDestinationConfigParams() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigParamsChromeDestinationConfig unmarshals an instance of DestinationConfigParamsChromeDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigParamsChromeDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigParamsChromeDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "api_key", &obj.APIKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "website_url", &obj.WebsiteURL)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DestinationConfigParamsFcmDestinationConfig : Payload describing a FCM destination configuration.
 // This model "extends" DestinationConfigParams
 type DestinationConfigParamsFcmDestinationConfig struct {
@@ -5983,6 +5904,44 @@ func UnmarshalDestinationConfigParamsFcmDestinationConfig(m map[string]json.RawM
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "sender_id", &obj.SenderID)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigParamsFirefoxDestinationConfig : Payload describing a Firefox destination configuration.
+// This model "extends" DestinationConfigParams
+type DestinationConfigParamsFirefoxDestinationConfig struct {
+	// Website url.
+	WebsiteURL *string `json:"website_url" validate:"required"`
+
+	// Chrome VAPID public key.
+	PublicKey *string `json:"public_key,omitempty"`
+}
+
+// NewDestinationConfigParamsFirefoxDestinationConfig : Instantiate DestinationConfigParamsFirefoxDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigParamsFirefoxDestinationConfig(websiteURL string) (_model *DestinationConfigParamsFirefoxDestinationConfig, err error) {
+	_model = &DestinationConfigParamsFirefoxDestinationConfig{
+		WebsiteURL: core.StringPtr(websiteURL),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigParamsFirefoxDestinationConfig) isaDestinationConfigParams() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigParamsFirefoxDestinationConfig unmarshals an instance of DestinationConfigParamsFirefoxDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigParamsFirefoxDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigParamsFirefoxDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "website_url", &obj.WebsiteURL)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
 	if err != nil {
 		return
 	}
@@ -6112,290 +6071,6 @@ func UnmarshalDestinationConfigParamsWebhookDestinationConfig(m map[string]json.
 	err = core.UnmarshalPrimitive(m, "sensitive_headers", &obj.SensitiveHeaders)
 	if err != nil {
 		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationApnsBodyMessageEnData : Payload describing a fcm notifications body message.
-// This model "extends" NotificationApnsBody
-type NotificationApnsBodyMessageEnData struct {
-	// Payload describing a apns notifications body message Data.
-	EnData *NotificationApnsBodyMessageData `json:"en_data,omitempty"`
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-func (*NotificationApnsBodyMessageEnData) isaNotificationApnsBody() bool {
-	return true
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationApnsBodyMessageEnData
-func (o *NotificationApnsBodyMessageEnData) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationApnsBodyMessageEnData
-func (o *NotificationApnsBodyMessageEnData) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationApnsBodyMessageEnData
-func (o *NotificationApnsBodyMessageEnData) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationApnsBodyMessageEnData
-func (o *NotificationApnsBodyMessageEnData) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationApnsBodyMessageEnData
-func (o *NotificationApnsBodyMessageEnData) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	if o.EnData != nil {
-		m["en_data"] = o.EnData
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalNotificationApnsBodyMessageEnData unmarshals an instance of NotificationApnsBodyMessageEnData from the specified map of raw messages.
-func UnmarshalNotificationApnsBodyMessageEnData(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationApnsBodyMessageEnData)
-	err = core.UnmarshalModel(m, "en_data", &obj.EnData, UnmarshalNotificationApnsBodyMessageData)
-	if err != nil {
-		return
-	}
-	delete(m, "en_data")
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationApnsBodyNotificationPayload : The attributes for an FCM/APNs notification.
-// This model "extends" NotificationApnsBody
-type NotificationApnsBodyNotificationPayload struct {
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-func (*NotificationApnsBodyNotificationPayload) isaNotificationApnsBody() bool {
-	return true
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationApnsBodyNotificationPayload
-func (o *NotificationApnsBodyNotificationPayload) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationApnsBodyNotificationPayload
-func (o *NotificationApnsBodyNotificationPayload) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationApnsBodyNotificationPayload
-func (o *NotificationApnsBodyNotificationPayload) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationApnsBodyNotificationPayload
-func (o *NotificationApnsBodyNotificationPayload) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationApnsBodyNotificationPayload
-func (o *NotificationApnsBodyNotificationPayload) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalNotificationApnsBodyNotificationPayload unmarshals an instance of NotificationApnsBodyNotificationPayload from the specified map of raw messages.
-func UnmarshalNotificationApnsBodyNotificationPayload(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationApnsBodyNotificationPayload)
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationFcmBodyMessageEnData : Payload describing a fcm notifications body message.
-// This model "extends" NotificationFcmBody
-type NotificationFcmBodyMessageEnData struct {
-	// Payload describing a fcm notifications body message Data.
-	EnData *NotificationFcmBodyMessageData `json:"en_data,omitempty"`
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-func (*NotificationFcmBodyMessageEnData) isaNotificationFcmBody() bool {
-	return true
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationFcmBodyMessageEnData
-func (o *NotificationFcmBodyMessageEnData) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationFcmBodyMessageEnData
-func (o *NotificationFcmBodyMessageEnData) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationFcmBodyMessageEnData
-func (o *NotificationFcmBodyMessageEnData) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationFcmBodyMessageEnData
-func (o *NotificationFcmBodyMessageEnData) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationFcmBodyMessageEnData
-func (o *NotificationFcmBodyMessageEnData) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	if o.EnData != nil {
-		m["en_data"] = o.EnData
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalNotificationFcmBodyMessageEnData unmarshals an instance of NotificationFcmBodyMessageEnData from the specified map of raw messages.
-func UnmarshalNotificationFcmBodyMessageEnData(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationFcmBodyMessageEnData)
-	err = core.UnmarshalModel(m, "en_data", &obj.EnData, UnmarshalNotificationFcmBodyMessageData)
-	if err != nil {
-		return
-	}
-	delete(m, "en_data")
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// NotificationFcmBodyNotificationPayload : The attributes for an FCM/APNs notification.
-// This model "extends" NotificationFcmBody
-type NotificationFcmBodyNotificationPayload struct {
-
-	// Allows users to set arbitrary properties
-	additionalProperties map[string]interface{}
-}
-
-func (*NotificationFcmBodyNotificationPayload) isaNotificationFcmBody() bool {
-	return true
-}
-
-// SetProperty allows the user to set an arbitrary property on an instance of NotificationFcmBodyNotificationPayload
-func (o *NotificationFcmBodyNotificationPayload) SetProperty(key string, value interface{}) {
-	if o.additionalProperties == nil {
-		o.additionalProperties = make(map[string]interface{})
-	}
-	o.additionalProperties[key] = value
-}
-
-// SetProperties allows the user to set a map of arbitrary properties on an instance of NotificationFcmBodyNotificationPayload
-func (o *NotificationFcmBodyNotificationPayload) SetProperties(m map[string]interface{}) {
-	o.additionalProperties = make(map[string]interface{})
-	for k, v := range m {
-		o.additionalProperties[k] = v
-	}
-}
-
-// GetProperty allows the user to retrieve an arbitrary property from an instance of NotificationFcmBodyNotificationPayload
-func (o *NotificationFcmBodyNotificationPayload) GetProperty(key string) interface{} {
-	return o.additionalProperties[key]
-}
-
-// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of NotificationFcmBodyNotificationPayload
-func (o *NotificationFcmBodyNotificationPayload) GetProperties() map[string]interface{} {
-	return o.additionalProperties
-}
-
-// MarshalJSON performs custom serialization for instances of NotificationFcmBodyNotificationPayload
-func (o *NotificationFcmBodyNotificationPayload) MarshalJSON() (buffer []byte, err error) {
-	m := make(map[string]interface{})
-	if len(o.additionalProperties) > 0 {
-		for k, v := range o.additionalProperties {
-			m[k] = v
-		}
-	}
-	buffer, err = json.Marshal(m)
-	return
-}
-
-// UnmarshalNotificationFcmBodyNotificationPayload unmarshals an instance of NotificationFcmBodyNotificationPayload from the specified map of raw messages.
-func UnmarshalNotificationFcmBodyNotificationPayload(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(NotificationFcmBodyNotificationPayload)
-	for k := range m {
-		var v interface{}
-		e := core.UnmarshalPrimitive(m, k, &v)
-		if e != nil {
-			err = e
-			return
-		}
-		obj.SetProperty(k, v)
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
