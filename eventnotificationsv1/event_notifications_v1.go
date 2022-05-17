@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.46.1-a5569134-20220316-164819
+ * IBM OpenAPI SDK Code Generator Version: 3.46.0-a4e29da0-20220224-210428
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -271,6 +271,75 @@ func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalNotificationResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// SendBulkNotifications : Send Bulk notification
+func (eventNotifications *EventNotificationsV1) SendBulkNotifications(sendBulkNotificationsOptions *SendBulkNotificationsOptions) (result *BulkNotificationResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.SendBulkNotificationsWithContext(context.Background(), sendBulkNotificationsOptions)
+}
+
+// SendBulkNotificationsWithContext is an alternate form of the SendBulkNotifications method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) SendBulkNotificationsWithContext(ctx context.Context, sendBulkNotificationsOptions *SendBulkNotificationsOptions) (result *BulkNotificationResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(sendBulkNotificationsOptions, "sendBulkNotificationsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(sendBulkNotificationsOptions, "sendBulkNotificationsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *sendBulkNotificationsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/notifications/bulk`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range sendBulkNotificationsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "SendBulkNotifications")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if sendBulkNotificationsOptions.BulkMessages != nil {
+		body["bulk_messages"] = sendBulkNotificationsOptions.BulkMessages
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalBulkNotificationResponse)
 		if err != nil {
 			return
 		}
@@ -2039,6 +2108,30 @@ func (eventNotifications *EventNotificationsV1) UpdateSubscriptionWithContext(ct
 	return
 }
 
+// BulkNotificationResponse : Payload describing a notifications response.
+type BulkNotificationResponse struct {
+	// Bulk Notification ID.
+	BulkNotificationID *string `json:"bulk_notification_id,omitempty"`
+
+	// List of Notifications.
+	BulkMessages []interface{} `json:"bulk_messages,omitempty"`
+}
+
+// UnmarshalBulkNotificationResponse unmarshals an instance of BulkNotificationResponse from the specified map of raw messages.
+func UnmarshalBulkNotificationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(BulkNotificationResponse)
+	err = core.UnmarshalPrimitive(m, "bulk_notification_id", &obj.BulkNotificationID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "bulk_messages", &obj.BulkMessages)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // CreateDestinationOptions : The CreateDestination options.
 type CreateDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2073,6 +2166,7 @@ const (
 	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
+	CreateDestinationOptionsTypeSlackConst       = "slack"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
 
@@ -2620,6 +2714,7 @@ const (
 	DestinationTypePushAndroidConst = "push_android"
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationTypeSlackConst       = "slack"
 	DestinationTypeSmsIBMConst      = "sms_ibm"
 	DestinationTypeWebhookConst     = "webhook"
 )
@@ -2695,6 +2790,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigParamsIosDestinationConfig
 // - DestinationConfigParamsChromeDestinationConfig
 // - DestinationConfigParamsFirefoxDestinationConfig
+// - DestinationConfigParamsSlackDestinationConfig
 type DestinationConfigParams struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -3034,6 +3130,7 @@ const (
 	DestinationListItemTypePushAndroidConst = "push_android"
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationListItemTypeSlackConst       = "slack"
 	DestinationListItemTypeSmsIBMConst      = "sms_ibm"
 	DestinationListItemTypeWebhookConst     = "webhook"
 )
@@ -3893,7 +3990,9 @@ type NotificationCreate struct {
 	// The Notifications APNS body.
 	Ibmenapnsbody *string `json:"ibmenapnsbody,omitempty"`
 
-	// Payload describing a FCM Notifications targets.
+	// This field should not be empty. The allowed fields are fcm_devices, apns_devices, chrome_devices, firefox_devices,
+	// platforms, tags and user_ids. If platforms or tags or user_ids are being used then do not use fcm_devices /
+	// apns_devices / chrome_devices / firefox_devices with it.
 	Ibmenpushto *string `json:"ibmenpushto,omitempty"`
 
 	// Headers for an APNs notification.
@@ -4324,6 +4423,43 @@ func UnmarshalRulesGet(m map[string]json.RawMessage, result interface{}) (err er
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
+}
+
+// SendBulkNotificationsOptions : The SendBulkNotifications options.
+type SendBulkNotificationsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// List of notifications body.
+	BulkMessages []NotificationCreate `json:"bulk_messages,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewSendBulkNotificationsOptions : Instantiate SendBulkNotificationsOptions
+func (*EventNotificationsV1) NewSendBulkNotificationsOptions(instanceID string) *SendBulkNotificationsOptions {
+	return &SendBulkNotificationsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *SendBulkNotificationsOptions) SetInstanceID(instanceID string) *SendBulkNotificationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetBulkMessages : Allow user to set BulkMessages
+func (_options *SendBulkNotificationsOptions) SetBulkMessages(bulkMessages []NotificationCreate) *SendBulkNotificationsOptions {
+	_options.BulkMessages = bulkMessages
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *SendBulkNotificationsOptions) SetHeaders(param map[string]string) *SendBulkNotificationsOptions {
+	options.Headers = param
+	return options
 }
 
 // SendNotificationsOptions : The SendNotifications options.
@@ -4797,6 +4933,7 @@ type Subscription struct {
 // The type of destination.
 const (
 	SubscriptionDestinationTypeSMTPIBMConst = "smtp_ibm"
+	SubscriptionDestinationTypeSlackConst   = "slack"
 	SubscriptionDestinationTypeSmsIBMConst  = "sms_ibm"
 	SubscriptionDestinationTypeWebhookConst = "webhook"
 )
@@ -4948,12 +5085,16 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesSmsAttributesResponse
 // - SubscriptionAttributesEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
+// - SubscriptionAttributesSlackAttributesResponse
 type SubscriptionAttributes struct {
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
 
 	// Decision for Notification Payload to be added.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
+
+	// Attachment Color for Slack Notification.
+	AttachmentColor *string `json:"attachment_color,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
@@ -5011,6 +5152,9 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 	if o.AddNotificationPayload != nil {
 		m["add_notification_payload"] = o.AddNotificationPayload
 	}
+	if o.AttachmentColor != nil {
+		m["attachment_color"] = o.AttachmentColor
+	}
 	buffer, err = json.Marshal(m)
 	return
 }
@@ -5028,6 +5172,11 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 		return
 	}
 	delete(m, "add_notification_payload")
+	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	delete(m, "attachment_color")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -5047,6 +5196,7 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesEmailAttributes
 // - SubscriptionCreateAttributesWebhookAttributes
 // - SubscriptionCreateAttributesFcmAttributes
+// - SubscriptionCreateAttributesSlackAttributes
 type SubscriptionCreateAttributes struct {
 	// The phone number to send the SMS to.
 	To []string `json:"to,omitempty"`
@@ -5065,6 +5215,9 @@ type SubscriptionCreateAttributes struct {
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
+
+	// Attachment Color for the slack message.
+	AttachmentColor *string `json:"attachment_color,omitempty"`
 }
 
 func (*SubscriptionCreateAttributes) isaSubscriptionCreateAttributes() bool {
@@ -5099,6 +5252,10 @@ func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
 	if err != nil {
 		return
 	}
@@ -5178,6 +5335,7 @@ type SubscriptionListItem struct {
 // The type of destination.
 const (
 	SubscriptionListItemDestinationTypeSMTPIBMConst = "smtp_ibm"
+	SubscriptionListItemDestinationTypeSlackConst   = "slack"
 	SubscriptionListItemDestinationTypeSmsIBMConst  = "sms_ibm"
 	SubscriptionListItemDestinationTypeWebhookConst = "webhook"
 )
@@ -6016,6 +6174,37 @@ func UnmarshalDestinationConfigParamsIosDestinationConfig(m map[string]json.RawM
 	return
 }
 
+// DestinationConfigParamsSlackDestinationConfig : Payload describing a slack destination configuration.
+// This model "extends" DestinationConfigParams
+type DestinationConfigParamsSlackDestinationConfig struct {
+	// URL of Slack Incoming Webhook.
+	URL *string `json:"url" validate:"required"`
+}
+
+// NewDestinationConfigParamsSlackDestinationConfig : Instantiate DestinationConfigParamsSlackDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigParamsSlackDestinationConfig(url string) (_model *DestinationConfigParamsSlackDestinationConfig, err error) {
+	_model = &DestinationConfigParamsSlackDestinationConfig{
+		URL: core.StringPtr(url),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigParamsSlackDestinationConfig) isaDestinationConfigParams() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigParamsSlackDestinationConfig unmarshals an instance of DestinationConfigParamsSlackDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigParamsSlackDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigParamsSlackDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DestinationConfigParamsWebhookDestinationConfig : Payload describing a webhook destination configuration.
 // This model "extends" DestinationConfigParams
 type DestinationConfigParamsWebhookDestinationConfig struct {
@@ -6195,6 +6384,82 @@ func (o *SubscriptionAttributesSmsAttributesResponse) MarshalJSON() (buffer []by
 // UnmarshalSubscriptionAttributesSmsAttributesResponse unmarshals an instance of SubscriptionAttributesSmsAttributesResponse from the specified map of raw messages.
 func UnmarshalSubscriptionAttributesSmsAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributesSmsAttributesResponse)
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesSlackAttributesResponse : The attributes for a slack notification.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesSlackAttributesResponse struct {
+	// Attachment Color for Slack Notification.
+	AttachmentColor *string `json:"attachment_color" validate:"required"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesSlackAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesSlackAttributesResponse
+func (o *SubscriptionAttributesSlackAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesSlackAttributesResponse
+func (o *SubscriptionAttributesSlackAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesSlackAttributesResponse
+func (o *SubscriptionAttributesSlackAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesSlackAttributesResponse
+func (o *SubscriptionAttributesSlackAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesSlackAttributesResponse
+func (o *SubscriptionAttributesSlackAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.AttachmentColor != nil {
+		m["attachment_color"] = o.AttachmentColor
+	}
+	buffer, err = json.Marshal(m)
+	return
+}
+
+// UnmarshalSubscriptionAttributesSlackAttributesResponse unmarshals an instance of SubscriptionAttributesSlackAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesSlackAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesSlackAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	delete(m, "attachment_color")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -6398,6 +6663,37 @@ func (*SubscriptionCreateAttributesSmsAttributes) isaSubscriptionCreateAttribute
 func UnmarshalSubscriptionCreateAttributesSmsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionCreateAttributesSmsAttributes)
 	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionCreateAttributesSlackAttributes : The attributes for a slack notification.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesSlackAttributes struct {
+	// Attachment Color for the slack message.
+	AttachmentColor *string `json:"attachment_color" validate:"required"`
+}
+
+// NewSubscriptionCreateAttributesSlackAttributes : Instantiate SubscriptionCreateAttributesSlackAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionCreateAttributesSlackAttributes(attachmentColor string) (_model *SubscriptionCreateAttributesSlackAttributes, err error) {
+	_model = &SubscriptionCreateAttributesSlackAttributes{
+		AttachmentColor: core.StringPtr(attachmentColor),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*SubscriptionCreateAttributesSlackAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesSlackAttributes unmarshals an instance of SubscriptionCreateAttributesSlackAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesSlackAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesSlackAttributes)
+	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
 	if err != nil {
 		return
 	}

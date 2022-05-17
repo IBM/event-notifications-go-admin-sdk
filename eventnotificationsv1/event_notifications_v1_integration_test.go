@@ -61,6 +61,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID             string
 		destinationID2            string
 		destinationID3            string
+		destinationID4            string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
@@ -552,6 +553,31 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID3 = *destinationResponse.ID
 
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Slack_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeSlackConst,
+			)
+
+			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigParamsSlackDestinationConfig{
+				URL: core.StringPtr("https://api.slack.com/myslack"),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID4 = *destinationResponse.ID
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -987,7 +1013,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`SendNotifications(sendNotificationsOptions *SendNotificationsOptions)`, func() {
 
-			notificationDevicesModel := "{\"user_ids\": \"userId\"}"
+			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 
 			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
@@ -1013,6 +1039,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			sendNotificationsOptions.CeIbmenfcmbody = &notificationFcmBodyModel
 			sendNotificationsOptions.CeIbmenapnsbody = &notificationAPNsBodyModel
 			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
+			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -1053,6 +1080,78 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
 			Expect(notificationResponse).ToNot(BeNil())
+
+			//
+			// The following status codes aren't covered by tests.
+			// Please provide integration tests for these too.
+			//
+			// 400
+			// 401
+			// 415
+			// 500
+			//
+		})
+	})
+
+	Describe(`SendBulkNotifications - Send Bulk notification`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`SendBulkNotifications(sendBulkNotificationsOptions *SendBulkNotificationsOptions)`, func() {
+
+			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
+			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+
+			notificationID := "1234-1234-sdfs-234"
+			notificationSeverity := "MEDIUM"
+			typeValue := "com.acme.offer:new"
+			notificationsSouce := "1234-1234-sdfs-234:test"
+			now := time.Now()
+			date := strfmt.DateTime(now).String()
+			specVersion := "1.0"
+
+			notificationCreateModel := &eventnotificationsv1.NotificationCreate{
+				Ibmenseverity: &notificationSeverity,
+				Ibmenfcmbody:  &notificationFcmBodyModel,
+				Ibmenapnsbody: &notificationAPNsBodyModel,
+				Ibmenpushto:   &notificationDevicesModel,
+				Ibmensourceid: &sourceID,
+				ID:            &notificationID,
+				Source:        &notificationsSouce,
+				Type:          &typeValue,
+				Specversion:   &specVersion,
+				Time:          &date,
+			}
+
+			notificationID = "1234-1234-sdfs-234temp"
+			notificationsSouce = "1234-1234-sdfs-234:test1"
+			notificationSeverity = "LOW"
+			typeValue = "com.groc.offer:new"
+
+			notificationCreateModel1 := &eventnotificationsv1.NotificationCreate{
+				Ibmenseverity: &notificationSeverity,
+				Ibmenfcmbody:  &notificationFcmBodyModel,
+				Ibmenapnsbody: &notificationAPNsBodyModel,
+				Ibmenpushto:   &notificationDevicesModel,
+				Ibmensourceid: &sourceID,
+				ID:            &notificationID,
+				Source:        &notificationsSouce,
+				Type:          &typeValue,
+				Specversion:   &specVersion,
+				Time:          &date,
+			}
+
+			sendBulkNotificationsOptions := &eventnotificationsv1.SendBulkNotificationsOptions{
+				InstanceID:   core.StringPtr(instanceID),
+				BulkMessages: []eventnotificationsv1.NotificationCreate{*notificationCreateModel, *notificationCreateModel1},
+			}
+
+			bulkNotificationResponse, response, err := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(bulkNotificationResponse).ToNot(BeNil())
 
 			//
 			// The following status codes aren't covered by tests.
@@ -1130,7 +1229,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

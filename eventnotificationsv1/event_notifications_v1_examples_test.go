@@ -57,6 +57,7 @@ var (
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
+	destinationID4            string
 	subscriptionID            string
 	fcmServerKey              string
 	fcmSenderId               string
@@ -382,11 +383,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ := json.MarshalIndent(destinationResponse, "", "  ")
 			fmt.Println(string(b))
 
-			// end-create_destination
-
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(destinationResponse).ToNot(BeNil())
+
+			// end-create_destination
 
 		})
 		It(`ListDestinations request example`, func() {
@@ -624,7 +625,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
 			date := strfmt.DateTime(now).String()
-			userId := "userId"
+			//userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
 			specVersion := "1.0"
 
@@ -641,14 +642,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			sendNotificationsOptions.CeType = &typeValue
 			sendNotificationsOptions.CeTime = &date
 			sendNotificationsOptions.CeSpecversion = &specVersion
+			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
 
-			devices := map[string]interface{}{
-				"user_id": userId,
-			}
-			devicesbody, _ := json.Marshal(devices)
-			devicesbodyString := string(devicesbody)
+			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 
-			sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
+			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
 
 			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
@@ -703,7 +701,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			typeValue := "com.acme.offer:new"
 			now := time.Now()
 			date := strfmt.DateTime(now).String()
-			userId := "userId"
+			//userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
 			specVersion := "1.0"
 			// begin-send_notifications
@@ -719,14 +717,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			sendNotificationsOptions.CeType = &typeValue
 			sendNotificationsOptions.CeTime = &date
 			sendNotificationsOptions.CeSpecversion = &specVersion
+			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
 
-			devices := map[string]interface{}{
-				"user_id": userId,
-			}
-			devicesbody, _ := json.Marshal(devices)
-			devicesbodyString := string(devicesbody)
+			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 
-			sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
+			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
 
 			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
@@ -772,6 +767,76 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(notificationResponse).ToNot(BeNil())
 
 		})
+
+		It(`SendBulkNotifications request example`, func() {
+			fmt.Println("\nSendBulkNotifications() result:")
+			// begin-send_bulk_notifications
+
+			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
+
+			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+
+			notificationID := "1234-1234-sdfs-234"
+			notificationSeverity := "MEDIUM"
+			typeValue := "com.acme.offer:new"
+			notificationsSouce := "1234-1234-sdfs-234:test"
+			now := time.Now()
+			date := strfmt.DateTime(now).String()
+			specVersion := "1.0"
+
+			notificationCreateModel := &eventnotificationsv1.NotificationCreate{
+				Ibmenseverity: &notificationSeverity,
+				Ibmenfcmbody:  &notificationFcmBodyModel,
+				Ibmenapnsbody: &notificationAPNsBodyModel,
+				Ibmenpushto:   &notificationDevicesModel,
+				Ibmensourceid: &sourceID,
+				ID:            &notificationID,
+				Source:        &notificationsSouce,
+				Type:          &typeValue,
+				Specversion:   &specVersion,
+				Time:          &date,
+			}
+
+			notificationID1 := "1234-1234-sdfs-234temp"
+			notificationsSouce1 := "1234-1234-sdfs-234:test1"
+			notificationSeverity1 := "LOW"
+			typeValue1 := "com.groc.offer:new"
+
+			notificationCreateModel1 := &eventnotificationsv1.NotificationCreate{
+				Ibmenseverity: &notificationSeverity1,
+				Ibmenfcmbody:  &notificationFcmBodyModel,
+				Ibmenapnsbody: &notificationAPNsBodyModel,
+				Ibmenpushto:   &notificationDevicesModel,
+				Ibmensourceid: &sourceID,
+				ID:            &notificationID1,
+				Source:        &notificationsSouce1,
+				Type:          &typeValue1,
+				Specversion:   &specVersion,
+				Time:          &date,
+			}
+
+			sendBulkNotificationsOptions := &eventnotificationsv1.SendBulkNotificationsOptions{
+				InstanceID:   core.StringPtr(instanceID),
+				BulkMessages: []eventnotificationsv1.NotificationCreate{*notificationCreateModel, *notificationCreateModel1},
+			}
+
+			bulkNotificationResponse, response, err := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(bulkNotificationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			// end-send_bulk_notifications
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(bulkNotificationResponse).ToNot(BeNil())
+
+		})
+
 		It(`DeleteSubscription request example`, func() {
 			// begin-delete_subscription
 
