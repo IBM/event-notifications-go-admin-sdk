@@ -57,7 +57,6 @@ var (
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
-	destinationID4            string
 	subscriptionID            string
 	fcmServerKey              string
 	fcmSenderId               string
@@ -386,7 +385,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(destinationResponse).ToNot(BeNil())
-
 			// end-create_destination
 
 		})
