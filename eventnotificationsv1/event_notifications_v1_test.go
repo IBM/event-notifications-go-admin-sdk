@@ -7650,6 +7650,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewSubscriptionUpdateAttributesSlackAttributes successfully`, func() {
+				attachmentColor := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesSlackAttributes(attachmentColor)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewSubscriptionUpdateAttributesWebhookAttributes successfully`, func() {
 				signingEnabled := true
 				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesWebhookAttributes(signingEnabled)
