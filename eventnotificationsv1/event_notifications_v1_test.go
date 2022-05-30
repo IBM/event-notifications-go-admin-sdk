@@ -209,7 +209,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
 					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
+					res.WriteHeader(202)
 					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
@@ -351,7 +351,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
+					res.WriteHeader(202)
 					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID"}`)
 				}))
 			})
@@ -497,7 +497,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
+					res.WriteHeader(202)
 					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID"}`)
 				}))
 			})
@@ -649,7 +649,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					defer GinkgoRecover()
 
 					// Set success status code with no respoonse body
-					res.WriteHeader(201)
+					res.WriteHeader(202)
 				}))
 			})
 			It(`Invoke SendNotifications successfully`, func() {
@@ -709,6 +709,375 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`SendBulkNotifications(sendBulkNotificationsOptions *SendBulkNotificationsOptions) - Operation response error`, func() {
+		sendBulkNotificationsPath := "/v1/instances/testString/notifications/bulk"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendBulkNotificationsPath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(202)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke SendBulkNotifications with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				sendBulkNotificationsOptionsModel := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				sendBulkNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
+				sendBulkNotificationsOptionsModel.BulkMessages = []eventnotificationsv1.NotificationCreate{*notificationCreateModel}
+				sendBulkNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`SendBulkNotifications(sendBulkNotificationsOptions *SendBulkNotificationsOptions)`, func() {
+		sendBulkNotificationsPath := "/v1/instances/testString/notifications/bulk"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendBulkNotificationsPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(202)
+					fmt.Fprintf(res, "%s", `{"bulk_notification_id": "BulkNotificationID", "bulk_messages": ["anyValue"]}`)
+				}))
+			})
+			It(`Invoke SendBulkNotifications successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				sendBulkNotificationsOptionsModel := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				sendBulkNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
+				sendBulkNotificationsOptionsModel.BulkMessages = []eventnotificationsv1.NotificationCreate{*notificationCreateModel}
+				sendBulkNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.SendBulkNotificationsWithContext(ctx, sendBulkNotificationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.SendBulkNotificationsWithContext(ctx, sendBulkNotificationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(sendBulkNotificationsPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(202)
+					fmt.Fprintf(res, "%s", `{"bulk_notification_id": "BulkNotificationID", "bulk_messages": ["anyValue"]}`)
+				}))
+			})
+			It(`Invoke SendBulkNotifications successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.SendBulkNotifications(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				sendBulkNotificationsOptionsModel := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				sendBulkNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
+				sendBulkNotificationsOptionsModel.BulkMessages = []eventnotificationsv1.NotificationCreate{*notificationCreateModel}
+				sendBulkNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke SendBulkNotifications with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				sendBulkNotificationsOptionsModel := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				sendBulkNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
+				sendBulkNotificationsOptionsModel.BulkMessages = []eventnotificationsv1.NotificationCreate{*notificationCreateModel}
+				sendBulkNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the SendBulkNotificationsOptions model with no property values
+				sendBulkNotificationsOptionsModelNew := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(202)
+				}))
+			})
+			It(`Invoke SendBulkNotifications successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				sendBulkNotificationsOptionsModel := new(eventnotificationsv1.SendBulkNotificationsOptions)
+				sendBulkNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
+				sendBulkNotificationsOptionsModel.BulkMessages = []eventnotificationsv1.NotificationCreate{*notificationCreateModel}
+				sendBulkNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.SendBulkNotifications(sendBulkNotificationsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
@@ -6936,6 +7305,74 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewSendBulkNotificationsOptions successfully`, func() {
+				// Construct an instance of the NotificationCreate model
+				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
+				Expect(notificationCreateModel).ToNot(BeNil())
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.ID = core.StringPtr("testString")
+				notificationCreateModel.Source = core.StringPtr("testString")
+				notificationCreateModel.Type = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
+				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
+				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Source).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Type).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(notificationCreateModel.Time).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
+				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
+
+				notificationCreateModel.SetProperties(nil)
+				Expect(notificationCreateModel.GetProperties()).To(BeEmpty())
+
+				notificationCreateModelExpectedMap := make(map[string]interface{})
+				notificationCreateModelExpectedMap["foo"] = core.StringPtr("testString")
+				notificationCreateModel.SetProperties(notificationCreateModelExpectedMap)
+				notificationCreateModelActualMap := notificationCreateModel.GetProperties()
+				Expect(notificationCreateModelActualMap).To(Equal(notificationCreateModelExpectedMap))
+
+				// Construct an instance of the SendBulkNotificationsOptions model
+				instanceID := "testString"
+				sendBulkNotificationsOptionsModel := eventNotificationsService.NewSendBulkNotificationsOptions(instanceID)
+				sendBulkNotificationsOptionsModel.SetInstanceID("testString")
+				sendBulkNotificationsOptionsModel.SetBulkMessages([]eventnotificationsv1.NotificationCreate{*notificationCreateModel})
+				sendBulkNotificationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(sendBulkNotificationsOptionsModel).ToNot(BeNil())
+				Expect(sendBulkNotificationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(sendBulkNotificationsOptionsModel.BulkMessages).To(Equal([]eventnotificationsv1.NotificationCreate{*notificationCreateModel}))
+				Expect(sendBulkNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewSendNotificationsOptions successfully`, func() {
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
@@ -7157,6 +7594,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigParamsSlackDestinationConfig successfully`, func() {
+				url := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsSlackDestinationConfig(url)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigParamsWebhookDestinationConfig successfully`, func() {
 				url := "testString"
 				verb := "get"
@@ -7180,6 +7623,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewSubscriptionCreateAttributesSlackAttributes successfully`, func() {
+				attachmentColor := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesSlackAttributes(attachmentColor)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewSubscriptionCreateAttributesWebhookAttributes successfully`, func() {
 				signingEnabled := true
 				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesWebhookAttributes(signingEnabled)
@@ -7198,6 +7647,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewSubscriptionUpdateAttributesSmsAttributes successfully`, func() {
 				to := []string{"testString"}
 				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesSmsAttributes(to)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewSubscriptionUpdateAttributesSlackAttributes successfully`, func() {
+				attachmentColor := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesSlackAttributes(attachmentColor)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
