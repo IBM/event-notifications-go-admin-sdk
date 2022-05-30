@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.0...v0.1.1) (2022-05-30)
+
+
+### Bug Fixes
+
+* add slack destination support ([341f5d2](https://github.com/IBM/event-notifications-go-admin-sdk/commit/341f5d2fdb9a0d1413c2437afac469eca5c6b5ee))
+
 # [0.1.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.0.8...v0.1.0) (2022-04-29)
 
 
