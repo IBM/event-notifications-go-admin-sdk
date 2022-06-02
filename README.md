@@ -654,6 +654,15 @@ apnsOptions := map[string]interface{}{
 ibmenapnsbody, _ := json.Marshal(apnsOptions)
 ibmenapnsbodyString := string(ibmenapnsbody)
 
+safariOptions := map[string]interface{}{
+	"saf": map[string]interface{}{
+		"alert": "<notification-message>",
+		"badge": 5,
+	},
+})
+ibmensafaribody, _ := json.Marshal(safariOptions)
+ibmensafaribodyString := string(ibmensafaribody)
+
 fcmOptions := map[string]interface{}{
 	"notification": map[string]interface{}{
 		"title": "<notification-title>",
@@ -693,6 +702,7 @@ sendNotificationsOptions.CeSpecversion = &specVersion
 sendNotificationsOptions.CeIbmenpushto = &devicesbodyString
 sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
 sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
+sendNotificationsOptions.ceIbmensafaribody = &ibmensafaribodyString
 sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
 
 notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
@@ -731,6 +741,7 @@ if err != nil {
   - *CeIbmenpushto* (**string**) - Targets for the FCM notifications. 
   - *CeIbmenfcmbody* (**string**) - Message body for the FCM notifications. 
   - *CeIbmenapnsbody* (**string**) - Message body for the APNs notifications. 
+  - *CeIbmensafaribody* (**string**) - Message body for the Safari notifications. 
   - *CeIbmenapnsheaders* (**string**) - Headers for the APNs notifications. 
   - *CeIbmenchromebody* (**string**) - Message body for the Chrome notifications. 
   - *CeIbmenfirefoxbody* (**string**) - Message body for the Firefox notifications. 
