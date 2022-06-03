@@ -52,6 +52,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		serviceURL                string
 		config                    map[string]string
 		instanceID                string
+		safariCertificatePath     string
 		search                    string = ""
 		topicName                 string = "WebhookTopic"
 		sourceID                  string
@@ -62,6 +63,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID2            string
 		destinationID3            string
 		destinationID4            string
+		destinationID5            string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
@@ -109,6 +111,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load service fcmSenderId configuration property, skipping tests")
 			}
 			fmt.Printf("Service fcmSenderId: %s\n", fcmSenderId)
+
+			safariCertificatePath = config["SAFARI_CERTIFICATE"]
+			if safariCertificatePath == "" {
+				Skip("Unable to load service safariCertificatePath configuration property, skipping tests")
+			}
+			fmt.Printf("Service safariCertificatePath: %s\n", safariCertificatePath)
 
 			shouldSkipTest = func() {}
 		})
@@ -578,6 +586,42 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID4 = *destinationResponse.ID
 
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Safari_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushSafariConst,
+			)
+
+			certificatefile, err := os.Open(safariCertificatePath)
+			if err != nil {
+				panic(err)
+			}
+			createDestinationOptions.Certificate = certificatefile
+
+			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+				CertType:        core.StringPtr("p12"),
+				Password:        core.StringPtr("safari"),
+				WebsiteURL:      core.StringPtr("https://ensafaripush.mybluemix.net"),
+				WebsiteName:     core.StringPtr("NodeJS Starter Application"),
+				URLFormatString: core.StringPtr("https://ensafaripush.mybluemix.net/%@/?flight=%@"),
+				WebsitePushID:   core.StringPtr("web.net.mybluemix.ensafaripush"),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSafariModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID5 = *destinationResponse.ID
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -724,6 +768,44 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(name)))
 			Expect(destination.Description).To(Equal(core.StringPtr(description)))
 
+			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+				CertType:        core.StringPtr("p12"),
+				Password:        core.StringPtr("safari"),
+				URLFormatString: core.StringPtr("https://ensafaripush.mybluemix.net/%@/?flight=%@"),
+				WebsiteName:     core.StringPtr("NodeJS Starter Application"),
+				WebsiteURL:      core.StringPtr("https://ensafaripush.mybluemix.net"),
+				WebsitePushID:   core.StringPtr("web.net.mybluemix.ensafaripush"),
+			}
+
+			safaridestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: safaridestinationConfigParamsModel,
+			}
+
+			name = "Safari_dest"
+			description = "This destination is for Safari"
+			safariupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID5),
+				Name:        core.StringPtr(name),
+				Description: core.StringPtr(description),
+				Config:      safaridestinationConfigModel,
+			}
+
+			certificatefile, err := os.Open(safariCertificatePath)
+			if err != nil {
+				panic(err)
+			}
+
+			safariupdateDestinationOptions.Certificate = certificatefile
+
+			safaridestination, safariresponse, err := eventNotificationsService.UpdateDestination(safariupdateDestinationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(safariresponse.StatusCode).To(Equal(200))
+			Expect(safaridestination).ToNot(BeNil())
+			Expect(safaridestination.ID).To(Equal(core.StringPtr(destinationID5)))
+			Expect(safaridestination.Name).To(Equal(core.StringPtr(name)))
+			Expect(safaridestination.Description).To(Equal(core.StringPtr(description)))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1017,6 +1099,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
 			notificationID := "1234-1234-sdfs-234"
 			notificationSeverity := "MEDIUM"
@@ -1038,8 +1121,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			sendNotificationsOptions.CeSpecversion = &specVersion
 			sendNotificationsOptions.CeIbmenfcmbody = &notificationFcmBodyModel
 			sendNotificationsOptions.CeIbmenapnsbody = &notificationAPNsBodyModel
+			sendNotificationsOptions.CeIbmensafaribody = &notificationSafariBodyModel
 			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
-			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -1102,6 +1185,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 			notificationFcmBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
 			notificationID := "1234-1234-sdfs-234"
 			notificationSeverity := "MEDIUM"
@@ -1112,16 +1196,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			specVersion := "1.0"
 
 			notificationCreateModel := &eventnotificationsv1.NotificationCreate{
-				Ibmenseverity: &notificationSeverity,
-				Ibmenfcmbody:  &notificationFcmBodyModel,
-				Ibmenapnsbody: &notificationAPNsBodyModel,
-				Ibmenpushto:   &notificationDevicesModel,
-				Ibmensourceid: &sourceID,
-				ID:            &notificationID,
-				Source:        &notificationsSouce,
-				Type:          &typeValue,
-				Specversion:   &specVersion,
-				Time:          &date,
+				Ibmenseverity:   &notificationSeverity,
+				Ibmenfcmbody:    &notificationFcmBodyModel,
+				Ibmenapnsbody:   &notificationAPNsBodyModel,
+				Ibmensafaribody: &notificationSafariBodyModel,
+				Ibmenpushto:     &notificationDevicesModel,
+				Ibmensourceid:   &sourceID,
+				ID:              &notificationID,
+				Source:          &notificationsSouce,
+				Type:            &typeValue,
+				Specversion:     &specVersion,
+				Time:            &date,
 			}
 
 			notificationID = "1234-1234-sdfs-234temp"
@@ -1130,16 +1215,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			typeValue = "com.groc.offer:new"
 
 			notificationCreateModel1 := &eventnotificationsv1.NotificationCreate{
-				Ibmenseverity: &notificationSeverity,
-				Ibmenfcmbody:  &notificationFcmBodyModel,
-				Ibmenapnsbody: &notificationAPNsBodyModel,
-				Ibmenpushto:   &notificationDevicesModel,
-				Ibmensourceid: &sourceID,
-				ID:            &notificationID,
-				Source:        &notificationsSouce,
-				Type:          &typeValue,
-				Specversion:   &specVersion,
-				Time:          &date,
+				Ibmenseverity:   &notificationSeverity,
+				Ibmenfcmbody:    &notificationFcmBodyModel,
+				Ibmenapnsbody:   &notificationAPNsBodyModel,
+				Ibmensafaribody: &notificationSafariBodyModel,
+				Ibmenpushto:     &notificationDevicesModel,
+				Ibmensourceid:   &sourceID,
+				ID:              &notificationID,
+				Source:          &notificationsSouce,
+				Type:            &typeValue,
+				Specversion:     &specVersion,
+				Time:            &date,
 			}
 
 			sendBulkNotificationsOptions := &eventnotificationsv1.SendBulkNotificationsOptions{
@@ -1229,7 +1315,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

@@ -53,10 +53,12 @@ var (
 	config                    map[string]string
 	configLoaded              bool = false
 	instanceID                string
+	safariCertificatePath     string
 	topicName                 string = "Admin Topic Compliance"
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
+	destinationID5            string
 	subscriptionID            string
 	fcmServerKey              string
 	fcmSenderId               string
@@ -100,6 +102,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load service fcmSenderId configuration property, skipping tests")
 			}
 			fmt.Printf("Service fcmSenderId: %s\n", fcmSenderId)
+
+			safariCertificatePath = config["SAFARI_CERTIFICATE"]
+			if safariCertificatePath == "" {
+				Skip("Unable to load service safariCertificatePath configuration property, skipping tests")
+			}
+			fmt.Printf("Service safariCertificatePath: %s\n", safariCertificatePath)
 
 			configLoaded = len(config) > 0
 		})
@@ -385,6 +393,47 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(destinationResponse).ToNot(BeNil())
+
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Safari_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushSafariConst,
+			)
+
+			certificatefile, err := os.Open(safariCertificatePath)
+			if err != nil {
+				panic(err)
+			}
+			createDestinationOptions.Certificate = certificatefile
+
+			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+				CertType:        core.StringPtr("p12"),
+				Password:        core.StringPtr("safari"),
+				WebsiteURL:      core.StringPtr("https://ensafaripush.mybluemix.net"),
+				WebsiteName:     core.StringPtr("NodeJS Starter Application"),
+				URLFormatString: core.StringPtr("https://ensafaripush.mybluemix.net/%@/?flight=%@"),
+				WebsitePushID:   core.StringPtr("web.net.mybluemix.ensafaripush"),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSafariModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID5 = *destinationResponse.ID
+
 			// end-create_destination
 
 		})
@@ -466,6 +515,50 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
+
+			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+				CertType:        core.StringPtr("p12"),
+				Password:        core.StringPtr("safari"),
+				URLFormatString: core.StringPtr("https://ensafaripush.mybluemix.net/%@/?flight=%@"),
+				WebsiteName:     core.StringPtr("NodeJS Starter Application"),
+				WebsiteURL:      core.StringPtr("https://ensafaripush.mybluemix.net"),
+				WebsitePushID:   core.StringPtr("web.net.mybluemix.ensafaripush"),
+			}
+
+			safaridestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: safaridestinationConfigParamsModel,
+			}
+
+			name := "Safari_dest"
+			description := "This destination is for Safari"
+			safariupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID5),
+				Name:        core.StringPtr(name),
+				Description: core.StringPtr(description),
+				Config:      safaridestinationConfigModel,
+			}
+
+			certificatefile, err := os.Open(safariCertificatePath)
+			if err != nil {
+				panic(err)
+			}
+
+			safariupdateDestinationOptions.Certificate = certificatefile
+
+			safaridestination, safariresponse, err := eventNotificationsService.UpdateDestination(safariupdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(safaridestination, "", "  ")
+			fmt.Println(string(b))
+
+			// end-update_destination
+
+			Expect(err).To(BeNil())
+			Expect(safariresponse.StatusCode).To(Equal(200))
+			Expect(safaridestination).ToNot(BeNil())
 
 		})
 		It(`ListDestinationDevices request example`, func() {
@@ -643,6 +736,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
 
 			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
+			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
 			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
 
@@ -674,6 +768,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
 			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
 			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
+			sendNotificationsOptions.CeIbmensafaribody = &notificationSafariBodyModel
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
 
@@ -886,6 +981,21 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			response, err := eventNotificationsService.DeleteDestination(deleteDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			// end-delete_destination
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+			deleteDestinationOptions = eventNotificationsService.NewDeleteDestinationOptions(
+				instanceID,
+				destinationID5,
+			)
+
+			response, err = eventNotificationsService.DeleteDestination(deleteDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
