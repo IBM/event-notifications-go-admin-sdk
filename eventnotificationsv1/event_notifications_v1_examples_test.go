@@ -401,7 +401,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			certificatefile, err := os.Open(safariCertificatePath)
-
+			if err != nil {
+				panic(err)
+			}
 			createDestinationOptions.Certificate = certificatefile
 
 			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
@@ -538,6 +540,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			certificatefile, err := os.Open(safariCertificatePath)
+			if err != nil {
+				panic(err)
+			}
 
 			safariupdateDestinationOptions.Certificate = certificatefile
 
