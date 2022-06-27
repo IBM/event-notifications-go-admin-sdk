@@ -7789,6 +7789,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigParamsMsTeamsDestinationConfig successfully`, func() {
+				url := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsMsTeamsDestinationConfig(url)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigParamsSafariDestinationConfig successfully`, func() {
 				password := "testString"
 				websiteURL := "testString"

@@ -62,6 +62,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID             string
 		destinationID2            string
 		destinationID3            string
+		destinationID6            string
 		destinationID4            string
 		destinationID5            string
 		subscriptionID            string
@@ -621,6 +622,31 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID5 = *destinationResponse.ID
+
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"MSTeams_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeMSTeamsConst,
+			)
+
+			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigParamsMsTeamsDestinationConfig{
+				URL: core.StringPtr("https://teams.microsoft.com"),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsMSTeaMSModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID6 = *destinationResponse.ID
 
 			//
 			// The following status codes aren't covered by tests.
@@ -1315,7 +1341,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

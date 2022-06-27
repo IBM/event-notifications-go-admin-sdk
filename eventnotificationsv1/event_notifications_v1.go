@@ -2249,12 +2249,14 @@ type CreateDestinationOptions struct {
 // Constants associated with the CreateDestinationOptions.Type property.
 // The type of Destination Webhook.
 const (
+	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
 	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
 	CreateDestinationOptionsTypeSlackConst       = "slack"
+	CreateDestinationOptionsTypeMSTeamsConst     = "msteams"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
 
@@ -2852,7 +2854,7 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/SMS/Webhook/FCM.
+	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2869,8 +2871,9 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM.
+// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
 const (
+	DestinationTypeMsteamsConst     = "msteams"
 	DestinationTypePushAndroidConst = "push_android"
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypePushSafariConst  = "push_safari"
@@ -2953,6 +2956,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigParamsFirefoxDestinationConfig
 // - DestinationConfigParamsSlackDestinationConfig
 // - DestinationConfigParamsSafariDestinationConfig
+// - DestinationConfigParamsMsTeamsDestinationConfig
 type DestinationConfigParams struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -3294,7 +3298,7 @@ type DestinationListItem struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type.
+	// Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
 	Type *string `json:"type" validate:"required"`
 
 	// Subscription count.
@@ -3308,8 +3312,9 @@ type DestinationListItem struct {
 }
 
 // Constants associated with the DestinationListItem.Type property.
-// Destination type.
+// Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
 const (
+	DestinationListItemTypeMsteamsConst     = "msteams"
 	DestinationListItemTypePushAndroidConst = "push_android"
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypePushSafariConst  = "push_safari"
@@ -3378,6 +3383,7 @@ type DestinationResponse struct {
 // Constants associated with the DestinationResponse.Type property.
 // Destination type.
 const (
+	DestinationResponseTypeMsteamsConst     = "msteams"
 	DestinationResponseTypePushAndroidConst = "push_android"
 	DestinationResponseTypePushChromeConst  = "push_chrome"
 	DestinationResponseTypePushFirefoxConst = "push_firefox"
@@ -5142,6 +5148,7 @@ type Subscription struct {
 // Constants associated with the Subscription.DestinationType property.
 // The type of destination.
 const (
+	SubscriptionDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionDestinationTypePushAndroidConst = "push_android"
 	SubscriptionDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionDestinationTypePushFirefoxConst = "push_firefox"
@@ -5549,6 +5556,7 @@ type SubscriptionListItem struct {
 // Constants associated with the SubscriptionListItem.DestinationType property.
 // The type of destination.
 const (
+	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
 	SubscriptionListItemDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionListItemDestinationTypePushFirefoxConst = "push_firefox"
@@ -6503,6 +6511,37 @@ func UnmarshalDestinationConfigParamsIosDestinationConfig(m map[string]json.RawM
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "bundle_id", &obj.BundleID)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigParamsMsTeamsDestinationConfig : Payload describing a MS Teams destination configuration.
+// This model "extends" DestinationConfigParams
+type DestinationConfigParamsMsTeamsDestinationConfig struct {
+	// URL of MS Teams Incoming Webhook.
+	URL *string `json:"url" validate:"required"`
+}
+
+// NewDestinationConfigParamsMsTeamsDestinationConfig : Instantiate DestinationConfigParamsMsTeamsDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigParamsMsTeamsDestinationConfig(url string) (_model *DestinationConfigParamsMsTeamsDestinationConfig, err error) {
+	_model = &DestinationConfigParamsMsTeamsDestinationConfig{
+		URL: core.StringPtr(url),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigParamsMsTeamsDestinationConfig) isaDestinationConfigParams() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigParamsMsTeamsDestinationConfig unmarshals an instance of DestinationConfigParamsMsTeamsDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigParamsMsTeamsDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigParamsMsTeamsDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
 	if err != nil {
 		return
 	}
