@@ -1,3 +1,10 @@
+## [0.1.3](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.2...v0.1.3) (2022-06-27)
+
+
+### Bug Fixes
+
+* add msteams destination support ([2d6e349](https://github.com/IBM/event-notifications-go-admin-sdk/commit/2d6e3497ff01e4725ba0eafca2d8c01d49fa3579))
+
 ## [0.1.2](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.1...v0.1.2) (2022-06-03)
 
 
