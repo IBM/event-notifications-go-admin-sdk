@@ -732,21 +732,21 @@ if err != nil {
 - **CeIbmenapnsheaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
 - **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
   - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
-  - *CeIbmenseverity* (**String**) - Severity for the notifications. 
-  - *CeID* (**String**) - ID for the notifications. 
-  - *CeSource* (**String**) - Source of the notifications. 
-  - *CeIbmensourceid* (**String**) - Event Notificaitons instance Source ID. 
-  - *CeType* (**String**) - Type for the notifications. 
-  - *CeTime* (**String**) - Time of the notifications. 
-  - *CeIbmenpushto* (**string**) - Targets for the FCM notifications. 
-  - *CeIbmenfcmbody* (**string**) - Message body for the FCM notifications. 
-  - *CeIbmenapnsbody* (**string**) - Message body for the APNs notifications. 
-  - *CeIbmensafaribody* (**string**) - Message body for the Safari notifications. 
-  - *CeIbmenapnsheaders* (**string**) - Headers for the APNs notifications. 
-  - *CeIbmenchromebody* (**string**) - Message body for the Chrome notifications. 
-  - *CeIbmenfirefoxbody* (**string**) - Message body for the Firefox notifications. 
-  - *CeIbmenchromeheaders* (**string**) - Headers for the Chrome notifications. 
-  - *CeIbmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. 
+  - *CeIbmenseverity* (**String**) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event.
+  - *CeID* (**String**) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
+  - *CeSource* (**String**) - This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with.
+  - *CeIbmensourceid* (**String**) - This is the ID of the source created in EN. This is available in the EN UI in the "Sources" section.
+  - *CeType* (**String**) - This describes the type of event. It is of the form <event-type-name>:<sub-type> This type is defined by the producer. The event type name has to be prefixed with the reverse DNS names so the event type is uniquely identified. The same event type can be produced by 2 different sources. It is highly recommended to use hyphen - as a separator instead of _.
+  - *CeTime* (**String**) - Time of the notifications. UTC time stamp when the event occurred. Must be in the RFC 3339 format.
+  - *CeIbmenpushto* (**string**) - Targets for the FCM notifications. This contains details about the destination where you want to send push notification. This attribute is mandatory for successful delivery from an Android FCM or APNS destination
+  - *CeIbmenfcmbody* (**string**) - Message body for the FCM notifications. [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
+  - *CeIbmenapnsbody* (**string**) - Message body for the APNs notifications. [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - *CeIbmensafaribody* (**string**) - Message body for the Safari notifications. [Refer this Safari official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - *CeIbmenapnsheaders* (**string**) - Headers for the APNs notifications. [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
+  - *CeIbmenchromebody* (**string**) - Message body for the Chrome notifications. [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
+  - *CeIbmenfirefoxbody* (**string**) - Message body for the Firefox notifications. [Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more].
+  - *CeIbmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *CeIbmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *CeSpecversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
 
 </details>
