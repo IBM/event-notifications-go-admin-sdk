@@ -24,7 +24,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"time"
 
 	"github.com/IBM/event-notifications-go-admin-sdk/eventnotificationsv1"
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -561,52 +560,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(safaridestination).ToNot(BeNil())
 
 		})
-		It(`ListDestinationDevices request example`, func() {
-			fmt.Println("\nListDestinationDevices() result:")
-			// begin-list_destination_devices
-
-			listDestinationDevicesOptions := eventNotificationsService.NewListDestinationDevicesOptions(
-				instanceID,
-				destinationID,
-			)
-
-			destinationDevicesList, response, err := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(destinationDevicesList, "", "  ")
-			fmt.Println(string(b))
-
-			// end-list_destination_devices
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevicesList).ToNot(BeNil())
-
-		})
-		It(`GetDestinationDevicesReport request example`, func() {
-			fmt.Println("\nGetDestinationDevicesReport() result:")
-			// begin-get_destination_devices_report
-
-			getDestinationDevicesReportOptions := eventNotificationsService.NewGetDestinationDevicesReportOptions(
-				instanceID,
-				destinationID,
-			)
-
-			destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
-			if err != nil {
-				panic(err)
-			}
-			b, _ := json.MarshalIndent(destinationDevicesReport, "", "  ")
-			fmt.Println(string(b))
-
-			// end-get_destination_devices_report
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevicesReport).ToNot(BeNil())
-
-		})
 
 		It(`CreateSubscription request example`, func() {
 			fmt.Println("\nCreateSubscription() result:")
@@ -714,31 +667,26 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationID := "1234-1234-sdfs-234"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
-			now := time.Now()
-			date := strfmt.DateTime(now).String()
 			//userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
 			specVersion := "1.0"
 
 			// begin-send_notifications
 
-			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
-				instanceID,
-			)
+			notificationCreateModel := &eventnotificationsv1.NotificationCreate{}
 
-			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
-			sendNotificationsOptions.CeID = &notificationID
-			sendNotificationsOptions.CeSource = &notificationsSouce
-			sendNotificationsOptions.CeIbmensourceid = &sourceID
-			sendNotificationsOptions.CeType = &typeValue
-			sendNotificationsOptions.CeTime = &date
-			sendNotificationsOptions.CeSpecversion = &specVersion
-			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
+			notificationCreateModel.Ibmenseverity = &notificationSeverity
+			notificationCreateModel.ID = &notificationID
+			notificationCreateModel.Source = &notificationsSouce
+			notificationCreateModel.Ibmensourceid = &sourceID
+			notificationCreateModel.Type = &typeValue
+			notificationCreateModel.Time = &strfmt.DateTime{}
+			notificationCreateModel.Specversion = &specVersion
 
 			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
-			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
+			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
 
 			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
@@ -765,12 +713,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
 			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
 
-			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
-			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
-			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
-			sendNotificationsOptions.CeIbmensafaribody = &notificationSafariBodyModel
+			notificationCreateModel.Ibmenfcmbody = &ibmenfcmbodyString
+			notificationCreateModel.Ibmenapnsbody = &ibmenapnsbodyString
+			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
+			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
+			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Offer Alert")
+			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert on expiring offers")
 
-			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+			sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
+			sendNotificationsOptionsModel.InstanceID = &instanceID
+			sendNotificationsOptionsModel.Body = notificationCreateModel
+
+			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
 
 			if err != nil {
 				panic(err)
@@ -792,29 +746,26 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationID := "1234-1234-sdfs-234"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
-			now := time.Now()
-			date := strfmt.DateTime(now).String()
 			//userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
 			specVersion := "1.0"
 			// begin-send_notifications
 
-			sendNotificationsOptions := eventNotificationsService.NewSendNotificationsOptions(
-				instanceID,
-			)
+			notificationCreateModel := &eventnotificationsv1.NotificationCreate{}
 
-			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
-			sendNotificationsOptions.CeID = &notificationID
-			sendNotificationsOptions.CeSource = &notificationsSouce
-			sendNotificationsOptions.CeIbmensourceid = &sourceID
-			sendNotificationsOptions.CeType = &typeValue
-			sendNotificationsOptions.CeTime = &date
-			sendNotificationsOptions.CeSpecversion = &specVersion
-			sendNotificationsOptions.Body = &eventnotificationsv1.NotificationCreate{}
+			notificationCreateModel.Ibmenseverity = &notificationSeverity
+			notificationCreateModel.ID = &notificationID
+			notificationCreateModel.Source = &notificationsSouce
+			notificationCreateModel.Ibmensourceid = &sourceID
+			notificationCreateModel.Type = &typeValue
+			notificationCreateModel.Time = &strfmt.DateTime{}
+			notificationCreateModel.Specversion = &specVersion
+			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Offer Alert")
+			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert on expiring offers")
 
 			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 
-			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
+			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
 
 			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
@@ -841,11 +792,15 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
 			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
 
-			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
-			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
-			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
+			notificationCreateModel.Ibmenfcmbody = &ibmenfcmbodyString
+			notificationCreateModel.Ibmenapnsbody = &ibmenapnsbodyString
+			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 
-			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+			sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
+			sendNotificationsOptionsModel.InstanceID = &instanceID
+			sendNotificationsOptionsModel.Body = notificationCreateModel
+
+			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
 
 			if err != nil {
 				panic(err)
