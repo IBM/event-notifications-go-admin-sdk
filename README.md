@@ -479,6 +479,7 @@ if err != nil {
 }
 ```
 ### Get Device Count
+
 ```go
 getDeviceCountOptions := &eventnotificationsv1.GetDeviceCountOptions{
 	<instance-id>,		// Event notifications service instance GUID
