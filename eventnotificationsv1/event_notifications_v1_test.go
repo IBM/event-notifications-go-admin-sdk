@@ -174,42 +174,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(sendNotificationsPath))
 					Expect(req.Method).To(Equal("POST"))
-					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensafaribody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensafaribody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
-					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(202)
 					fmt.Fprint(res, `} this is not valid json {`)
@@ -225,51 +189,33 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Body = notificationCreateModel
-				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensafaribody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
-				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
@@ -316,42 +262,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensafaribody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensafaribody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
-					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -372,51 +282,33 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Body = notificationCreateModel
-				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensafaribody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
-				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -469,42 +361,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
-					Expect(req.Header["Ce-Ibmenseverity"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenseverity"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultshort"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultshort"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmendefaultlong"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmendefaultlong"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfcmbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfcmbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenapnsbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensafaribody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensafaribody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenpushto"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenpushto"][0]).To(Equal(fmt.Sprintf("%v", `{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-					Expect(req.Header["Ce-Ibmenapnsheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenapnsheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromebody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromebody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxbody"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxbody"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenchromeheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenchromeheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmenfirefoxheaders"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Ibmensourceid"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Ibmensourceid"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Id"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Id"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Source"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Source"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Type"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Type"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
-					Expect(req.Header["Ce-Specversion"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Specversion"][0]).To(Equal(fmt.Sprintf("%v", "1.0")))
-					Expect(req.Header["Ce-Time"]).ToNot(BeNil())
-					Expect(req.Header["Ce-Time"][0]).To(Equal(fmt.Sprintf("%v", "testString")))
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(202)
@@ -527,51 +383,33 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Body = notificationCreateModel
-				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensafaribody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
-				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -591,51 +429,33 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Body = notificationCreateModel
-				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensafaribody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
-				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -676,51 +496,33 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 				sendNotificationsOptionsModel.InstanceID = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Body = notificationCreateModel
-				sendNotificationsOptionsModel.CeIbmenseverity = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultshort = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmendefaultlong = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfcmbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenapnsbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensafaribody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.CeIbmenapnsheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromebody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxbody = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenchromeheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmenfirefoxheaders = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeIbmensourceid = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeID = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSource = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeType = core.StringPtr("testString")
-				sendNotificationsOptionsModel.CeSpecversion = core.StringPtr("1.0")
-				sendNotificationsOptionsModel.CeTime = core.StringPtr("testString")
 				sendNotificationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -761,27 +563,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendBulkNotificationsOptions model
@@ -854,27 +656,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendBulkNotificationsOptions model
@@ -955,27 +757,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendBulkNotificationsOptions model
@@ -1001,27 +803,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendBulkNotificationsOptions model
@@ -1068,27 +870,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendBulkNotificationsOptions model
@@ -4573,481 +4375,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
-	Describe(`ListDestinationDevices(listDestinationDevicesOptions *ListDestinationDevicesOptions) - Operation response error`, func() {
-		listDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices"
+	Describe(`GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions) - Operation response error`, func() {
+		getTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listDestinationDevicesPath))
-					Expect(req.Method).To(Equal("GET"))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprint(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke ListDestinationDevices with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListDestinationDevicesOptions model
-				listDestinationDevicesOptionsModel := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				listDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listDestinationDevicesOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listDestinationDevicesOptionsModel.Search = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`ListDestinationDevices(listDestinationDevicesOptions *ListDestinationDevicesOptions)`, func() {
-		listDestinationDevicesPath := "/v1/instances/testString/destinations/testString/devices"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listDestinationDevicesPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "devices": [{"id": "ID", "user_id": "UserID", "platform": "Platform", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke ListDestinationDevices successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the ListDestinationDevicesOptions model
-				listDestinationDevicesOptionsModel := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				listDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listDestinationDevicesOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listDestinationDevicesOptionsModel.Search = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.ListDestinationDevicesWithContext(ctx, listDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.ListDestinationDevicesWithContext(ctx, listDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listDestinationDevicesPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "devices": [{"id": "ID", "user_id": "UserID", "platform": "Platform", "token": "Token", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke ListDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.ListDestinationDevices(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the ListDestinationDevicesOptions model
-				listDestinationDevicesOptionsModel := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				listDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listDestinationDevicesOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listDestinationDevicesOptionsModel.Search = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke ListDestinationDevices with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListDestinationDevicesOptions model
-				listDestinationDevicesOptionsModel := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				listDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listDestinationDevicesOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listDestinationDevicesOptionsModel.Search = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the ListDestinationDevicesOptions model with no property values
-				listDestinationDevicesOptionsModelNew := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke ListDestinationDevices successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the ListDestinationDevicesOptions model
-				listDestinationDevicesOptionsModel := new(eventnotificationsv1.ListDestinationDevicesOptions)
-				listDestinationDevicesOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.ID = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listDestinationDevicesOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listDestinationDevicesOptionsModel.Search = core.StringPtr("testString")
-				listDestinationDevicesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions) - Operation response error`, func() {
-		getDestinationDevicesReportPath := "/v1/instances/testString/destinations/testString/devices/report"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicesReportPath))
-					Expect(req.Method).To(Equal("GET"))
-					// TODO: Add check for days query parameter
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprint(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke GetDestinationDevicesReport with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				getDestinationDevicesReportOptionsModel := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				getDestinationDevicesReportOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.Days = core.Int64Ptr(int64(1))
-				getDestinationDevicesReportOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions)`, func() {
-		getDestinationDevicesReportPath := "/v1/instances/testString/destinations/testString/devices/report"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicesReportPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// TODO: Add check for days query parameter
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 12, "all": 3}`)
-				}))
-			})
-			It(`Invoke GetDestinationDevicesReport successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				getDestinationDevicesReportOptionsModel := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				getDestinationDevicesReportOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.Days = core.Int64Ptr(int64(1))
-				getDestinationDevicesReportOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.GetDestinationDevicesReportWithContext(ctx, getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.GetDestinationDevicesReportWithContext(ctx, getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDestinationDevicesReportPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// TODO: Add check for days query parameter
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 12, "all": 3}`)
-				}))
-			})
-			It(`Invoke GetDestinationDevicesReport successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.GetDestinationDevicesReport(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				getDestinationDevicesReportOptionsModel := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				getDestinationDevicesReportOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.Days = core.Int64Ptr(int64(1))
-				getDestinationDevicesReportOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke GetDestinationDevicesReport with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				getDestinationDevicesReportOptionsModel := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				getDestinationDevicesReportOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.Days = core.Int64Ptr(int64(1))
-				getDestinationDevicesReportOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the GetDestinationDevicesReportOptions model with no property values
-				getDestinationDevicesReportOptionsModelNew := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke GetDestinationDevicesReport successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				getDestinationDevicesReportOptionsModel := new(eventnotificationsv1.GetDestinationDevicesReportOptions)
-				getDestinationDevicesReportOptionsModel.InstanceID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.ID = core.StringPtr("testString")
-				getDestinationDevicesReportOptionsModel.Days = core.Int64Ptr(int64(1))
-				getDestinationDevicesReportOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) - Operation response error`, func() {
-		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
 					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
 					// TODO: Add check for limit query parameter
@@ -5057,7 +4393,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
-			It(`Invoke ListTagsSubscriptionsDevice with error: Operation response processing error`, func() {
+			It(`Invoke GetTagsSubscriptionsDevice with error: Operation response processing error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -5065,24 +4401,24 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
+				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
 
 				// Enable retries and test again
 				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).To(BeNil())
@@ -5092,15 +4428,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
-	Describe(`ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions)`, func() {
-		listTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
+	Describe(`GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions)`, func() {
+		getTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
 		Context(`Using mock server endpoint with timeout`, func() {
 			BeforeEach(func() {
 				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
 
 					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
@@ -5115,7 +4451,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully with retries`, func() {
+			It(`Invoke GetTagsSubscriptionsDevice successfully with retries`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -5124,26 +4460,26 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
+				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
 				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
+				_, _, operationErr := eventNotificationsService.GetTagsSubscriptionsDeviceWithContext(ctx, getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 
 				// Disable retries and test again
 				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
@@ -5151,7 +4487,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Re-test the timeout error with retries disabled
 				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
 				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.ListTagsSubscriptionsDeviceWithContext(ctx, listTagsSubscriptionsDeviceOptionsModel)
+				_, _, operationErr = eventNotificationsService.GetTagsSubscriptionsDeviceWithContext(ctx, getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
@@ -5165,7 +4501,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					defer GinkgoRecover()
 
 					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionsDevicePath))
+					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
 					Expect(req.Method).To(Equal("GET"))
 
 					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
@@ -5177,7 +4513,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
+			It(`Invoke GetTagsSubscriptionsDevice successfully`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -5186,29 +4522,29 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 
 				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(nil)
+				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(nil)
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
+				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 				Expect(result).ToNot(BeNil())
 
 			})
-			It(`Invoke ListTagsSubscriptionsDevice with error: Operation validation and request error`, func() {
+			It(`Invoke GetTagsSubscriptionsDevice with error: Operation validation and request error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -5216,27 +4552,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
+				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
 				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
-				// Construct a second instance of the ListTagsSubscriptionsDeviceOptions model with no property values
-				listTagsSubscriptionsDeviceOptionsModelNew := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
+				// Construct a second instance of the GetTagsSubscriptionsDeviceOptions model with no property values
+				getTagsSubscriptionsDeviceOptionsModelNew := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
 				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModelNew)
+				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
@@ -5254,7 +4590,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 				}))
 			})
-			It(`Invoke ListTagsSubscriptionsDevice successfully`, func() {
+			It(`Invoke GetTagsSubscriptionsDevice successfully`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
 					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
@@ -5262,18 +4598,494 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				listTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.ListTagsSubscriptionsDeviceOptions)
-				listTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
+				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
+				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
-				result, response, operationErr := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptionsModel)
+				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions) - Operation response error`, func() {
+		getDeviceCountPath := "/v1/instances/testString/destinations/testString/devices/count"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetDeviceCount with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetDeviceCountOptions model
+				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
+				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions)`, func() {
+		getDeviceCountPath := "/v1/instances/testString/destinations/testString/devices/count"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10}`)
+				}))
+			})
+			It(`Invoke GetDeviceCount successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetDeviceCountOptions model
+				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
+				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetDeviceCountWithContext(ctx, getDeviceCountOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetDeviceCountWithContext(ctx, getDeviceCountOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10}`)
+				}))
+			})
+			It(`Invoke GetDeviceCount successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetDeviceCount(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetDeviceCountOptions model
+				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
+				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetDeviceCount with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetDeviceCountOptions model
+				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
+				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetDeviceCountOptions model with no property values
+				getDeviceCountOptionsModelNew := new(eventnotificationsv1.GetDeviceCountOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetDeviceCount successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetDeviceCountOptions model
+				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
+				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
+				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) - Operation response error`, func() {
+		createTagsSubscriptionPath := "/v1/instances/testString/destinations/testString/tag_subscriptions"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke CreateTagsSubscription with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateTagsSubscriptionOptions model
+				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions)`, func() {
+		createTagsSubscriptionPath := "/v1/instances/testString/destinations/testString/tag_subscriptions"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateTagsSubscription successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the CreateTagsSubscriptionOptions model
+				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.CreateTagsSubscriptionWithContext(ctx, createTagsSubscriptionOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.CreateTagsSubscriptionWithContext(ctx, createTagsSubscriptionOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateTagsSubscription successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the CreateTagsSubscriptionOptions model
+				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke CreateTagsSubscription with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateTagsSubscriptionOptions model
+				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the CreateTagsSubscriptionOptions model with no property values
+				createTagsSubscriptionOptionsModelNew := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateTagsSubscription successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateTagsSubscriptionOptions model
+				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
+				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
+				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
@@ -5539,265 +5351,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := eventNotificationsService.ListTagsSubscription(listTagsSubscriptionOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) - Operation response error`, func() {
-		createTagsSubscriptionPath := "/v1/instances/testString/destinations/testString/tag_subscriptions"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
-					Expect(req.Method).To(Equal("POST"))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprint(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke CreateTagsSubscription with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateTagsSubscriptionOptions model
-				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions)`, func() {
-		createTagsSubscriptionPath := "/v1/instances/testString/destinations/testString/tag_subscriptions"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
-					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "created_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke CreateTagsSubscription successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the CreateTagsSubscriptionOptions model
-				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.CreateTagsSubscriptionWithContext(ctx, createTagsSubscriptionOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.CreateTagsSubscriptionWithContext(ctx, createTagsSubscriptionOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(createTagsSubscriptionPath))
-					Expect(req.Method).To(Equal("POST"))
-
-					// For gzip-disabled operation, verify Content-Encoding is not set.
-					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
-
-					// If there is a body, then make sure we can read it
-					bodyBuf := new(bytes.Buffer)
-					if req.Header.Get("Content-Encoding") == "gzip" {
-						body, err := core.NewGzipDecompressionReader(req.Body)
-						Expect(err).To(BeNil())
-						_, err = bodyBuf.ReadFrom(body)
-						Expect(err).To(BeNil())
-					} else {
-						_, err := bodyBuf.ReadFrom(req.Body)
-						Expect(err).To(BeNil())
-					}
-					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "created_at": "2019-01-01T12:00:00.000Z"}`)
-				}))
-			})
-			It(`Invoke CreateTagsSubscription successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the CreateTagsSubscriptionOptions model
-				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke CreateTagsSubscription with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateTagsSubscriptionOptions model
-				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the CreateTagsSubscriptionOptions model with no property values
-				createTagsSubscriptionOptionsModelNew := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(201)
-				}))
-			})
-			It(`Invoke CreateTagsSubscription successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the CreateTagsSubscriptionOptions model
-				createTagsSubscriptionOptionsModel := new(eventnotificationsv1.CreateTagsSubscriptionOptions)
-				createTagsSubscriptionOptionsModel.InstanceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.ID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				createTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.CreateTagsSubscription(createTagsSubscriptionOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
@@ -7228,21 +6781,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_, err := eventNotificationsService.NewDestinationConfig(params)
 				Expect(err).ToNot(BeNil())
 			})
-			It(`Invoke NewGetDestinationDevicesReportOptions successfully`, func() {
-				// Construct an instance of the GetDestinationDevicesReportOptions model
-				instanceID := "testString"
-				id := "testString"
-				getDestinationDevicesReportOptionsModel := eventNotificationsService.NewGetDestinationDevicesReportOptions(instanceID, id)
-				getDestinationDevicesReportOptionsModel.SetInstanceID("testString")
-				getDestinationDevicesReportOptionsModel.SetID("testString")
-				getDestinationDevicesReportOptionsModel.SetDays(int64(1))
-				getDestinationDevicesReportOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(getDestinationDevicesReportOptionsModel).ToNot(BeNil())
-				Expect(getDestinationDevicesReportOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(getDestinationDevicesReportOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(getDestinationDevicesReportOptionsModel.Days).To(Equal(core.Int64Ptr(int64(1))))
-				Expect(getDestinationDevicesReportOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
 			It(`Invoke NewGetDestinationOptions successfully`, func() {
 				// Construct an instance of the GetDestinationOptions model
 				instanceID := "testString"
@@ -7255,6 +6793,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(getDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetDeviceCountOptions successfully`, func() {
+				// Construct an instance of the GetDeviceCountOptions model
+				instanceID := "testString"
+				id := "testString"
+				getDeviceCountOptionsModel := eventNotificationsService.NewGetDeviceCountOptions(instanceID, id)
+				getDeviceCountOptionsModel.SetInstanceID("testString")
+				getDeviceCountOptionsModel.SetID("testString")
+				getDeviceCountOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getDeviceCountOptionsModel).ToNot(BeNil())
+				Expect(getDeviceCountOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getDeviceCountOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getDeviceCountOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetSourceOptions successfully`, func() {
 				// Construct an instance of the GetSourceOptions model
@@ -7282,6 +6833,28 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getSubscriptionOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewGetTagsSubscriptionsDeviceOptions successfully`, func() {
+				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
+				instanceID := "testString"
+				id := "testString"
+				deviceID := "testString"
+				getTagsSubscriptionsDeviceOptionsModel := eventNotificationsService.NewGetTagsSubscriptionsDeviceOptions(instanceID, id, deviceID)
+				getTagsSubscriptionsDeviceOptionsModel.SetInstanceID("testString")
+				getTagsSubscriptionsDeviceOptionsModel.SetID("testString")
+				getTagsSubscriptionsDeviceOptionsModel.SetDeviceID("testString")
+				getTagsSubscriptionsDeviceOptionsModel.SetTagName("testString")
+				getTagsSubscriptionsDeviceOptionsModel.SetLimit(int64(1))
+				getTagsSubscriptionsDeviceOptionsModel.SetOffset(int64(0))
+				getTagsSubscriptionsDeviceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getTagsSubscriptionsDeviceOptionsModel).ToNot(BeNil())
+				Expect(getTagsSubscriptionsDeviceOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(getTagsSubscriptionsDeviceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewGetTopicOptions successfully`, func() {
 				// Construct an instance of the GetTopicOptions model
 				instanceID := "testString"
@@ -7296,25 +6869,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getTopicOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getTopicOptionsModel.Include).To(Equal(core.StringPtr("testString")))
 				Expect(getTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
-			It(`Invoke NewListDestinationDevicesOptions successfully`, func() {
-				// Construct an instance of the ListDestinationDevicesOptions model
-				instanceID := "testString"
-				id := "testString"
-				listDestinationDevicesOptionsModel := eventNotificationsService.NewListDestinationDevicesOptions(instanceID, id)
-				listDestinationDevicesOptionsModel.SetInstanceID("testString")
-				listDestinationDevicesOptionsModel.SetID("testString")
-				listDestinationDevicesOptionsModel.SetLimit(int64(1))
-				listDestinationDevicesOptionsModel.SetOffset(int64(0))
-				listDestinationDevicesOptionsModel.SetSearch("testString")
-				listDestinationDevicesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(listDestinationDevicesOptionsModel).ToNot(BeNil())
-				Expect(listDestinationDevicesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(listDestinationDevicesOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(listDestinationDevicesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
-				Expect(listDestinationDevicesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(listDestinationDevicesOptionsModel.Search).To(Equal(core.StringPtr("testString")))
-				Expect(listDestinationDevicesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewListDestinationsOptions successfully`, func() {
 				// Construct an instance of the ListDestinationsOptions model
@@ -7389,28 +6943,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTagsSubscriptionOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewListTagsSubscriptionsDeviceOptions successfully`, func() {
-				// Construct an instance of the ListTagsSubscriptionsDeviceOptions model
-				instanceID := "testString"
-				id := "testString"
-				deviceID := "testString"
-				listTagsSubscriptionsDeviceOptionsModel := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(instanceID, id, deviceID)
-				listTagsSubscriptionsDeviceOptionsModel.SetInstanceID("testString")
-				listTagsSubscriptionsDeviceOptionsModel.SetID("testString")
-				listTagsSubscriptionsDeviceOptionsModel.SetDeviceID("testString")
-				listTagsSubscriptionsDeviceOptionsModel.SetTagName("testString")
-				listTagsSubscriptionsDeviceOptionsModel.SetLimit(int64(1))
-				listTagsSubscriptionsDeviceOptionsModel.SetOffset(int64(0))
-				listTagsSubscriptionsDeviceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(listTagsSubscriptionsDeviceOptionsModel).ToNot(BeNil())
-				Expect(listTagsSubscriptionsDeviceOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(listTagsSubscriptionsDeviceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
 			It(`Invoke NewListTopicsOptions successfully`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				instanceID := "testString"
@@ -7426,6 +6958,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTopicsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listTopicsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTopicsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewNotificationCreate successfully`, func() {
+				specversion := "1.0"
+				ibmensourceid := "testString"
+				ibmendefaultshort := "testString"
+				ibmendefaultlong := "testString"
+				_model, err := eventNotificationsService.NewNotificationCreate(specversion, ibmensourceid, ibmendefaultshort, ibmendefaultlong)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewReplaceTopicOptions successfully`, func() {
 				// Construct an instance of the Rules model
@@ -7474,49 +7015,49 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				Expect(notificationCreateModel).ToNot(BeNil())
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
-				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
-				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
-				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(notificationCreateModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(notificationCreateModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Source).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
-				Expect(notificationCreateModel.Time).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
+				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))
+				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
 				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
 
@@ -7544,49 +7085,49 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				Expect(notificationCreateModel).ToNot(BeNil())
-				notificationCreateModel.Data = make(map[string]interface{})
-				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
-				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
-				notificationCreateModel.Ibmenchromeheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr("testString")
-				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
-				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
-				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Specversion = core.StringPtr("1.0")
+				notificationCreateModel.Time = CreateMockDateTime("2019-01-01T12:00:00.000Z")
 				notificationCreateModel.ID = core.StringPtr("testString")
 				notificationCreateModel.Source = core.StringPtr("testString")
 				notificationCreateModel.Type = core.StringPtr("testString")
-				notificationCreateModel.Specversion = core.StringPtr("1.0")
-				notificationCreateModel.Time = core.StringPtr("testString")
+				notificationCreateModel.Ibmenseverity = core.StringPtr("testString")
+				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
+				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
+				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
+				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenapnsheaders = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromebody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
+				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
-				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
-				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
-				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
+				Expect(notificationCreateModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
 				Expect(notificationCreateModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Source).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
-				Expect(notificationCreateModel.Time).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenseverity).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
+				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))
+				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenapnsheaders).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromebody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
 				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
 
@@ -7604,46 +7145,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				sendNotificationsOptionsModel := eventNotificationsService.NewSendNotificationsOptions(instanceID)
 				sendNotificationsOptionsModel.SetInstanceID("testString")
 				sendNotificationsOptionsModel.SetBody(notificationCreateModel)
-				sendNotificationsOptionsModel.SetCeIbmenseverity("testString")
-				sendNotificationsOptionsModel.SetCeIbmendefaultshort("testString")
-				sendNotificationsOptionsModel.SetCeIbmendefaultlong("testString")
-				sendNotificationsOptionsModel.SetCeIbmenfcmbody("testString")
-				sendNotificationsOptionsModel.SetCeIbmenapnsbody("testString")
-				sendNotificationsOptionsModel.SetCeIbmensafaribody("testString")
-				sendNotificationsOptionsModel.SetCeIbmenpushto(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)
-				sendNotificationsOptionsModel.SetCeIbmenapnsheaders("testString")
-				sendNotificationsOptionsModel.SetCeIbmenchromebody("testString")
-				sendNotificationsOptionsModel.SetCeIbmenfirefoxbody("testString")
-				sendNotificationsOptionsModel.SetCeIbmenchromeheaders("testString")
-				sendNotificationsOptionsModel.SetCeIbmenfirefoxheaders("testString")
-				sendNotificationsOptionsModel.SetCeIbmensourceid("testString")
-				sendNotificationsOptionsModel.SetCeID("testString")
-				sendNotificationsOptionsModel.SetCeSource("testString")
-				sendNotificationsOptionsModel.SetCeType("testString")
-				sendNotificationsOptionsModel.SetCeSpecversion("1.0")
-				sendNotificationsOptionsModel.SetCeTime("testString")
 				sendNotificationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(sendNotificationsOptionsModel).ToNot(BeNil())
 				Expect(sendNotificationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(sendNotificationsOptionsModel.Body).To(Equal(notificationCreateModel))
-				Expect(sendNotificationsOptionsModel.CeIbmenseverity).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmendefaultshort).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmendefaultlong).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenfcmbody).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenapnsbody).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmensafaribody).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenpushto).To(Equal(core.StringPtr(`{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}`)))
-				Expect(sendNotificationsOptionsModel.CeIbmenapnsheaders).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenchromebody).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxbody).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenchromeheaders).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmenfirefoxheaders).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeIbmensourceid).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeID).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeSource).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeType).To(Equal(core.StringPtr("testString")))
-				Expect(sendNotificationsOptionsModel.CeSpecversion).To(Equal(core.StringPtr("1.0")))
-				Expect(sendNotificationsOptionsModel.CeTime).To(Equal(core.StringPtr("testString")))
 				Expect(sendNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewTopicUpdateSourcesItem successfully`, func() {
@@ -7796,12 +7301,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewDestinationConfigParamsSafariDestinationConfig successfully`, func() {
+				certType := "p12"
 				password := "testString"
 				websiteURL := "testString"
 				websiteName := "testString"
 				urlFormatString := "testString"
 				websitePushID := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsSafariDestinationConfig(password, websiteURL, websiteName, urlFormatString, websitePushID)
+				_model, err := eventNotificationsService.NewDestinationConfigParamsSafariDestinationConfig(certType, password, websiteURL, websiteName, urlFormatString, websitePushID)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

@@ -62,9 +62,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID             string
 		destinationID2            string
 		destinationID3            string
-		destinationID6            string
 		destinationID4            string
 		destinationID5            string
+		destinationID6            string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
@@ -590,8 +590,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Safari_destination",
-				eventnotificationsv1.CreateDestinationOptionsTypePushSafariConst,
-			)
+				eventnotificationsv1.CreateDestinationOptionsTypePushSafariConst)
 
 			certificatefile, err := os.Open(safariCertificatePath)
 			if err != nil {
@@ -626,7 +625,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"MSTeams_destination",
-				eventnotificationsv1.CreateDestinationOptionsTypeMSTeamsConst,
+				eventnotificationsv1.CreateDestinationOptionsTypeMsteamsConst,
 			)
 
 			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigParamsMsTeamsDestinationConfig{
@@ -846,55 +845,22 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`ListDestinationDevices - Get list of Destination devices`, func() {
+	Describe(`GetDeviceCount - Get count of devices`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
-		It(`ListDestinationDevices(listDestinationDevicesOptions *ListDestinationDevicesOptions)`, func() {
+		It(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions)`, func() {
 
-			listDestinationDevicesOptions := &eventnotificationsv1.ListDestinationDevicesOptions{
+			getDeviceCountOptions := &eventnotificationsv1.GetDeviceCountOptions{
 				InstanceID: core.StringPtr(instanceID),
 				ID:         core.StringPtr(destinationID3),
-				Limit:      core.Int64Ptr(int64(1)),
-				Offset:     core.Int64Ptr(int64(0)),
-				Search:     core.StringPtr(""),
 			}
 
-			destinationDevicesList, response, err := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptions)
+			deviceCount, response, err := eventNotificationsService.GetDeviceCount(getDeviceCountOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevicesList).ToNot(BeNil())
-
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 404
-			// 500
-			//
-		})
-	})
-
-	Describe(`GetDestinationDevicesReport - Retrieves report of destination devices registered`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions)`, func() {
-
-			getDestinationDevicesReportOptions := &eventnotificationsv1.GetDestinationDevicesReportOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-				Days:       core.Int64Ptr(int64(1)),
-			}
-
-			destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destinationDevicesReport).ToNot(BeNil())
-
+			Expect(deviceCount).ToNot(BeNil())
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1127,30 +1093,31 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationAPNsBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
-			notificationID := "1234-1234-sdfs-234"
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			notificationsSouce := "1234-1234-sdfs-234:test"
-			now := time.Now()
-			date := strfmt.DateTime(now).String()
 			specVersion := "1.0"
 
-			sendNotificationsOptions := &eventnotificationsv1.SendNotificationsOptions{
-				InstanceID: core.StringPtr(instanceID),
-			}
-			sendNotificationsOptions.CeIbmenseverity = &notificationSeverity
-			sendNotificationsOptions.CeID = &notificationID
-			sendNotificationsOptions.CeSource = &notificationsSouce
-			sendNotificationsOptions.CeIbmensourceid = &sourceID
-			sendNotificationsOptions.CeType = &typeValue
-			sendNotificationsOptions.CeTime = &date
-			sendNotificationsOptions.CeSpecversion = &specVersion
-			sendNotificationsOptions.CeIbmenfcmbody = &notificationFcmBodyModel
-			sendNotificationsOptions.CeIbmenapnsbody = &notificationAPNsBodyModel
-			sendNotificationsOptions.CeIbmensafaribody = &notificationSafariBodyModel
-			sendNotificationsOptions.CeIbmenpushto = &notificationDevicesModel
+			notificationCreateModel := &eventnotificationsv1.NotificationCreate{}
+			notificationCreateModel.Ibmenseverity = &notificationSeverity
+			notificationCreateModel.ID = &instanceID
+			notificationCreateModel.Source = &notificationsSouce
+			notificationCreateModel.Ibmensourceid = &sourceID
+			notificationCreateModel.Type = &typeValue
+			notificationCreateModel.Time = &strfmt.DateTime{}
+			notificationCreateModel.Specversion = &specVersion
+			notificationCreateModel.Ibmenfcmbody = &notificationFcmBodyModel
+			notificationCreateModel.Ibmenapnsbody = &notificationAPNsBodyModel
+			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
+			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
+			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
+			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
 
-			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptions)
+			sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
+			sendNotificationsOptionsModel.InstanceID = &instanceID
+			sendNotificationsOptionsModel.Body = notificationCreateModel
+
+			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
@@ -1180,11 +1147,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
 			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
 
-			sendNotificationsOptions.CeIbmenfcmbody = &ibmenfcmbodyString
-			sendNotificationsOptions.CeIbmenapnsbody = &ibmenapnsbodyString
-			sendNotificationsOptions.CeIbmenapnsheaders = &ibmenapnsheaderstring
+			notificationCreateModel.Ibmenfcmbody = &ibmenfcmbodyString
+			notificationCreateModel.Ibmenapnsbody = &ibmenapnsbodyString
+			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 
-			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptions)
+			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
@@ -1201,7 +1168,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//
 		})
 	})
-
 	Describe(`SendBulkNotifications - Send Bulk notification`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -1217,8 +1183,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			notificationsSouce := "1234-1234-sdfs-234:test"
-			now := time.Now()
-			date := strfmt.DateTime(now).String()
 			specVersion := "1.0"
 
 			notificationCreateModel := &eventnotificationsv1.NotificationCreate{
@@ -1232,7 +1196,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Source:          &notificationsSouce,
 				Type:            &typeValue,
 				Specversion:     &specVersion,
-				Time:            &date,
+				Time:            &strfmt.DateTime{},
 			}
 
 			notificationID = "1234-1234-sdfs-234temp"
@@ -1251,7 +1215,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Source:          &notificationsSouce,
 				Type:            &typeValue,
 				Specversion:     &specVersion,
-				Time:            &date,
+				Time:            &strfmt.DateTime{},
 			}
 
 			sendBulkNotificationsOptions := &eventnotificationsv1.SendBulkNotificationsOptions{

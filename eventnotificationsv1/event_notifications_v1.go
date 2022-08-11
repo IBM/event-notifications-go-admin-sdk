@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.46.0-a4e29da0-20220224-210428
+ * IBM OpenAPI SDK Code Generator Version: 3.54.0-af6d2126-20220803-151219
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -163,6 +163,7 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 }
 
 // SendNotifications : Send a notification
+// Send Notifications body from the instance.
 func (eventNotifications *EventNotificationsV1) SendNotifications(sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.SendNotificationsWithContext(context.Background(), sendNotificationsOptions)
 }
@@ -200,60 +201,6 @@ func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx
 	}
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
-	if sendNotificationsOptions.CeIbmenseverity != nil {
-		builder.AddHeader("ce-ibmenseverity", fmt.Sprint(*sendNotificationsOptions.CeIbmenseverity))
-	}
-	if sendNotificationsOptions.CeIbmendefaultshort != nil {
-		builder.AddHeader("ce-ibmendefaultshort", fmt.Sprint(*sendNotificationsOptions.CeIbmendefaultshort))
-	}
-	if sendNotificationsOptions.CeIbmendefaultlong != nil {
-		builder.AddHeader("ce-ibmendefaultlong", fmt.Sprint(*sendNotificationsOptions.CeIbmendefaultlong))
-	}
-	if sendNotificationsOptions.CeIbmenfcmbody != nil {
-		builder.AddHeader("ce-ibmenfcmbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenfcmbody))
-	}
-	if sendNotificationsOptions.CeIbmenapnsbody != nil {
-		builder.AddHeader("ce-ibmenapnsbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenapnsbody))
-	}
-	if sendNotificationsOptions.CeIbmensafaribody != nil {
-		builder.AddHeader("ce-ibmensafaribody", fmt.Sprint(*sendNotificationsOptions.CeIbmensafaribody))
-	}
-	if sendNotificationsOptions.CeIbmenpushto != nil {
-		builder.AddHeader("ce-ibmenpushto", fmt.Sprint(*sendNotificationsOptions.CeIbmenpushto))
-	}
-	if sendNotificationsOptions.CeIbmenapnsheaders != nil {
-		builder.AddHeader("ce-ibmenapnsheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenapnsheaders))
-	}
-	if sendNotificationsOptions.CeIbmenchromebody != nil {
-		builder.AddHeader("ce-ibmenchromebody", fmt.Sprint(*sendNotificationsOptions.CeIbmenchromebody))
-	}
-	if sendNotificationsOptions.CeIbmenfirefoxbody != nil {
-		builder.AddHeader("ce-ibmenfirefoxbody", fmt.Sprint(*sendNotificationsOptions.CeIbmenfirefoxbody))
-	}
-	if sendNotificationsOptions.CeIbmenchromeheaders != nil {
-		builder.AddHeader("ce-ibmenchromeheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenchromeheaders))
-	}
-	if sendNotificationsOptions.CeIbmenfirefoxheaders != nil {
-		builder.AddHeader("ce-ibmenfirefoxheaders", fmt.Sprint(*sendNotificationsOptions.CeIbmenfirefoxheaders))
-	}
-	if sendNotificationsOptions.CeIbmensourceid != nil {
-		builder.AddHeader("ce-ibmensourceid", fmt.Sprint(*sendNotificationsOptions.CeIbmensourceid))
-	}
-	if sendNotificationsOptions.CeID != nil {
-		builder.AddHeader("ce-id", fmt.Sprint(*sendNotificationsOptions.CeID))
-	}
-	if sendNotificationsOptions.CeSource != nil {
-		builder.AddHeader("ce-source", fmt.Sprint(*sendNotificationsOptions.CeSource))
-	}
-	if sendNotificationsOptions.CeType != nil {
-		builder.AddHeader("ce-type", fmt.Sprint(*sendNotificationsOptions.CeType))
-	}
-	if sendNotificationsOptions.CeSpecversion != nil {
-		builder.AddHeader("ce-specversion", fmt.Sprint(*sendNotificationsOptions.CeSpecversion))
-	}
-	if sendNotificationsOptions.CeTime != nil {
-		builder.AddHeader("ce-time", fmt.Sprint(*sendNotificationsOptions.CeTime))
-	}
 
 	if sendNotificationsOptions.Body != nil {
 		_, err = builder.SetBodyContentJSON(sendNotificationsOptions.Body)
@@ -1078,7 +1025,7 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 			core.StringNilMapper(createDestinationOptions.Icon16x16ContentType), createDestinationOptions.Icon16x16)
 	}
 	if createDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16@2x", "",
+		builder.AddFormData("icon_16x16_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon16x162xContentType), createDestinationOptions.Icon16x162x)
 	}
 	if createDestinationOptions.Icon32x32 != nil {
@@ -1086,7 +1033,7 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 			core.StringNilMapper(createDestinationOptions.Icon32x32ContentType), createDestinationOptions.Icon32x32)
 	}
 	if createDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32@2x", "",
+		builder.AddFormData("icon_32x32_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon32x322xContentType), createDestinationOptions.Icon32x322x)
 	}
 	if createDestinationOptions.Icon128x128 != nil {
@@ -1094,7 +1041,7 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 			core.StringNilMapper(createDestinationOptions.Icon128x128ContentType), createDestinationOptions.Icon128x128)
 	}
 	if createDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128@2x", "",
+		builder.AddFormData("icon_128x128_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon128x1282xContentType), createDestinationOptions.Icon128x1282x)
 	}
 
@@ -1312,7 +1259,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 			core.StringNilMapper(updateDestinationOptions.Icon16x16ContentType), updateDestinationOptions.Icon16x16)
 	}
 	if updateDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16@2x", "",
+		builder.AddFormData("icon_16x16_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon16x162xContentType), updateDestinationOptions.Icon16x162x)
 	}
 	if updateDestinationOptions.Icon32x32 != nil {
@@ -1320,7 +1267,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 			core.StringNilMapper(updateDestinationOptions.Icon32x32ContentType), updateDestinationOptions.Icon32x32)
 	}
 	if updateDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32@2x", "",
+		builder.AddFormData("icon_32x32_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon32x322xContentType), updateDestinationOptions.Icon32x322x)
 	}
 	if updateDestinationOptions.Icon128x128 != nil {
@@ -1328,7 +1275,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 			core.StringNilMapper(updateDestinationOptions.Icon128x128ContentType), updateDestinationOptions.Icon128x128)
 	}
 	if updateDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128@2x", "",
+		builder.AddFormData("icon_128x128_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon128x1282xContentType), updateDestinationOptions.Icon128x1282x)
 	}
 
@@ -1402,163 +1349,27 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 	return
 }
 
-// ListDestinationDevices : Get list of Destination devices
-// Get list of Destination devices.
-func (eventNotifications *EventNotificationsV1) ListDestinationDevices(listDestinationDevicesOptions *ListDestinationDevicesOptions) (result *DestinationDevicesList, response *core.DetailedResponse, err error) {
-	return eventNotifications.ListDestinationDevicesWithContext(context.Background(), listDestinationDevicesOptions)
-}
-
-// ListDestinationDevicesWithContext is an alternate form of the ListDestinationDevices method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) ListDestinationDevicesWithContext(ctx context.Context, listDestinationDevicesOptions *ListDestinationDevicesOptions) (result *DestinationDevicesList, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listDestinationDevicesOptions, "listDestinationDevicesOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(listDestinationDevicesOptions, "listDestinationDevicesOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *listDestinationDevicesOptions.InstanceID,
-		"id":          *listDestinationDevicesOptions.ID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range listDestinationDevicesOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListDestinationDevices")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-
-	if listDestinationDevicesOptions.Limit != nil {
-		builder.AddQuery("limit", fmt.Sprint(*listDestinationDevicesOptions.Limit))
-	}
-	if listDestinationDevicesOptions.Offset != nil {
-		builder.AddQuery("offset", fmt.Sprint(*listDestinationDevicesOptions.Offset))
-	}
-	if listDestinationDevicesOptions.Search != nil {
-		builder.AddQuery("search", fmt.Sprint(*listDestinationDevicesOptions.Search))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationDevicesList)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// GetDestinationDevicesReport : Retrieves report of destination devices registered
-// Retrieves report of destination devices registered.
-func (eventNotifications *EventNotificationsV1) GetDestinationDevicesReport(getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions) (result *DestinationDevicesReport, response *core.DetailedResponse, err error) {
-	return eventNotifications.GetDestinationDevicesReportWithContext(context.Background(), getDestinationDevicesReportOptions)
-}
-
-// GetDestinationDevicesReportWithContext is an alternate form of the GetDestinationDevicesReport method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) GetDestinationDevicesReportWithContext(ctx context.Context, getDestinationDevicesReportOptions *GetDestinationDevicesReportOptions) (result *DestinationDevicesReport, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(getDestinationDevicesReportOptions, "getDestinationDevicesReportOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(getDestinationDevicesReportOptions, "getDestinationDevicesReportOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *getDestinationDevicesReportOptions.InstanceID,
-		"id":          *getDestinationDevicesReportOptions.ID,
-	}
-
-	builder := core.NewRequestBuilder(core.GET)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices/report`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range getDestinationDevicesReportOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetDestinationDevicesReport")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-
-	if getDestinationDevicesReportOptions.Days != nil {
-		builder.AddQuery("days", fmt.Sprint(*getDestinationDevicesReportOptions.Days))
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationDevicesReport)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// ListTagsSubscriptionsDevice : List all Tag Subscriptions for a device
+// GetTagsSubscriptionsDevice : List all Tag Subscriptions for a device
 // List all Tag Subscriptions for a device.
-func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
-	return eventNotifications.ListTagsSubscriptionsDeviceWithContext(context.Background(), listTagsSubscriptionsDeviceOptions)
+func (eventNotifications *EventNotificationsV1) GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetTagsSubscriptionsDeviceWithContext(context.Background(), getTagsSubscriptionsDeviceOptions)
 }
 
-// ListTagsSubscriptionsDeviceWithContext is an alternate form of the ListTagsSubscriptionsDevice method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDeviceWithContext(ctx context.Context, listTagsSubscriptionsDeviceOptions *ListTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions cannot be nil")
+// GetTagsSubscriptionsDeviceWithContext is an alternate form of the GetTagsSubscriptionsDevice method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetTagsSubscriptionsDeviceWithContext(ctx context.Context, getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getTagsSubscriptionsDeviceOptions, "getTagsSubscriptionsDeviceOptions cannot be nil")
 	if err != nil {
 		return
 	}
-	err = core.ValidateStruct(listTagsSubscriptionsDeviceOptions, "listTagsSubscriptionsDeviceOptions")
+	err = core.ValidateStruct(getTagsSubscriptionsDeviceOptions, "getTagsSubscriptionsDeviceOptions")
 	if err != nil {
 		return
 	}
 
 	pathParamsMap := map[string]string{
-		"instance_id": *listTagsSubscriptionsDeviceOptions.InstanceID,
-		"id":          *listTagsSubscriptionsDeviceOptions.ID,
-		"device_id":   *listTagsSubscriptionsDeviceOptions.DeviceID,
+		"instance_id": *getTagsSubscriptionsDeviceOptions.InstanceID,
+		"id":          *getTagsSubscriptionsDeviceOptions.ID,
+		"device_id":   *getTagsSubscriptionsDeviceOptions.DeviceID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1569,24 +1380,24 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDeviceWithC
 		return
 	}
 
-	for headerName, headerValue := range listTagsSubscriptionsDeviceOptions.Headers {
+	for headerName, headerValue := range getTagsSubscriptionsDeviceOptions.Headers {
 		builder.AddHeader(headerName, headerValue)
 	}
 
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListTagsSubscriptionsDevice")
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetTagsSubscriptionsDevice")
 	for headerName, headerValue := range sdkHeaders {
 		builder.AddHeader(headerName, headerValue)
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	if listTagsSubscriptionsDeviceOptions.TagName != nil {
-		builder.AddQuery("tag_name", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.TagName))
+	if getTagsSubscriptionsDeviceOptions.TagName != nil {
+		builder.AddQuery("tag_name", fmt.Sprint(*getTagsSubscriptionsDeviceOptions.TagName))
 	}
-	if listTagsSubscriptionsDeviceOptions.Limit != nil {
-		builder.AddQuery("limit", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Limit))
+	if getTagsSubscriptionsDeviceOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*getTagsSubscriptionsDeviceOptions.Limit))
 	}
-	if listTagsSubscriptionsDeviceOptions.Offset != nil {
-		builder.AddQuery("offset", fmt.Sprint(*listTagsSubscriptionsDeviceOptions.Offset))
+	if getTagsSubscriptionsDeviceOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*getTagsSubscriptionsDeviceOptions.Offset))
 	}
 
 	request, err := builder.Build()
@@ -1601,6 +1412,141 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionsDeviceWithC
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTagsSubscriptionList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetDeviceCount : Get Device count
+// Get Device count.
+func (eventNotifications *EventNotificationsV1) GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions) (result *DeviceCount, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetDeviceCountWithContext(context.Background(), getDeviceCountOptions)
+}
+
+// GetDeviceCountWithContext is an alternate form of the GetDeviceCount method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetDeviceCountWithContext(ctx context.Context, getDeviceCountOptions *GetDeviceCountOptions) (result *DeviceCount, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getDeviceCountOptions, "getDeviceCountOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getDeviceCountOptions, "getDeviceCountOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getDeviceCountOptions.InstanceID,
+		"id":          *getDeviceCountOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/devices/count`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getDeviceCountOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetDeviceCount")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDeviceCount)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// CreateTagsSubscription : Create a new Tag subscription
+// Create a new Tag subscription.
+func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.CreateTagsSubscriptionWithContext(context.Background(), createTagsSubscriptionOptions)
+}
+
+// CreateTagsSubscriptionWithContext is an alternate form of the CreateTagsSubscription method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) CreateTagsSubscriptionWithContext(ctx context.Context, createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createTagsSubscriptionOptions, "createTagsSubscriptionOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(createTagsSubscriptionOptions, "createTagsSubscriptionOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *createTagsSubscriptionOptions.InstanceID,
+		"id":          *createTagsSubscriptionOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range createTagsSubscriptionOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateTagsSubscription")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if createTagsSubscriptionOptions.DeviceID != nil {
+		body["device_id"] = createTagsSubscriptionOptions.DeviceID
+	}
+	if createTagsSubscriptionOptions.TagName != nil {
+		body["tag_name"] = createTagsSubscriptionOptions.TagName
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationTagsSubscriptionResponse)
 		if err != nil {
 			return
 		}
@@ -1681,80 +1627,6 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionWithContext(
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTagsSubscriptionList)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// CreateTagsSubscription : Create a new Tag subscription
-// Create a new Tag subscription.
-func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
-	return eventNotifications.CreateTagsSubscriptionWithContext(context.Background(), createTagsSubscriptionOptions)
-}
-
-// CreateTagsSubscriptionWithContext is an alternate form of the CreateTagsSubscription method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) CreateTagsSubscriptionWithContext(ctx context.Context, createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(createTagsSubscriptionOptions, "createTagsSubscriptionOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(createTagsSubscriptionOptions, "createTagsSubscriptionOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *createTagsSubscriptionOptions.InstanceID,
-		"id":          *createTagsSubscriptionOptions.ID,
-	}
-
-	builder := core.NewRequestBuilder(core.POST)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range createTagsSubscriptionOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateTagsSubscription")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if createTagsSubscriptionOptions.DeviceID != nil {
-		body["device_id"] = createTagsSubscriptionOptions.DeviceID
-	}
-	if createTagsSubscriptionOptions.TagName != nil {
-		body["tag_name"] = createTagsSubscriptionOptions.TagName
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalDestinationTagsSubscriptionResponse)
 		if err != nil {
 			return
 		}
@@ -2213,10 +2085,10 @@ type CreateDestinationOptions struct {
 	Icon16x16ContentType *string `json:"icon_16x16_content_type,omitempty"`
 
 	// Safari icon 16x16@2x.
-	Icon16x162x io.ReadCloser `json:"icon_16x16@2x,omitempty"`
+	Icon16x162x io.ReadCloser `json:"icon_16x16_2x,omitempty"`
 
 	// The content type of icon16x162x.
-	Icon16x162xContentType *string `json:"icon_16x16@2x_content_type,omitempty"`
+	Icon16x162xContentType *string `json:"icon_16x16_2x_content_type,omitempty"`
 
 	// Safari icon 32x32.
 	Icon32x32 io.ReadCloser `json:"icon_32x32,omitempty"`
@@ -2225,10 +2097,10 @@ type CreateDestinationOptions struct {
 	Icon32x32ContentType *string `json:"icon_32x32_content_type,omitempty"`
 
 	// Safari icon 32x32@2x.
-	Icon32x322x io.ReadCloser `json:"icon_32x32@2x,omitempty"`
+	Icon32x322x io.ReadCloser `json:"icon_32x32_2x,omitempty"`
 
 	// The content type of icon32x322x.
-	Icon32x322xContentType *string `json:"icon_32x32@2x_content_type,omitempty"`
+	Icon32x322xContentType *string `json:"icon_32x32_2x_content_type,omitempty"`
 
 	// Safari icon 128x128.
 	Icon128x128 io.ReadCloser `json:"icon_128x128,omitempty"`
@@ -2237,10 +2109,10 @@ type CreateDestinationOptions struct {
 	Icon128x128ContentType *string `json:"icon_128x128_content_type,omitempty"`
 
 	// Safari icon 128x128@2x.
-	Icon128x1282x io.ReadCloser `json:"icon_128x128@2x,omitempty"`
+	Icon128x1282x io.ReadCloser `json:"icon_128x128_2x,omitempty"`
 
 	// The content type of icon128x1282x.
-	Icon128x1282xContentType *string `json:"icon_128x128@2x_content_type,omitempty"`
+	Icon128x1282xContentType *string `json:"icon_128x128_2x_content_type,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -2256,7 +2128,6 @@ const (
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
 	CreateDestinationOptionsTypeSlackConst       = "slack"
-	CreateDestinationOptionsTypeMSTeamsConst     = "msteams"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
 
@@ -2976,6 +2847,9 @@ type DestinationConfigParams struct {
 	// FCM sender_id.
 	SenderID *string `json:"sender_id,omitempty"`
 
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
+
 	// Authentication type (p8 or p12).
 	CertType *string `json:"cert_type,omitempty"`
 
@@ -3055,6 +2929,10 @@ func UnmarshalDestinationConfigParams(m map[string]json.RawMessage, result inter
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "cert_type", &obj.CertType)
 	if err != nil {
 		return
@@ -3100,148 +2978,6 @@ func UnmarshalDestinationConfigParams(m map[string]json.RawMessage, result inter
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "website_push_id", &obj.WebsitePushID)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DestinationDevicesList : Payload describing a destination devices list request.
-type DestinationDevicesList struct {
-	// Total number of destination devices.
-	TotalCount *int64 `json:"total_count" validate:"required"`
-
-	// Current offset.
-	Offset *int64 `json:"offset" validate:"required"`
-
-	// limit to show destination devices.
-	Limit *int64 `json:"limit" validate:"required"`
-
-	// List of devices.
-	Devices []DestinationDevicesListItem `json:"devices" validate:"required"`
-}
-
-// UnmarshalDestinationDevicesList unmarshals an instance of DestinationDevicesList from the specified map of raw messages.
-func UnmarshalDestinationDevicesList(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationDevicesList)
-	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "devices", &obj.Devices, UnmarshalDestinationDevicesListItem)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DestinationDevicesListItem : device object.
-type DestinationDevicesListItem struct {
-	// device ID.
-	ID *string `json:"id" validate:"required"`
-
-	// user ID.
-	UserID *string `json:"user_id,omitempty"`
-
-	// Destination platform.
-	Platform *string `json:"platform" validate:"required"`
-
-	// Destination device token.
-	Token *string `json:"token" validate:"required"`
-
-	// Updated at.
-	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
-}
-
-// UnmarshalDestinationDevicesListItem unmarshals an instance of DestinationDevicesListItem from the specified map of raw messages.
-func UnmarshalDestinationDevicesListItem(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationDevicesListItem)
-	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "user_id", &obj.UserID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "platform", &obj.Platform)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "token", &obj.Token)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
-// DestinationDevicesReport : Payload describing a destination devices report.
-type DestinationDevicesReport struct {
-	// Android Devices Registered.
-	Android *int64 `json:"android" validate:"required"`
-
-	// ios Devices Registered.
-	Ios *int64 `json:"ios" validate:"required"`
-
-	// chrome web Devices Registered.
-	Chrome *int64 `json:"chrome" validate:"required"`
-
-	// firefox web Devices Registered.
-	Firefox *int64 `json:"firefox" validate:"required"`
-
-	// safari web Devices Registered.
-	Safari *int64 `json:"safari" validate:"required"`
-
-	// chromeAppExt Devices Registered.
-	ChromeAppExt *int64 `json:"chromeAppExt" validate:"required"`
-
-	// Total Devices Registered.
-	All *int64 `json:"all" validate:"required"`
-}
-
-// UnmarshalDestinationDevicesReport unmarshals an instance of DestinationDevicesReport from the specified map of raw messages.
-func UnmarshalDestinationDevicesReport(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationDevicesReport)
-	err = core.UnmarshalPrimitive(m, "android", &obj.Android)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "ios", &obj.Ios)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "chrome", &obj.Chrome)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "firefox", &obj.Firefox)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "safari", &obj.Safari)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "chromeAppExt", &obj.ChromeAppExt)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "all", &obj.All)
 	if err != nil {
 		return
 	}
@@ -3298,7 +3034,7 @@ type DestinationListItem struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
+	// Destination type.
 	Type *string `json:"type" validate:"required"`
 
 	// Subscription count.
@@ -3312,7 +3048,7 @@ type DestinationListItem struct {
 }
 
 // Constants associated with the DestinationListItem.Type property.
-// Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
+// Destination type.
 const (
 	DestinationListItemTypeMsteamsConst     = "msteams"
 	DestinationListItemTypePushAndroidConst = "push_android"
@@ -3469,6 +3205,95 @@ func UnmarshalDestinationTagsSubscriptionResponse(m map[string]json.RawMessage, 
 	return
 }
 
+// DeviceCount : Payload describing Device Count.
+type DeviceCount struct {
+	// Total number of devices.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+}
+
+// UnmarshalDeviceCount unmarshals an instance of DeviceCount from the specified map of raw messages.
+func UnmarshalDeviceCount(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DeviceCount)
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// EmailAttributesResponseInvitedItem : EmailAttributesResponseInvitedItem struct
+type EmailAttributesResponseInvitedItem struct {
+	// email address.
+	Email *string `json:"email,omitempty"`
+
+	// time of addition.
+	Time *strfmt.DateTime `json:"time,omitempty"`
+}
+
+// UnmarshalEmailAttributesResponseInvitedItem unmarshals an instance of EmailAttributesResponseInvitedItem from the specified map of raw messages.
+func UnmarshalEmailAttributesResponseInvitedItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EmailAttributesResponseInvitedItem)
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// EmailAttributesResponseToItem : EmailAttributesResponseToItem struct
+type EmailAttributesResponseToItem struct {
+	// email address.
+	Email *string `json:"email,omitempty"`
+
+	// time of addition.
+	Time *strfmt.DateTime `json:"time,omitempty"`
+}
+
+// UnmarshalEmailAttributesResponseToItem unmarshals an instance of EmailAttributesResponseToItem from the specified map of raw messages.
+func UnmarshalEmailAttributesResponseToItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EmailAttributesResponseToItem)
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// EmailAttributesResponseUnsubscribedItem : EmailAttributesResponseUnsubscribedItem struct
+type EmailAttributesResponseUnsubscribedItem struct {
+	// email address.
+	Email *string `json:"email,omitempty"`
+
+	// time of addition.
+	Time *strfmt.DateTime `json:"time,omitempty"`
+}
+
+// UnmarshalEmailAttributesResponseUnsubscribedItem unmarshals an instance of EmailAttributesResponseUnsubscribedItem from the specified map of raw messages.
+func UnmarshalEmailAttributesResponseUnsubscribedItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EmailAttributesResponseUnsubscribedItem)
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // EmailUpdateAttributesTo : The email ids.
 type EmailUpdateAttributesTo struct {
 	// The email ids.
@@ -3510,55 +3335,6 @@ func UnmarshalEmailUpdateAttributesUnsubscribed(m map[string]json.RawMessage, re
 	return
 }
 
-// GetDestinationDevicesReportOptions : The GetDestinationDevicesReport options.
-type GetDestinationDevicesReportOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// Number of days report has to be generated from
-	// * `Note :` Max value is 90
-	// * Min or default value is 1.
-	Days *int64 `json:"days,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewGetDestinationDevicesReportOptions : Instantiate GetDestinationDevicesReportOptions
-func (*EventNotificationsV1) NewGetDestinationDevicesReportOptions(instanceID string, id string) *GetDestinationDevicesReportOptions {
-	return &GetDestinationDevicesReportOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *GetDestinationDevicesReportOptions) SetInstanceID(instanceID string) *GetDestinationDevicesReportOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *GetDestinationDevicesReportOptions) SetID(id string) *GetDestinationDevicesReportOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDays : Allow user to set Days
-func (_options *GetDestinationDevicesReportOptions) SetDays(days int64) *GetDestinationDevicesReportOptions {
-	_options.Days = core.Int64Ptr(days)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *GetDestinationDevicesReportOptions) SetHeaders(param map[string]string) *GetDestinationDevicesReportOptions {
-	options.Headers = param
-	return options
-}
-
 // GetDestinationOptions : The GetDestination options.
 type GetDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3593,6 +3369,44 @@ func (_options *GetDestinationOptions) SetID(id string) *GetDestinationOptions {
 
 // SetHeaders : Allow user to set Headers
 func (options *GetDestinationOptions) SetHeaders(param map[string]string) *GetDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// GetDeviceCountOptions : The GetDeviceCount options.
+type GetDeviceCountOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Destination.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetDeviceCountOptions : Instantiate GetDeviceCountOptions
+func (*EventNotificationsV1) NewGetDeviceCountOptions(instanceID string, id string) *GetDeviceCountOptions {
+	return &GetDeviceCountOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetDeviceCountOptions) SetInstanceID(instanceID string) *GetDeviceCountOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetDeviceCountOptions) SetID(id string) *GetDeviceCountOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetDeviceCountOptions) SetHeaders(param map[string]string) *GetDeviceCountOptions {
 	options.Headers = param
 	return options
 }
@@ -3673,6 +3487,81 @@ func (options *GetSubscriptionOptions) SetHeaders(param map[string]string) *GetS
 	return options
 }
 
+// GetTagsSubscriptionsDeviceOptions : The GetTagsSubscriptionsDevice options.
+type GetTagsSubscriptionsDeviceOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Destination.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// DeviceID of the destination.
+	DeviceID *string `json:"device_id" validate:"required,ne="`
+
+	// TagName of the subscription.
+	TagName *string `json:"tag_name,omitempty"`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetTagsSubscriptionsDeviceOptions : Instantiate GetTagsSubscriptionsDeviceOptions
+func (*EventNotificationsV1) NewGetTagsSubscriptionsDeviceOptions(instanceID string, id string, deviceID string) *GetTagsSubscriptionsDeviceOptions {
+	return &GetTagsSubscriptionsDeviceOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		DeviceID:   core.StringPtr(deviceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetTagsSubscriptionsDeviceOptions) SetInstanceID(instanceID string) *GetTagsSubscriptionsDeviceOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetTagsSubscriptionsDeviceOptions) SetID(id string) *GetTagsSubscriptionsDeviceOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetDeviceID : Allow user to set DeviceID
+func (_options *GetTagsSubscriptionsDeviceOptions) SetDeviceID(deviceID string) *GetTagsSubscriptionsDeviceOptions {
+	_options.DeviceID = core.StringPtr(deviceID)
+	return _options
+}
+
+// SetTagName : Allow user to set TagName
+func (_options *GetTagsSubscriptionsDeviceOptions) SetTagName(tagName string) *GetTagsSubscriptionsDeviceOptions {
+	_options.TagName = core.StringPtr(tagName)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *GetTagsSubscriptionsDeviceOptions) SetLimit(limit int64) *GetTagsSubscriptionsDeviceOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *GetTagsSubscriptionsDeviceOptions) SetOffset(offset int64) *GetTagsSubscriptionsDeviceOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetTagsSubscriptionsDeviceOptions) SetHeaders(param map[string]string) *GetTagsSubscriptionsDeviceOptions {
+	options.Headers = param
+	return options
+}
+
 // GetTopicOptions : The GetTopic options.
 type GetTopicOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3716,71 +3605,6 @@ func (_options *GetTopicOptions) SetInclude(include string) *GetTopicOptions {
 
 // SetHeaders : Allow user to set Headers
 func (options *GetTopicOptions) SetHeaders(param map[string]string) *GetTopicOptions {
-	options.Headers = param
-	return options
-}
-
-// ListDestinationDevicesOptions : The ListDestinationDevices options.
-type ListDestinationDevicesOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// Page limit for paginated results.
-	Limit *int64 `json:"limit,omitempty"`
-
-	// offset for paginated results.
-	Offset *int64 `json:"offset,omitempty"`
-
-	// Search string for filtering results.
-	Search *string `json:"search,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewListDestinationDevicesOptions : Instantiate ListDestinationDevicesOptions
-func (*EventNotificationsV1) NewListDestinationDevicesOptions(instanceID string, id string) *ListDestinationDevicesOptions {
-	return &ListDestinationDevicesOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *ListDestinationDevicesOptions) SetInstanceID(instanceID string) *ListDestinationDevicesOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *ListDestinationDevicesOptions) SetID(id string) *ListDestinationDevicesOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetLimit : Allow user to set Limit
-func (_options *ListDestinationDevicesOptions) SetLimit(limit int64) *ListDestinationDevicesOptions {
-	_options.Limit = core.Int64Ptr(limit)
-	return _options
-}
-
-// SetOffset : Allow user to set Offset
-func (_options *ListDestinationDevicesOptions) SetOffset(offset int64) *ListDestinationDevicesOptions {
-	_options.Offset = core.Int64Ptr(offset)
-	return _options
-}
-
-// SetSearch : Allow user to set Search
-func (_options *ListDestinationDevicesOptions) SetSearch(search string) *ListDestinationDevicesOptions {
-	_options.Search = core.StringPtr(search)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *ListDestinationDevicesOptions) SetHeaders(param map[string]string) *ListDestinationDevicesOptions {
 	options.Headers = param
 	return options
 }
@@ -4042,81 +3866,6 @@ func (options *ListTagsSubscriptionOptions) SetHeaders(param map[string]string) 
 	return options
 }
 
-// ListTagsSubscriptionsDeviceOptions : The ListTagsSubscriptionsDevice options.
-type ListTagsSubscriptionsDeviceOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for Destination.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// DeviceID of the destination.
-	DeviceID *string `json:"device_id" validate:"required,ne="`
-
-	// TagName of the subscription.
-	TagName *string `json:"tag_name,omitempty"`
-
-	// Page limit for paginated results.
-	Limit *int64 `json:"limit,omitempty"`
-
-	// offset for paginated results.
-	Offset *int64 `json:"offset,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewListTagsSubscriptionsDeviceOptions : Instantiate ListTagsSubscriptionsDeviceOptions
-func (*EventNotificationsV1) NewListTagsSubscriptionsDeviceOptions(instanceID string, id string, deviceID string) *ListTagsSubscriptionsDeviceOptions {
-	return &ListTagsSubscriptionsDeviceOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-		DeviceID:   core.StringPtr(deviceID),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *ListTagsSubscriptionsDeviceOptions) SetInstanceID(instanceID string) *ListTagsSubscriptionsDeviceOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *ListTagsSubscriptionsDeviceOptions) SetID(id string) *ListTagsSubscriptionsDeviceOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetDeviceID : Allow user to set DeviceID
-func (_options *ListTagsSubscriptionsDeviceOptions) SetDeviceID(deviceID string) *ListTagsSubscriptionsDeviceOptions {
-	_options.DeviceID = core.StringPtr(deviceID)
-	return _options
-}
-
-// SetTagName : Allow user to set TagName
-func (_options *ListTagsSubscriptionsDeviceOptions) SetTagName(tagName string) *ListTagsSubscriptionsDeviceOptions {
-	_options.TagName = core.StringPtr(tagName)
-	return _options
-}
-
-// SetLimit : Allow user to set Limit
-func (_options *ListTagsSubscriptionsDeviceOptions) SetLimit(limit int64) *ListTagsSubscriptionsDeviceOptions {
-	_options.Limit = core.Int64Ptr(limit)
-	return _options
-}
-
-// SetOffset : Allow user to set Offset
-func (_options *ListTagsSubscriptionsDeviceOptions) SetOffset(offset int64) *ListTagsSubscriptionsDeviceOptions {
-	_options.Offset = core.Int64Ptr(offset)
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *ListTagsSubscriptionsDeviceOptions) SetHeaders(param map[string]string) *ListTagsSubscriptionsDeviceOptions {
-	options.Headers = param
-	return options
-}
-
 // ListTopicsOptions : The ListTopics options.
 type ListTopicsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -4174,73 +3923,84 @@ func (options *ListTopicsOptions) SetHeaders(param map[string]string) *ListTopic
 
 // NotificationCreate : Payload describing a notification create request.
 type NotificationCreate struct {
-	// The Notifications data for webhook.
-	Data map[string]interface{} `json:"data,omitempty"`
+	// The version of the notification specification.
+	Specversion *string `json:"specversion" validate:"required"`
 
-	// The Notifications id.
-	Ibmenseverity *string `json:"ibmenseverity,omitempty"`
+	// The time notification was created.
+	Time *strfmt.DateTime `json:"time,omitempty"`
 
-	// The Notifications FCM body.
-	Ibmenfcmbody *string `json:"ibmenfcmbody,omitempty"`
-
-	// The Notifications APNS body.
-	Ibmenapnsbody *string `json:"ibmenapnsbody,omitempty"`
-
-	// The Notifications safari body.
-	Ibmensafaribody *string `json:"ibmensafaribody,omitempty"`
-
-	// This field should not be empty. The allowed fields are fcm_devices, apns_devices, chrome_devices, firefox_devices,
-	// platforms, tags and user_ids. If platforms or tags or user_ids are being used then do not use fcm_devices /
-	// apns_devices / chrome_devices / firefox_devices with it.
-	Ibmenpushto *string `json:"ibmenpushto,omitempty"`
-
-	// Headers for an APNs notification.
-	Ibmenapnsheaders *string `json:"ibmenapnsheaders,omitempty"`
-
-	// Default short text for the message.
-	Ibmendefaultshort *string `json:"ibmendefaultshort,omitempty"`
-
-	// Default long text for the message.
-	Ibmendefaultlong *string `json:"ibmendefaultlong,omitempty"`
-
-	// The Notifications Chrome body.
-	Ibmenchromebody *string `json:"ibmenchromebody,omitempty"`
-
-	// The Notifications Firefox body.
-	Ibmenfirefoxbody *string `json:"ibmenfirefoxbody,omitempty"`
-
-	// Headers for a Chrome notification.
-	Ibmenchromeheaders *string `json:"ibmenchromeheaders,omitempty"`
-
-	// Headers for an FireFox notification.
-	Ibmenfirefoxheaders *string `json:"ibmenfirefoxheaders,omitempty"`
-
-	// The Event Notifications source id.
-	Ibmensourceid *string `json:"ibmensourceid,omitempty"`
-
-	// The Notifications content type.
-	Datacontenttype *string `json:"datacontenttype,omitempty"`
-
-	// The Notifications subject.
-	Subject *string `json:"subject,omitempty"`
-
-	// The Notifications id.
+	// The unique identifier of the notification.
 	ID *string `json:"id,omitempty"`
 
-	// The source of Notifications.
+	// The source of notifications.
 	Source *string `json:"source,omitempty"`
 
-	// The Notifications type.
+	// The notifications type.
 	Type *string `json:"type,omitempty"`
 
-	// The Notifications specversion.
-	Specversion *string `json:"specversion,omitempty"`
+	// The severity of the notification.
+	Ibmenseverity *string `json:"ibmenseverity,omitempty"`
 
-	// The Notifications time.
-	Time *string `json:"time,omitempty"`
+	// The source id of the notification.
+	Ibmensourceid *string `json:"ibmensourceid" validate:"required"`
+
+	// Default short text for the message.
+	Ibmendefaultshort *string `json:"ibmendefaultshort" validate:"required"`
+
+	// Default long text for the message.
+	Ibmendefaultlong *string `json:"ibmendefaultlong" validate:"required"`
+
+	// The subject of the notification.
+	Subject *string `json:"subject,omitempty"`
+
+	// The payload for webhook notification.
+	Data map[string]interface{} `json:"data,omitempty"`
+
+	// The notification content type.
+	Datacontenttype *string `json:"datacontenttype,omitempty"`
+
+	// If platforms or tags or user_ids is used then do not use fcm_devices / apns_devices / chrome_devices /
+	// firefox_devices / safari_devices with it. Value should be stringified json.
+	Ibmenpushto *string `json:"ibmenpushto,omitempty"`
+
+	// Payload describing a notification FCM body. Value should be stringified json.
+	Ibmenfcmbody *string `json:"ibmenfcmbody,omitempty"`
+
+	// Payload describing a notification APNs body. Value should be stringified json.
+	Ibmenapnsbody *string `json:"ibmenapnsbody,omitempty"`
+
+	// Headers for iOS notification. Value should be stringified json.
+	Ibmenapnsheaders *string `json:"ibmenapnsheaders,omitempty"`
+
+	// Notification payload for Chrome. Value should be stringified json.
+	Ibmenchromebody *string `json:"ibmenchromebody,omitempty"`
+
+	// Headers for a Chrome notification. Value should be stringified json.
+	Ibmenchromeheaders *string `json:"ibmenchromeheaders,omitempty"`
+
+	// Notification payload for Firefox. Value should be stringified json.
+	Ibmenfirefoxbody *string `json:"ibmenfirefoxbody,omitempty"`
+
+	// Headers for a Firefox notification. Value should be stringified json.
+	Ibmenfirefoxheaders *string `json:"ibmenfirefoxheaders,omitempty"`
+
+	// Payload describing a notification Safari body. Value should be stringified json.
+	Ibmensafaribody *string `json:"ibmensafaribody,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
+}
+
+// NewNotificationCreate : Instantiate NotificationCreate (Generic Model Constructor)
+func (*EventNotificationsV1) NewNotificationCreate(specversion string, ibmensourceid string, ibmendefaultshort string, ibmendefaultlong string) (_model *NotificationCreate, err error) {
+	_model = &NotificationCreate{
+		Specversion:       core.StringPtr(specversion),
+		Ibmensourceid:     core.StringPtr(ibmensourceid),
+		Ibmendefaultshort: core.StringPtr(ibmendefaultshort),
+		Ibmendefaultlong:  core.StringPtr(ibmendefaultlong),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
 }
 
 // SetProperty allows the user to set an arbitrary property on an instance of NotificationCreate
@@ -4277,53 +4037,11 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 			m[k] = v
 		}
 	}
-	if o.Data != nil {
-		m["data"] = o.Data
+	if o.Specversion != nil {
+		m["specversion"] = o.Specversion
 	}
-	if o.Ibmenseverity != nil {
-		m["ibmenseverity"] = o.Ibmenseverity
-	}
-	if o.Ibmenfcmbody != nil {
-		m["ibmenfcmbody"] = o.Ibmenfcmbody
-	}
-	if o.Ibmenapnsbody != nil {
-		m["ibmenapnsbody"] = o.Ibmenapnsbody
-	}
-	if o.Ibmensafaribody != nil {
-		m["ibmensafaribody"] = o.Ibmensafaribody
-	}
-	if o.Ibmenpushto != nil {
-		m["ibmenpushto"] = o.Ibmenpushto
-	}
-	if o.Ibmenapnsheaders != nil {
-		m["ibmenapnsheaders"] = o.Ibmenapnsheaders
-	}
-	if o.Ibmendefaultshort != nil {
-		m["ibmendefaultshort"] = o.Ibmendefaultshort
-	}
-	if o.Ibmendefaultlong != nil {
-		m["ibmendefaultlong"] = o.Ibmendefaultlong
-	}
-	if o.Ibmenchromebody != nil {
-		m["ibmenchromebody"] = o.Ibmenchromebody
-	}
-	if o.Ibmenfirefoxbody != nil {
-		m["ibmenfirefoxbody"] = o.Ibmenfirefoxbody
-	}
-	if o.Ibmenchromeheaders != nil {
-		m["ibmenchromeheaders"] = o.Ibmenchromeheaders
-	}
-	if o.Ibmenfirefoxheaders != nil {
-		m["ibmenfirefoxheaders"] = o.Ibmenfirefoxheaders
-	}
-	if o.Ibmensourceid != nil {
-		m["ibmensourceid"] = o.Ibmensourceid
-	}
-	if o.Datacontenttype != nil {
-		m["datacontenttype"] = o.Datacontenttype
-	}
-	if o.Subject != nil {
-		m["subject"] = o.Subject
+	if o.Time != nil {
+		m["time"] = o.Time
 	}
 	if o.ID != nil {
 		m["id"] = o.ID
@@ -4334,11 +4052,53 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Type != nil {
 		m["type"] = o.Type
 	}
-	if o.Specversion != nil {
-		m["specversion"] = o.Specversion
+	if o.Ibmenseverity != nil {
+		m["ibmenseverity"] = o.Ibmenseverity
 	}
-	if o.Time != nil {
-		m["time"] = o.Time
+	if o.Ibmensourceid != nil {
+		m["ibmensourceid"] = o.Ibmensourceid
+	}
+	if o.Ibmendefaultshort != nil {
+		m["ibmendefaultshort"] = o.Ibmendefaultshort
+	}
+	if o.Ibmendefaultlong != nil {
+		m["ibmendefaultlong"] = o.Ibmendefaultlong
+	}
+	if o.Subject != nil {
+		m["subject"] = o.Subject
+	}
+	if o.Data != nil {
+		m["data"] = o.Data
+	}
+	if o.Datacontenttype != nil {
+		m["datacontenttype"] = o.Datacontenttype
+	}
+	if o.Ibmenpushto != nil {
+		m["ibmenpushto"] = o.Ibmenpushto
+	}
+	if o.Ibmenfcmbody != nil {
+		m["ibmenfcmbody"] = o.Ibmenfcmbody
+	}
+	if o.Ibmenapnsbody != nil {
+		m["ibmenapnsbody"] = o.Ibmenapnsbody
+	}
+	if o.Ibmenapnsheaders != nil {
+		m["ibmenapnsheaders"] = o.Ibmenapnsheaders
+	}
+	if o.Ibmenchromebody != nil {
+		m["ibmenchromebody"] = o.Ibmenchromebody
+	}
+	if o.Ibmenchromeheaders != nil {
+		m["ibmenchromeheaders"] = o.Ibmenchromeheaders
+	}
+	if o.Ibmenfirefoxbody != nil {
+		m["ibmenfirefoxbody"] = o.Ibmenfirefoxbody
+	}
+	if o.Ibmenfirefoxheaders != nil {
+		m["ibmenfirefoxheaders"] = o.Ibmenfirefoxheaders
+	}
+	if o.Ibmensafaribody != nil {
+		m["ibmensafaribody"] = o.Ibmensafaribody
 	}
 	buffer, err = json.Marshal(m)
 	return
@@ -4347,86 +4107,16 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 // UnmarshalNotificationCreate unmarshals an instance of NotificationCreate from the specified map of raw messages.
 func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(NotificationCreate)
-	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
+	err = core.UnmarshalPrimitive(m, "specversion", &obj.Specversion)
 	if err != nil {
 		return
 	}
-	delete(m, "data")
-	err = core.UnmarshalPrimitive(m, "ibmenseverity", &obj.Ibmenseverity)
+	delete(m, "specversion")
+	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
 	if err != nil {
 		return
 	}
-	delete(m, "ibmenseverity")
-	err = core.UnmarshalPrimitive(m, "ibmenfcmbody", &obj.Ibmenfcmbody)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenfcmbody")
-	err = core.UnmarshalPrimitive(m, "ibmenapnsbody", &obj.Ibmenapnsbody)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenapnsbody")
-	err = core.UnmarshalPrimitive(m, "ibmensafaribody", &obj.Ibmensafaribody)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmensafaribody")
-	err = core.UnmarshalPrimitive(m, "ibmenpushto", &obj.Ibmenpushto)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenpushto")
-	err = core.UnmarshalPrimitive(m, "ibmenapnsheaders", &obj.Ibmenapnsheaders)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenapnsheaders")
-	err = core.UnmarshalPrimitive(m, "ibmendefaultshort", &obj.Ibmendefaultshort)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmendefaultshort")
-	err = core.UnmarshalPrimitive(m, "ibmendefaultlong", &obj.Ibmendefaultlong)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmendefaultlong")
-	err = core.UnmarshalPrimitive(m, "ibmenchromebody", &obj.Ibmenchromebody)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenchromebody")
-	err = core.UnmarshalPrimitive(m, "ibmenfirefoxbody", &obj.Ibmenfirefoxbody)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenfirefoxbody")
-	err = core.UnmarshalPrimitive(m, "ibmenchromeheaders", &obj.Ibmenchromeheaders)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenchromeheaders")
-	err = core.UnmarshalPrimitive(m, "ibmenfirefoxheaders", &obj.Ibmenfirefoxheaders)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmenfirefoxheaders")
-	err = core.UnmarshalPrimitive(m, "ibmensourceid", &obj.Ibmensourceid)
-	if err != nil {
-		return
-	}
-	delete(m, "ibmensourceid")
-	err = core.UnmarshalPrimitive(m, "datacontenttype", &obj.Datacontenttype)
-	if err != nil {
-		return
-	}
-	delete(m, "datacontenttype")
-	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
-	if err != nil {
-		return
-	}
-	delete(m, "subject")
+	delete(m, "time")
 	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
 	if err != nil {
 		return
@@ -4442,16 +4132,86 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "type")
-	err = core.UnmarshalPrimitive(m, "specversion", &obj.Specversion)
+	err = core.UnmarshalPrimitive(m, "ibmenseverity", &obj.Ibmenseverity)
 	if err != nil {
 		return
 	}
-	delete(m, "specversion")
-	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	delete(m, "ibmenseverity")
+	err = core.UnmarshalPrimitive(m, "ibmensourceid", &obj.Ibmensourceid)
 	if err != nil {
 		return
 	}
-	delete(m, "time")
+	delete(m, "ibmensourceid")
+	err = core.UnmarshalPrimitive(m, "ibmendefaultshort", &obj.Ibmendefaultshort)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmendefaultshort")
+	err = core.UnmarshalPrimitive(m, "ibmendefaultlong", &obj.Ibmendefaultlong)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmendefaultlong")
+	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
+	if err != nil {
+		return
+	}
+	delete(m, "subject")
+	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
+	if err != nil {
+		return
+	}
+	delete(m, "data")
+	err = core.UnmarshalPrimitive(m, "datacontenttype", &obj.Datacontenttype)
+	if err != nil {
+		return
+	}
+	delete(m, "datacontenttype")
+	err = core.UnmarshalPrimitive(m, "ibmenpushto", &obj.Ibmenpushto)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenpushto")
+	err = core.UnmarshalPrimitive(m, "ibmenfcmbody", &obj.Ibmenfcmbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfcmbody")
+	err = core.UnmarshalPrimitive(m, "ibmenapnsbody", &obj.Ibmenapnsbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenapnsbody")
+	err = core.UnmarshalPrimitive(m, "ibmenapnsheaders", &obj.Ibmenapnsheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenapnsheaders")
+	err = core.UnmarshalPrimitive(m, "ibmenchromebody", &obj.Ibmenchromebody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenchromebody")
+	err = core.UnmarshalPrimitive(m, "ibmenchromeheaders", &obj.Ibmenchromeheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenchromeheaders")
+	err = core.UnmarshalPrimitive(m, "ibmenfirefoxbody", &obj.Ibmenfirefoxbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfirefoxbody")
+	err = core.UnmarshalPrimitive(m, "ibmenfirefoxheaders", &obj.Ibmenfirefoxheaders)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenfirefoxheaders")
+	err = core.UnmarshalPrimitive(m, "ibmensafaribody", &obj.Ibmensafaribody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmensafaribody")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -4677,60 +4437,6 @@ type SendNotificationsOptions struct {
 	// Payload describing a notification create request.
 	Body *NotificationCreate `json:"body,omitempty"`
 
-	// The Notification severity.
-	CeIbmenseverity *string `json:"ce-ibmenseverity,omitempty"`
-
-	// The Notification default short text.
-	CeIbmendefaultshort *string `json:"ce-ibmendefaultshort,omitempty"`
-
-	// The Notification default long text.
-	CeIbmendefaultlong *string `json:"ce-ibmendefaultlong,omitempty"`
-
-	// The FCM Notification body.
-	CeIbmenfcmbody *string `json:"ce-ibmenfcmbody,omitempty"`
-
-	// The APNS Notification body.
-	CeIbmenapnsbody *string `json:"ce-ibmenapnsbody,omitempty"`
-
-	// The safari Notification body.
-	CeIbmensafaribody *string `json:"ce-ibmensafaribody,omitempty"`
-
-	// Push Notifications Targets.
-	CeIbmenpushto *string `json:"ce-ibmenpushto,omitempty"`
-
-	// Push Notifications APNS Headers.
-	CeIbmenapnsheaders *string `json:"ce-ibmenapnsheaders,omitempty"`
-
-	// Push Notifications Chrome body.
-	CeIbmenchromebody *string `json:"ce-ibmenchromebody,omitempty"`
-
-	// Push Notifications Firefox body.
-	CeIbmenfirefoxbody *string `json:"ce-ibmenfirefoxbody,omitempty"`
-
-	// Push Notifications Chrome Headers.
-	CeIbmenchromeheaders *string `json:"ce-ibmenchromeheaders,omitempty"`
-
-	// Push Notifications Firefox Headers.
-	CeIbmenfirefoxheaders *string `json:"ce-ibmenfirefoxheaders,omitempty"`
-
-	// Event Notifications Target source ID.
-	CeIbmensourceid *string `json:"ce-ibmensourceid,omitempty"`
-
-	// custom ID to track notifications from client side (Mandatory identifier for the binary mode).
-	CeID *string `json:"ce-id,omitempty"`
-
-	// custom source odentifier from the client side.
-	CeSource *string `json:"ce-source,omitempty"`
-
-	// Type identifier for source filters.
-	CeType *string `json:"ce-type,omitempty"`
-
-	// Version of the Cloud Event specification (Mandatory header to make the request Binary Mode).
-	CeSpecversion *string `json:"ce-specversion,omitempty"`
-
-	// The time of the notification.
-	CeTime *string `json:"ce-time,omitempty"`
-
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -4751,114 +4457,6 @@ func (_options *SendNotificationsOptions) SetInstanceID(instanceID string) *Send
 // SetBody : Allow user to set Body
 func (_options *SendNotificationsOptions) SetBody(body *NotificationCreate) *SendNotificationsOptions {
 	_options.Body = body
-	return _options
-}
-
-// SetCeIbmenseverity : Allow user to set CeIbmenseverity
-func (_options *SendNotificationsOptions) SetCeIbmenseverity(ceIbmenseverity string) *SendNotificationsOptions {
-	_options.CeIbmenseverity = core.StringPtr(ceIbmenseverity)
-	return _options
-}
-
-// SetCeIbmendefaultshort : Allow user to set CeIbmendefaultshort
-func (_options *SendNotificationsOptions) SetCeIbmendefaultshort(ceIbmendefaultshort string) *SendNotificationsOptions {
-	_options.CeIbmendefaultshort = core.StringPtr(ceIbmendefaultshort)
-	return _options
-}
-
-// SetCeIbmendefaultlong : Allow user to set CeIbmendefaultlong
-func (_options *SendNotificationsOptions) SetCeIbmendefaultlong(ceIbmendefaultlong string) *SendNotificationsOptions {
-	_options.CeIbmendefaultlong = core.StringPtr(ceIbmendefaultlong)
-	return _options
-}
-
-// SetCeIbmenfcmbody : Allow user to set CeIbmenfcmbody
-func (_options *SendNotificationsOptions) SetCeIbmenfcmbody(ceIbmenfcmbody string) *SendNotificationsOptions {
-	_options.CeIbmenfcmbody = core.StringPtr(ceIbmenfcmbody)
-	return _options
-}
-
-// SetCeIbmenapnsbody : Allow user to set CeIbmenapnsbody
-func (_options *SendNotificationsOptions) SetCeIbmenapnsbody(ceIbmenapnsbody string) *SendNotificationsOptions {
-	_options.CeIbmenapnsbody = core.StringPtr(ceIbmenapnsbody)
-	return _options
-}
-
-// SetCeIbmensafaribody : Allow user to set CeIbmensafaribody
-func (_options *SendNotificationsOptions) SetCeIbmensafaribody(ceIbmensafaribody string) *SendNotificationsOptions {
-	_options.CeIbmensafaribody = core.StringPtr(ceIbmensafaribody)
-	return _options
-}
-
-// SetCeIbmenpushto : Allow user to set CeIbmenpushto
-func (_options *SendNotificationsOptions) SetCeIbmenpushto(ceIbmenpushto string) *SendNotificationsOptions {
-	_options.CeIbmenpushto = core.StringPtr(ceIbmenpushto)
-	return _options
-}
-
-// SetCeIbmenapnsheaders : Allow user to set CeIbmenapnsheaders
-func (_options *SendNotificationsOptions) SetCeIbmenapnsheaders(ceIbmenapnsheaders string) *SendNotificationsOptions {
-	_options.CeIbmenapnsheaders = core.StringPtr(ceIbmenapnsheaders)
-	return _options
-}
-
-// SetCeIbmenchromebody : Allow user to set CeIbmenchromebody
-func (_options *SendNotificationsOptions) SetCeIbmenchromebody(ceIbmenchromebody string) *SendNotificationsOptions {
-	_options.CeIbmenchromebody = core.StringPtr(ceIbmenchromebody)
-	return _options
-}
-
-// SetCeIbmenfirefoxbody : Allow user to set CeIbmenfirefoxbody
-func (_options *SendNotificationsOptions) SetCeIbmenfirefoxbody(ceIbmenfirefoxbody string) *SendNotificationsOptions {
-	_options.CeIbmenfirefoxbody = core.StringPtr(ceIbmenfirefoxbody)
-	return _options
-}
-
-// SetCeIbmenchromeheaders : Allow user to set CeIbmenchromeheaders
-func (_options *SendNotificationsOptions) SetCeIbmenchromeheaders(ceIbmenchromeheaders string) *SendNotificationsOptions {
-	_options.CeIbmenchromeheaders = core.StringPtr(ceIbmenchromeheaders)
-	return _options
-}
-
-// SetCeIbmenfirefoxheaders : Allow user to set CeIbmenfirefoxheaders
-func (_options *SendNotificationsOptions) SetCeIbmenfirefoxheaders(ceIbmenfirefoxheaders string) *SendNotificationsOptions {
-	_options.CeIbmenfirefoxheaders = core.StringPtr(ceIbmenfirefoxheaders)
-	return _options
-}
-
-// SetCeIbmensourceid : Allow user to set CeIbmensourceid
-func (_options *SendNotificationsOptions) SetCeIbmensourceid(ceIbmensourceid string) *SendNotificationsOptions {
-	_options.CeIbmensourceid = core.StringPtr(ceIbmensourceid)
-	return _options
-}
-
-// SetCeID : Allow user to set CeID
-func (_options *SendNotificationsOptions) SetCeID(ceID string) *SendNotificationsOptions {
-	_options.CeID = core.StringPtr(ceID)
-	return _options
-}
-
-// SetCeSource : Allow user to set CeSource
-func (_options *SendNotificationsOptions) SetCeSource(ceSource string) *SendNotificationsOptions {
-	_options.CeSource = core.StringPtr(ceSource)
-	return _options
-}
-
-// SetCeType : Allow user to set CeType
-func (_options *SendNotificationsOptions) SetCeType(ceType string) *SendNotificationsOptions {
-	_options.CeType = core.StringPtr(ceType)
-	return _options
-}
-
-// SetCeSpecversion : Allow user to set CeSpecversion
-func (_options *SendNotificationsOptions) SetCeSpecversion(ceSpecversion string) *SendNotificationsOptions {
-	_options.CeSpecversion = core.StringPtr(ceSpecversion)
-	return _options
-}
-
-// SetCeTime : Allow user to set CeTime
-func (_options *SendNotificationsOptions) SetCeTime(ceTime string) *SendNotificationsOptions {
-	_options.CeTime = core.StringPtr(ceTime)
 	return _options
 }
 
@@ -5309,11 +4907,29 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesWebhookAttributesResponse
 // - SubscriptionAttributesSlackAttributesResponse
 type SubscriptionAttributes struct {
+	// The email id string.
+	To []EmailAttributesResponseToItem `json:"to,omitempty"`
+
+	// The unsubscribe list.
+	Unsubscribed []EmailAttributesResponseUnsubscribedItem `json:"unsubscribed,omitempty"`
+
+	// The invited list.
+	Invited []EmailAttributesResponseInvitedItem `json:"invited,omitempty"`
+
+	// Whether to add the notification payload to the email.
+	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
+
+	// The email address to reply to.
+	ReplyToMail *string `json:"reply_to_mail,omitempty"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name,omitempty"`
+
+	// The email name of From.
+	FromName *string `json:"from_name,omitempty"`
+
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
-
-	// Decision for Notification Payload to be added.
-	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
 
 	// Attachment Color for Slack Notification.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
@@ -5368,11 +4984,29 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 			m[k] = v
 		}
 	}
-	if o.SigningEnabled != nil {
-		m["signing_enabled"] = o.SigningEnabled
+	if o.To != nil {
+		m["to"] = o.To
+	}
+	if o.Unsubscribed != nil {
+		m["unsubscribed"] = o.Unsubscribed
+	}
+	if o.Invited != nil {
+		m["invited"] = o.Invited
 	}
 	if o.AddNotificationPayload != nil {
 		m["add_notification_payload"] = o.AddNotificationPayload
+	}
+	if o.ReplyToMail != nil {
+		m["reply_to_mail"] = o.ReplyToMail
+	}
+	if o.ReplyToName != nil {
+		m["reply_to_name"] = o.ReplyToName
+	}
+	if o.FromName != nil {
+		m["from_name"] = o.FromName
+	}
+	if o.SigningEnabled != nil {
+		m["signing_enabled"] = o.SigningEnabled
 	}
 	if o.AttachmentColor != nil {
 		m["attachment_color"] = o.AttachmentColor
@@ -5384,16 +5018,46 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 // UnmarshalSubscriptionAttributes unmarshals an instance of SubscriptionAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributes)
-	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
+	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalEmailAttributesResponseToItem)
 	if err != nil {
 		return
 	}
-	delete(m, "signing_enabled")
+	delete(m, "to")
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalEmailAttributesResponseUnsubscribedItem)
+	if err != nil {
+		return
+	}
+	delete(m, "unsubscribed")
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalEmailAttributesResponseInvitedItem)
+	if err != nil {
+		return
+	}
+	delete(m, "invited")
 	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
 	if err != nil {
 		return
 	}
 	delete(m, "add_notification_payload")
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_mail")
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_name")
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	delete(m, "from_name")
+	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
+	if err != nil {
+		return
+	}
+	delete(m, "signing_enabled")
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
 	if err != nil {
 		return
@@ -6038,10 +5702,10 @@ type UpdateDestinationOptions struct {
 	Icon16x16ContentType *string `json:"icon_16x16_content_type,omitempty"`
 
 	// Safari icon 16x16@2x.
-	Icon16x162x io.ReadCloser `json:"icon_16x16@2x,omitempty"`
+	Icon16x162x io.ReadCloser `json:"icon_16x16_2x,omitempty"`
 
 	// The content type of icon16x162x.
-	Icon16x162xContentType *string `json:"icon_16x16@2x_content_type,omitempty"`
+	Icon16x162xContentType *string `json:"icon_16x16_2x_content_type,omitempty"`
 
 	// Safari icon 32x32.
 	Icon32x32 io.ReadCloser `json:"icon_32x32,omitempty"`
@@ -6050,10 +5714,10 @@ type UpdateDestinationOptions struct {
 	Icon32x32ContentType *string `json:"icon_32x32_content_type,omitempty"`
 
 	// Safari icon 32x32@2x.
-	Icon32x322x io.ReadCloser `json:"icon_32x32@2x,omitempty"`
+	Icon32x322x io.ReadCloser `json:"icon_32x32_2x,omitempty"`
 
 	// The content type of icon32x322x.
-	Icon32x322xContentType *string `json:"icon_32x32@2x_content_type,omitempty"`
+	Icon32x322xContentType *string `json:"icon_32x32_2x_content_type,omitempty"`
 
 	// Safari icon 128x128.
 	Icon128x128 io.ReadCloser `json:"icon_128x128,omitempty"`
@@ -6062,10 +5726,10 @@ type UpdateDestinationOptions struct {
 	Icon128x128ContentType *string `json:"icon_128x128_content_type,omitempty"`
 
 	// Safari icon 128x128@2x.
-	Icon128x1282x io.ReadCloser `json:"icon_128x128@2x,omitempty"`
+	Icon128x1282x io.ReadCloser `json:"icon_128x128_2x,omitempty"`
 
 	// The content type of icon128x1282x.
-	Icon128x1282xContentType *string `json:"icon_128x128@2x_content_type,omitempty"`
+	Icon128x1282xContentType *string `json:"icon_128x128_2x_content_type,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -6339,6 +6003,9 @@ type DestinationConfigParamsChromeDestinationConfig struct {
 
 	// Chrome VAPID public key.
 	PublicKey *string `json:"public_key,omitempty"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
 }
 
 // NewDestinationConfigParamsChromeDestinationConfig : Instantiate DestinationConfigParamsChromeDestinationConfig (Generic Model Constructor)
@@ -6370,6 +6037,10 @@ func UnmarshalDestinationConfigParamsChromeDestinationConfig(m map[string]json.R
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -6382,6 +6053,9 @@ type DestinationConfigParamsFcmDestinationConfig struct {
 
 	// FCM sender_id.
 	SenderID *string `json:"sender_id" validate:"required"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
 }
 
 // NewDestinationConfigParamsFcmDestinationConfig : Instantiate DestinationConfigParamsFcmDestinationConfig (Generic Model Constructor)
@@ -6409,6 +6083,10 @@ func UnmarshalDestinationConfigParamsFcmDestinationConfig(m map[string]json.RawM
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -6421,6 +6099,9 @@ type DestinationConfigParamsFirefoxDestinationConfig struct {
 
 	// Chrome VAPID public key.
 	PublicKey *string `json:"public_key,omitempty"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
 }
 
 // NewDestinationConfigParamsFirefoxDestinationConfig : Instantiate DestinationConfigParamsFirefoxDestinationConfig (Generic Model Constructor)
@@ -6444,6 +6125,10 @@ func UnmarshalDestinationConfigParamsFirefoxDestinationConfig(m map[string]json.
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
 	if err != nil {
 		return
 	}
@@ -6471,6 +6156,9 @@ type DestinationConfigParamsIosDestinationConfig struct {
 
 	// Bundle ID for token (Required when cert_type is p8).
 	BundleID *string `json:"bundle_id,omitempty"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
 }
 
 // NewDestinationConfigParamsIosDestinationConfig : Instantiate DestinationConfigParamsIosDestinationConfig (Generic Model Constructor)
@@ -6514,6 +6202,10 @@ func UnmarshalDestinationConfigParamsIosDestinationConfig(m map[string]json.RawM
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -6553,7 +6245,7 @@ func UnmarshalDestinationConfigParamsMsTeamsDestinationConfig(m map[string]json.
 // This model "extends" DestinationConfigParams
 type DestinationConfigParamsSafariDestinationConfig struct {
 	// Authentication type p12.
-	CertType *string `json:"cert_type,omitempty"`
+	CertType *string `json:"cert_type" validate:"required"`
 
 	// Password for certificate (Required when cert_type is p12).
 	Password *string `json:"password" validate:"required"`
@@ -6569,11 +6261,15 @@ type DestinationConfigParamsSafariDestinationConfig struct {
 
 	// Websire url.
 	WebsitePushID *string `json:"website_push_id" validate:"required"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
 }
 
 // NewDestinationConfigParamsSafariDestinationConfig : Instantiate DestinationConfigParamsSafariDestinationConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewDestinationConfigParamsSafariDestinationConfig(password string, websiteURL string, websiteName string, urlFormatString string, websitePushID string) (_model *DestinationConfigParamsSafariDestinationConfig, err error) {
+func (*EventNotificationsV1) NewDestinationConfigParamsSafariDestinationConfig(certType string, password string, websiteURL string, websiteName string, urlFormatString string, websitePushID string) (_model *DestinationConfigParamsSafariDestinationConfig, err error) {
 	_model = &DestinationConfigParamsSafariDestinationConfig{
+		CertType:        core.StringPtr(certType),
 		Password:        core.StringPtr(password),
 		WebsiteURL:      core.StringPtr(websiteURL),
 		WebsiteName:     core.StringPtr(websiteName),
@@ -6612,6 +6308,10 @@ func UnmarshalDestinationConfigParamsSafariDestinationConfig(m map[string]json.R
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "website_push_id", &obj.WebsitePushID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
 	if err != nil {
 		return
 	}
@@ -6713,6 +6413,26 @@ func UnmarshalDestinationConfigParamsWebhookDestinationConfig(m map[string]json.
 // SubscriptionAttributesEmailAttributesResponse : The attributes reponse for an email destination.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesEmailAttributesResponse struct {
+	// The email id string.
+	To []EmailAttributesResponseToItem `json:"to" validate:"required"`
+
+	// The unsubscribe list.
+	Unsubscribed []EmailAttributesResponseUnsubscribedItem `json:"unsubscribed,omitempty"`
+
+	// The invited list.
+	Invited []EmailAttributesResponseInvitedItem `json:"invited,omitempty"`
+
+	// Whether to add the notification payload to the email.
+	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
+
+	// The email address to reply to.
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
+
+	// The email name of From.
+	FromName *string `json:"from_name" validate:"required"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
@@ -6756,6 +6476,27 @@ func (o *SubscriptionAttributesEmailAttributesResponse) MarshalJSON() (buffer []
 			m[k] = v
 		}
 	}
+	if o.To != nil {
+		m["to"] = o.To
+	}
+	if o.Unsubscribed != nil {
+		m["unsubscribed"] = o.Unsubscribed
+	}
+	if o.Invited != nil {
+		m["invited"] = o.Invited
+	}
+	if o.AddNotificationPayload != nil {
+		m["add_notification_payload"] = o.AddNotificationPayload
+	}
+	if o.ReplyToMail != nil {
+		m["reply_to_mail"] = o.ReplyToMail
+	}
+	if o.ReplyToName != nil {
+		m["reply_to_name"] = o.ReplyToName
+	}
+	if o.FromName != nil {
+		m["from_name"] = o.FromName
+	}
 	buffer, err = json.Marshal(m)
 	return
 }
@@ -6763,6 +6504,41 @@ func (o *SubscriptionAttributesEmailAttributesResponse) MarshalJSON() (buffer []
 // UnmarshalSubscriptionAttributesEmailAttributesResponse unmarshals an instance of SubscriptionAttributesEmailAttributesResponse from the specified map of raw messages.
 func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributesEmailAttributesResponse)
+	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalEmailAttributesResponseToItem)
+	if err != nil {
+		return
+	}
+	delete(m, "to")
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalEmailAttributesResponseUnsubscribedItem)
+	if err != nil {
+		return
+	}
+	delete(m, "unsubscribed")
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalEmailAttributesResponseInvitedItem)
+	if err != nil {
+		return
+	}
+	delete(m, "invited")
+	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
+	if err != nil {
+		return
+	}
+	delete(m, "add_notification_payload")
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_mail")
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_name")
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	delete(m, "from_name")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
