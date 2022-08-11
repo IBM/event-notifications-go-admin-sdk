@@ -1,3 +1,10 @@
+## [0.1.4](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.3...v0.1.4) (2022-08-11)
+
+
+### Bug Fixes
+
+* add device count API, apispeclint errors fix and binary mode separation ([8cf3dce](https://github.com/IBM/event-notifications-go-admin-sdk/commit/8cf3dce34ca504ca6ff18095761db30799cacd06))
+
 ## [0.1.3](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.2...v0.1.3) (2022-06-27)
 
 
