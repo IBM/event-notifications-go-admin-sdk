@@ -113,12 +113,11 @@ SDK Methods to consume
 	- [Get Destination](#get-destination)
 	- [Update Destination](#update-destination)
 	- [Delete Destination](#delete-destination)
-- [Destination Devices](#destination-devices)
-	- [List Destination device](#list-destination-devices)
-	- [Get Destination device report](#get-destination-device-report)
+- [Push Destination APIs](#push-destination-apis)
 	- [Create Destination tag subscription](#create-destination-tag-subscription)
 	- [List Destination tag subscription](#list-destination-tag-subscription)
 	- [List Destination device tag subscriptions](#list-destination-device-tag-subscriptions)
+	- [Get Device Count](#get-device-count)
 	- [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
 	- [Create Subscription](#create-subscription)
@@ -127,7 +126,7 @@ SDK Methods to consume
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
 - [Send Notifications](#send-notifications)
-
+- [Get Device Count](#get-device-count)
 
 
 ## Source 
@@ -430,37 +429,7 @@ if err != nil {
 }
 ```
 
-## Destination Devices
-
-### List Destination devices
-
-```go
-listDestinationDevicesOptions := eventNotificationsService.NewListDestinationDevicesOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-)
-
-destinationDevicesList, response, err := eventNotificationsService.ListDestinationDevices(listDestinationDevicesOptions)
-
-if err != nil {
-	panic(err)
-}
-```
-
-### Get Destination device report
-
-```go
-getDestinationDevicesReportOptions := eventNotificationsService.NewGetDestinationDevicesReportOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-)
-
-destinationDevicesReport, response, err := eventNotificationsService.GetDestinationDevicesReport(getDestinationDevicesReportOptions)
-
-if err != nil {
-	panic(err)
-}
-```
+## Push Destination APIs
 
 ### Create Destination tag subscription
 
@@ -509,7 +478,18 @@ if err != nil {
 	panic(err)
 }
 ```
+### Get Device Count
+```go
+getDeviceCountOptions := &eventnotificationsv1.GetDeviceCountOptions{
+	<instance-id>,		// Event notifications service instance GUID
+	<destination-id>,	// Event notifications service instance Destination ID
+}
 
+deviceCount, response, err := eventNotificationsService.GetDeviceCount(getDeviceCountOptions)
+if err != nil {
+	panic(err)
+}
+```
 ### Delete Destination device tag subscription
 
 ```go
