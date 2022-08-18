@@ -88,6 +88,14 @@ func initInstance() *eventnotificationsv1.EventNotificationsV1 {
 
 }
 ```
+To configure service URL for Private Endpoint
+
+```go
+options := &eventnotificationsv1.EventNotificationsV1Options{
+		Authenticator: authenticator,
+		URL:           "https://private." + region + ".event-notifications.cloud.ibm.com/event-notifications",
+	}
+```
 - region : Region of the Event Notifications Instance
 
 
