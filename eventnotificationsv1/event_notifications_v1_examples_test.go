@@ -58,6 +58,7 @@ var (
 	topicID                   string
 	destinationID             string
 	destinationID5            string
+	destinationID7            string
 	subscriptionID            string
 	fcmServerKey              string
 	fcmSenderId               string
@@ -134,7 +135,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(eventNotificationsService).ToNot(BeNil())
 		})
 	})
-
 	Describe(`EventNotificationsV1 request examples`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -433,6 +433,35 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			destinationID5 = *destinationResponse.ID
 
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Cloud_Functions_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
+			)
+
+			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+				URL:    core.StringPtr("https://us-south.functions.test.cloud.ibm.com/api/v1/namespaces/940dfa37-061a-46bd-9781-e584ed4bef18/actions/Action-CF"),
+				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUG73QYXWz0SGyR_PQE8UoZCen"),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsCloudFunctionsModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID7 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -553,11 +582,42 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ = json.MarshalIndent(safaridestination, "", "  ")
 			fmt.Println(string(b))
 
-			// end-update_destination
-
 			Expect(err).To(BeNil())
 			Expect(safariresponse.StatusCode).To(Equal(200))
 			Expect(safaridestination).ToNot(BeNil())
+
+			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+				URL:    core.StringPtr("https://us-south.functions.test.cloud.ibm.com/api/v1/namespaces/940dfa37-061a-46bd-9781-e584ed4bef18/actions/Action-CF"),
+				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUG73QYXWz0SGyR_PQE8UoZCen"),
+			}
+
+			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsCloudFunctionskModel,
+			}
+
+			name = "cf_dest"
+			description = "This destination is for cloud functions"
+			cfupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID7),
+				Name:        core.StringPtr(name),
+				Description: core.StringPtr(description),
+				Config:      cfdestinationConfigModel,
+			}
+
+			cfdestination, cfresponse, err := eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(cfdestination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(cfresponse.StatusCode).To(Equal(200))
+			Expect(cfdestination).ToNot(BeNil())
+
+			// end-update_destination
 
 		})
 
@@ -665,7 +725,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
 			notificationID := "1234-1234-sdfs-234"
-			notificationSeverity := "MEDIUM"
+			notificationSeverity := "LOW"
 			typeValue := "com.acme.offer:new"
 			//userId := "userId"
 			notificationsSouce := "1234-1234-sdfs-234:test"
@@ -678,7 +738,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmenseverity = &notificationSeverity
 			notificationCreateModel.ID = &notificationID
 			notificationCreateModel.Source = &notificationsSouce
-			notificationCreateModel.Ibmensourceid = &sourceID
+			notificationCreateModel.Ibmensourceid = &notificationsSouce
 			notificationCreateModel.Type = &typeValue
 			notificationCreateModel.Time = &strfmt.DateTime{}
 			notificationCreateModel.Specversion = &specVersion
@@ -690,7 +750,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			apnsOptions := map[string]interface{}{
 				"aps": map[string]interface{}{
-					"alert": "alert message",
+					"alert": "APNS alert",
 					"badge": 5,
 				},
 			}
@@ -700,8 +760,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			fcmOptions := map[string]interface{}{
 				"notification": map[string]interface{}{
-					"title": "alert title",
-					"body":  "alert message",
+					"title": "FCM alert",
+					"body":  "alert message for FCM",
 				},
 			}
 			ibmenfcmbody, _ := json.Marshal(fcmOptions)
@@ -717,8 +777,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmenapnsbody = &ibmenapnsbodyString
 			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
-			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Offer Alert")
-			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert on expiring offers")
+			notificationCreateModel.Ibmendefaultshort = core.StringPtr("This is simple test alert from IBM Cloud Event Notifications service.")
+			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Hi, we are making sure from our side that the service is available for consumption.")
 
 			sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 			sendNotificationsOptionsModel.InstanceID = &instanceID
@@ -871,8 +931,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				panic(err)
 			}
 
-			// end-delete_destination
-
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
@@ -886,6 +944,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				panic(err)
 			}
 
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(204))
+
+			deleteDestinationOptions = eventNotificationsService.NewDeleteDestinationOptions(
+				instanceID,
+				destinationID7,
+			)
+
+			response, err = eventNotificationsService.DeleteDestination(deleteDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
 			// end-delete_destination
 
 			Expect(err).To(BeNil())

@@ -65,6 +65,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID4            string
 		destinationID5            string
 		destinationID6            string
+		destinationID7            string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
@@ -647,6 +648,32 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID6 = *destinationResponse.ID
 
+			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Cloud_Functions_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
+			)
+
+			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
+				APIKey: core.StringPtr(""),
+			}
+
+			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsCloudFunctionsModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID7 = *destinationResponse.ID
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -831,6 +858,35 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(safaridestination.ID).To(Equal(core.StringPtr(destinationID5)))
 			Expect(safaridestination.Name).To(Equal(core.StringPtr(name)))
 			Expect(safaridestination.Description).To(Equal(core.StringPtr(description)))
+
+			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
+				APIKey: core.StringPtr(""),
+			}
+
+			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsCloudFunctionskModel,
+			}
+
+			name = "cf_dest"
+			description = "This destination is for cloud functions"
+			cfupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID7),
+				Name:        core.StringPtr(name),
+				Description: core.StringPtr(description),
+				Config:      cfdestinationConfigModel,
+			}
+
+			cfdestination, cfresponse, err := eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(cfresponse.StatusCode).To(Equal(200))
+			Expect(cfdestination).ToNot(BeNil())
+			Expect(cfdestination.ID).To(Equal(core.StringPtr(destinationID7)))
+			Expect(cfdestination.Name).To(Equal(core.StringPtr(name)))
+			Expect(cfdestination.Description).To(Equal(core.StringPtr(description)))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1305,7 +1361,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
