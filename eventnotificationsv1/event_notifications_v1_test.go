@@ -5525,7 +5525,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke CreateSubscription successfully with retries`, func() {
@@ -5604,7 +5604,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke CreateSubscription successfully`, func() {
@@ -6026,7 +6026,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke GetSubscription successfully with retries`, func() {
@@ -6081,7 +6081,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke GetSubscription successfully`, func() {
@@ -6273,9 +6273,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6336,7 +6341,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke UpdateSubscription successfully with retries`, func() {
@@ -6348,9 +6353,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6414,7 +6424,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {}}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "updated_at": "UpdatedAt", "from": "From", "destination_type": "sms_ibm", "destination_id": "DestinationID", "destination_name": "DestinationName", "topic_id": "TopicID", "topic_name": "TopicName", "attributes": {"to": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "PhoneNumber", "time": "2019-01-01T12:00:00.000Z"}]}}`)
 				}))
 			})
 			It(`Invoke UpdateSubscription successfully`, func() {
@@ -6431,9 +6441,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6459,9 +6474,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6508,9 +6528,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -7243,11 +7268,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSourceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewUpdateSubscriptionOptions successfully`, func() {
-				// Construct an instance of the SubscriptionUpdateAttributesSmsAttributes model
-				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsAttributes)
+				// Construct an instance of the SmSupdateAttributesTo model
+				smSupdateAttributesToModel := new(eventnotificationsv1.SmSupdateAttributesTo)
+				Expect(smSupdateAttributesToModel).ToNot(BeNil())
+				smSupdateAttributesToModel.Add = []string{"testString"}
+				smSupdateAttributesToModel.Remove = []string{"testString"}
+				Expect(smSupdateAttributesToModel.Add).To(Equal([]string{"testString"}))
+				Expect(smSupdateAttributesToModel.Remove).To(Equal([]string{"testString"}))
+
+				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
+				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				Expect(subscriptionUpdateAttributesModel).ToNot(BeNil())
-				subscriptionUpdateAttributesModel.To = []string{"testString"}
-				Expect(subscriptionUpdateAttributesModel.To).To(Equal([]string{"testString"}))
+				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				Expect(subscriptionUpdateAttributesModel.To).To(Equal(smSupdateAttributesToModel))
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				instanceID := "testString"
@@ -7284,6 +7317,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewDestinationConfigParamsFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigParamsFirefoxDestinationConfig(websiteURL)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigParamsIBMCloudFunctionsDestinationConfig successfully`, func() {
+				url := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigParamsIBMCloudFunctionsDestinationConfig(url)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -7361,11 +7400,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_, err := eventNotificationsService.NewSubscriptionUpdateAttributesEmailUpdateAttributes(to, addNotificationPayload, replyToMail, replyToName, fromName)
 				Expect(err).ToNot(BeNil())
 			})
-			It(`Invoke NewSubscriptionUpdateAttributesSmsAttributes successfully`, func() {
-				to := []string{"testString"}
-				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesSmsAttributes(to)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
+			It(`Invoke NewSubscriptionUpdateAttributesSmsUpdateAttributes successfully`, func() {
+				var to *eventnotificationsv1.SmSupdateAttributesTo = nil
+				_, err := eventNotificationsService.NewSubscriptionUpdateAttributesSmsUpdateAttributes(to)
+				Expect(err).ToNot(BeNil())
 			})
 			It(`Invoke NewSubscriptionUpdateAttributesSlackAttributes successfully`, func() {
 				attachmentColor := "testString"
