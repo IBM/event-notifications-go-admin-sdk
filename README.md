@@ -358,7 +358,7 @@ fmt.Println(string(b))
 ```
 Among the supported destinations, if you need to create Push Notification destinations, you have the additional option of choosing a destination of production type or pre-production type.
 Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
-Supported destinations are Android, iOS, Chrome, Firefox, and Safari.
+Supported destinations are Android, iOS, Chrome, Firefox and Safari.
 
 ### List Destinations
 
