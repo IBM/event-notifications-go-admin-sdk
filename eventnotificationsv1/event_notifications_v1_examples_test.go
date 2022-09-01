@@ -440,8 +440,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://us-south.functions.test.cloud.ibm.com/api/v1/namespaces/940dfa37-061a-46bd-9781-e584ed4bef18/actions/Action-CF"),
-				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUG73QYXWz0SGyR_PQE8UoZCen"),
+				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
+				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUWz0SGyR_PQE8UoZCen"),
 			}
 
 			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
@@ -538,8 +538,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ := json.MarshalIndent(destination, "", "  ")
 			fmt.Println(string(b))
 
-			// end-update_destination
-
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
@@ -587,8 +585,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(safaridestination).ToNot(BeNil())
 
 			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://us-south.functions.test.cloud.ibm.com/api/v1/namespaces/940dfa37-061a-46bd-9781-e584ed4bef18/actions/Action-CF"),
-				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUG73QYXWz0SGyR_PQE8UoZCen"),
+				URL:    core.StringPtr("https://www.ibmcfendpoint.com"),
+				APIKey: core.StringPtr("amZzYVDnB73QYXWz0SGyR_PQEoZCen"),
 			}
 
 			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -613,11 +611,10 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			b, _ = json.MarshalIndent(cfdestination, "", "  ")
 			fmt.Println(string(b))
 
+			// end-update_destination
 			Expect(err).To(BeNil())
 			Expect(cfresponse.StatusCode).To(Equal(200))
 			Expect(cfdestination).ToNot(BeNil())
-
-			// end-update_destination
 
 		})
 
