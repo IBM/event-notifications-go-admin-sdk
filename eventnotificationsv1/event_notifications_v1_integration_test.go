@@ -281,7 +281,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				NotificationFilter: core.StringPtr("$.notification.findings[0].severity == 'MODERATE'"),
 			}
 
-			topicUpdateSourcesItemModel := &eventnotificationsv1.TopicUpdateSourcesItem{
+			topicUpdateSourcesItemModel := &eventnotificationsv1.SourcesItems{
 				ID:    core.StringPtr(sourceID),
 				Rules: []eventnotificationsv1.Rules{*rulesModel},
 			}
@@ -292,7 +292,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        name,
 				Description: description,
-				Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
+				Sources:     []eventnotificationsv1.SourcesItems{*topicUpdateSourcesItemModel},
 			}
 
 			topicResponse, response, err := eventNotificationsService.CreateTopic(createTopicOptions)
@@ -311,7 +311,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        name,
 				Description: description,
-				Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
+				Sources:     []eventnotificationsv1.SourcesItems{*topicUpdateSourcesItemModel},
 			}
 
 			topicResponse, response, err = eventNotificationsService.CreateTopic(createTopicOptions)
@@ -332,7 +332,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				NotificationFilter: core.StringPtr("$.notification.findings[0].severity == 'MODERATE'"),
 			}
 
-			topicUpdateSourcesItemModel = &eventnotificationsv1.TopicUpdateSourcesItem{
+			topicUpdateSourcesItemModel = &eventnotificationsv1.SourcesItems{
 				ID:    core.StringPtr(sourceID),
 				Rules: []eventnotificationsv1.Rules{*rulesModel},
 			}
@@ -341,7 +341,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        core.StringPtr("FCM_topic"),
 				Description: core.StringPtr("This topic is used for routing all compliance related notifications to the appropriate destinations"),
-				Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
+				Sources:     []eventnotificationsv1.SourcesItems{*topicUpdateSourcesItemModel},
 			}
 
 			topicResponse, response, err = eventNotificationsService.CreateTopic(createTopicOptions)
@@ -456,7 +456,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				NotificationFilter: core.StringPtr("$.notification.findings[0].severity == 'SEVERE'"),
 			}
 
-			topicUpdateSourcesItemModel := &eventnotificationsv1.TopicUpdateSourcesItem{
+			topicUpdateSourcesItemModel := &eventnotificationsv1.SourcesItems{
 				ID:    core.StringPtr(sourceID),
 				Rules: []eventnotificationsv1.Rules{*rulesModel},
 			}
@@ -469,7 +469,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				ID:          core.StringPtr(topicID),
 				Name:        name,
 				Description: description,
-				Sources:     []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel},
+				Sources:     []eventnotificationsv1.SourcesItems{*topicUpdateSourcesItemModel},
 			}
 
 			topic, response, err := eventNotificationsService.ReplaceTopic(replaceTopicOptions)
@@ -501,7 +501,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`CreateDestination(createDestinationOptions *CreateDestinationOptions)`, func() {
 
-			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
+			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
 				URL:  core.StringPtr("https://gcm.com"),
 				Verb: core.StringPtr("get"),
 				CustomHeaders: map[string]string{
@@ -542,7 +542,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
 			)
 
-			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigParamsFcmDestinationConfig{
+			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
 				ServerKey: core.StringPtr(fcmServerKey),
 				SenderID:  core.StringPtr(fcmSenderId),
 			}
@@ -569,7 +569,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				eventnotificationsv1.CreateDestinationOptionsTypeSlackConst,
 			)
 
-			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigParamsSlackDestinationConfig{
+			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
 				URL: core.StringPtr("https://api.slack.com/myslack"),
 			}
 
@@ -599,7 +599,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 			createDestinationOptions.Certificate = certificatefile
 
-			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig{
 				CertType:        core.StringPtr("p12"),
 				Password:        core.StringPtr("safari"),
 				WebsiteURL:      core.StringPtr("https://ensafaripush.mybluemix.net"),
@@ -629,7 +629,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				eventnotificationsv1.CreateDestinationOptionsTypeMsteamsConst,
 			)
 
-			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigParamsMsTeamsDestinationConfig{
+			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
 				URL: core.StringPtr("https://teams.microsoft.com"),
 			}
 
@@ -654,7 +654,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
 			)
 
-			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
 				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
 			}
@@ -788,7 +788,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`UpdateDestination(updateDestinationOptions *UpdateDestinationOptions)`, func() {
 
-			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
+			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
 				URL:  core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
 				Verb: core.StringPtr("post"),
 				CustomHeaders: map[string]string{
@@ -820,7 +820,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(name)))
 			Expect(destination.Description).To(Equal(core.StringPtr(description)))
 
-			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsSafariDestinationConfig{
+			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig{
 				CertType:        core.StringPtr("p12"),
 				Password:        core.StringPtr("safari"),
 				URLFormatString: core.StringPtr("https://ensafaripush.mybluemix.net/%@/?flight=%@"),
@@ -859,7 +859,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(safaridestination.Name).To(Equal(core.StringPtr(name)))
 			Expect(safaridestination.Description).To(Equal(core.StringPtr(description)))
 
-			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigParamsIBMCloudFunctionsDestinationConfig{
+			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
 				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
 			}
@@ -901,33 +901,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetDeviceCount - Get count of devices`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions)`, func() {
-
-			getDeviceCountOptions := &eventnotificationsv1.GetDeviceCountOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(destinationID3),
-			}
-
-			deviceCount, response, err := eventNotificationsService.GetDeviceCount(getDeviceCountOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(deviceCount).ToNot(BeNil())
-			//
-			// The following status codes aren't covered by tests.
-			// Please provide integration tests for these too.
-			//
-			// 401
-			// 404
-			// 500
-			//
-		})
-	})
-
 	Describe(`CreateSubscription - Create a new Subscription`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -960,7 +933,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionID = *subscription.ID
 
 			subscriptionCreateAttributesEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes{
-				To:                     []string{"tester1@gmail.com", "tester3@ibm.com"},
+				Invited:                []string{"tester1@gmail.com", "tester3@ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
 				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
 				ReplyToName:            core.StringPtr("rester_reply"),
@@ -1120,6 +1093,43 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscription).ToNot(BeNil())
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID)))
+			Expect(subscription.Name).To(Equal(name))
+			Expect(subscription.Description).To(Equal(description))
+
+			UpdateAttributesInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
+			UpdateAttributesInvitedModel.Add = []string{"tester4@ibm.com"}
+
+			UpdateAttributessubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
+			UpdateAttributessubscribedModel.Remove = []string{"tester3@ibm.com"}
+
+			UpdateAttributesUnSubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+			UpdateAttributesUnSubscribedModel.Remove = []string{"tester3@ibm.com"}
+
+			subscriptionUpdateEmailAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesEmailUpdateAttributes{
+				Invited:                UpdateAttributesInvitedModel,
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
+				ReplyToName:            core.StringPtr("rester_reply"),
+				FromName:               core.StringPtr("Test IBM email"),
+				Subscribed:             UpdateAttributessubscribedModel,
+				Unsubscribed:           UpdateAttributesUnSubscribedModel,
+			}
+			name = core.StringPtr("subscription_email")
+			description = core.StringPtr("Subscription for email")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        name,
+				Description: description,
+				ID:          core.StringPtr(subscriptionID2),
+				Attributes:  subscriptionUpdateEmailAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID2)))
 			Expect(subscription.Name).To(Equal(name))
 			Expect(subscription.Description).To(Equal(description))
 

@@ -1200,7 +1200,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListSourcesOptions model
 				listSourcesOptionsModel := new(eventnotificationsv1.ListSourcesOptions)
 				listSourcesOptionsModel.InstanceID = core.StringPtr("testString")
-				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSourcesOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listSourcesOptionsModel.Search = core.StringPtr("testString")
 				listSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1242,7 +1242,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSources successfully with retries`, func() {
@@ -1257,7 +1257,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListSourcesOptions model
 				listSourcesOptionsModel := new(eventnotificationsv1.ListSourcesOptions)
 				listSourcesOptionsModel.InstanceID = core.StringPtr("testString")
-				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSourcesOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listSourcesOptionsModel.Search = core.StringPtr("testString")
 				listSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1302,7 +1302,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSources successfully`, func() {
@@ -1322,7 +1322,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListSourcesOptions model
 				listSourcesOptionsModel := new(eventnotificationsv1.ListSourcesOptions)
 				listSourcesOptionsModel.InstanceID = core.StringPtr("testString")
-				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSourcesOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listSourcesOptionsModel.Search = core.StringPtr("testString")
 				listSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1345,7 +1345,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListSourcesOptions model
 				listSourcesOptionsModel := new(eventnotificationsv1.ListSourcesOptions)
 				listSourcesOptionsModel.InstanceID = core.StringPtr("testString")
-				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSourcesOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listSourcesOptionsModel.Search = core.StringPtr("testString")
 				listSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1389,7 +1389,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListSourcesOptions model
 				listSourcesOptionsModel := new(eventnotificationsv1.ListSourcesOptions)
 				listSourcesOptionsModel.InstanceID = core.StringPtr("testString")
-				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSourcesOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSourcesOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listSourcesOptionsModel.Search = core.StringPtr("testString")
 				listSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -1404,6 +1404,119 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.SourceList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.SourceList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SourceList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SourceList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSourcesPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use SourcesPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.SourceListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use SourcesPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
 			})
 		})
 	})
@@ -1987,17 +2100,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the CreateTopicOptions model
 				createTopicOptionsModel := new(eventnotificationsv1.CreateTopicOptions)
 				createTopicOptionsModel.InstanceID = core.StringPtr("testString")
 				createTopicOptionsModel.Name = core.StringPtr("testString")
 				createTopicOptionsModel.Description = core.StringPtr("testString")
-				createTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				createTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				createTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.CreateTopic(createTopicOptionsModel)
@@ -2068,17 +2181,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the CreateTopicOptions model
 				createTopicOptionsModel := new(eventnotificationsv1.CreateTopicOptions)
 				createTopicOptionsModel.InstanceID = core.StringPtr("testString")
 				createTopicOptionsModel.Name = core.StringPtr("testString")
 				createTopicOptionsModel.Description = core.StringPtr("testString")
-				createTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				createTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				createTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -2157,17 +2270,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the CreateTopicOptions model
 				createTopicOptionsModel := new(eventnotificationsv1.CreateTopicOptions)
 				createTopicOptionsModel.InstanceID = core.StringPtr("testString")
 				createTopicOptionsModel.Name = core.StringPtr("testString")
 				createTopicOptionsModel.Description = core.StringPtr("testString")
-				createTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				createTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				createTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -2191,17 +2304,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the CreateTopicOptions model
 				createTopicOptionsModel := new(eventnotificationsv1.CreateTopicOptions)
 				createTopicOptionsModel.InstanceID = core.StringPtr("testString")
 				createTopicOptionsModel.Name = core.StringPtr("testString")
 				createTopicOptionsModel.Description = core.StringPtr("testString")
-				createTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				createTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				createTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -2246,17 +2359,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the CreateTopicOptions model
 				createTopicOptionsModel := new(eventnotificationsv1.CreateTopicOptions)
 				createTopicOptionsModel.InstanceID = core.StringPtr("testString")
 				createTopicOptionsModel.Name = core.StringPtr("testString")
 				createTopicOptionsModel.Description = core.StringPtr("testString")
-				createTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				createTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				createTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -2301,7 +2414,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				listTopicsOptionsModel := new(eventnotificationsv1.ListTopicsOptions)
 				listTopicsOptionsModel.InstanceID = core.StringPtr("testString")
-				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTopicsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTopicsOptionsModel.Search = core.StringPtr("testString")
 				listTopicsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2343,7 +2456,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "ID", "name": "Name", "description": "Description", "source_count": 0, "sources_names": ["SourcesNames"], "subscription_count": 0}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "ID", "name": "Name", "description": "Description", "source_count": 0, "sources_names": ["SourcesNames"], "subscription_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTopics successfully with retries`, func() {
@@ -2358,7 +2471,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				listTopicsOptionsModel := new(eventnotificationsv1.ListTopicsOptions)
 				listTopicsOptionsModel.InstanceID = core.StringPtr("testString")
-				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTopicsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTopicsOptionsModel.Search = core.StringPtr("testString")
 				listTopicsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2403,7 +2516,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "ID", "name": "Name", "description": "Description", "source_count": 0, "sources_names": ["SourcesNames"], "subscription_count": 0}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "ID", "name": "Name", "description": "Description", "source_count": 0, "sources_names": ["SourcesNames"], "subscription_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTopics successfully`, func() {
@@ -2423,7 +2536,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				listTopicsOptionsModel := new(eventnotificationsv1.ListTopicsOptions)
 				listTopicsOptionsModel.InstanceID = core.StringPtr("testString")
-				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTopicsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTopicsOptionsModel.Search = core.StringPtr("testString")
 				listTopicsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2446,7 +2559,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				listTopicsOptionsModel := new(eventnotificationsv1.ListTopicsOptions)
 				listTopicsOptionsModel.InstanceID = core.StringPtr("testString")
-				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTopicsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTopicsOptionsModel.Search = core.StringPtr("testString")
 				listTopicsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2490,7 +2603,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListTopicsOptions model
 				listTopicsOptionsModel := new(eventnotificationsv1.ListTopicsOptions)
 				listTopicsOptionsModel.InstanceID = core.StringPtr("testString")
-				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTopicsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTopicsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTopicsOptionsModel.Search = core.StringPtr("testString")
 				listTopicsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -2505,6 +2618,119 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.TopicList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.TopicList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TopicList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TopicList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTopicsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"topics":[{"id":"ID","name":"Name","description":"Description","source_count":0,"sources_names":["SourcesNames"],"subscription_count":0}],"limit":1}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"topics":[{"id":"ID","name":"Name","description":"Description","source_count":0,"sources_names":["SourcesNames"],"subscription_count":0}],"limit":1}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use TopicsPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.TopicsListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use TopicsPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
 			})
 		})
 	})
@@ -2762,10 +2988,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the ReplaceTopicOptions model
 				replaceTopicOptionsModel := new(eventnotificationsv1.ReplaceTopicOptions)
@@ -2773,7 +2999,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.ID = core.StringPtr("testString")
 				replaceTopicOptionsModel.Name = core.StringPtr("testString")
 				replaceTopicOptionsModel.Description = core.StringPtr("testString")
-				replaceTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				replaceTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				replaceTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.ReplaceTopic(replaceTopicOptionsModel)
@@ -2844,10 +3070,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the ReplaceTopicOptions model
 				replaceTopicOptionsModel := new(eventnotificationsv1.ReplaceTopicOptions)
@@ -2855,7 +3081,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.ID = core.StringPtr("testString")
 				replaceTopicOptionsModel.Name = core.StringPtr("testString")
 				replaceTopicOptionsModel.Description = core.StringPtr("testString")
-				replaceTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				replaceTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				replaceTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -2934,10 +3160,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the ReplaceTopicOptions model
 				replaceTopicOptionsModel := new(eventnotificationsv1.ReplaceTopicOptions)
@@ -2945,7 +3171,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.ID = core.StringPtr("testString")
 				replaceTopicOptionsModel.Name = core.StringPtr("testString")
 				replaceTopicOptionsModel.Description = core.StringPtr("testString")
-				replaceTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				replaceTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				replaceTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -2969,10 +3195,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the ReplaceTopicOptions model
 				replaceTopicOptionsModel := new(eventnotificationsv1.ReplaceTopicOptions)
@@ -2980,7 +3206,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.ID = core.StringPtr("testString")
 				replaceTopicOptionsModel.Name = core.StringPtr("testString")
 				replaceTopicOptionsModel.Description = core.StringPtr("testString")
-				replaceTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				replaceTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				replaceTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -3025,10 +3251,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
 
 				// Construct an instance of the ReplaceTopicOptions model
 				replaceTopicOptionsModel := new(eventnotificationsv1.ReplaceTopicOptions)
@@ -3036,7 +3262,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.ID = core.StringPtr("testString")
 				replaceTopicOptionsModel.Name = core.StringPtr("testString")
 				replaceTopicOptionsModel.Description = core.StringPtr("testString")
-				replaceTopicOptionsModel.Sources = []eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}
+				replaceTopicOptionsModel.Sources = []eventnotificationsv1.SourcesItems{*sourcesItemsModel}
 				replaceTopicOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -3145,16 +3371,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the CreateDestinationOptions model
 				createDestinationOptionsModel := new(eventnotificationsv1.CreateDestinationOptions)
@@ -3225,16 +3451,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the CreateDestinationOptions model
 				createDestinationOptionsModel := new(eventnotificationsv1.CreateDestinationOptions)
@@ -3313,16 +3539,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the CreateDestinationOptions model
 				createDestinationOptionsModel := new(eventnotificationsv1.CreateDestinationOptions)
@@ -3362,16 +3588,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the CreateDestinationOptions model
 				createDestinationOptionsModel := new(eventnotificationsv1.CreateDestinationOptions)
@@ -3432,16 +3658,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the CreateDestinationOptions model
 				createDestinationOptionsModel := new(eventnotificationsv1.CreateDestinationOptions)
@@ -3508,7 +3734,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				listDestinationsOptionsModel := new(eventnotificationsv1.ListDestinationsOptions)
 				listDestinationsOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listDestinationsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listDestinationsOptionsModel.Search = core.StringPtr("testString")
 				listDestinationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3550,7 +3776,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "destinations": [{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "destinations": [{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListDestinations successfully with retries`, func() {
@@ -3565,7 +3791,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				listDestinationsOptionsModel := new(eventnotificationsv1.ListDestinationsOptions)
 				listDestinationsOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listDestinationsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listDestinationsOptionsModel.Search = core.StringPtr("testString")
 				listDestinationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3610,7 +3836,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "destinations": [{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "destinations": [{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListDestinations successfully`, func() {
@@ -3630,7 +3856,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				listDestinationsOptionsModel := new(eventnotificationsv1.ListDestinationsOptions)
 				listDestinationsOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listDestinationsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listDestinationsOptionsModel.Search = core.StringPtr("testString")
 				listDestinationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3653,7 +3879,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				listDestinationsOptionsModel := new(eventnotificationsv1.ListDestinationsOptions)
 				listDestinationsOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listDestinationsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listDestinationsOptionsModel.Search = core.StringPtr("testString")
 				listDestinationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3697,7 +3923,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				listDestinationsOptionsModel := new(eventnotificationsv1.ListDestinationsOptions)
 				listDestinationsOptionsModel.InstanceID = core.StringPtr("testString")
-				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listDestinationsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listDestinationsOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listDestinationsOptionsModel.Search = core.StringPtr("testString")
 				listDestinationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3712,6 +3938,119 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.DestinationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.DestinationList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.DestinationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.DestinationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listDestinationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"destinations":[{"id":"ID","name":"Name","description":"Description","type":"webhook","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"destinations":[{"id":"ID","name":"Name","description":"Description","type":"webhook","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use DestinationsPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.DestinationListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use DestinationsPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
 			})
 		})
 	})
@@ -3955,16 +4294,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the UpdateDestinationOptions model
 				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
@@ -4035,16 +4374,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the UpdateDestinationOptions model
 				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
@@ -4123,16 +4462,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the UpdateDestinationOptions model
 				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
@@ -4188,16 +4527,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the UpdateDestinationOptions model
 				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
@@ -4258,16 +4597,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
-				destinationConfigModel.Params = destinationConfigParamsModel
+				destinationConfigModel.Params = destinationConfigOneOfModel
 
 				// Construct an instance of the UpdateDestinationOptions model
 				updateDestinationOptionsModel := new(eventnotificationsv1.UpdateDestinationOptions)
@@ -4369,469 +4708,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				response, operationErr = eventNotificationsService.DeleteDestination(deleteDestinationOptionsModelNew)
 				Expect(operationErr).ToNot(BeNil())
 				Expect(response).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions) - Operation response error`, func() {
-		getTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprint(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke GetTagsSubscriptionsDevice with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptions *GetTagsSubscriptionsDeviceOptions)`, func() {
-		getTagsSubscriptionsDevicePath := "/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke GetTagsSubscriptionsDevice successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.GetTagsSubscriptionsDeviceWithContext(ctx, getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.GetTagsSubscriptionsDeviceWithContext(ctx, getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getTagsSubscriptionsDevicePath))
-					Expect(req.Method).To(Equal("GET"))
-
-					Expect(req.URL.Query()["tag_name"]).To(Equal([]string{"testString"}))
-					// TODO: Add check for limit query parameter
-					// TODO: Add check for offset query parameter
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
-				}))
-			})
-			It(`Invoke GetTagsSubscriptionsDevice successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke GetTagsSubscriptionsDevice with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the GetTagsSubscriptionsDeviceOptions model with no property values
-				getTagsSubscriptionsDeviceOptionsModelNew := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke GetTagsSubscriptionsDevice successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				getTagsSubscriptionsDeviceOptionsModel := new(eventnotificationsv1.GetTagsSubscriptionsDeviceOptions)
-				getTagsSubscriptionsDeviceOptionsModel.InstanceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.ID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.DeviceID = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.TagName = core.StringPtr("testString")
-				getTagsSubscriptionsDeviceOptionsModel.Limit = core.Int64Ptr(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.Offset = core.Int64Ptr(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.GetTagsSubscriptionsDevice(getTagsSubscriptionsDeviceOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions) - Operation response error`, func() {
-		getDeviceCountPath := "/v1/instances/testString/destinations/testString/devices/count"
-		Context(`Using mock server endpoint with invalid JSON response`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
-					Expect(req.Method).To(Equal("GET"))
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprint(res, `} this is not valid json {`)
-				}))
-			})
-			It(`Invoke GetDeviceCount with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDeviceCountOptions model
-				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
-				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-	})
-	Describe(`GetDeviceCount(getDeviceCountOptions *GetDeviceCountOptions)`, func() {
-		getDeviceCountPath := "/v1/instances/testString/destinations/testString/devices/count"
-		Context(`Using mock server endpoint with timeout`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// Sleep a short time to support a timeout test
-					time.Sleep(100 * time.Millisecond)
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10}`)
-				}))
-			})
-			It(`Invoke GetDeviceCount successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the GetDeviceCountOptions model
-				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
-				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.GetDeviceCountWithContext(ctx, getDeviceCountOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.GetDeviceCountWithContext(ctx, getDeviceCountOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Verify the contents of the request
-					Expect(req.URL.EscapedPath()).To(Equal(getDeviceCountPath))
-					Expect(req.Method).To(Equal("GET"))
-
-					// Set mock response
-					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10}`)
-				}))
-			})
-			It(`Invoke GetDeviceCount successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Invoke operation with nil options model (negative test)
-				result, response, operationErr := eventNotificationsService.GetDeviceCount(nil)
-				Expect(operationErr).NotTo(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-
-				// Construct an instance of the GetDeviceCountOptions model
-				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
-				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with valid options model (positive test)
-				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-			})
-			It(`Invoke GetDeviceCount with error: Operation validation and request error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDeviceCountOptions model
-				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
-				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Invoke operation with empty URL (negative test)
-				err := eventNotificationsService.SetServiceURL("")
-				Expect(err).To(BeNil())
-				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-				// Construct a second instance of the GetDeviceCountOptions model with no property values
-				getDeviceCountOptionsModelNew := new(eventnotificationsv1.GetDeviceCountOptions)
-				// Invoke operation with invalid model (negative test)
-				result, response, operationErr = eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModelNew)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).To(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
-			})
-		})
-		Context(`Using mock server endpoint with missing response body`, func() {
-			BeforeEach(func() {
-				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
-					defer GinkgoRecover()
-
-					// Set success status code with no respoonse body
-					res.WriteHeader(200)
-				}))
-			})
-			It(`Invoke GetDeviceCount successfully`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetDeviceCountOptions model
-				getDeviceCountOptionsModel := new(eventnotificationsv1.GetDeviceCountOptions)
-				getDeviceCountOptionsModel.InstanceID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.ID = core.StringPtr("testString")
-				getDeviceCountOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation
-				result, response, operationErr := eventNotificationsService.GetDeviceCount(getDeviceCountOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-
-				// Verify a nil result
-				Expect(result).To(BeNil())
 			})
 			AfterEach(func() {
 				testServer.Close()
@@ -5133,7 +5009,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.UserID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTagsSubscriptionOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTagsSubscriptionOptionsModel.Search = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5178,7 +5054,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTagsSubscription successfully with retries`, func() {
@@ -5197,7 +5073,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.UserID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTagsSubscriptionOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTagsSubscriptionOptionsModel.Search = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5245,7 +5121,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "ID", "device_id": "DeviceID", "tag_name": "TagName", "user_id": "UserID", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTagsSubscription successfully`, func() {
@@ -5269,7 +5145,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.UserID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTagsSubscriptionOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTagsSubscriptionOptionsModel.Search = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5296,7 +5172,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.UserID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTagsSubscriptionOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTagsSubscriptionOptionsModel.Search = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5344,7 +5220,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.DeviceID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.UserID = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.TagName = core.StringPtr("testString")
-				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listTagsSubscriptionOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listTagsSubscriptionOptionsModel.Offset = core.Int64Ptr(int64(0))
 				listTagsSubscriptionOptionsModel.Search = core.StringPtr("testString")
 				listTagsSubscriptionOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -5359,6 +5235,127 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTagsSubscriptionPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"ID","device_id":"DeviceID","tag_name":"TagName","user_id":"UserID","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"ID","device_id":"DeviceID","tag_name":"TagName","user_id":"UserID","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use TagsSubscriptionPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
+					InstanceID: core.StringPtr("testString"),
+					ID: core.StringPtr("testString"),
+					DeviceID: core.StringPtr("testString"),
+					UserID: core.StringPtr("testString"),
+					TagName: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.TagsSubscriptionListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use TagsSubscriptionPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
+					InstanceID: core.StringPtr("testString"),
+					ID: core.StringPtr("testString"),
+					DeviceID: core.StringPtr("testString"),
+					UserID: core.StringPtr("testString"),
+					TagName: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
 			})
 		})
 	})
@@ -5757,7 +5754,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := new(eventnotificationsv1.ListSubscriptionsOptions)
 				listSubscriptionsOptionsModel.InstanceID = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSubscriptionsOptionsModel.Search = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -5798,7 +5795,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSubscriptions successfully with retries`, func() {
@@ -5814,7 +5811,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := new(eventnotificationsv1.ListSubscriptionsOptions)
 				listSubscriptionsOptionsModel.InstanceID = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSubscriptionsOptionsModel.Search = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5858,7 +5855,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSubscriptions successfully`, func() {
@@ -5879,7 +5876,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := new(eventnotificationsv1.ListSubscriptionsOptions)
 				listSubscriptionsOptionsModel.InstanceID = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSubscriptionsOptionsModel.Search = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5902,7 +5899,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := new(eventnotificationsv1.ListSubscriptionsOptions)
 				listSubscriptionsOptionsModel.InstanceID = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSubscriptionsOptionsModel.Search = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -5946,7 +5943,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := new(eventnotificationsv1.ListSubscriptionsOptions)
 				listSubscriptionsOptionsModel.InstanceID = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Offset = core.Int64Ptr(int64(0))
-				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(1))
+				listSubscriptionsOptionsModel.Limit = core.Int64Ptr(int64(10))
 				listSubscriptionsOptionsModel.Search = core.StringPtr("testString")
 				listSubscriptionsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -5960,6 +5957,119 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			AfterEach(func() {
 				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.SubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.SubscriptionList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SubscriptionList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSubscriptionsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"subscriptions":[{"id":"ID","name":"Name","description":"Description","destination_id":"DestinationID","destination_name":"DestinationName","destination_type":"sms_ibm","topic_id":"TopicID","topic_name":"TopicName","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"subscriptions":[{"id":"ID","name":"Name","description":"Description","destination_id":"DestinationID","destination_name":"DestinationName","destination_type":"sms_ibm","topic_id":"TopicID","topic_name":"TopicName","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use SubscriptionsPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.SubscriptionListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use SubscriptionsPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
 			})
 		})
 	})
@@ -6278,9 +6388,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				smSupdateAttributesToModel.Add = []string{"testString"}
 				smSupdateAttributesToModel.Remove = []string{"testString"}
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6358,9 +6473,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				smSupdateAttributesToModel.Add = []string{"testString"}
 				smSupdateAttributesToModel.Remove = []string{"testString"}
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6446,9 +6566,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				smSupdateAttributesToModel.Add = []string{"testString"}
 				smSupdateAttributesToModel.Remove = []string{"testString"}
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6479,9 +6604,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				smSupdateAttributesToModel.Add = []string{"testString"}
 				smSupdateAttributesToModel.Remove = []string{"testString"}
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6533,9 +6663,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				smSupdateAttributesToModel.Add = []string{"testString"}
 				smSupdateAttributesToModel.Remove = []string{"testString"}
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				updateSubscriptionOptionsModel := new(eventnotificationsv1.UpdateSubscriptionOptions)
@@ -6566,23 +6701,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			It(`Invoke NewCreateDestinationOptions successfully`, func() {
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				Expect(destinationConfigParamsModel).ToNot(BeNil())
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
-				Expect(destinationConfigParamsModel.URL).To(Equal(core.StringPtr("testString")))
-				Expect(destinationConfigParamsModel.Verb).To(Equal(core.StringPtr("get")))
-				Expect(destinationConfigParamsModel.CustomHeaders).To(Equal(make(map[string]string)))
-				Expect(destinationConfigParamsModel.SensitiveHeaders).To(Equal([]string{"testString"}))
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				Expect(destinationConfigOneOfModel).ToNot(BeNil())
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				Expect(destinationConfigOneOfModel.URL).To(Equal(core.StringPtr("testString")))
+				Expect(destinationConfigOneOfModel.Verb).To(Equal(core.StringPtr("get")))
+				Expect(destinationConfigOneOfModel.CustomHeaders).To(Equal(make(map[string]string)))
+				Expect(destinationConfigOneOfModel.SensitiveHeaders).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
 				Expect(destinationConfigModel).ToNot(BeNil())
-				destinationConfigModel.Params = destinationConfigParamsModel
-				Expect(destinationConfigModel.Params).To(Equal(destinationConfigParamsModel))
+				destinationConfigModel.Params = destinationConfigOneOfModel
+				Expect(destinationConfigModel.Params).To(Equal(destinationConfigOneOfModel))
 
 				// Construct an instance of the CreateDestinationOptions model
 				instanceID := "testString"
@@ -6708,13 +6843,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(rulesModel.EventTypeFilter).To(Equal(core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")))
 				Expect(rulesModel.NotificationFilter).To(Equal(core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")))
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				Expect(topicUpdateSourcesItemModel).ToNot(BeNil())
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
-				Expect(topicUpdateSourcesItemModel.ID).To(Equal(core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")))
-				Expect(topicUpdateSourcesItemModel.Rules).To(Equal([]eventnotificationsv1.Rules{*rulesModel}))
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				Expect(sourcesItemsModel).ToNot(BeNil())
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				Expect(sourcesItemsModel.ID).To(Equal(core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")))
+				Expect(sourcesItemsModel.Rules).To(Equal([]eventnotificationsv1.Rules{*rulesModel}))
 
 				// Construct an instance of the CreateTopicOptions model
 				instanceID := "testString"
@@ -6723,13 +6858,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTopicOptionsModel.SetInstanceID("testString")
 				createTopicOptionsModel.SetName("testString")
 				createTopicOptionsModel.SetDescription("testString")
-				createTopicOptionsModel.SetSources([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel})
+				createTopicOptionsModel.SetSources([]eventnotificationsv1.SourcesItems{*sourcesItemsModel})
 				createTopicOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createTopicOptionsModel).ToNot(BeNil())
 				Expect(createTopicOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(createTopicOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(createTopicOptionsModel.Description).To(Equal(core.StringPtr("testString")))
-				Expect(createTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}))
+				Expect(createTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.SourcesItems{*sourcesItemsModel}))
 				Expect(createTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDeleteDestinationOptions successfully`, func() {
@@ -6802,7 +6937,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(deleteTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDestinationConfig successfully`, func() {
-				var params eventnotificationsv1.DestinationConfigParamsIntf = nil
+				var params eventnotificationsv1.DestinationConfigOneOfIntf = nil
 				_, err := eventNotificationsService.NewDestinationConfig(params)
 				Expect(err).ToNot(BeNil())
 			})
@@ -6818,19 +6953,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(getDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
-			It(`Invoke NewGetDeviceCountOptions successfully`, func() {
-				// Construct an instance of the GetDeviceCountOptions model
-				instanceID := "testString"
-				id := "testString"
-				getDeviceCountOptionsModel := eventNotificationsService.NewGetDeviceCountOptions(instanceID, id)
-				getDeviceCountOptionsModel.SetInstanceID("testString")
-				getDeviceCountOptionsModel.SetID("testString")
-				getDeviceCountOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(getDeviceCountOptionsModel).ToNot(BeNil())
-				Expect(getDeviceCountOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(getDeviceCountOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(getDeviceCountOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetSourceOptions successfully`, func() {
 				// Construct an instance of the GetSourceOptions model
@@ -6858,28 +6980,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getSubscriptionOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewGetTagsSubscriptionsDeviceOptions successfully`, func() {
-				// Construct an instance of the GetTagsSubscriptionsDeviceOptions model
-				instanceID := "testString"
-				id := "testString"
-				deviceID := "testString"
-				getTagsSubscriptionsDeviceOptionsModel := eventNotificationsService.NewGetTagsSubscriptionsDeviceOptions(instanceID, id, deviceID)
-				getTagsSubscriptionsDeviceOptionsModel.SetInstanceID("testString")
-				getTagsSubscriptionsDeviceOptionsModel.SetID("testString")
-				getTagsSubscriptionsDeviceOptionsModel.SetDeviceID("testString")
-				getTagsSubscriptionsDeviceOptionsModel.SetTagName("testString")
-				getTagsSubscriptionsDeviceOptionsModel.SetLimit(int64(1))
-				getTagsSubscriptionsDeviceOptionsModel.SetOffset(int64(0))
-				getTagsSubscriptionsDeviceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
-				Expect(getTagsSubscriptionsDeviceOptionsModel).ToNot(BeNil())
-				Expect(getTagsSubscriptionsDeviceOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.ID).To(Equal(core.StringPtr("testString")))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(getTagsSubscriptionsDeviceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
-			})
 			It(`Invoke NewGetTopicOptions successfully`, func() {
 				// Construct an instance of the GetTopicOptions model
 				instanceID := "testString"
@@ -6900,13 +7000,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				instanceID := "testString"
 				listDestinationsOptionsModel := eventNotificationsService.NewListDestinationsOptions(instanceID)
 				listDestinationsOptionsModel.SetInstanceID("testString")
-				listDestinationsOptionsModel.SetLimit(int64(1))
+				listDestinationsOptionsModel.SetLimit(int64(10))
 				listDestinationsOptionsModel.SetOffset(int64(0))
 				listDestinationsOptionsModel.SetSearch("testString")
 				listDestinationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listDestinationsOptionsModel).ToNot(BeNil())
 				Expect(listDestinationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(listDestinationsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(listDestinationsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listDestinationsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listDestinationsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listDestinationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -6916,13 +7016,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				instanceID := "testString"
 				listSourcesOptionsModel := eventNotificationsService.NewListSourcesOptions(instanceID)
 				listSourcesOptionsModel.SetInstanceID("testString")
-				listSourcesOptionsModel.SetLimit(int64(1))
+				listSourcesOptionsModel.SetLimit(int64(10))
 				listSourcesOptionsModel.SetOffset(int64(0))
 				listSourcesOptionsModel.SetSearch("testString")
 				listSourcesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listSourcesOptionsModel).ToNot(BeNil())
 				Expect(listSourcesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(listSourcesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(listSourcesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listSourcesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listSourcesOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listSourcesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -6933,13 +7033,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listSubscriptionsOptionsModel := eventNotificationsService.NewListSubscriptionsOptions(instanceID)
 				listSubscriptionsOptionsModel.SetInstanceID("testString")
 				listSubscriptionsOptionsModel.SetOffset(int64(0))
-				listSubscriptionsOptionsModel.SetLimit(int64(1))
+				listSubscriptionsOptionsModel.SetLimit(int64(10))
 				listSubscriptionsOptionsModel.SetSearch("testString")
 				listSubscriptionsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listSubscriptionsOptionsModel).ToNot(BeNil())
 				Expect(listSubscriptionsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(listSubscriptionsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
-				Expect(listSubscriptionsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(listSubscriptionsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listSubscriptionsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listSubscriptionsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
@@ -6953,7 +7053,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				listTagsSubscriptionOptionsModel.SetDeviceID("testString")
 				listTagsSubscriptionOptionsModel.SetUserID("testString")
 				listTagsSubscriptionOptionsModel.SetTagName("testString")
-				listTagsSubscriptionOptionsModel.SetLimit(int64(1))
+				listTagsSubscriptionOptionsModel.SetLimit(int64(10))
 				listTagsSubscriptionOptionsModel.SetOffset(int64(0))
 				listTagsSubscriptionOptionsModel.SetSearch("testString")
 				listTagsSubscriptionOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
@@ -6963,7 +7063,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTagsSubscriptionOptionsModel.DeviceID).To(Equal(core.StringPtr("testString")))
 				Expect(listTagsSubscriptionOptionsModel.UserID).To(Equal(core.StringPtr("testString")))
 				Expect(listTagsSubscriptionOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
-				Expect(listTagsSubscriptionOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(listTagsSubscriptionOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listTagsSubscriptionOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listTagsSubscriptionOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -6973,23 +7073,26 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				instanceID := "testString"
 				listTopicsOptionsModel := eventNotificationsService.NewListTopicsOptions(instanceID)
 				listTopicsOptionsModel.SetInstanceID("testString")
-				listTopicsOptionsModel.SetLimit(int64(1))
+				listTopicsOptionsModel.SetLimit(int64(10))
 				listTopicsOptionsModel.SetOffset(int64(0))
 				listTopicsOptionsModel.SetSearch("testString")
 				listTopicsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(listTopicsOptionsModel).ToNot(BeNil())
 				Expect(listTopicsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
-				Expect(listTopicsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(1))))
+				Expect(listTopicsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listTopicsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listTopicsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTopicsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewNotificationCreate successfully`, func() {
 				specversion := "1.0"
+				id := "testString"
+				source := "testString"
+				typeVar := "testString"
 				ibmensourceid := "testString"
 				ibmendefaultshort := "testString"
 				ibmendefaultlong := "testString"
-				_model, err := eventNotificationsService.NewNotificationCreate(specversion, ibmensourceid, ibmendefaultshort, ibmendefaultlong)
+				_model, err := eventNotificationsService.NewNotificationCreate(specversion, id, source, typeVar, ibmensourceid, ibmendefaultshort, ibmendefaultlong)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -7004,13 +7107,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(rulesModel.EventTypeFilter).To(Equal(core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")))
 				Expect(rulesModel.NotificationFilter).To(Equal(core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")))
 
-				// Construct an instance of the TopicUpdateSourcesItem model
-				topicUpdateSourcesItemModel := new(eventnotificationsv1.TopicUpdateSourcesItem)
-				Expect(topicUpdateSourcesItemModel).ToNot(BeNil())
-				topicUpdateSourcesItemModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
-				topicUpdateSourcesItemModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
-				Expect(topicUpdateSourcesItemModel.ID).To(Equal(core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")))
-				Expect(topicUpdateSourcesItemModel.Rules).To(Equal([]eventnotificationsv1.Rules{*rulesModel}))
+				// Construct an instance of the SourcesItems model
+				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
+				Expect(sourcesItemsModel).ToNot(BeNil())
+				sourcesItemsModel.ID = core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")
+				sourcesItemsModel.Rules = []eventnotificationsv1.Rules{*rulesModel}
+				Expect(sourcesItemsModel.ID).To(Equal(core.StringPtr("e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api")))
+				Expect(sourcesItemsModel.Rules).To(Equal([]eventnotificationsv1.Rules{*rulesModel}))
 
 				// Construct an instance of the ReplaceTopicOptions model
 				instanceID := "testString"
@@ -7020,14 +7123,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTopicOptionsModel.SetID("testString")
 				replaceTopicOptionsModel.SetName("testString")
 				replaceTopicOptionsModel.SetDescription("testString")
-				replaceTopicOptionsModel.SetSources([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel})
+				replaceTopicOptionsModel.SetSources([]eventnotificationsv1.SourcesItems{*sourcesItemsModel})
 				replaceTopicOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceTopicOptionsModel).ToNot(BeNil())
 				Expect(replaceTopicOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceTopicOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(replaceTopicOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(replaceTopicOptionsModel.Description).To(Equal(core.StringPtr("testString")))
-				Expect(replaceTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.TopicUpdateSourcesItem{*topicUpdateSourcesItemModel}))
+				Expect(replaceTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.SourcesItems{*sourcesItemsModel}))
 				Expect(replaceTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewRules successfully`, func() {
@@ -7176,31 +7279,31 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(sendNotificationsOptionsModel.Body).To(Equal(notificationCreateModel))
 				Expect(sendNotificationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewTopicUpdateSourcesItem successfully`, func() {
+			It(`Invoke NewSourcesItems successfully`, func() {
 				id := "testString"
 				rules := []eventnotificationsv1.Rules{}
-				_model, err := eventNotificationsService.NewTopicUpdateSourcesItem(id, rules)
+				_model, err := eventNotificationsService.NewSourcesItems(id, rules)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateDestinationOptions successfully`, func() {
-				// Construct an instance of the DestinationConfigParamsWebhookDestinationConfig model
-				destinationConfigParamsModel := new(eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig)
-				Expect(destinationConfigParamsModel).ToNot(BeNil())
-				destinationConfigParamsModel.URL = core.StringPtr("testString")
-				destinationConfigParamsModel.Verb = core.StringPtr("get")
-				destinationConfigParamsModel.CustomHeaders = make(map[string]string)
-				destinationConfigParamsModel.SensitiveHeaders = []string{"testString"}
-				Expect(destinationConfigParamsModel.URL).To(Equal(core.StringPtr("testString")))
-				Expect(destinationConfigParamsModel.Verb).To(Equal(core.StringPtr("get")))
-				Expect(destinationConfigParamsModel.CustomHeaders).To(Equal(make(map[string]string)))
-				Expect(destinationConfigParamsModel.SensitiveHeaders).To(Equal([]string{"testString"}))
+				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				Expect(destinationConfigOneOfModel).ToNot(BeNil())
+				destinationConfigOneOfModel.URL = core.StringPtr("testString")
+				destinationConfigOneOfModel.Verb = core.StringPtr("get")
+				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
+				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				Expect(destinationConfigOneOfModel.URL).To(Equal(core.StringPtr("testString")))
+				Expect(destinationConfigOneOfModel.Verb).To(Equal(core.StringPtr("get")))
+				Expect(destinationConfigOneOfModel.CustomHeaders).To(Equal(make(map[string]string)))
+				Expect(destinationConfigOneOfModel.SensitiveHeaders).To(Equal([]string{"testString"}))
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
 				Expect(destinationConfigModel).ToNot(BeNil())
-				destinationConfigModel.Params = destinationConfigParamsModel
-				Expect(destinationConfigModel.Params).To(Equal(destinationConfigParamsModel))
+				destinationConfigModel.Params = destinationConfigOneOfModel
+				Expect(destinationConfigModel.Params).To(Equal(destinationConfigOneOfModel))
 
 				// Construct an instance of the UpdateDestinationOptions model
 				instanceID := "testString"
@@ -7276,11 +7379,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(smSupdateAttributesToModel.Add).To(Equal([]string{"testString"}))
 				Expect(smSupdateAttributesToModel.Remove).To(Equal([]string{"testString"}))
 
+				// Construct an instance of the UpdateAttributesUnsubscribed model
+				updateAttributesUnsubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				Expect(updateAttributesUnsubscribedModel).ToNot(BeNil())
+				updateAttributesUnsubscribedModel.Remove = []string{"testString"}
+				Expect(updateAttributesUnsubscribedModel.Remove).To(Equal([]string{"testString"}))
+
 				// Construct an instance of the SubscriptionUpdateAttributesSmsUpdateAttributes model
 				subscriptionUpdateAttributesModel := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
 				Expect(subscriptionUpdateAttributesModel).ToNot(BeNil())
 				subscriptionUpdateAttributesModel.To = smSupdateAttributesToModel
+				subscriptionUpdateAttributesModel.Unsubscribed = updateAttributesUnsubscribedModel
 				Expect(subscriptionUpdateAttributesModel.To).To(Equal(smSupdateAttributesToModel))
+				Expect(subscriptionUpdateAttributesModel.Unsubscribed).To(Equal(updateAttributesUnsubscribedModel))
 
 				// Construct an instance of the UpdateSubscriptionOptions model
 				instanceID := "testString"
@@ -7300,76 +7411,76 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSubscriptionOptionsModel.Attributes).To(Equal(subscriptionUpdateAttributesModel))
 				Expect(updateSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewDestinationConfigParamsChromeDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfChromeDestinationConfig successfully`, func() {
 				apiKey := "testString"
 				websiteURL := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsChromeDestinationConfig(apiKey, websiteURL)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfChromeDestinationConfig(apiKey, websiteURL)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsFcmDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfFcmDestinationConfig successfully`, func() {
 				serverKey := "testString"
 				senderID := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsFcmDestinationConfig(serverKey, senderID)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfFcmDestinationConfig(serverKey, senderID)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsFirefoxDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsFirefoxDestinationConfig(websiteURL)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfFirefoxDestinationConfig(websiteURL)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsIBMCloudFunctionsDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig successfully`, func() {
 				url := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsIBMCloudFunctionsDestinationConfig(url)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(url)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsIosDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfIosDestinationConfig successfully`, func() {
 				certType := "p8"
 				isSandbox := false
-				_model, err := eventNotificationsService.NewDestinationConfigParamsIosDestinationConfig(certType, isSandbox)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfIosDestinationConfig(certType, isSandbox)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsMsTeamsDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfMsTeamsDestinationConfig successfully`, func() {
 				url := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsMsTeamsDestinationConfig(url)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfMsTeamsDestinationConfig(url)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsSafariDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfSafariDestinationConfig successfully`, func() {
 				certType := "p12"
 				password := "testString"
 				websiteURL := "testString"
 				websiteName := "testString"
 				urlFormatString := "testString"
 				websitePushID := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsSafariDestinationConfig(certType, password, websiteURL, websiteName, urlFormatString, websitePushID)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfSafariDestinationConfig(certType, password, websiteURL, websiteName, urlFormatString, websitePushID)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsSlackDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfSlackDestinationConfig successfully`, func() {
 				url := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsSlackDestinationConfig(url)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfSlackDestinationConfig(url)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigParamsWebhookDestinationConfig successfully`, func() {
+			It(`Invoke NewDestinationConfigOneOfWebhookDestinationConfig successfully`, func() {
 				url := "testString"
 				verb := "get"
-				_model, err := eventNotificationsService.NewDestinationConfigParamsWebhookDestinationConfig(url, verb)
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfWebhookDestinationConfig(url, verb)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSubscriptionCreateAttributesEmailAttributes successfully`, func() {
-				to := []string{"testString"}
+				invited := []string{"testString"}
 				addNotificationPayload := false
 				replyToMail := "testString"
 				replyToName := "testString"
 				fromName := "testString"
-				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesEmailAttributes(to, addNotificationPayload, replyToMail, replyToName, fromName)
+				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesEmailAttributes(invited, addNotificationPayload, replyToMail, replyToName, fromName)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -7392,18 +7503,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSubscriptionUpdateAttributesEmailUpdateAttributes successfully`, func() {
-				var to *eventnotificationsv1.EmailUpdateAttributesTo = nil
 				addNotificationPayload := false
 				replyToMail := "testString"
 				replyToName := "testString"
 				fromName := "testString"
-				_, err := eventNotificationsService.NewSubscriptionUpdateAttributesEmailUpdateAttributes(to, addNotificationPayload, replyToMail, replyToName, fromName)
-				Expect(err).ToNot(BeNil())
-			})
-			It(`Invoke NewSubscriptionUpdateAttributesSmsUpdateAttributes successfully`, func() {
-				var to *eventnotificationsv1.SmSupdateAttributesTo = nil
-				_, err := eventNotificationsService.NewSubscriptionUpdateAttributesSmsUpdateAttributes(to)
-				Expect(err).ToNot(BeNil())
+				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesEmailUpdateAttributes(addNotificationPayload, replyToMail, replyToName, fromName)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewSubscriptionUpdateAttributesSlackAttributes successfully`, func() {
 				attachmentColor := "testString"
