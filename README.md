@@ -136,8 +136,6 @@ SDK Methods to consume
 - [Push Destination APIs](#push-destination-apis)
 	- [Create Destination tag subscription](#create-destination-tag-subscription)
 	- [List Destination tag subscription](#list-destination-tag-subscription)
-	- [List Destination device tag subscriptions](#list-destination-device-tag-subscriptions)
-	- [Get Device Count](#get-device-count)
 	- [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
 	- [Create Subscription](#create-subscription)
@@ -146,8 +144,6 @@ SDK Methods to consume
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
 - [Send Notifications](#send-notifications)
-- [Get Device Count](#get-device-count)
-
 
 ## Source 
 
@@ -486,34 +482,6 @@ if err != nil {
 }
 ```
 
-### List Destination device tag subscriptions
-
-```go
-listTagsSubscriptionsDeviceOptions := eventNotificationsService.NewListTagsSubscriptionsDeviceOptions(
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-	<device-id>,		// Event notifications service device ID
-)
-
-tagsSubscriptionList, response, err := eventNotificationsService.ListTagsSubscriptionsDevice(listTagsSubscriptionsDeviceOptions)
-
-if err != nil {
-	panic(err)
-}
-```
-### Get Device Count
-
-```go
-getDeviceCountOptions := &eventnotificationsv1.GetDeviceCountOptions{
-	<instance-id>,		// Event notifications service instance GUID
-	<destination-id>,	// Event notifications service instance Destination ID
-}
-
-deviceCount, response, err := eventNotificationsService.GetDeviceCount(getDeviceCountOptions)
-if err != nil {
-	panic(err)
-}
-```
 ### Delete Destination device tag subscription
 
 ```go
