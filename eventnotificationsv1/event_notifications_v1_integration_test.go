@@ -1424,8 +1424,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Subscribed:             UpdateAttributessubscribedModel,
 				Unsubscribed:           UpdateAttributesUnSubscribedModel,
 			}
-			emailName := core.StringPtr("subscription_email")
-			emailDescription := core.StringPtr("Subscription for email")
+			emailName := core.StringPtr("subscription_email_update")
+			emailDescription := core.StringPtr("Subscription update for email")
 			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        emailName,
@@ -1443,8 +1443,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(emailName))
 			Expect(subscription.Description).To(Equal(emailDescription))
 
-			fcmName := core.StringPtr("subscription_FCM")
-			fcmDescription := core.StringPtr("Subscription for FCM")
+			fcmName := core.StringPtr("subscription_FCM_update")
+			fcmDescription := core.StringPtr("Subscription update for FCM")
 			updateFCMSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        fcmName,
@@ -1461,8 +1461,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(fcmName))
 			Expect(subscription.Description).To(Equal(fcmDescription))
 
-			slackName := core.StringPtr("subscription_FCM")
-			slackDescription := core.StringPtr("Subscription for FCM")
+			slackName := core.StringPtr("subscription_slack_update")
+			slackDescription := core.StringPtr("Subscription update for slack")
 			updateSlackSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        slackName,
@@ -1515,8 +1515,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(teamsName))
 			Expect(subscription.Description).To(Equal(teamsDescription))
 
-			cfName := core.StringPtr("subscription_MSTeams")
-			cfDescription := core.StringPtr("Subscription for MSTeams")
+			cfName := core.StringPtr("subscription_cloudfunctions")
+			cfDescription := core.StringPtr("Subscription for cloud functions")
 			updateCFSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        cfName,
@@ -1551,8 +1551,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(chromeName))
 			Expect(subscription.Description).To(Equal(chromeDescription))
 
-			fireName := core.StringPtr("subscription_Chrome")
-			fireDescription := core.StringPtr("Subscription for Chrome")
+			fireName := core.StringPtr("subscription_Firefox_update")
+			fireDescription := core.StringPtr("Subscription for Firefox")
 			updateFirefoxSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        fireName,

@@ -68,12 +68,6 @@ var (
 	subscriptionID            string
 	subscriptionID2           string
 	subscriptionID3           string
-	subscriptionID4           string
-	subscriptionID5           string
-	subscriptionID6           string
-	subscriptionID7           string
-	subscriptionID8           string
-	subscriptionID9           string
 	fcmServerKey              string
 	fcmSenderId               string
 )
@@ -946,8 +940,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Params: destinationConfigParamsfireModel,
 			}
 
-			fireName := "chrome_dest"
-			fireDescription := "This destination is for chrome"
+			fireName := "Firefox_destination"
+			fireDescription := "This destination is for Firefox"
 			fireUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(destinationID9),
@@ -1374,7 +1368,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID2} {
+			for _, ID := range []string{subscriptionID2, subscriptionID3} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -1430,7 +1424,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID5, destinationID7} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
