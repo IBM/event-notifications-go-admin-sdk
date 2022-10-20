@@ -66,9 +66,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID5            string
 		destinationID6            string
 		destinationID7            string
+		destinationID8            string
+		destinationID9            string
 		subscriptionID            string
 		subscriptionID2           string
 		subscriptionID3           string
+		subscriptionID4           string
+		subscriptionID5           string
+		subscriptionID6           string
+		subscriptionID7           string
+		subscriptionID8           string
+		subscriptionID9           string
 		fcmServerKey              string
 		fcmSenderId               string
 	)
@@ -536,7 +544,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID = *destinationResponse.ID
 
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			createFCMDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"FCM_destination",
 				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
@@ -547,13 +555,13 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				SenderID:  core.StringPtr(fcmSenderId),
 			}
 
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			fcmDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsFCMModel,
 			}
 
-			createDestinationOptions.SetConfig(destinationConfigModel)
+			createFCMDestinationOptions.SetConfig(fcmDestinationConfigModel)
 
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createFCMDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -563,7 +571,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID3 = *destinationResponse.ID
 
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			createSlackDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Slack_destination",
 				eventnotificationsv1.CreateDestinationOptionsTypeSlackConst,
@@ -573,12 +581,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				URL: core.StringPtr("https://api.slack.com/myslack"),
 			}
 
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsSlackModel,
 			}
 
-			createDestinationOptions.SetConfig(destinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			createSlackDestinationOptions.SetConfig(slackDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createSlackDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -588,7 +596,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID4 = *destinationResponse.ID
 
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			createSafariDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Safari_destination",
 				eventnotificationsv1.CreateDestinationOptionsTypePushSafariConst)
@@ -597,7 +605,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
-			createDestinationOptions.Certificate = certificatefile
+			createSafariDestinationOptions.Certificate = certificatefile
 
 			destinationConfigParamsSafariModel := &eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig{
 				CertType:        core.StringPtr("p12"),
@@ -608,12 +616,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				WebsitePushID:   core.StringPtr("web.net.mybluemix.ensafaripush"),
 			}
 
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			safariDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsSafariModel,
 			}
 
-			createDestinationOptions.SetConfig(destinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			createSafariDestinationOptions.SetConfig(safariDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createSafariDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -623,7 +631,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID5 = *destinationResponse.ID
 
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			createMSTeamsDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"MSTeams_destination",
 				eventnotificationsv1.CreateDestinationOptionsTypeMsteamsConst,
@@ -633,12 +641,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				URL: core.StringPtr("https://teams.microsoft.com"),
 			}
 
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsMSTeaMSModel,
 			}
 
-			createDestinationOptions.SetConfig(destinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			createMSTeamsDestinationOptions.SetConfig(msTeamsDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createMSTeamsDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -648,7 +656,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID6 = *destinationResponse.ID
 
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			cfCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Cloud_Functions_destination",
 				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
@@ -659,12 +667,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
 			}
 
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsCloudFunctionsModel,
 			}
 
-			createDestinationOptions.SetConfig(destinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
+			cfCreateDestinationOptions.SetConfig(cfdestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(cfCreateDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -673,6 +681,61 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID7 = *destinationResponse.ID
+
+			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Chrome_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushChromeConst,
+			)
+
+			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
+				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsChromeModel,
+			}
+
+			chromeCreateDestinationOptions.SetConfig(chromeDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(chromeCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID8 = *destinationResponse.ID
+
+			fireCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Firefox_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushFirefoxConst,
+			)
+
+			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsfireModel,
+			}
+
+			fireCreateDestinationOptions.SetConfig(fireDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(fireCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID9 = *destinationResponse.ID
 
 			//
 			// The following status codes aren't covered by tests.
@@ -788,6 +851,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`UpdateDestination(updateDestinationOptions *UpdateDestinationOptions)`, func() {
 
+			//webhook
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
 				URL:  core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
 				Verb: core.StringPtr("post"),
@@ -820,6 +884,62 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(name)))
 			Expect(destination.Description).To(Equal(core.StringPtr(description)))
 
+			//FCM
+			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
+				ServerKey: core.StringPtr(fcmServerKey),
+				SenderID:  core.StringPtr(fcmSenderId),
+			}
+
+			fcmDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsFCMModel,
+			}
+
+			fcmName := "fcm_destination_update"
+			fcmDescription := "This destination is for FCM"
+			fcmUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID3),
+				Name:        core.StringPtr(fcmName),
+				Description: core.StringPtr(fcmDescription),
+				Config:      fcmDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(fcmUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID3)))
+			Expect(destination.Name).To(Equal(core.StringPtr(fcmName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(fcmDescription)))
+
+			//slack
+			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
+				URL: core.StringPtr("https://api.slack.com/myslack"),
+			}
+
+			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackModel,
+			}
+
+			slackName := "slack_destination_update"
+			slackDescription := "This destination is for slack"
+			slackUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID4),
+				Name:        core.StringPtr(slackName),
+				Description: core.StringPtr(slackDescription),
+				Config:      slackDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(slackUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID4)))
+			Expect(destination.Name).To(Equal(core.StringPtr(slackName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(slackDescription)))
+
+			//safari
 			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig{
 				CertType:        core.StringPtr("p12"),
 				Password:        core.StringPtr("safari"),
@@ -833,13 +953,13 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Params: safaridestinationConfigParamsModel,
 			}
 
-			name = "Safari_dest"
-			description = "This destination is for Safari"
+			safariName := "Safari_dest"
+			safaridescription := "This destination is for Safari"
 			safariupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(destinationID5),
-				Name:        core.StringPtr(name),
-				Description: core.StringPtr(description),
+				Name:        core.StringPtr(safariName),
+				Description: core.StringPtr(safaridescription),
 				Config:      safaridestinationConfigModel,
 			}
 
@@ -856,9 +976,38 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(safariresponse.StatusCode).To(Equal(200))
 			Expect(safaridestination).ToNot(BeNil())
 			Expect(safaridestination.ID).To(Equal(core.StringPtr(destinationID5)))
-			Expect(safaridestination.Name).To(Equal(core.StringPtr(name)))
-			Expect(safaridestination.Description).To(Equal(core.StringPtr(description)))
+			Expect(safaridestination.Name).To(Equal(core.StringPtr(safariName)))
+			Expect(safaridestination.Description).To(Equal(core.StringPtr(safaridescription)))
 
+			//MSTeams
+
+			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
+				URL: core.StringPtr("https://teams.microsoft.com"),
+			}
+
+			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsMSTeaMSModel,
+			}
+
+			teamsName := "Msteams_dest"
+			teamsDescription := "This destination is for MSTeams"
+			msTeamsupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID6),
+				Name:        core.StringPtr(teamsName),
+				Description: core.StringPtr(teamsDescription),
+				Config:      msTeamsDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(msTeamsupdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID6)))
+			Expect(destination.Name).To(Equal(core.StringPtr(teamsName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(teamsDescription)))
+
+			//cloud functins
 			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
 				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
@@ -868,13 +1017,13 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Params: destinationConfigParamsCloudFunctionskModel,
 			}
 
-			name = "cf_dest"
-			description = "This destination is for cloud functions"
+			cfName := "cf_dest"
+			cfDescription := "This destination is for cloud functions"
 			cfupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(destinationID7),
-				Name:        core.StringPtr(name),
-				Description: core.StringPtr(description),
+				Name:        core.StringPtr(cfName),
+				Description: core.StringPtr(cfDescription),
 				Config:      cfdestinationConfigModel,
 			}
 
@@ -884,8 +1033,67 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(cfresponse.StatusCode).To(Equal(200))
 			Expect(cfdestination).ToNot(BeNil())
 			Expect(cfdestination.ID).To(Equal(core.StringPtr(destinationID7)))
-			Expect(cfdestination.Name).To(Equal(core.StringPtr(name)))
-			Expect(cfdestination.Description).To(Equal(core.StringPtr(description)))
+			Expect(cfdestination.Name).To(Equal(core.StringPtr(cfName)))
+			Expect(cfdestination.Description).To(Equal(core.StringPtr(cfDescription)))
+
+			//Chrome
+			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
+				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsChromeModel,
+			}
+
+			chromeName := "chrome_dest"
+			chromeDescription := "This destination is for chrome"
+			chromeupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID8),
+				Name:        core.StringPtr(chromeName),
+				Description: core.StringPtr(chromeDescription),
+				Config:      chromeDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(chromeupdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID8)))
+			Expect(destination.Name).To(Equal(core.StringPtr(chromeName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(chromeDescription)))
+
+			//Firefox
+			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsfireModel,
+			}
+
+			fireName := "chrome_dest"
+			fireDescription := "This destination is for chrome"
+			fireUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID9),
+				Name:        core.StringPtr(fireName),
+				Description: core.StringPtr(fireDescription),
+				Config:      fireDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(fireUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID9)))
+			Expect(destination.Name).To(Equal(core.StringPtr(fireName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(fireDescription)))
 
 			//
 			// The following status codes aren't covered by tests.
@@ -939,30 +1147,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
 			}
-			name = core.StringPtr("subscription_email")
-			description = core.StringPtr("Subscription for email")
-			createSubscriptionOptions = &eventnotificationsv1.CreateSubscriptionOptions{
+			emailName := core.StringPtr("subscription_email")
+			emailDescription := core.StringPtr("Subscription for email")
+			createEmailSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
-				Name:          name,
-				Description:   description,
+				Name:          emailName,
+				Description:   emailDescription,
 				DestinationID: core.StringPtr(destinationID2),
 				TopicID:       core.StringPtr(topicID),
 				Attributes:    subscriptionCreateAttributesEmailModel,
 			}
 
-			subscription, response, err = eventNotificationsService.CreateSubscription(createSubscriptionOptions)
+			subscription, response, err = eventNotificationsService.CreateSubscription(createEmailSubscriptionOptions)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			Expect(subscription.Attributes).ToNot(BeNil())
-			Expect(subscription.Description).To(Equal(description))
-			Expect(subscription.Name).To(Equal(name))
+			Expect(subscription.Description).To(Equal(emailDescription))
+			Expect(subscription.Name).To(Equal(emailName))
 			subscriptionID2 = *subscription.ID
 
 			Expect(subscriptionID2).ToNot(Equal(subscriptionID))
 
-			createSubscriptionOptions = &eventnotificationsv1.CreateSubscriptionOptions{
+			createFCMSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				Name:          core.StringPtr("FCM subscription"),
 				Description:   core.StringPtr("Subscription for the FCM"),
@@ -970,7 +1178,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				TopicID:       core.StringPtr(topicID3),
 			}
 
-			subscription, response, err = eventNotificationsService.CreateSubscription(createSubscriptionOptions)
+			subscription, response, err = eventNotificationsService.CreateSubscription(createFCMSubscriptionOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -978,6 +1186,108 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID3 = string(*subscription.ID)
+
+			createSlackSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Slack subscription"),
+				Description:   core.StringPtr("Subscription for the Slack"),
+				DestinationID: core.StringPtr(destinationID4),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSlackSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID4 = string(*subscription.ID)
+
+			createSafariSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Safari subscription"),
+				Description:   core.StringPtr("Subscription for the Safari"),
+				DestinationID: core.StringPtr(destinationID5),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSafariSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID5 = string(*subscription.ID)
+
+			createMSTeamsSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("MSTeams subscription"),
+				Description:   core.StringPtr("Subscription for MSTeams"),
+				DestinationID: core.StringPtr(destinationID6),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createMSTeamsSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID6 = string(*subscription.ID)
+
+			createCFSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("cloud functions subscription"),
+				Description:   core.StringPtr("Subscription for cloud functions"),
+				DestinationID: core.StringPtr(destinationID7),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createCFSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID7 = string(*subscription.ID)
+
+			createChromeSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("chrome subscription"),
+				Description:   core.StringPtr("Subscription for chrome"),
+				DestinationID: core.StringPtr(destinationID8),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createChromeSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID8 = string(*subscription.ID)
+
+			createFireSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Firefox subscription"),
+				Description:   core.StringPtr("Subscription for Firefox"),
+				DestinationID: core.StringPtr(destinationID9),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createFireSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID9 = string(*subscription.ID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1114,12 +1424,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Subscribed:             UpdateAttributessubscribedModel,
 				Unsubscribed:           UpdateAttributesUnSubscribedModel,
 			}
-			name = core.StringPtr("subscription_email")
-			description = core.StringPtr("Subscription for email")
+			emailName := core.StringPtr("subscription_email")
+			emailDescription := core.StringPtr("Subscription for email")
 			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
-				Name:        name,
-				Description: description,
+				Name:        emailName,
+				Description: emailDescription,
 				ID:          core.StringPtr(subscriptionID2),
 				Attributes:  subscriptionUpdateEmailAttributesModel,
 			}
@@ -1130,9 +1440,134 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscription).ToNot(BeNil())
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID2)))
-			Expect(subscription.Name).To(Equal(name))
-			Expect(subscription.Description).To(Equal(description))
+			Expect(subscription.Name).To(Equal(emailName))
+			Expect(subscription.Description).To(Equal(emailDescription))
 
+			fcmName := core.StringPtr("subscription_FCM")
+			fcmDescription := core.StringPtr("Subscription for FCM")
+			updateFCMSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        fcmName,
+				Description: fcmDescription,
+				ID:          core.StringPtr(subscriptionID3),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateFCMSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID3)))
+			Expect(subscription.Name).To(Equal(fcmName))
+			Expect(subscription.Description).To(Equal(fcmDescription))
+
+			slackName := core.StringPtr("subscription_FCM")
+			slackDescription := core.StringPtr("Subscription for FCM")
+			updateSlackSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        slackName,
+				Description: slackDescription,
+				ID:          core.StringPtr(subscriptionID4),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSlackSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID4)))
+			Expect(subscription.Name).To(Equal(slackName))
+			Expect(subscription.Description).To(Equal(slackDescription))
+
+			safariName := core.StringPtr("subscription_FCM")
+			safariDescription := core.StringPtr("Subscription for FCM")
+			updateSafariSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        safariName,
+				Description: safariDescription,
+				ID:          core.StringPtr(subscriptionID5),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSafariSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID5)))
+			Expect(subscription.Name).To(Equal(safariName))
+			Expect(subscription.Description).To(Equal(safariDescription))
+
+			teamsName := core.StringPtr("subscription_MSTeams")
+			teamsDescription := core.StringPtr("Subscription for MSTeams")
+			updateTeamsSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        teamsName,
+				Description: teamsDescription,
+				ID:          core.StringPtr(subscriptionID6),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateTeamsSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID6)))
+			Expect(subscription.Name).To(Equal(teamsName))
+			Expect(subscription.Description).To(Equal(teamsDescription))
+
+			cfName := core.StringPtr("subscription_MSTeams")
+			cfDescription := core.StringPtr("Subscription for MSTeams")
+			updateCFSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        cfName,
+				Description: cfDescription,
+				ID:          core.StringPtr(subscriptionID7),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateCFSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID7)))
+			Expect(subscription.Name).To(Equal(cfName))
+			Expect(subscription.Description).To(Equal(cfDescription))
+
+			chromeName := core.StringPtr("subscription_Chrome")
+			chromeDescription := core.StringPtr("Subscription for Chrome")
+			updateChromeSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        chromeName,
+				Description: chromeDescription,
+				ID:          core.StringPtr(subscriptionID8),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateChromeSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID8)))
+			Expect(subscription.Name).To(Equal(chromeName))
+			Expect(subscription.Description).To(Equal(chromeDescription))
+
+			fireName := core.StringPtr("subscription_Chrome")
+			fireDescription := core.StringPtr("Subscription for Chrome")
+			updateFirefoxSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        fireName,
+				Description: fireDescription,
+				ID:          core.StringPtr(subscriptionID9),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateFirefoxSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID9)))
+			Expect(subscription.Name).To(Equal(fireName))
+			Expect(subscription.Description).To(Equal(fireDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1313,7 +1748,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -1371,7 +1806,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
