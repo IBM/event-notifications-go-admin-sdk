@@ -58,10 +58,16 @@ var (
 	topicID                   string
 	destinationID             string
 	destinationID2            string
+	destinationID3            string
+	destinationID4            string
 	destinationID5            string
+	destinationID6            string
 	destinationID7            string
+	destinationID8            string
+	destinationID9            string
 	subscriptionID            string
 	subscriptionID2           string
+	subscriptionID3           string
 	fcmServerKey              string
 	fcmSenderId               string
 )
@@ -395,6 +401,75 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(destinationResponse).ToNot(BeNil())
 
+			//webhook
+			webHookDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr("https://gcm.com"),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"gcm_apikey": "api_key_value",
+				},
+				SensitiveHeaders: []string{"gcm_apikey"},
+			}
+
+			webHookDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: webHookDestinationConfigParamsModel,
+			}
+
+			name := "Webhook_destination"
+			typeVal := "webhook"
+			description := "Webhook Destination"
+			createWebHookDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(typeVal),
+				Description: core.StringPtr(description),
+				Config:      webHookDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createWebHookDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID3 = *destinationResponse.ID
+
+			//slack
+			createSlackDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Slack_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeSlackConst,
+			)
+
+			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
+				URL: core.StringPtr("https://api.slack.com/myslack"),
+			}
+
+			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackModel,
+			}
+
+			createSlackDestinationOptions.SetConfig(slackDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createSlackDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID4 = *destinationResponse.ID
+
 			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Safari_destination",
@@ -435,6 +510,36 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			destinationID5 = *destinationResponse.ID
 
+			//MSTeams
+			createMSTeamsDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"MSTeams_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeMsteamsConst,
+			)
+
+			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
+				URL: core.StringPtr("https://teams.microsoft.com"),
+			}
+
+			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsMSTeaMSModel,
+			}
+
+			createMSTeamsDestinationOptions.SetConfig(msTeamsDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createMSTeamsDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID6 = *destinationResponse.ID
+
 			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"Cloud_Functions_destination",
@@ -464,6 +569,71 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID7 = *destinationResponse.ID
+
+			//Chrome
+			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Chrome_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushChromeConst,
+			)
+
+			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
+				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsChromeModel,
+			}
+
+			chromeCreateDestinationOptions.SetConfig(chromeDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(chromeCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID8 = *destinationResponse.ID
+
+			//Firefox
+			fireCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Firefox_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePushFirefoxConst,
+			)
+
+			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsfireModel,
+			}
+
+			fireCreateDestinationOptions.SetConfig(fireDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(fireCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID9 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -523,6 +693,73 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println("\nUpdateDestination() result:")
 			// begin-update_destination
 
+			//webhook
+			webHookDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
+				Verb: core.StringPtr("post"),
+				CustomHeaders: map[string]string{
+					"authorization": "authorization key",
+				},
+				SensitiveHeaders: []string{"authorization"},
+			}
+
+			webHookDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: webHookDestinationConfigParamsModel,
+			}
+
+			webName := "Admin Webhook Compliance"
+			webDescription := "This destination is for creating admin Webhook to receive compliance notifications"
+			webUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID3),
+				Name:        core.StringPtr(webName),
+				Description: core.StringPtr(webDescription),
+				Config:      webHookDestinationConfigModel,
+			}
+
+			destination, response, err := eventNotificationsService.UpdateDestination(webUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//slack
+			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
+				URL: core.StringPtr("https://api.slack.com/myslack"),
+			}
+
+			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackModel,
+			}
+
+			slackName := "slack_destination_update"
+			slackDescription := "This destination is for slack"
+			slackUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID4),
+				Name:        core.StringPtr(slackName),
+				Description: core.StringPtr(slackDescription),
+				Config:      slackDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(slackUpdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//FCM
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
 				ServerKey: core.StringPtr(fcmServerKey),
 				SenderID:  core.StringPtr(fcmSenderId),
@@ -540,17 +777,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			updateDestinationOptions.SetDescription("This destination is for creating admin FCM to receive compliance notifications")
 			updateDestinationOptions.SetConfig(destinationConfigModel)
 
-			destination, response, err := eventNotificationsService.UpdateDestination(updateDestinationOptions)
+			destination, response, err = eventNotificationsService.UpdateDestination(updateDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
-			b, _ := json.MarshalIndent(destination, "", "  ")
+			b, _ = json.MarshalIndent(destination, "", "  ")
 			fmt.Println(string(b))
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
 
+			//Safari
 			safaridestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig{
 				CertType:        core.StringPtr("p12"),
 				Password:        core.StringPtr("safari"),
@@ -593,6 +831,39 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(safariresponse.StatusCode).To(Equal(200))
 			Expect(safaridestination).ToNot(BeNil())
 
+			//MSTeams
+
+			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
+				URL: core.StringPtr("https://teams.microsoft.com"),
+			}
+
+			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsMSTeaMSModel,
+			}
+
+			teamsName := "Msteams_dest"
+			teamsDescription := "This destination is for MSTeams"
+			msTeamsupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID6),
+				Name:        core.StringPtr(teamsName),
+				Description: core.StringPtr(teamsDescription),
+				Config:      msTeamsDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(msTeamsupdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//cloud functions
 			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com"),
 				APIKey: core.StringPtr("amZzYVDnB73QYXWz0SGyR_PQEoZCen"),
@@ -612,19 +883,86 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Config:      cfdestinationConfigModel,
 			}
 
-			cfdestination, cfresponse, err := eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
+			destination, response, err = eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
 
 			if err != nil {
 				panic(err)
 			}
-			b, _ = json.MarshalIndent(cfdestination, "", "  ")
+			b, _ = json.MarshalIndent(destination, "", "  ")
 			fmt.Println(string(b))
 
-			// end-update_destination
 			Expect(err).To(BeNil())
-			Expect(cfresponse.StatusCode).To(Equal(200))
-			Expect(cfdestination).ToNot(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
 
+			//Chrome
+			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
+				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsChromeModel,
+			}
+
+			chromeName := "chrome_dest"
+			chromeDescription := "This destination is for chrome"
+			chromeupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID8),
+				Name:        core.StringPtr(chromeName),
+				Description: core.StringPtr(chromeDescription),
+				Config:      chromeDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(chromeupdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//Firefox
+			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
+				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
+				PublicKey:  core.StringPtr("ksddkasjdaksd"),
+				PreProd:    core.BoolPtr(false),
+			}
+
+			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsfireModel,
+			}
+
+			fireName := "Firefox_destination"
+			fireDescription := "This destination is for Firefox"
+			fireUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID9),
+				Name:        core.StringPtr(fireName),
+				Description: core.StringPtr(fireDescription),
+				Config:      fireDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(fireUpdateDestinationOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			// end-update_destination
 		})
 
 		It(`CreateSubscription request example`, func() {
@@ -632,7 +970,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			subscriptionName := "FCM subscription"
 			// begin-create_subscription
-
+			//FCM
 			createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
 				instanceID,
 				subscriptionName,
@@ -653,6 +991,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 
+			//Email
 			subscriptionCreateAttributesEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes{
 				Invited:                []string{"tester1@gmail.com", "tester3@ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
@@ -675,7 +1014,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
-			// end-create_subscription
+
 			subscriptionID2 = string(*subscription.ID)
 			b, _ = json.MarshalIndent(subscription, "", "  ")
 			fmt.Println(string(b))
@@ -683,6 +1022,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
+
+			webSubscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
+				SigningEnabled: core.BoolPtr(false),
+			}
+
+			webName := core.StringPtr("subscription_web")
+			webDescription := core.StringPtr("Subscription for web")
+			createWebSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          webName,
+				Description:   webDescription,
+				DestinationID: core.StringPtr(destinationID3),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    webSubscriptionCreateAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createWebSubscriptionOptions)
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID3 = *subscription.ID
+
+			// end-create_subscription
 
 		})
 		It(`ListSubscriptions request example`, func() {
@@ -786,7 +1152,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			if err != nil {
 				panic(err)
 			}
-			// end-update_subscription
 
 			b, _ = json.MarshalIndent(subscription, "", "  ")
 			fmt.Println(string(b))
@@ -797,6 +1162,38 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID2)))
 			Expect(subscription.Name).To(Equal(name))
 			Expect(subscription.Description).To(Equal(description))
+
+			webSubscriptionUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
+				SigningEnabled: core.BoolPtr(true),
+			}
+
+			webName := core.StringPtr("Webhook_sub_updated")
+			webDescription := core.StringPtr("Update Webhook subscription")
+			webUpdateSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionID3),
+				Name:        webName,
+				Description: webDescription,
+				Attributes:  webSubscriptionUpdateAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(webUpdateSubscriptionOptions)
+
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID3)))
+			Expect(subscription.Name).To(Equal(webName))
+			Expect(subscription.Description).To(Equal(webDescription))
+
+			// end-update_subscription
 
 		})
 		It(`SendNotifications request example`, func() {
@@ -971,7 +1368,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID2} {
+			for _, ID := range []string{subscriptionID2, subscriptionID3} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -1027,7 +1424,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID5, destinationID7} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
