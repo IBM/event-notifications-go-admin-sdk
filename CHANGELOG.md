@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.5...v0.1.6) (2022-10-31)
+
+
+### Bug Fixes
+
+* sms opt in changes ([402d400](https://github.com/IBM/event-notifications-go-admin-sdk/commit/402d400950dec650e63279e6ef334398e798dcda))
+
 ## [0.1.5](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.4...v0.1.5) (2022-08-30)
 
 
