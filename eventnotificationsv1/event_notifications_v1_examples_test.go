@@ -57,6 +57,7 @@ var (
 	sourceID                  string = ""
 	topicID                   string
 	destinationID             string
+	destinationID1            string
 	destinationID2            string
 	destinationID3            string
 	destinationID4            string
@@ -66,6 +67,7 @@ var (
 	destinationID8            string
 	destinationID9            string
 	subscriptionID            string
+	subscriptionID1           string
 	subscriptionID2           string
 	subscriptionID3           string
 	fcmServerKey              string
@@ -661,7 +663,15 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			for _, ID := range destinationList.Destinations {
 				if destinationID != *ID.ID && *ID.Type == "smtp_ibm" {
 					destinationID2 = *ID.ID
-					break
+					if destinationID1 != "" {
+						break
+					}
+				}
+				if *ID.Type == "sms_ibm" {
+					destinationID1 = *ID.ID
+					if destinationID2 != "" {
+						break
+					}
 				}
 			}
 
@@ -990,6 +1000,31 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
+
+			//SMS
+			subscriptionCreateAttributesSMSModel := &eventnotificationsv1.SubscriptionCreateAttributesSmsAttributes{
+				Invited: []string{"+12064563059", "+12267054625"},
+			}
+			smsName := core.StringPtr("subscription_sms")
+			smsDescription := core.StringPtr("Subscription for sms")
+			createSMSSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          smsName,
+				Description:   smsDescription,
+				DestinationID: core.StringPtr(destinationID1),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesSMSModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSMSSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.Attributes).ToNot(BeNil())
+			Expect(subscription.Description).To(Equal(smsDescription))
+			Expect(subscription.Name).To(Equal(smsName))
+			subscriptionID1 = *subscription.ID
 
 			//Email
 			subscriptionCreateAttributesEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes{
