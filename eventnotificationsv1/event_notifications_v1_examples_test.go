@@ -1154,6 +1154,44 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscription).ToNot(BeNil())
 
+			UpdateAttributesSMSInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
+			UpdateAttributesSMSInvitedModel.Add = []string{"+12064512559"}
+
+			UpdateAttributesSMSSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
+			UpdateAttributesSMSSubscribedModel.Remove = []string{"+12064512559"}
+
+			UpdateAttributesSMSUnSubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+			UpdateAttributesSMSUnSubscribedModel.Remove = []string{"+12064512559"}
+
+			subscriptionUpdateSMSAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes{
+				Invited:      UpdateAttributesSMSInvitedModel,
+				Subscribed:   UpdateAttributesSMSSubscribedModel,
+				Unsubscribed: UpdateAttributesSMSUnSubscribedModel,
+			}
+			smsName := core.StringPtr("subscription_sms_update")
+			smsDescription := core.StringPtr("Subscription update for sms")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        smsName,
+				Description: smsDescription,
+				ID:          core.StringPtr(subscriptionID1),
+				Attributes:  subscriptionUpdateSMSAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID1)))
+			Expect(subscription.Name).To(Equal(smsName))
+			Expect(subscription.Description).To(Equal(smsDescription))
+
 			UpdateAttributesInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
 			UpdateAttributesInvitedModel.Add = []string{"tester4@ibm.com"}
 
@@ -1403,7 +1441,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID2, subscriptionID3} {
+			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
