@@ -1087,8 +1087,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Params: destinationConfigParamsfireModel,
 			}
 
-			fireName := "chrome_dest"
-			fireDescription := "This destination is for chrome"
+			fireName := "fire_dest"
+			fireDescription := "This destination is for firefox"
 			fireUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(destinationID9),
