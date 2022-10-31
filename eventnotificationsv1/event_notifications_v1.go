@@ -4136,23 +4136,23 @@ func UnmarshalRulesGet(m map[string]json.RawMessage, result interface{}) (err er
 	return
 }
 
-// SmAttributesItems : The sms attributes.
-type SmAttributesItems struct {
+// SmsAttributesItems : The sms attributes.
+type SmsAttributesItems struct {
 	// Phone number.
 	PhoneNumber *string `json:"phone_number,omitempty"`
 
 	// last updated time.
-	Time *strfmt.DateTime `json:"time,omitempty"`
+	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty"`
 }
 
-// UnmarshalSmAttributesItems unmarshals an instance of SmAttributesItems from the specified map of raw messages.
-func UnmarshalSmAttributesItems(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(SmAttributesItems)
+// UnmarshalSmsAttributesItems unmarshals an instance of SmsAttributesItems from the specified map of raw messages.
+func UnmarshalSmsAttributesItems(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SmsAttributesItems)
 	err = core.UnmarshalPrimitive(m, "phone_number", &obj.PhoneNumber)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "time", &obj.Time)
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
 	if err != nil {
 		return
 	}
@@ -4160,23 +4160,30 @@ func UnmarshalSmAttributesItems(m map[string]json.RawMessage, result interface{}
 	return
 }
 
-// SmSupdateAttributesTo : The phone number to send the SMS to.
-type SmSupdateAttributesTo struct {
-	// array to add new items.
-	Add []string `json:"add,omitempty"`
+// SmsInviteAttributesItems : The sms attributes.
+type SmsInviteAttributesItems struct {
+	// Phone number.
+	PhoneNumber *string `json:"phone_number,omitempty"`
 
-	// array to add new items.
-	Remove []string `json:"remove,omitempty"`
+	// last updated time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// time of expiration.
+	ExpiresAt *strfmt.DateTime `json:"expires_at,omitempty"`
 }
 
-// UnmarshalSmSupdateAttributesTo unmarshals an instance of SmSupdateAttributesTo from the specified map of raw messages.
-func UnmarshalSmSupdateAttributesTo(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(SmSupdateAttributesTo)
-	err = core.UnmarshalPrimitive(m, "add", &obj.Add)
+// UnmarshalSmsInviteAttributesItems unmarshals an instance of SmsInviteAttributesItems from the specified map of raw messages.
+func UnmarshalSmsInviteAttributesItems(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SmsInviteAttributesItems)
+	err = core.UnmarshalPrimitive(m, "phone_number", &obj.PhoneNumber)
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalPrimitive(m, "remove", &obj.Remove)
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "expires_at", &obj.ExpiresAt)
 	if err != nil {
 		return
 	}
@@ -4773,16 +4780,13 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesSlackAttributesResponse
 type SubscriptionAttributes struct {
 	// The subscribed list.
-	To []SmAttributesItems `json:"to,omitempty"`
+	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
 
 	// The unsubscribe list.
-	Unsubscribed []SmAttributesItems `json:"unsubscribed,omitempty"`
+	Unsubscribed []SmsAttributesItems `json:"unsubscribed,omitempty"`
 
 	// The email id string.
-	Invited []SmAttributesItems `json:"invited,omitempty"`
-
-	// The unsubscribe list.
-	Subscribed []EmailAttributesResponseSubscribedUnsubscribedItems `json:"subscribed,omitempty"`
+	Invited []SmsInviteAttributesItems `json:"invited,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
@@ -4852,17 +4856,14 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 			m[k] = v
 		}
 	}
-	if o.To != nil {
-		m["to"] = o.To
+	if o.Subscribed != nil {
+		m["subscribed"] = o.Subscribed
 	}
 	if o.Unsubscribed != nil {
 		m["unsubscribed"] = o.Unsubscribed
 	}
 	if o.Invited != nil {
 		m["invited"] = o.Invited
-	}
-	if o.Subscribed != nil {
-		m["subscribed"] = o.Subscribed
 	}
 	if o.AddNotificationPayload != nil {
 		m["add_notification_payload"] = o.AddNotificationPayload
@@ -4889,26 +4890,21 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 // UnmarshalSubscriptionAttributes unmarshals an instance of SubscriptionAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributes)
-	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalSmAttributesItems)
-	if err != nil {
-		return
-	}
-	delete(m, "to")
-	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSmAttributesItems)
-	if err != nil {
-		return
-	}
-	delete(m, "unsubscribed")
-	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSmAttributesItems)
-	if err != nil {
-		return
-	}
-	delete(m, "invited")
-	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalEmailAttributesResponseSubscribedUnsubscribedItems)
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalSmsAttributesItems)
 	if err != nil {
 		return
 	}
 	delete(m, "subscribed")
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSmsAttributesItems)
+	if err != nil {
+		return
+	}
+	delete(m, "unsubscribed")
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSmsInviteAttributesItems)
+	if err != nil {
+		return
+	}
+	delete(m, "invited")
 	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
 	if err != nil {
 		return
@@ -4961,9 +4957,6 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesSlackAttributes
 type SubscriptionCreateAttributes struct {
 	// The sms id string.
-	To []string `json:"to,omitempty"`
-
-	// The email id string.
 	Invited []string `json:"invited,omitempty"`
 
 	// Whether to add the notification payload to the email.
@@ -4996,10 +4989,6 @@ type SubscriptionCreateAttributesIntf interface {
 // UnmarshalSubscriptionCreateAttributes unmarshals an instance of SubscriptionCreateAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionCreateAttributes)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
-	if err != nil {
-		return
-	}
 	err = core.UnmarshalPrimitive(m, "invited", &obj.Invited)
 	if err != nil {
 		return
@@ -5204,14 +5193,14 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // - SubscriptionUpdateAttributesWebhookAttributes
 // - SubscriptionUpdateAttributesSlackAttributes
 type SubscriptionUpdateAttributes struct {
-	// The phone number to send the SMS to.
-	To *SmSupdateAttributesTo `json:"to,omitempty"`
-
-	// The phone number or Email id to send the SMS/email to.
-	Unsubscribed *UpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
-
 	// The email ids or phone numbers.
 	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
+
+	// The email ids or phone numbers.
+	Subscribed *UpdateAttributesSubscribed `json:"subscribed,omitempty"`
+
+	// The email ids or phone numbers.
+	Unsubscribed *UpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
@@ -5224,9 +5213,6 @@ type SubscriptionUpdateAttributes struct {
 
 	// The email name of From.
 	FromName *string `json:"from_name,omitempty"`
-
-	// The email ids or phone number.
-	Subscribed *UpdateAttributesSubscribed `json:"subscribed,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -5246,15 +5232,15 @@ type SubscriptionUpdateAttributesIntf interface {
 // UnmarshalSubscriptionUpdateAttributes unmarshals an instance of SubscriptionUpdateAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionUpdateAttributes)
-	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalSmSupdateAttributesTo)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalUpdateAttributesInvited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalUpdateAttributesSubscribed)
 	if err != nil {
 		return
 	}
 	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalUpdateAttributesUnsubscribed)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalUpdateAttributesInvited)
 	if err != nil {
 		return
 	}
@@ -5271,10 +5257,6 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalUpdateAttributesSubscribed)
 	if err != nil {
 		return
 	}
@@ -5645,10 +5627,10 @@ func UnmarshalTopicsListItem(m map[string]json.RawMessage, result interface{}) (
 
 // UpdateAttributesInvited : The email ids or phone numbers.
 type UpdateAttributesInvited struct {
-	// The email ids or phone numbers.
+	// The email ids or phone numbers to be invited.
 	Add []string `json:"add,omitempty"`
 
-	// The email ids for removal.
+	// The email ids or phone numbers for removal.
 	Remove []string `json:"remove,omitempty"`
 }
 
@@ -5667,9 +5649,9 @@ func UnmarshalUpdateAttributesInvited(m map[string]json.RawMessage, result inter
 	return
 }
 
-// UpdateAttributesSubscribed : The email ids or phone number.
+// UpdateAttributesSubscribed : The email ids or phone numbers.
 type UpdateAttributesSubscribed struct {
-	// The email ids or phone number unsubscribed.
+	// The email ids or phone numbers to be unsubscribed.
 	Remove []string `json:"remove,omitempty"`
 }
 
@@ -5684,9 +5666,9 @@ func UnmarshalUpdateAttributesSubscribed(m map[string]json.RawMessage, result in
 	return
 }
 
-// UpdateAttributesUnsubscribed : The phone number or Email id to send the SMS/email to.
+// UpdateAttributesUnsubscribed : The email ids or phone numbers.
 type UpdateAttributesUnsubscribed struct {
-	// array to add new items.
+	// The email ids or phone numbers to be unsubscribed.
 	Remove []string `json:"remove,omitempty"`
 }
 
@@ -6623,13 +6605,13 @@ func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.Ra
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesSmsAttributesResponse struct {
 	// The subscribed list.
-	To []SmAttributesItems `json:"to" validate:"required"`
+	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
 
 	// The unsubscribe list.
-	Unsubscribed []SmAttributesItems `json:"unsubscribed,omitempty"`
+	Unsubscribed []SmsAttributesItems `json:"unsubscribed,omitempty"`
 
 	// The email id string.
-	Invited []SmAttributesItems `json:"invited,omitempty"`
+	Invited []SmsInviteAttributesItems `json:"invited,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
@@ -6673,8 +6655,8 @@ func (o *SubscriptionAttributesSmsAttributesResponse) MarshalJSON() (buffer []by
 			m[k] = v
 		}
 	}
-	if o.To != nil {
-		m["to"] = o.To
+	if o.Subscribed != nil {
+		m["subscribed"] = o.Subscribed
 	}
 	if o.Unsubscribed != nil {
 		m["unsubscribed"] = o.Unsubscribed
@@ -6689,17 +6671,17 @@ func (o *SubscriptionAttributesSmsAttributesResponse) MarshalJSON() (buffer []by
 // UnmarshalSubscriptionAttributesSmsAttributesResponse unmarshals an instance of SubscriptionAttributesSmsAttributesResponse from the specified map of raw messages.
 func UnmarshalSubscriptionAttributesSmsAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributesSmsAttributesResponse)
-	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalSmAttributesItems)
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalSmsAttributesItems)
 	if err != nil {
 		return
 	}
-	delete(m, "to")
-	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSmAttributesItems)
+	delete(m, "subscribed")
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSmsAttributesItems)
 	if err != nil {
 		return
 	}
 	delete(m, "unsubscribed")
-	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSmAttributesItems)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSmsInviteAttributesItems)
 	if err != nil {
 		return
 	}
@@ -6963,13 +6945,13 @@ func UnmarshalSubscriptionCreateAttributesFcmAttributes(m map[string]json.RawMes
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesSmsAttributes struct {
 	// The sms id string.
-	To []string `json:"to" validate:"required"`
+	Invited []string `json:"invited" validate:"required"`
 }
 
 // NewSubscriptionCreateAttributesSmsAttributes : Instantiate SubscriptionCreateAttributesSmsAttributes (Generic Model Constructor)
-func (*EventNotificationsV1) NewSubscriptionCreateAttributesSmsAttributes(to []string) (_model *SubscriptionCreateAttributesSmsAttributes, err error) {
+func (*EventNotificationsV1) NewSubscriptionCreateAttributesSmsAttributes(invited []string) (_model *SubscriptionCreateAttributesSmsAttributes, err error) {
 	_model = &SubscriptionCreateAttributesSmsAttributes{
-		To: to,
+		Invited: invited,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -6982,7 +6964,7 @@ func (*SubscriptionCreateAttributesSmsAttributes) isaSubscriptionCreateAttribute
 // UnmarshalSubscriptionCreateAttributesSmsAttributes unmarshals an instance of SubscriptionCreateAttributesSmsAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionCreateAttributesSmsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionCreateAttributesSmsAttributes)
-	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+	err = core.UnmarshalPrimitive(m, "invited", &obj.Invited)
 	if err != nil {
 		return
 	}
@@ -7070,10 +7052,10 @@ type SubscriptionUpdateAttributesEmailUpdateAttributes struct {
 	// The email name of From.
 	FromName *string `json:"from_name" validate:"required"`
 
-	// The email ids or phone number.
+	// The email ids or phone numbers.
 	Subscribed *UpdateAttributesSubscribed `json:"subscribed,omitempty"`
 
-	// The phone number or Email id to send the SMS/email to.
+	// The email ids or phone numbers.
 	Unsubscribed *UpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
 }
 
@@ -7131,10 +7113,13 @@ func UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes(m map[string]jso
 // SubscriptionUpdateAttributesSmsUpdateAttributes : SMS attributes object.
 // This model "extends" SubscriptionUpdateAttributes
 type SubscriptionUpdateAttributesSmsUpdateAttributes struct {
-	// The phone number to send the SMS to.
-	To *SmSupdateAttributesTo `json:"to,omitempty"`
+	// The email ids or phone numbers.
+	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
 
-	// The phone number or Email id to send the SMS/email to.
+	// The email ids or phone numbers.
+	Subscribed *UpdateAttributesSubscribed `json:"subscribed,omitempty"`
+
+	// The email ids or phone numbers.
 	Unsubscribed *UpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
 }
 
@@ -7145,7 +7130,11 @@ func (*SubscriptionUpdateAttributesSmsUpdateAttributes) isaSubscriptionUpdateAtt
 // UnmarshalSubscriptionUpdateAttributesSmsUpdateAttributes unmarshals an instance of SubscriptionUpdateAttributesSmsUpdateAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionUpdateAttributesSmsUpdateAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionUpdateAttributesSmsUpdateAttributes)
-	err = core.UnmarshalModel(m, "to", &obj.To, UnmarshalSmSupdateAttributesTo)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalUpdateAttributesInvited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalUpdateAttributesSubscribed)
 	if err != nil {
 		return
 	}

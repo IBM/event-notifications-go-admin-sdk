@@ -60,6 +60,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		topicID2                  string
 		topicID3                  string
 		destinationID             string
+		destinationID1            string
 		destinationID2            string
 		destinationID3            string
 		destinationID4            string
@@ -69,6 +70,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID8            string
 		destinationID9            string
 		subscriptionID            string
+		subscriptionID1           string
 		subscriptionID2           string
 		subscriptionID3           string
 		subscriptionID4           string
@@ -804,7 +806,15 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			for _, ID := range destinationList.Destinations {
 				if destinationID != *ID.ID && *ID.Type == "smtp_ibm" {
 					destinationID2 = *ID.ID
-					break
+					if destinationID1 != "" {
+						break
+					}
+				}
+				if *ID.Type == "sms_ibm" {
+					destinationID1 = *ID.ID
+					if destinationID2 != "" {
+						break
+					}
 				}
 			}
 
@@ -1077,8 +1087,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Params: destinationConfigParamsfireModel,
 			}
 
-			fireName := "chrome_dest"
-			fireDescription := "This destination is for chrome"
+			fireName := "fire_dest"
+			fireDescription := "This destination is for firefox"
 			fireUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(destinationID9),
@@ -1139,6 +1149,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Description).To(Equal(description))
 			Expect(subscription.Name).To(Equal(name))
 			subscriptionID = *subscription.ID
+
+			subscriptionCreateAttributesSMSModel := &eventnotificationsv1.SubscriptionCreateAttributesSmsAttributes{
+				Invited: []string{"+12064563059", "+12267054625"},
+			}
+			smsName := core.StringPtr("subscription_sms")
+			smsDescription := core.StringPtr("Subscription for sms")
+			createSMSSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          smsName,
+				Description:   smsDescription,
+				DestinationID: core.StringPtr(destinationID1),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesSMSModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSMSSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.Attributes).ToNot(BeNil())
+			Expect(subscription.Description).To(Equal(smsDescription))
+			Expect(subscription.Name).To(Equal(smsName))
+			subscriptionID1 = *subscription.ID
 
 			subscriptionCreateAttributesEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes{
 				Invited:                []string{"tester1@gmail.com", "tester3@ibm.com"},
@@ -1405,6 +1439,39 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID)))
 			Expect(subscription.Name).To(Equal(name))
 			Expect(subscription.Description).To(Equal(description))
+
+			UpdateAttributesSMSInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
+			UpdateAttributesSMSInvitedModel.Add = []string{"+12064512559"}
+
+			UpdateAttributesSMSSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
+			UpdateAttributesSMSSubscribedModel.Remove = []string{"+12064512559"}
+
+			UpdateAttributesSMSUnSubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+			UpdateAttributesSMSUnSubscribedModel.Remove = []string{"+12064512559"}
+
+			subscriptionUpdateSMSAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes{
+				Invited:      UpdateAttributesSMSInvitedModel,
+				Subscribed:   UpdateAttributesSMSSubscribedModel,
+				Unsubscribed: UpdateAttributesSMSUnSubscribedModel,
+			}
+			smsName := core.StringPtr("subscription_sms_update")
+			smsDescription := core.StringPtr("Subscription update for sms")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        smsName,
+				Description: smsDescription,
+				ID:          core.StringPtr(subscriptionID1),
+				Attributes:  subscriptionUpdateSMSAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID1)))
+			Expect(subscription.Name).To(Equal(smsName))
+			Expect(subscription.Description).To(Equal(smsDescription))
 
 			UpdateAttributesInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
 			UpdateAttributesInvitedModel.Add = []string{"tester4@ibm.com"}
@@ -1748,7 +1815,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
