@@ -1992,6 +1992,7 @@ type CreateDestinationOptions struct {
 const (
 	CreateDestinationOptionsTypeIbmcfConst       = "ibmcf"
 	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
+	CreateDestinationOptionsTypePagerdutyConst   = "pagerduty"
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
 	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
@@ -2595,7 +2596,7 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2612,10 +2613,11 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
 const (
 	DestinationTypeIbmcfConst       = "ibmcf"
 	DestinationTypeMsteamsConst     = "msteams"
+	DestinationTypePagerdutyConst   = "pagerduty"
 	DestinationTypePushAndroidConst = "push_android"
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypePushSafariConst  = "push_safari"
@@ -2700,6 +2702,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfSafariDestinationConfig
 // - DestinationConfigOneOfMsTeamsDestinationConfig
 // - DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
+// - DestinationConfigOneOfPagerDutyDestinationConfig
 type DestinationConfigOneOf struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -2757,6 +2760,9 @@ type DestinationConfigOneOf struct {
 
 	// Websire url.
 	WebsitePushID *string `json:"website_push_id,omitempty"`
+
+	// Routing Key for the pagerduty account.
+	RoutingKey *string `json:"routing_key,omitempty"`
 }
 
 // Constants associated with the DestinationConfigOneOf.Verb property.
@@ -2850,6 +2856,10 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "website_push_id", &obj.WebsitePushID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "routing_key", &obj.RoutingKey)
 	if err != nil {
 		return
 	}
@@ -2962,6 +2972,7 @@ type DestinationListItem struct {
 const (
 	DestinationListItemTypeIbmcfConst       = "ibmcf"
 	DestinationListItemTypeMsteamsConst     = "msteams"
+	DestinationListItemTypePagerdutyConst   = "pagerduty"
 	DestinationListItemTypePushAndroidConst = "push_android"
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypePushSafariConst  = "push_safari"
@@ -3032,6 +3043,7 @@ type DestinationResponse struct {
 const (
 	DestinationResponseTypeIbmcfConst       = "ibmcf"
 	DestinationResponseTypeMsteamsConst     = "msteams"
+	DestinationResponseTypePagerdutyConst   = "pagerduty"
 	DestinationResponseTypePushAndroidConst = "push_android"
 	DestinationResponseTypePushChromeConst  = "push_chrome"
 	DestinationResponseTypePushFirefoxConst = "push_firefox"
@@ -4619,6 +4631,7 @@ type Subscription struct {
 const (
 	SubscriptionDestinationTypeIbmcfConst       = "ibmcf"
 	SubscriptionDestinationTypeMsteamsConst     = "msteams"
+	SubscriptionDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionDestinationTypePushAndroidConst = "push_android"
 	SubscriptionDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionDestinationTypePushFirefoxConst = "push_firefox"
@@ -5132,6 +5145,7 @@ type SubscriptionListItem struct {
 const (
 	SubscriptionListItemDestinationTypeIbmcfConst       = "ibmcf"
 	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
+	SubscriptionListItemDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
 	SubscriptionListItemDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionListItemDestinationTypePushFirefoxConst = "push_firefox"
@@ -6283,6 +6297,45 @@ func (*DestinationConfigOneOfMsTeamsDestinationConfig) isaDestinationConfigOneOf
 func UnmarshalDestinationConfigOneOfMsTeamsDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(DestinationConfigOneOfMsTeamsDestinationConfig)
 	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigOneOfPagerDutyDestinationConfig : Payload describing a PagerDuty destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfPagerDutyDestinationConfig struct {
+	// API Key for the pagerduty account.
+	APIKey *string `json:"api_key" validate:"required"`
+
+	// Routing Key for the pagerduty account.
+	RoutingKey *string `json:"routing_key" validate:"required"`
+}
+
+// NewDestinationConfigOneOfPagerDutyDestinationConfig : Instantiate DestinationConfigOneOfPagerDutyDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfPagerDutyDestinationConfig(apiKey string, routingKey string) (_model *DestinationConfigOneOfPagerDutyDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfPagerDutyDestinationConfig{
+		APIKey:     core.StringPtr(apiKey),
+		RoutingKey: core.StringPtr(routingKey),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfPagerDutyDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfPagerDutyDestinationConfig unmarshals an instance of DestinationConfigOneOfPagerDutyDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfPagerDutyDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfPagerDutyDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "api_key", &obj.APIKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "routing_key", &obj.RoutingKey)
 	if err != nil {
 		return
 	}

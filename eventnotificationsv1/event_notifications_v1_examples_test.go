@@ -66,6 +66,7 @@ var (
 	destinationID7            string
 	destinationID8            string
 	destinationID9            string
+	destinationID10           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -636,6 +637,36 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID9 = *destinationResponse.ID
+
+			pagerDutyCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"PagerDuty_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePagerdutyConst,
+			)
+
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("usedfsdfsdfsdfsdfs"),
+				RoutingKey: core.StringPtr("2e332432423423w3rwfewf8"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pagerDutyCreateDestinationOptions.SetConfig(pagerDutyDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(pagerDutyCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID10 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -972,6 +1003,35 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
 
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("udsfsdfsdfsdfqwesdfsdfsdfs"),
+				RoutingKey: core.StringPtr("sdfwer34r345343453534534534"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pdName := "Pagerduty_dest_update"
+			pdDescription := "This destination update is for Pagerduty"
+			pagerDutyUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID10),
+				Name:        core.StringPtr(pdName),
+				Description: core.StringPtr(pdDescription),
+				Config:      pagerDutyDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(pagerDutyUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
 			// end-update_destination
 		})
 
@@ -1497,7 +1557,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

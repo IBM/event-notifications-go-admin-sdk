@@ -7483,6 +7483,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigOneOfPagerDutyDestinationConfig successfully`, func() {
+				apiKey := "testString"
+				routingKey := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfPagerDutyDestinationConfig(apiKey, routingKey)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfSafariDestinationConfig successfully`, func() {
 				certType := "p12"
 				password := "testString"
