@@ -6719,6 +6719,861 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
+	Describe(`ListIntegrations(listIntegrationsOptions *ListIntegrationsOptions) - Operation response error`, func() {
+		listIntegrationsPath := "/v1/instances/testString/integrations"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listIntegrationsPath))
+					Expect(req.Method).To(Equal("GET"))
+					// TODO: Add check for offset query parameter
+					// TODO: Add check for limit query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ListIntegrations with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListIntegrationsOptions model
+				listIntegrationsOptionsModel := new(eventnotificationsv1.ListIntegrationsOptions)
+				listIntegrationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listIntegrationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listIntegrationsOptionsModel.Search = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListIntegrations(listIntegrationsOptions *ListIntegrationsOptions)`, func() {
+		listIntegrationsPath := "/v1/instances/testString/integrations"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listIntegrationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for offset query parameter
+					// TODO: Add check for limit query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListIntegrations successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the ListIntegrationsOptions model
+				listIntegrationsOptionsModel := new(eventnotificationsv1.ListIntegrationsOptions)
+				listIntegrationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listIntegrationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listIntegrationsOptionsModel.Search = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.ListIntegrationsWithContext(ctx, listIntegrationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.ListIntegrationsWithContext(ctx, listIntegrationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listIntegrationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for offset query parameter
+					// TODO: Add check for limit query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListIntegrations successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.ListIntegrations(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the ListIntegrationsOptions model
+				listIntegrationsOptionsModel := new(eventnotificationsv1.ListIntegrationsOptions)
+				listIntegrationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listIntegrationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listIntegrationsOptionsModel.Search = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ListIntegrations with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListIntegrationsOptions model
+				listIntegrationsOptionsModel := new(eventnotificationsv1.ListIntegrationsOptions)
+				listIntegrationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listIntegrationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listIntegrationsOptionsModel.Search = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ListIntegrationsOptions model with no property values
+				listIntegrationsOptionsModelNew := new(eventnotificationsv1.ListIntegrationsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.ListIntegrations(listIntegrationsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListIntegrations successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListIntegrationsOptions model
+				listIntegrationsOptionsModel := new(eventnotificationsv1.ListIntegrationsOptions)
+				listIntegrationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listIntegrationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listIntegrationsOptionsModel.Search = core.StringPtr("testString")
+				listIntegrationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.ListIntegrations(listIntegrationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.IntegrationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.IntegrationList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.IntegrationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.IntegrationList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listIntegrationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"Type","metadata":{"endpoint":"Endpoint","crn":"CRN","root_key_id":"RootKeyID"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"Type","metadata":{"endpoint":"Endpoint","crn":"CRN","root_key_id":"RootKeyID"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use IntegrationsPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.IntegrationListItem
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use IntegrationsPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
+			})
+		})
+	})
+	Describe(`GetIntegration(getIntegrationOptions *GetIntegrationOptions) - Operation response error`, func() {
+		getIntegrationPath := "/v1/instances/testString/integrations/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getIntegrationPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetIntegration with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetIntegrationOptions model
+				getIntegrationOptionsModel := new(eventnotificationsv1.GetIntegrationOptions)
+				getIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				getIntegrationOptionsModel.ID = core.StringPtr("testString")
+				getIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetIntegration(getIntegrationOptions *GetIntegrationOptions)`, func() {
+		getIntegrationPath := "/v1/instances/testString/integrations/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getIntegrationPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetIntegration successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetIntegrationOptions model
+				getIntegrationOptionsModel := new(eventnotificationsv1.GetIntegrationOptions)
+				getIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				getIntegrationOptionsModel.ID = core.StringPtr("testString")
+				getIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetIntegrationWithContext(ctx, getIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetIntegrationWithContext(ctx, getIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getIntegrationPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetIntegration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetIntegration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetIntegrationOptions model
+				getIntegrationOptionsModel := new(eventnotificationsv1.GetIntegrationOptions)
+				getIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				getIntegrationOptionsModel.ID = core.StringPtr("testString")
+				getIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetIntegration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetIntegrationOptions model
+				getIntegrationOptionsModel := new(eventnotificationsv1.GetIntegrationOptions)
+				getIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				getIntegrationOptionsModel.ID = core.StringPtr("testString")
+				getIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetIntegrationOptions model with no property values
+				getIntegrationOptionsModelNew := new(eventnotificationsv1.GetIntegrationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetIntegration(getIntegrationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetIntegration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetIntegrationOptions model
+				getIntegrationOptionsModel := new(eventnotificationsv1.GetIntegrationOptions)
+				getIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				getIntegrationOptionsModel.ID = core.StringPtr("testString")
+				getIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetIntegration(getIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ReplaceIntegration(replaceIntegrationOptions *ReplaceIntegrationOptions) - Operation response error`, func() {
+		replaceIntegrationPath := "/v1/instances/testString/integrations/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(replaceIntegrationPath))
+					Expect(req.Method).To(Equal("PUT"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ReplaceIntegration with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				replaceIntegrationOptionsModel := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				replaceIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.ID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Type = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Metadata = integrationMetadataModel
+				replaceIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ReplaceIntegration(replaceIntegrationOptions *ReplaceIntegrationOptions)`, func() {
+		replaceIntegrationPath := "/v1/instances/testString/integrations/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(replaceIntegrationPath))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke ReplaceIntegration successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				replaceIntegrationOptionsModel := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				replaceIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.ID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Type = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Metadata = integrationMetadataModel
+				replaceIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.ReplaceIntegrationWithContext(ctx, replaceIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.ReplaceIntegrationWithContext(ctx, replaceIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(replaceIntegrationPath))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "root_key_id": "RootKeyID"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke ReplaceIntegration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.ReplaceIntegration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				replaceIntegrationOptionsModel := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				replaceIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.ID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Type = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Metadata = integrationMetadataModel
+				replaceIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ReplaceIntegration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				replaceIntegrationOptionsModel := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				replaceIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.ID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Type = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Metadata = integrationMetadataModel
+				replaceIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ReplaceIntegrationOptions model with no property values
+				replaceIntegrationOptionsModelNew := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ReplaceIntegration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				replaceIntegrationOptionsModel := new(eventnotificationsv1.ReplaceIntegrationOptions)
+				replaceIntegrationOptionsModel.InstanceID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.ID = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Type = core.StringPtr("testString")
+				replaceIntegrationOptionsModel.Metadata = integrationMetadataModel
+				replaceIntegrationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.ReplaceIntegration(replaceIntegrationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			eventNotificationsService, _ := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
@@ -6979,6 +7834,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewGetIntegrationOptions successfully`, func() {
+				// Construct an instance of the GetIntegrationOptions model
+				instanceID := "testString"
+				id := "testString"
+				getIntegrationOptionsModel := eventNotificationsService.NewGetIntegrationOptions(instanceID, id)
+				getIntegrationOptionsModel.SetInstanceID("testString")
+				getIntegrationOptionsModel.SetID("testString")
+				getIntegrationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getIntegrationOptionsModel).ToNot(BeNil())
+				Expect(getIntegrationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getIntegrationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getIntegrationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewGetSourceOptions successfully`, func() {
 				// Construct an instance of the GetSourceOptions model
 				instanceID := "testString"
@@ -7020,6 +7888,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getTopicOptionsModel.Include).To(Equal(core.StringPtr("testString")))
 				Expect(getTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewIntegrationMetadata successfully`, func() {
+				endpoint := "testString"
+				crn := "testString"
+				rootKeyID := "testString"
+				_model, err := eventNotificationsService.NewIntegrationMetadata(endpoint, crn, rootKeyID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewListDestinationsOptions successfully`, func() {
 				// Construct an instance of the ListDestinationsOptions model
 				instanceID := "testString"
@@ -7035,6 +7911,22 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listDestinationsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listDestinationsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listDestinationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewListIntegrationsOptions successfully`, func() {
+				// Construct an instance of the ListIntegrationsOptions model
+				instanceID := "testString"
+				listIntegrationsOptionsModel := eventNotificationsService.NewListIntegrationsOptions(instanceID)
+				listIntegrationsOptionsModel.SetInstanceID("testString")
+				listIntegrationsOptionsModel.SetOffset(int64(0))
+				listIntegrationsOptionsModel.SetLimit(int64(10))
+				listIntegrationsOptionsModel.SetSearch("testString")
+				listIntegrationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(listIntegrationsOptionsModel).ToNot(BeNil())
+				Expect(listIntegrationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(listIntegrationsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(listIntegrationsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
+				Expect(listIntegrationsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
+				Expect(listIntegrationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewListSourcesOptions successfully`, func() {
 				// Construct an instance of the ListSourcesOptions model
@@ -7120,6 +8012,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_model, err := eventNotificationsService.NewNotificationCreate(specversion, id, source, typeVar, ibmensourceid, ibmendefaultshort, ibmendefaultlong)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewReplaceIntegrationOptions successfully`, func() {
+				// Construct an instance of the IntegrationMetadata model
+				integrationMetadataModel := new(eventnotificationsv1.IntegrationMetadata)
+				Expect(integrationMetadataModel).ToNot(BeNil())
+				integrationMetadataModel.Endpoint = core.StringPtr("testString")
+				integrationMetadataModel.CRN = core.StringPtr("testString")
+				integrationMetadataModel.RootKeyID = core.StringPtr("testString")
+				Expect(integrationMetadataModel.Endpoint).To(Equal(core.StringPtr("testString")))
+				Expect(integrationMetadataModel.CRN).To(Equal(core.StringPtr("testString")))
+				Expect(integrationMetadataModel.RootKeyID).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the ReplaceIntegrationOptions model
+				instanceID := "testString"
+				id := "testString"
+				replaceIntegrationOptionsType := "testString"
+				var replaceIntegrationOptionsMetadata *eventnotificationsv1.IntegrationMetadata = nil
+				replaceIntegrationOptionsModel := eventNotificationsService.NewReplaceIntegrationOptions(instanceID, id, replaceIntegrationOptionsType, replaceIntegrationOptionsMetadata)
+				replaceIntegrationOptionsModel.SetInstanceID("testString")
+				replaceIntegrationOptionsModel.SetID("testString")
+				replaceIntegrationOptionsModel.SetType("testString")
+				replaceIntegrationOptionsModel.SetMetadata(integrationMetadataModel)
+				replaceIntegrationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(replaceIntegrationOptionsModel).ToNot(BeNil())
+				Expect(replaceIntegrationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(replaceIntegrationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(replaceIntegrationOptionsModel.Type).To(Equal(core.StringPtr("testString")))
+				Expect(replaceIntegrationOptionsModel.Metadata).To(Equal(integrationMetadataModel))
+				Expect(replaceIntegrationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceTopicOptions successfully`, func() {
 				// Construct an instance of the Rules model

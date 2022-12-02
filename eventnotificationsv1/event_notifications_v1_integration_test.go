@@ -83,6 +83,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID10          string
 		fcmServerKey              string
 		fcmSenderId               string
+		integrationId             string
 	)
 
 	var shouldSkipTest = func() {
@@ -152,6 +153,75 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
 			eventNotificationsService.EnableRetries(4, 30*time.Second)
+		})
+	})
+
+	Describe(`ListIntegrations - Lists all integrations for an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListIntegrations(listIntegrationsOptions *ListIntegrationsOptions)`, func() {
+
+			listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Limit:      core.Int64Ptr(int64(1)),
+				Offset:     core.Int64Ptr(int64(0)),
+				Search:     core.StringPtr(search),
+			}
+
+			integrationResponse, response, err := eventNotificationsService.ListIntegrations(listIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
+
+			integrationId = string(*integrationResponse.Integrations[0].ID)
+		})
+	})
+
+	Describe(`GetIntegration - Get integration of an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetIntegration(getIntegrationOptions *GetIntegrationOptions)`, func() {
+
+			listIntegrationsOptions := &eventnotificationsv1.GetIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+			}
+
+			integrationResponse, response, err := eventNotificationsService.GetIntegration(listIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
+		})
+	})
+
+	Describe(`UpdateIntegration - Update integration of an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateIntegration(updateIntegrationOptions *UpdateIntegrationOptions)`, func() {
+
+			integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
+				Endpoint:  core.StringPtr("https://private.us-south.kms.cloud.ibm.com"),
+				CRN:       core.StringPtr("crn:v1:staging:public:kms:us-south:a/****:****::"),
+				RootKeyID: core.StringPtr("sddsds-f326-4688-baaf-611750e79b61"),
+			}
+
+			replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+				Type:       core.StringPtr("kms"),
+				Metadata:   integrationMetadata,
+			}
+
+			integrationResponse, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
 		})
 	})
 

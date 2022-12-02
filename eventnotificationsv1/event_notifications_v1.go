@@ -1900,6 +1900,211 @@ func (eventNotifications *EventNotificationsV1) UpdateSubscriptionWithContext(ct
 	return
 }
 
+// ListIntegrations : List all Integrations
+// List of all KMS Integrations.
+func (eventNotifications *EventNotificationsV1) ListIntegrations(listIntegrationsOptions *ListIntegrationsOptions) (result *IntegrationList, response *core.DetailedResponse, err error) {
+	return eventNotifications.ListIntegrationsWithContext(context.Background(), listIntegrationsOptions)
+}
+
+// ListIntegrationsWithContext is an alternate form of the ListIntegrations method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ListIntegrationsWithContext(ctx context.Context, listIntegrationsOptions *ListIntegrationsOptions) (result *IntegrationList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listIntegrationsOptions, "listIntegrationsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(listIntegrationsOptions, "listIntegrationsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *listIntegrationsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/integrations`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listIntegrationsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListIntegrations")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	if listIntegrationsOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listIntegrationsOptions.Offset))
+	}
+	if listIntegrationsOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listIntegrationsOptions.Limit))
+	}
+	if listIntegrationsOptions.Search != nil {
+		builder.AddQuery("search", fmt.Sprint(*listIntegrationsOptions.Search))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalIntegrationList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetIntegration : Get a single Integrations
+// Get a single KMS Integrations.
+func (eventNotifications *EventNotificationsV1) GetIntegration(getIntegrationOptions *GetIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetIntegrationWithContext(context.Background(), getIntegrationOptions)
+}
+
+// GetIntegrationWithContext is an alternate form of the GetIntegration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetIntegrationWithContext(ctx context.Context, getIntegrationOptions *GetIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getIntegrationOptions, "getIntegrationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getIntegrationOptions, "getIntegrationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getIntegrationOptions.InstanceID,
+		"id":          *getIntegrationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/integrations/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getIntegrationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetIntegration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalIntegrationGetResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ReplaceIntegration : Update an exisitng Integration
+// Update an exisitng KMS Integration.
+func (eventNotifications *EventNotificationsV1) ReplaceIntegration(replaceIntegrationOptions *ReplaceIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.ReplaceIntegrationWithContext(context.Background(), replaceIntegrationOptions)
+}
+
+// ReplaceIntegrationWithContext is an alternate form of the ReplaceIntegration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ReplaceIntegrationWithContext(ctx context.Context, replaceIntegrationOptions *ReplaceIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(replaceIntegrationOptions, "replaceIntegrationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(replaceIntegrationOptions, "replaceIntegrationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *replaceIntegrationOptions.InstanceID,
+		"id":          *replaceIntegrationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PUT)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/integrations/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range replaceIntegrationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ReplaceIntegration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if replaceIntegrationOptions.Type != nil {
+		body["type"] = replaceIntegrationOptions.Type
+	}
+	if replaceIntegrationOptions.Metadata != nil {
+		body["metadata"] = replaceIntegrationOptions.Metadata
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalIntegrationGetResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // BulkNotificationResponse : Payload describing a notifications response.
 type BulkNotificationResponse struct {
 	// Bulk Notification ID.
@@ -2761,7 +2966,7 @@ type DestinationConfigOneOf struct {
 	// Websire url.
 	WebsitePushID *string `json:"website_push_id,omitempty"`
 
-	// Routing Key for the pagerduty account.
+	// Routing Key(Integration Key) for the team in pagerduty account.
 	RoutingKey *string `json:"routing_key,omitempty"`
 }
 
@@ -3222,6 +3427,44 @@ func (options *GetDestinationOptions) SetHeaders(param map[string]string) *GetDe
 	return options
 }
 
+// GetIntegrationOptions : The GetIntegration options.
+type GetIntegrationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for integration.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetIntegrationOptions : Instantiate GetIntegrationOptions
+func (*EventNotificationsV1) NewGetIntegrationOptions(instanceID string, id string) *GetIntegrationOptions {
+	return &GetIntegrationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetIntegrationOptions) SetInstanceID(instanceID string) *GetIntegrationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetIntegrationOptions) SetID(id string) *GetIntegrationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetIntegrationOptions) SetHeaders(param map[string]string) *GetIntegrationOptions {
+	options.Headers = param
+	return options
+}
+
 // GetSourceOptions : The GetSource options.
 type GetSourceOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3345,6 +3588,214 @@ func (options *GetTopicOptions) SetHeaders(param map[string]string) *GetTopicOpt
 	return options
 }
 
+// IntegrationGetResponse : Integration response object.
+type IntegrationGetResponse struct {
+	// ID of the integration.
+	ID *strfmt.UUID `json:"id" validate:"required"`
+
+	// Integration type. Allowed values are kms and hs-crypto.
+	Type *string `json:"type" validate:"required"`
+
+	// Integration Metadata object.
+	Metadata *IntegrationMetadata `json:"metadata" validate:"required"`
+
+	// Creation time of an integration.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+
+	// Last Update time of an integration.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalIntegrationGetResponse unmarshals an instance of IntegrationGetResponse from the specified map of raw messages.
+func UnmarshalIntegrationGetResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(IntegrationGetResponse)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "metadata", &obj.Metadata, UnmarshalIntegrationMetadata)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// IntegrationList : all Integrations response object.
+type IntegrationList struct {
+	// Number of integrations.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// Current offset.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// limit to show integrations.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// List of integrations.
+	Integrations []IntegrationListItem `json:"integrations" validate:"required"`
+
+	// Response having URL of the page.
+	First *PageHrefResponse `json:"first,omitempty"`
+
+	// Response having URL of the page.
+	Previous *PageHrefResponse `json:"previous,omitempty"`
+
+	// Response having URL of the page.
+	Next *PageHrefResponse `json:"next,omitempty"`
+}
+
+// UnmarshalIntegrationList unmarshals an instance of IntegrationList from the specified map of raw messages.
+func UnmarshalIntegrationList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(IntegrationList)
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "integrations", &obj.Integrations, UnmarshalIntegrationListItem)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "previous", &obj.Previous, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *IntegrationList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
+// IntegrationListItem : all Integrations response object.
+type IntegrationListItem struct {
+	// ID of the integration.
+	ID *strfmt.UUID `json:"id" validate:"required"`
+
+	// Integration type. Allowed values are kms and hs-crypto.
+	Type *string `json:"type" validate:"required"`
+
+	// Integration Metadata object.
+	Metadata *IntegrationMetadata `json:"metadata" validate:"required"`
+
+	// Creation time of an integration.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+
+	// Update time of an integration.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalIntegrationListItem unmarshals an instance of IntegrationListItem from the specified map of raw messages.
+func UnmarshalIntegrationListItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(IntegrationListItem)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "metadata", &obj.Metadata, UnmarshalIntegrationMetadata)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// IntegrationMetadata : Integration Metadata object.
+type IntegrationMetadata struct {
+	// KMS url for key management.
+	Endpoint *string `json:"endpoint" validate:"required"`
+
+	// CRN of the KMS instance.
+	CRN *string `json:"crn" validate:"required"`
+
+	// Root Key id of KMS.
+	RootKeyID *string `json:"root_key_id" validate:"required"`
+}
+
+// NewIntegrationMetadata : Instantiate IntegrationMetadata (Generic Model Constructor)
+func (*EventNotificationsV1) NewIntegrationMetadata(endpoint string, crn string, rootKeyID string) (_model *IntegrationMetadata, err error) {
+	_model = &IntegrationMetadata{
+		Endpoint:  core.StringPtr(endpoint),
+		CRN:       core.StringPtr(crn),
+		RootKeyID: core.StringPtr(rootKeyID),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+// UnmarshalIntegrationMetadata unmarshals an instance of IntegrationMetadata from the specified map of raw messages.
+func UnmarshalIntegrationMetadata(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(IntegrationMetadata)
+	err = core.UnmarshalPrimitive(m, "endpoint", &obj.Endpoint)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "crn", &obj.CRN)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "root_key_id", &obj.RootKeyID)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // ListDestinationsOptions : The ListDestinations options.
 type ListDestinationsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3396,6 +3847,61 @@ func (_options *ListDestinationsOptions) SetSearch(search string) *ListDestinati
 
 // SetHeaders : Allow user to set Headers
 func (options *ListDestinationsOptions) SetHeaders(param map[string]string) *ListDestinationsOptions {
+	options.Headers = param
+	return options
+}
+
+// ListIntegrationsOptions : The ListIntegrations options.
+type ListIntegrationsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// Search string for filtering results.
+	Search *string `json:"search,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListIntegrationsOptions : Instantiate ListIntegrationsOptions
+func (*EventNotificationsV1) NewListIntegrationsOptions(instanceID string) *ListIntegrationsOptions {
+	return &ListIntegrationsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListIntegrationsOptions) SetInstanceID(instanceID string) *ListIntegrationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListIntegrationsOptions) SetOffset(offset int64) *ListIntegrationsOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListIntegrationsOptions) SetLimit(limit int64) *ListIntegrationsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetSearch : Allow user to set Search
+func (_options *ListIntegrationsOptions) SetSearch(search string) *ListIntegrationsOptions {
+	_options.Search = core.StringPtr(search)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListIntegrationsOptions) SetHeaders(param map[string]string) *ListIntegrationsOptions {
 	options.Headers = param
 	return options
 }
@@ -3996,6 +4502,64 @@ func UnmarshalPageHrefResponse(m map[string]json.RawMessage, result interface{})
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
+}
+
+// ReplaceIntegrationOptions : The ReplaceIntegration options.
+type ReplaceIntegrationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for integration.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Integration type. Allowed values are kms and hs-crypto.
+	Type *string `json:"type" validate:"required"`
+
+	// Integration Metadata object.
+	Metadata *IntegrationMetadata `json:"metadata" validate:"required"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewReplaceIntegrationOptions : Instantiate ReplaceIntegrationOptions
+func (*EventNotificationsV1) NewReplaceIntegrationOptions(instanceID string, id string, typeVar string, metadata *IntegrationMetadata) *ReplaceIntegrationOptions {
+	return &ReplaceIntegrationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
+		Metadata:   metadata,
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ReplaceIntegrationOptions) SetInstanceID(instanceID string) *ReplaceIntegrationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *ReplaceIntegrationOptions) SetID(id string) *ReplaceIntegrationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetType : Allow user to set Type
+func (_options *ReplaceIntegrationOptions) SetType(typeVar string) *ReplaceIntegrationOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetMetadata : Allow user to set Metadata
+func (_options *ReplaceIntegrationOptions) SetMetadata(metadata *IntegrationMetadata) *ReplaceIntegrationOptions {
+	_options.Metadata = metadata
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ReplaceIntegrationOptions) SetHeaders(param map[string]string) *ReplaceIntegrationOptions {
+	options.Headers = param
+	return options
 }
 
 // ReplaceTopicOptions : The ReplaceTopic options.
@@ -6310,7 +6874,7 @@ type DestinationConfigOneOfPagerDutyDestinationConfig struct {
 	// API Key for the pagerduty account.
 	APIKey *string `json:"api_key" validate:"required"`
 
-	// Routing Key for the pagerduty account.
+	// Routing Key(Integration Key) for the team in pagerduty account.
 	RoutingKey *string `json:"routing_key" validate:"required"`
 }
 
@@ -7693,5 +8257,92 @@ func (pager *SubscriptionsPager) GetNext() (page []SubscriptionListItem, err err
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *SubscriptionsPager) GetAll() (allItems []SubscriptionListItem, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
+//
+// IntegrationsPager can be used to simplify the use of the "ListIntegrations" method.
+//
+type IntegrationsPager struct {
+	hasNext     bool
+	options     *ListIntegrationsOptions
+	client      *EventNotificationsV1
+	pageContext struct {
+		next *int64
+	}
+}
+
+// NewIntegrationsPager returns a new IntegrationsPager instance.
+func (eventNotifications *EventNotificationsV1) NewIntegrationsPager(options *ListIntegrationsOptions) (pager *IntegrationsPager, err error) {
+	if options.Offset != nil && *options.Offset != 0 {
+		err = fmt.Errorf("the 'options.Offset' field should not be set")
+		return
+	}
+
+	var optionsCopy ListIntegrationsOptions = *options
+	pager = &IntegrationsPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  eventNotifications,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *IntegrationsPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *IntegrationsPager) GetNextWithContext(ctx context.Context) (page []IntegrationListItem, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Offset = pager.pageContext.next
+
+	result, _, err := pager.client.ListIntegrationsWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *int64
+	if result.Next != nil {
+		var offset *int64
+		offset, err = core.GetQueryParamAsInt(result.Next.Href, "offset")
+		if err != nil {
+			err = fmt.Errorf("error retrieving 'offset' query parameter from URL '%s': %s", *result.Next.Href, err.Error())
+			return
+		}
+		next = offset
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.Integrations
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *IntegrationsPager) GetAllWithContext(ctx context.Context) (allItems []IntegrationListItem, err error) {
+	for pager.HasNext() {
+		var nextPage []IntegrationListItem
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *IntegrationsPager) GetNext() (page []IntegrationListItem, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *IntegrationsPager) GetAll() (allItems []IntegrationListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
