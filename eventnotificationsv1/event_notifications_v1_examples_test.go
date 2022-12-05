@@ -155,7 +155,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 		})
 
 		It(`listIntegrations request example`, func() {
-			// begin-list_integration
+			// begin-list_integrations
 
 			listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
 				InstanceID: core.StringPtr(instanceID),
@@ -173,7 +173,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from listIntegrations(): %d\n", response.StatusCode)
 			}
 			integrationId = string(*integrationResponse.Integrations[0].ID)
-			// end-list_integration
+			// end-list_integrations
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
@@ -204,18 +204,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 		})
 
 		It(`updateIntegration request example`, func() {
-			// begin-update_integration
+			// begin-replace_integration
 
 			integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
 				Endpoint:  core.StringPtr("https://private.us-south.kms.cloud.ibm.com"),
-				CRN:       core.StringPtr("crn:v1:staging:public:kms:us-south:a/****:****::"),
-				RootKeyID: core.StringPtr("sddsds-f326-4688-baaf-611750e79b61"),
+				CRN:       core.StringPtr("insert CRN"),
+				RootKeyID: core.StringPtr("insert Root Key Id"),
 			}
 
 			replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
 				InstanceID: core.StringPtr(instanceID),
 				ID:         core.StringPtr(integrationId),
-				Type:       core.StringPtr("kms"),
+				Type:       core.StringPtr("kms/hs-crypto"),
 				Metadata:   integrationMetadata,
 			}
 
@@ -228,7 +228,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from updateIntegration(): %d\n", response.StatusCode)
 			}
 
-			// end-update_integration
+			// end-replace_integration
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 
