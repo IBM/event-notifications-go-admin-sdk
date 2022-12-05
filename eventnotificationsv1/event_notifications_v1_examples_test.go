@@ -55,6 +55,7 @@ var (
 	safariCertificatePath     string
 	topicName                 string = "Admin Topic Compliance"
 	sourceID                  string = ""
+	search                    string = ""
 	topicID                   string
 	destinationID             string
 	destinationID1            string
@@ -66,12 +67,14 @@ var (
 	destinationID7            string
 	destinationID8            string
 	destinationID9            string
+	destinationID10           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
 	subscriptionID3           string
 	fcmServerKey              string
 	fcmSenderId               string
+	integrationId             string
 )
 
 func shouldSkipTest() {
@@ -145,9 +148,90 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(eventNotificationsService).ToNot(BeNil())
 		})
 	})
+
 	Describe(`EventNotificationsV1 request examples`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
+		})
+
+		It(`listIntegrations request example`, func() {
+			// begin-list_integrations
+
+			listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Limit:      core.Int64Ptr(int64(1)),
+				Offset:     core.Int64Ptr(int64(0)),
+				Search:     core.StringPtr(search),
+			}
+
+			integrationResponse, response, err := eventNotificationsService.ListIntegrations(listIntegrationsOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from listIntegrations(): %d\n", response.StatusCode)
+			}
+			integrationId = string(*integrationResponse.Integrations[0].ID)
+			// end-list_integrations
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+
+		})
+
+		It(`getIntegration request example`, func() {
+			// begin-get_integration
+
+			listIntegrationsOptions := &eventnotificationsv1.GetIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+			}
+
+			_, response, err := eventNotificationsService.GetIntegration(listIntegrationsOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from getIntegration(): %d\n", response.StatusCode)
+			}
+
+			// end-get_integration
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+
+		})
+
+		It(`updateIntegration request example`, func() {
+			// begin-replace_integration
+
+			integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
+				Endpoint:  core.StringPtr("https://private.us-south.kms.cloud.ibm.com"),
+				CRN:       core.StringPtr("insert CRN"),
+				RootKeyID: core.StringPtr("insert Root Key Id"),
+			}
+
+			replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+				Type:       core.StringPtr("kms/hs-crypto"),
+				Metadata:   integrationMetadata,
+			}
+
+			_, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from updateIntegration(): %d\n", response.StatusCode)
+			}
+
+			// end-replace_integration
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+
 		})
 
 		It(`CreateSources request example`, func() {
@@ -636,6 +720,36 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID9 = *destinationResponse.ID
+
+			pagerDutyCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"PagerDuty_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePagerdutyConst,
+			)
+
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("insert API key here"),
+				RoutingKey: core.StringPtr("insert Routing Key here"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pagerDutyCreateDestinationOptions.SetConfig(pagerDutyDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(pagerDutyCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID10 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -972,6 +1086,35 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
 
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("insert API Key here"),
+				RoutingKey: core.StringPtr("insert Routing Key here"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pdName := "Pagerduty_dest_update"
+			pdDescription := "This destination update is for Pagerduty"
+			pagerDutyUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID10),
+				Name:        core.StringPtr(pdName),
+				Description: core.StringPtr(pdDescription),
+				Config:      pagerDutyDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(pagerDutyUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
 			// end-update_destination
 		})
 
@@ -1497,7 +1640,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

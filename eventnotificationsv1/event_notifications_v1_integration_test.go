@@ -69,6 +69,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID7            string
 		destinationID8            string
 		destinationID9            string
+		destinationID10           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -79,8 +80,10 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID7           string
 		subscriptionID8           string
 		subscriptionID9           string
+		subscriptionID10          string
 		fcmServerKey              string
 		fcmSenderId               string
+		integrationId             string
 	)
 
 	var shouldSkipTest = func() {
@@ -150,6 +153,75 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			core.SetLogger(core.NewLogger(core.LevelDebug, log.New(GinkgoWriter, "", log.LstdFlags), log.New(GinkgoWriter, "", log.LstdFlags)))
 			eventNotificationsService.EnableRetries(4, 30*time.Second)
+		})
+	})
+
+	Describe(`ListIntegrations - Lists all integrations for an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListIntegrations(listIntegrationsOptions *ListIntegrationsOptions)`, func() {
+
+			listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Limit:      core.Int64Ptr(int64(1)),
+				Offset:     core.Int64Ptr(int64(0)),
+				Search:     core.StringPtr(search),
+			}
+
+			integrationResponse, response, err := eventNotificationsService.ListIntegrations(listIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
+
+			integrationId = string(*integrationResponse.Integrations[0].ID)
+		})
+	})
+
+	Describe(`GetIntegration - Get integration of an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetIntegration(getIntegrationOptions *GetIntegrationOptions)`, func() {
+
+			listIntegrationsOptions := &eventnotificationsv1.GetIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+			}
+
+			integrationResponse, response, err := eventNotificationsService.GetIntegration(listIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
+		})
+	})
+
+	Describe(`UpdateIntegration - Update integration of an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateIntegration(updateIntegrationOptions *UpdateIntegrationOptions)`, func() {
+
+			integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
+				Endpoint:  core.StringPtr("https://private.us-south.kms.cloud.ibm.com"),
+				CRN:       core.StringPtr("crn:v1:staging:public:kms:us-south:a/****:****::"),
+				RootKeyID: core.StringPtr("sddsds-f326-4688-baaf-611750e79b61"),
+			}
+
+			replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(integrationId),
+				Type:       core.StringPtr("kms"),
+				Metadata:   integrationMetadata,
+			}
+
+			integrationResponse, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(integrationResponse).ToNot(BeNil())
 		})
 	})
 
@@ -739,6 +811,31 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID9 = *destinationResponse.ID
 
+			pagerDutyCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"PagerDuty_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypePagerdutyConst,
+			)
+
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("usedfsdfsdfsdfsdfs"),
+				RoutingKey: core.StringPtr("2e332432423423w3rwfewf8"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pagerDutyCreateDestinationOptions.SetConfig(pagerDutyDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(pagerDutyCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID10 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1105,6 +1202,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(fireName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(fireDescription)))
 
+			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
+				APIKey:     core.StringPtr("udsfsdfsdfsdfqwesdfsdfsdfs"),
+				RoutingKey: core.StringPtr("sdfwer34r345343453534534534"),
+			}
+
+			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsPDModel,
+			}
+
+			pdName := "Pagerduty_dest_update"
+			pdDescription := "This destination update is for Pagerduty"
+			pagerDutyUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID10),
+				Name:        core.StringPtr(pdName),
+				Description: core.StringPtr(pdDescription),
+				Config:      pagerDutyDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(pagerDutyUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID10)))
+			Expect(destination.Name).To(Equal(core.StringPtr(pdName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(pdDescription)))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1322,6 +1446,23 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID9 = string(*subscription.ID)
+
+			createPDSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Pager Duty subscription"),
+				Description:   core.StringPtr("Subscription for Pager Duty"),
+				DestinationID: core.StringPtr(destinationID10),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createPDSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID10 = string(*subscription.ID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1635,6 +1776,24 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID9)))
 			Expect(subscription.Name).To(Equal(fireName))
 			Expect(subscription.Description).To(Equal(fireDescription))
+
+			pdName := core.StringPtr("subscription_Pager_Duty_update")
+			pdDescription := core.StringPtr("Subscription update for Pager Duty")
+			updatePDSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        pdName,
+				Description: pdDescription,
+				ID:          core.StringPtr(subscriptionID10),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updatePDSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID10)))
+			Expect(subscription.Name).To(Equal(pdName))
+			Expect(subscription.Description).To(Equal(pdDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1815,7 +1974,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -1873,7 +2032,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
