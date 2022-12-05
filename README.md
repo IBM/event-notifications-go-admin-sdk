@@ -143,6 +143,10 @@ SDK Methods to consume
 	- [Get Subscription](#get-subscription)
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
+- [Integration](#integration)
+	- [Get Integration](#get-integration)
+	- [List Integrations](#list-integrations)
+	- [Update Integration](#update-integration)	
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -602,6 +606,48 @@ response, err := eventNotificationsService.DeleteSubscription(deleteSubscription
 if err != nil {
 	panic(err)
 }
+```
+## Integration
+
+### Get Integration
+
+```go
+getIntegrationOptions := &eventnotificationsv1.GetIntegrationOptions{
+	InstanceID: core.StringPtr(<instance-id>),
+	ID:         core.StringPtr(<integration-id>),
+}
+
+integrationResponse, response, err := eventNotificationsService.GetIntegration(getIntegrationOptions)
+```
+
+### List Integrations
+```go
+
+listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
+	InstanceID: core.StringPtr(<instance-id>),
+	Limit:      core.Int64Ptr(<limit>),
+	Offset:     core.Int64Ptr(<Offset>),
+	Search:     core.StringPtr(<search>),
+}
+
+integrationResponse, response, err := eventNotificationsService.ListIntegrations(listIntegrationsOptions)
+```
+### Update Integration
+```go
+integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
+	Endpoint:  core.StringPtr(<end-point-url>),
+	CRN:       core.StringPtr(<crn>),
+	RootKeyID: core.StringPtr(<root-key-id>),
+}
+
+replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+	InstanceID: core.StringPtr(instanceID),
+	ID:         core.StringPtr(integrationId),
+	Type:       core.StringPtr(<integration-type>),
+	Metadata:   integrationMetadata,
+}
+
+integrationResponse, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
 ```
 
 ## Send Notifications

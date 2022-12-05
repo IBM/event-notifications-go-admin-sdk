@@ -728,8 +728,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr("usedfsdfsdfsdfsdfs"),
-				RoutingKey: core.StringPtr("2e332432423423w3rwfewf8"),
+				APIKey:     core.StringPtr("insert API key here"),
+				RoutingKey: core.StringPtr("insert Routing Key here"),
 			}
 
 			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1087,8 +1087,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr("udsfsdfsdfsdfqwesdfsdfsdfs"),
-				RoutingKey: core.StringPtr("sdfwer34r345343453534534534"),
+				APIKey:     core.StringPtr("insert API Key here"),
+				RoutingKey: core.StringPtr("insert Routing Key here"),
 			}
 
 			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
