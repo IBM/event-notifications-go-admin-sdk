@@ -1,3 +1,10 @@
+## [0.1.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.6...v0.1.7) (2022-12-05)
+
+
+### Bug Fixes
+
+* add PagerDuty destination and KMS integration ([a3a9903](https://github.com/IBM/event-notifications-go-admin-sdk/commit/a3a9903436a9e625ee68025137d5edeb9e26d640))
+
 ## [0.1.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.5...v0.1.6) (2022-10-31)
 
 
