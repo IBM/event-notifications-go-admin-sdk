@@ -634,7 +634,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
-				APIKey: core.StringPtr("amZzYVDnBbTSu2Bx27dUWz0SGyR_PQE8UoZCen"),
+				APIKey: core.StringPtr("apikey"),
 			}
 
 			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
@@ -990,7 +990,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			//cloud functions
 			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
 				URL:    core.StringPtr("https://www.ibmcfendpoint.com"),
-				APIKey: core.StringPtr("amZzYVDnB73QYXWz0SGyR_PQEoZCen"),
+				APIKey: core.StringPtr("apikey"),
 			}
 
 			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
