@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -164,7 +164,7 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 }
 
 // SendNotifications : Send a notification
-// Send Notifications body from the instance. For more information on Event notifications payload, see
+// Send Notifications body from the instance. For more information about Event Notifications payload, see
 // [here](https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-spec-payload).
 func (eventNotifications *EventNotificationsV1) SendNotifications(sendNotificationsOptions *SendNotificationsOptions) (result *NotificationResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.SendNotificationsWithContext(context.Background(), sendNotificationsOptions)
@@ -448,7 +448,7 @@ func (eventNotifications *EventNotificationsV1) ListSourcesWithContext(ctx conte
 }
 
 // GetSource : Get a Source
-// Get a Sources.
+// Get a Source.
 func (eventNotifications *EventNotificationsV1) GetSource(getSourceOptions *GetSourceOptions) (result *Source, response *core.DetailedResponse, err error) {
 	return eventNotifications.GetSourceWithContext(context.Background(), getSourceOptions)
 }
@@ -1970,8 +1970,8 @@ func (eventNotifications *EventNotificationsV1) ListIntegrationsWithContext(ctx 
 	return
 }
 
-// GetIntegration : Get a single Integrations
-// Get a single KMS Integrations.
+// GetIntegration : Get a single Integration
+// Get a single KMS Integration.
 func (eventNotifications *EventNotificationsV1) GetIntegration(getIntegrationOptions *GetIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.GetIntegrationWithContext(context.Background(), getIntegrationOptions)
 }
@@ -2031,8 +2031,8 @@ func (eventNotifications *EventNotificationsV1) GetIntegrationWithContext(ctx co
 	return
 }
 
-// ReplaceIntegration : Update an exisitng Integration
-// Update an exisitng KMS Integration.
+// ReplaceIntegration : Update an existing Integration
+// Update an existing KMS Integration.
 func (eventNotifications *EventNotificationsV1) ReplaceIntegration(replaceIntegrationOptions *ReplaceIntegrationOptions) (result *IntegrationGetResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.ReplaceIntegrationWithContext(context.Background(), replaceIntegrationOptions)
 }
@@ -2134,7 +2134,7 @@ type CreateDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// The Destintion name.
+	// The Destination name.
 	Name *string `json:"name" validate:"required"`
 
 	// The type of Destination Webhook.
@@ -2203,6 +2203,7 @@ const (
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
+	CreateDestinationOptionsTypeServicenowConst  = "servicenow"
 	CreateDestinationOptionsTypeSlackConst       = "slack"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
@@ -2704,7 +2705,7 @@ type DeleteTagsSubscriptionOptions struct {
 	// Unique identifier for Destination.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// DeviceID of the destination tagsubscription.
+	// Device ID of the destination tagsubscription.
 	DeviceID *string `json:"device_id,omitempty"`
 
 	// TagName of the subscription.
@@ -2801,7 +2802,7 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
+	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2818,7 +2819,7 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
+// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
 const (
 	DestinationTypeIbmcfConst       = "ibmcf"
 	DestinationTypeMsteamsConst     = "msteams"
@@ -2827,6 +2828,7 @@ const (
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypePushSafariConst  = "push_safari"
 	DestinationTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationTypeServicenowConst  = "servicenow"
 	DestinationTypeSlackConst       = "slack"
 	DestinationTypeSmsIBMConst      = "sms_ibm"
 	DestinationTypeWebhookConst     = "webhook"
@@ -2908,6 +2910,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfMsTeamsDestinationConfig
 // - DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
 // - DestinationConfigOneOfPagerDutyDestinationConfig
+// - DestinationConfigOneOfServiceNowDestinationConfig
 type DestinationConfigOneOf struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -2933,7 +2936,7 @@ type DestinationConfigOneOf struct {
 	// Authentication type (p8 or p12).
 	CertType *string `json:"cert_type,omitempty"`
 
-	// Sandbox mode for IOS destinations.
+	// Sandbox mode for iOS destinations.
 	IsSandbox *bool `json:"is_sandbox,omitempty"`
 
 	// Password for certificate (Required when cert_type is p12).
@@ -2957,17 +2960,29 @@ type DestinationConfigOneOf struct {
 	// Chrome VAPID public key.
 	PublicKey *string `json:"public_key,omitempty"`
 
-	// Websire url.
+	// Website url.
 	WebsiteName *string `json:"website_name,omitempty"`
 
-	// Websire url.
+	// Website url.
 	URLFormatString *string `json:"url_format_string,omitempty"`
 
-	// Websire url.
+	// Website url.
 	WebsitePushID *string `json:"website_push_id,omitempty"`
 
-	// Routing Key(Integration Key) for the team in pagerduty account.
+	// Routing Key (Integration Key) for the team in PagerDuty account.
 	RoutingKey *string `json:"routing_key,omitempty"`
+
+	// ClientID for the ServiceNow account oauth.
+	ClientID *string `json:"client_id,omitempty"`
+
+	// ClientSecret for the ServiceNow account oauth.
+	ClientSecret *string `json:"client_secret,omitempty"`
+
+	// Username for ServiceNow account REST API.
+	Username *string `json:"username,omitempty"`
+
+	// Instance name for ServiceNow account.
+	InstanceName *string `json:"instance_name,omitempty"`
 }
 
 // Constants associated with the DestinationConfigOneOf.Verb property.
@@ -3065,6 +3080,22 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "routing_key", &obj.RoutingKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_id", &obj.ClientID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_secret", &obj.ClientSecret)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "username", &obj.Username)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "instance_name", &obj.InstanceName)
 	if err != nil {
 		return
 	}
@@ -3182,6 +3213,7 @@ const (
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypePushSafariConst  = "push_safari"
 	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationListItemTypeServicenowConst  = "servicenow"
 	DestinationListItemTypeSlackConst       = "slack"
 	DestinationListItemTypeSmsIBMConst      = "sms_ibm"
 	DestinationListItemTypeWebhookConst     = "webhook"
@@ -3254,6 +3286,7 @@ const (
 	DestinationResponseTypePushFirefoxConst = "push_firefox"
 	DestinationResponseTypePushIosConst     = "push_ios"
 	DestinationResponseTypePushSafariConst  = "push_safari"
+	DestinationResponseTypeServicenowConst  = "servicenow"
 	DestinationResponseTypeSlackConst       = "slack"
 	DestinationResponseTypeWebhookConst     = "webhook"
 )
@@ -3300,7 +3333,7 @@ type DestinationTagsSubscriptionResponse struct {
 	// The name of the tag its subscribed.
 	TagName *string `json:"tag_name" validate:"required"`
 
-	// The user identifier for the the device registration.
+	// The user identifier for the device registration.
 	UserID *string `json:"user_id,omitempty"`
 
 	// Last updated time.
@@ -3602,7 +3635,7 @@ type IntegrationGetResponse struct {
 	// Creation time of an integration.
 	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
 
-	// Last Update time of an integration.
+	// Last update time of an integration.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 }
 
@@ -3762,7 +3795,7 @@ type IntegrationMetadata struct {
 	// CRN of the KMS instance.
 	CRN *string `json:"crn" validate:"required"`
 
-	// Root Key id of KMS.
+	// Root Key ID of KMS.
 	RootKeyID *string `json:"root_key_id" validate:"required"`
 }
 
@@ -4024,7 +4057,7 @@ type ListTagsSubscriptionOptions struct {
 	// Unique identifier for Destination.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// DeviceID of the destination tagsubscription.
+	// Device ID of the destination tagsubscription.
 	DeviceID *string `json:"device_id,omitempty"`
 
 	// UserID of the destination.
@@ -5202,6 +5235,7 @@ const (
 	SubscriptionDestinationTypePushIosConst     = "push_ios"
 	SubscriptionDestinationTypePushSafariConst  = "push_safari"
 	SubscriptionDestinationTypeSMTPIBMConst     = "smtp_ibm"
+	SubscriptionDestinationTypeServicenowConst  = "servicenow"
 	SubscriptionDestinationTypeSlackConst       = "slack"
 	SubscriptionDestinationTypeSmsIBMConst      = "sms_ibm"
 	SubscriptionDestinationTypeWebhookConst     = "webhook"
@@ -5355,6 +5389,7 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
 // - SubscriptionAttributesSlackAttributesResponse
+// - SubscriptionAttributesServiceNowAttributesResponse
 type SubscriptionAttributes struct {
 	// The subscribed list.
 	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
@@ -5382,6 +5417,12 @@ type SubscriptionAttributes struct {
 
 	// Attachment Color for Slack Notification.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
+
+	// Assigned name from ServiceNow account.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Assigned group name from ServiceNow account.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
@@ -5460,6 +5501,12 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 	if o.AttachmentColor != nil {
 		m["attachment_color"] = o.AttachmentColor
 	}
+	if o.AssignedTo != nil {
+		m["assigned_to"] = o.AssignedTo
+	}
+	if o.AssignmentGroup != nil {
+		m["assignment_group"] = o.AssignmentGroup
+	}
 	buffer, err = json.Marshal(m)
 	return
 }
@@ -5512,6 +5559,16 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 		return
 	}
 	delete(m, "attachment_color")
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	delete(m, "assigned_to")
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
+	if err != nil {
+		return
+	}
+	delete(m, "assignment_group")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -5532,6 +5589,7 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesWebhookAttributes
 // - SubscriptionCreateAttributesFcmAttributes
 // - SubscriptionCreateAttributesSlackAttributes
+// - SubscriptionCreateAttributesServiceNowAttributes
 type SubscriptionCreateAttributes struct {
 	// The sms id string.
 	Invited []string `json:"invited,omitempty"`
@@ -5553,6 +5611,12 @@ type SubscriptionCreateAttributes struct {
 
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
+
+	// Name of user ServiceNow incident will be assigned to.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Group Name to which incident will be assigned to.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
 }
 
 func (*SubscriptionCreateAttributes) isaSubscriptionCreateAttributes() bool {
@@ -5591,6 +5655,14 @@ func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
 	if err != nil {
 		return
 	}
@@ -5716,6 +5788,7 @@ const (
 	SubscriptionListItemDestinationTypePushIosConst     = "push_ios"
 	SubscriptionListItemDestinationTypePushSafariConst  = "push_safari"
 	SubscriptionListItemDestinationTypeSMTPIBMConst     = "smtp_ibm"
+	SubscriptionListItemDestinationTypeServicenowConst  = "servicenow"
 	SubscriptionListItemDestinationTypeSlackConst       = "slack"
 	SubscriptionListItemDestinationTypeSmsIBMConst      = "sms_ibm"
 	SubscriptionListItemDestinationTypeWebhookConst     = "webhook"
@@ -5770,6 +5843,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // - SubscriptionUpdateAttributesEmailUpdateAttributes
 // - SubscriptionUpdateAttributesWebhookAttributes
 // - SubscriptionUpdateAttributesSlackAttributes
+// - SubscriptionUpdateAttributesServiceNowAttributes
 type SubscriptionUpdateAttributes struct {
 	// The email ids or phone numbers.
 	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
@@ -5797,6 +5871,12 @@ type SubscriptionUpdateAttributes struct {
 
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
+
+	// Name of user ServiceNow incident will be assigned to.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Group Name to which incident will be assigned to.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
 }
 
 func (*SubscriptionUpdateAttributes) isaSubscriptionUpdateAttributes() bool {
@@ -5843,6 +5923,14 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
 	if err != nil {
 		return
 	}
@@ -5937,7 +6025,7 @@ type TagsSubscriptionListItem struct {
 	// The name of the tag its subscribed.
 	TagName *string `json:"tag_name" validate:"required"`
 
-	// The user identifier for the the device registration.
+	// The user identifier for the device registration.
 	UserID *string `json:"user_id,omitempty"`
 
 	// Updated at.
@@ -6634,7 +6722,7 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 	return
 }
 
-// DestinationConfigOneOfFcmDestinationConfig : Payload describing a FCM destination configuration.
+// DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
 	// FCM server_key.
@@ -6725,13 +6813,13 @@ func UnmarshalDestinationConfigOneOfFirefoxDestinationConfig(m map[string]json.R
 	return
 }
 
-// DestinationConfigOneOfIBMCloudFunctionsDestinationConfig : Payload describing a IBM Cloud Functions destination configuration.
+// DestinationConfigOneOfIBMCloudFunctionsDestinationConfig : Payload describing an IBM Cloud Functions destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfIBMCloudFunctionsDestinationConfig struct {
 	// URL of IBM Cloud Functions Trigger EndPoint.
 	URL *string `json:"url" validate:"required"`
 
-	// APIKey with access of IBM Cloud Functions IAM Namespace.
+	// API Key with access of IBM Cloud Functions IAM Namespace.
 	APIKey *string `json:"api_key,omitempty"`
 }
 
@@ -6763,13 +6851,13 @@ func UnmarshalDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(m map[str
 	return
 }
 
-// DestinationConfigOneOfIosDestinationConfig : Payload describing a IOS destination configuration.
+// DestinationConfigOneOfIosDestinationConfig : Payload describing an iOS destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfIosDestinationConfig struct {
 	// Authentication type (p8 or p12).
 	CertType *string `json:"cert_type" validate:"required"`
 
-	// Sandbox mode for IOS destinations.
+	// Sandbox mode for iOS destinations.
 	IsSandbox *bool `json:"is_sandbox" validate:"required"`
 
 	// Password for certificate (Required when cert_type is p12).
@@ -6871,10 +6959,10 @@ func UnmarshalDestinationConfigOneOfMsTeamsDestinationConfig(m map[string]json.R
 // DestinationConfigOneOfPagerDutyDestinationConfig : Payload describing a PagerDuty destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfPagerDutyDestinationConfig struct {
-	// API Key for the pagerduty account.
+	// API Key for the PagerDuty account.
 	APIKey *string `json:"api_key" validate:"required"`
 
-	// Routing Key(Integration Key) for the team in pagerduty account.
+	// Routing Key (Integration Key) for the team in PagerDuty account.
 	RoutingKey *string `json:"routing_key" validate:"required"`
 }
 
@@ -6907,7 +6995,7 @@ func UnmarshalDestinationConfigOneOfPagerDutyDestinationConfig(m map[string]json
 	return
 }
 
-// DestinationConfigOneOfSafariDestinationConfig : Payload describing a safari destination configuration.
+// DestinationConfigOneOfSafariDestinationConfig : Payload describing a Safari destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfSafariDestinationConfig struct {
 	// Authentication type p12.
@@ -6916,16 +7004,16 @@ type DestinationConfigOneOfSafariDestinationConfig struct {
 	// Password for certificate (Required when cert_type is p12).
 	Password *string `json:"password" validate:"required"`
 
-	// Websire url.
+	// Website url.
 	WebsiteURL *string `json:"website_url" validate:"required"`
 
-	// Websire url.
+	// Website url.
 	WebsiteName *string `json:"website_name" validate:"required"`
 
-	// Websire url.
+	// Website url.
 	URLFormatString *string `json:"url_format_string" validate:"required"`
 
-	// Websire url.
+	// Website url.
 	WebsitePushID *string `json:"website_push_id" validate:"required"`
 
 	// If pre prod enabled.
@@ -6985,7 +7073,70 @@ func UnmarshalDestinationConfigOneOfSafariDestinationConfig(m map[string]json.Ra
 	return
 }
 
-// DestinationConfigOneOfSlackDestinationConfig : Payload describing a slack destination configuration.
+// DestinationConfigOneOfServiceNowDestinationConfig : Payload describing a ServiceNow destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfServiceNowDestinationConfig struct {
+	// ClientID for the ServiceNow account oauth.
+	ClientID *string `json:"client_id" validate:"required"`
+
+	// ClientSecret for the ServiceNow account oauth.
+	ClientSecret *string `json:"client_secret" validate:"required"`
+
+	// Username for ServiceNow account REST API.
+	Username *string `json:"username" validate:"required"`
+
+	// Password for ServiceNow account REST API.
+	Password *string `json:"password" validate:"required"`
+
+	// Instance name for ServiceNow account.
+	InstanceName *string `json:"instance_name" validate:"required"`
+}
+
+// NewDestinationConfigOneOfServiceNowDestinationConfig : Instantiate DestinationConfigOneOfServiceNowDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfServiceNowDestinationConfig(clientID string, clientSecret string, username string, password string, instanceName string) (_model *DestinationConfigOneOfServiceNowDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfServiceNowDestinationConfig{
+		ClientID:     core.StringPtr(clientID),
+		ClientSecret: core.StringPtr(clientSecret),
+		Username:     core.StringPtr(username),
+		Password:     core.StringPtr(password),
+		InstanceName: core.StringPtr(instanceName),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfServiceNowDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfServiceNowDestinationConfig unmarshals an instance of DestinationConfigOneOfServiceNowDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfServiceNowDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfServiceNowDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "client_id", &obj.ClientID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_secret", &obj.ClientSecret)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "username", &obj.Username)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "password", &obj.Password)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "instance_name", &obj.InstanceName)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigOneOfSlackDestinationConfig : Payload describing a Slack destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfSlackDestinationConfig struct {
 	// URL of Slack Incoming Webhook.
@@ -7316,7 +7467,94 @@ func UnmarshalSubscriptionAttributesSmsAttributesResponse(m map[string]json.RawM
 	return
 }
 
-// SubscriptionAttributesSlackAttributesResponse : The attributes for a slack notification.
+// SubscriptionAttributesServiceNowAttributesResponse : The attributes for a ServiceNow notification.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesServiceNowAttributesResponse struct {
+	// Assigned name from ServiceNow account.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Assigned group name from ServiceNow account.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesServiceNowAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesServiceNowAttributesResponse
+func (o *SubscriptionAttributesServiceNowAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesServiceNowAttributesResponse
+func (o *SubscriptionAttributesServiceNowAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesServiceNowAttributesResponse
+func (o *SubscriptionAttributesServiceNowAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesServiceNowAttributesResponse
+func (o *SubscriptionAttributesServiceNowAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesServiceNowAttributesResponse
+func (o *SubscriptionAttributesServiceNowAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.AssignedTo != nil {
+		m["assigned_to"] = o.AssignedTo
+	}
+	if o.AssignmentGroup != nil {
+		m["assignment_group"] = o.AssignmentGroup
+	}
+	buffer, err = json.Marshal(m)
+	return
+}
+
+// UnmarshalSubscriptionAttributesServiceNowAttributesResponse unmarshals an instance of SubscriptionAttributesServiceNowAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesServiceNowAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesServiceNowAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	delete(m, "assigned_to")
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
+	if err != nil {
+		return
+	}
+	delete(m, "assignment_group")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesSlackAttributesResponse : The attributes for a Slack notification.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesSlackAttributesResponse struct {
 	// Attachment Color for Slack Notification.
@@ -7589,6 +7827,35 @@ func UnmarshalSubscriptionCreateAttributesSmsAttributes(m map[string]json.RawMes
 	return
 }
 
+// SubscriptionCreateAttributesServiceNowAttributes : The attributes for a ServiceNow notification.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesServiceNowAttributes struct {
+	// Name of user ServiceNow incident will be assigned to.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Group Name to which incident will be assigned to.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
+}
+
+func (*SubscriptionCreateAttributesServiceNowAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesServiceNowAttributes unmarshals an instance of SubscriptionCreateAttributesServiceNowAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesServiceNowAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesServiceNowAttributes)
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionCreateAttributesSlackAttributes : The attributes for a slack notification.
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesSlackAttributes struct {
@@ -7756,6 +8023,35 @@ func UnmarshalSubscriptionUpdateAttributesSmsUpdateAttributes(m map[string]json.
 		return
 	}
 	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalUpdateAttributesUnsubscribed)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionUpdateAttributesServiceNowAttributes : The attributes for a ServiceNow notification.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesServiceNowAttributes struct {
+	// Name of user ServiceNow incident will be assigned to.
+	AssignedTo *string `json:"assigned_to,omitempty"`
+
+	// Group Name to which incident will be assigned to.
+	AssignmentGroup *string `json:"assignment_group,omitempty"`
+}
+
+func (*SubscriptionUpdateAttributesServiceNowAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesServiceNowAttributes unmarshals an instance of SubscriptionUpdateAttributesServiceNowAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesServiceNowAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesServiceNowAttributes)
+	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "assignment_group", &obj.AssignmentGroup)
 	if err != nil {
 		return
 	}
