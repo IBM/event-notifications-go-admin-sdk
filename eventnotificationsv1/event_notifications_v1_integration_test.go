@@ -802,8 +802,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
 				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -829,8 +827,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1213,8 +1209,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
 				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1242,8 +1236,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//Firefox
 			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
