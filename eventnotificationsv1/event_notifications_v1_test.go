@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -8419,6 +8419,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				urlFormatString := "testString"
 				websitePushID := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfSafariDestinationConfig(certType, password, websiteURL, websiteName, urlFormatString, websitePushID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigOneOfServiceNowDestinationConfig successfully`, func() {
+				clientID := "testString"
+				clientSecret := "testString"
+				username := "testString"
+				password := "testString"
+				instanceName := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfServiceNowDestinationConfig(clientID, clientSecret, username, password, instanceName)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

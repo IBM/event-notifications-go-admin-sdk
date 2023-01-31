@@ -70,6 +70,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID8            string
 		destinationID9            string
 		destinationID10           string
+		destinationID11           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -81,9 +82,15 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID8           string
 		subscriptionID9           string
 		subscriptionID10          string
+		subscriptionID11          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
+		sNowClientID              string
+		sNowClientSecret          string
+		sNowUserName              string
+		sNowPassword              string
+		sNowInstanceName          string
 	)
 
 	var shouldSkipTest = func() {
@@ -132,6 +139,36 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load service safariCertificatePath configuration property, skipping tests")
 			}
 			fmt.Printf("Service safariCertificatePath: %s\n", safariCertificatePath)
+
+			sNowClientID = config["SNOW_CLIENT_ID"]
+			if sNowClientID == "" {
+				Skip("Unable to load service sNowClientID configuration property, skipping tests")
+			}
+			fmt.Printf("Service sNowClientID: %s\n", sNowClientID)
+
+			sNowClientSecret = config["SNOW_CLIENT_SECRET"]
+			if sNowClientSecret == "" {
+				Skip("Unable to load service sNowClientSecret configuration property, skipping tests")
+			}
+			fmt.Printf("Service sNowClientSecret: %s\n", sNowClientSecret)
+
+			sNowUserName = config["SNOW_USER_NAME"]
+			if sNowUserName == "" {
+				Skip("Unable to load service sNowUserName configuration property, skipping tests")
+			}
+			fmt.Printf("Service sNowUserName: %s\n", sNowUserName)
+
+			sNowPassword = config["SNOW_PASSWORD"]
+			if sNowPassword == "" {
+				Skip("Unable to load service sNowPassword configuration property, skipping tests")
+			}
+			fmt.Printf("Service sNowPassword: %s\n", sNowPassword)
+
+			sNowInstanceName = config["SNOW_INSTANCE_NAME"]
+			if sNowInstanceName == "" {
+				Skip("Unable to load service sNowInstanceName configuration property, skipping tests")
+			}
+			fmt.Printf("Service sNowInstanceName: %s\n", sNowInstanceName)
 
 			shouldSkipTest = func() {}
 		})
@@ -765,8 +802,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
 				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -792,8 +827,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -836,6 +869,35 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID10 = *destinationResponse.ID
+
+			serviceNowCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"servicenow_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeServicenowConst,
+			)
+
+			destinationConfigParamsServiceNowModel := &eventnotificationsv1.DestinationConfigOneOfServiceNowDestinationConfig{
+				ClientID:     core.StringPtr(sNowClientID),
+				ClientSecret: core.StringPtr(sNowClientSecret),
+				Username:     core.StringPtr(sNowUserName),
+				Password:     core.StringPtr(sNowPassword),
+				InstanceName: core.StringPtr(sNowInstanceName),
+			}
+
+			serviceNowDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsServiceNowModel,
+			}
+
+			serviceNowCreateDestinationOptions.SetConfig(serviceNowDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(serviceNowCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID11 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1147,8 +1209,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
 				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			chromeDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1176,8 +1236,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//Firefox
 			destinationConfigParamsfireModel := &eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig{
 				WebsiteURL: core.StringPtr("https://cloud.ibm.com"),
-				PublicKey:  core.StringPtr("ksddkasjdaksd"),
-				PreProd:    core.BoolPtr(false),
 			}
 
 			fireDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1228,6 +1286,36 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.ID).To(Equal(core.StringPtr(destinationID10)))
 			Expect(destination.Name).To(Equal(core.StringPtr(pdName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(pdDescription)))
+
+			destinationConfigParamsServiceNowModel := &eventnotificationsv1.DestinationConfigOneOfServiceNowDestinationConfig{
+				ClientID:     core.StringPtr(sNowClientID),
+				ClientSecret: core.StringPtr(sNowClientSecret),
+				Username:     core.StringPtr(sNowUserName),
+				Password:     core.StringPtr(sNowPassword),
+				InstanceName: core.StringPtr(sNowInstanceName),
+			}
+
+			serviceNowDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsServiceNowModel,
+			}
+
+			serviceNowName := "ServiceNow_dest_update"
+			serviceNowDescription := "This destination update is for ServiceNow"
+			serviceNowUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID11),
+				Name:        core.StringPtr(serviceNowName),
+				Description: core.StringPtr(serviceNowDescription),
+				Config:      serviceNowDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(serviceNowUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID11)))
+			Expect(destination.Name).To(Equal(core.StringPtr(serviceNowName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(serviceNowDescription)))
 
 			//
 			// The following status codes aren't covered by tests.
@@ -1463,6 +1551,27 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID10 = string(*subscription.ID)
+
+			createServiceNowSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Service Now subscription"),
+				Description:   core.StringPtr("Subscription for Service Now"),
+				DestinationID: core.StringPtr(destinationID11),
+				TopicID:       core.StringPtr(topicID),
+				Attributes: &eventnotificationsv1.SubscriptionCreateAttributesServiceNowAttributes{
+					AssignedTo:      core.StringPtr("user"),
+					AssignmentGroup: core.StringPtr("test"),
+				},
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createServiceNowSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID11 = string(*subscription.ID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1794,6 +1903,28 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID10)))
 			Expect(subscription.Name).To(Equal(pdName))
 			Expect(subscription.Description).To(Equal(pdDescription))
+
+			serviceNowName := core.StringPtr("subscription_Service_Now_update")
+			serviceNowDescription := core.StringPtr("Subscription update for Service_Now")
+			updateServiceNowSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        serviceNowName,
+				Description: serviceNowDescription,
+				ID:          core.StringPtr(subscriptionID11),
+				Attributes: &eventnotificationsv1.SubscriptionUpdateAttributesServiceNowAttributes{
+					AssignedTo:      core.StringPtr("user"),
+					AssignmentGroup: core.StringPtr("test"),
+				},
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateServiceNowSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID11)))
+			Expect(subscription.Name).To(Equal(serviceNowName))
+			Expect(subscription.Description).To(Equal(serviceNowDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1974,7 +2105,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -2032,7 +2163,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
