@@ -1,3 +1,12 @@
+## [0.1.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.7...v0.1.8) (2023-02-01)
+
+
+### Bug Fixes
+
+* add service now destination support ([1b95c96](https://github.com/IBM/event-notifications-go-admin-sdk/commit/1b95c96febcca02debea0da4bc6cadeb6c301249))
+* add Service Now Destination support ([a3e8859](https://github.com/IBM/event-notifications-go-admin-sdk/commit/a3e8859dfb3ccc04d01879de3646eeb5bf971686))
+* add Service Now Destination support ([0fcb298](https://github.com/IBM/event-notifications-go-admin-sdk/commit/0fcb2988579c74fa0e65bd65d8b6d612310214ee))
+
 ## [0.1.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.6...v0.1.7) (2022-12-05)
 
 
