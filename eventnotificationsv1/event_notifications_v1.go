@@ -2924,14 +2924,23 @@ type DestinationConfigOneOf struct {
 	// List of sensitive headers from custom headers.
 	SensitiveHeaders []string `json:"sensitive_headers,omitempty"`
 
-	// FCM server_key.
+	// FCM server_key(deprecated-FCM legacy HTTP API).
 	ServerKey *string `json:"server_key,omitempty"`
 
-	// FCM sender_id.
+	// FCM sender_id(deprecated-FCM legacy HTTP API).
 	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
 	PreProd *bool `json:"pre_prod,omitempty"`
+
+	// FCM project_id.
+	ProjectID *string `json:"project_id,omitempty"`
+
+	// FCM private_key.
+	PrivateKey *string `json:"private_key,omitempty"`
+
+	// FCM client_email.
+	ClientEmail *string `json:"client_email,omitempty"`
 
 	// Authentication type (p8 or p12).
 	CertType *string `json:"cert_type,omitempty"`
@@ -3028,6 +3037,18 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_id", &obj.ProjectID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "private_key", &obj.PrivateKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_email", &obj.ClientEmail)
 	if err != nil {
 		return
 	}
@@ -6725,24 +6746,23 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 // DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
-	// FCM server_key.
-	ServerKey *string `json:"server_key" validate:"required"`
+	// FCM server_key(deprecated-FCM legacy HTTP API).
+	ServerKey *string `json:"server_key,omitempty"`
 
-	// FCM sender_id.
-	SenderID *string `json:"sender_id" validate:"required"`
+	// FCM sender_id(deprecated-FCM legacy HTTP API).
+	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
 	PreProd *bool `json:"pre_prod,omitempty"`
-}
 
-// NewDestinationConfigOneOfFcmDestinationConfig : Instantiate DestinationConfigOneOfFcmDestinationConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewDestinationConfigOneOfFcmDestinationConfig(serverKey string, senderID string) (_model *DestinationConfigOneOfFcmDestinationConfig, err error) {
-	_model = &DestinationConfigOneOfFcmDestinationConfig{
-		ServerKey: core.StringPtr(serverKey),
-		SenderID:  core.StringPtr(senderID),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
+	// FCM project_id.
+	ProjectID *string `json:"project_id,omitempty"`
+
+	// FCM private_key.
+	PrivateKey *string `json:"private_key,omitempty"`
+
+	// FCM client_email.
+	ClientEmail *string `json:"client_email,omitempty"`
 }
 
 func (*DestinationConfigOneOfFcmDestinationConfig) isaDestinationConfigOneOf() bool {
@@ -6761,6 +6781,18 @@ func UnmarshalDestinationConfigOneOfFcmDestinationConfig(m map[string]json.RawMe
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_id", &obj.ProjectID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "private_key", &obj.PrivateKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_email", &obj.ClientEmail)
 	if err != nil {
 		return
 	}

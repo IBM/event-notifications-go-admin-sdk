@@ -24,6 +24,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/IBM/event-notifications-go-admin-sdk/eventnotificationsv1"
 	"github.com/IBM/go-sdk-core/v5/core"
@@ -32,7 +33,6 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-//
 // This file provides an example of how to use the Event Notifications service.
 //
 // The following configuration properties are assumed to be defined:
@@ -44,7 +44,6 @@ import (
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
 // export IBM_CREDENTIALS_FILE=<name of configuration file>
-//
 const externalConfigFile = "../event_notifications_v1.env"
 
 var (
@@ -69,6 +68,7 @@ var (
 	destinationID9            string
 	destinationID10           string
 	destinationID11           string
+	destinationID12           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -82,6 +82,9 @@ var (
 	sNowUserName              string
 	sNowPassword              string
 	sNowInstanceName          string
+	fcmPrivateKey             string
+	fcmProjectID              string
+	fcmClientEmail            string
 )
 
 func shouldSkipTest() {
@@ -122,6 +125,25 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load service fcmSenderId configuration property, skipping tests")
 			}
 			fmt.Printf("Service fcmSenderId: %s\n", fcmSenderId)
+
+			fcmProjectID = config["FCM_PROJECT_ID"]
+			if fcmProjectID == "" {
+				Skip("Unable to load service fcmProjectID configuration property, skipping tests")
+			}
+			fmt.Printf("Service fcmProjectID: %s\n", fcmProjectID)
+
+			fcmClientEmail = config["FCM_CLIENT_EMAIL"]
+			if fcmClientEmail == "" {
+				Skip("Unable to load service fcmclientEmail configuration property, skipping tests")
+			}
+			fmt.Printf("Service fcmClientEmail: %s\n", fcmClientEmail)
+
+			fcmPrivateKey = config["FCM_PRIVATE_KEY"]
+			fcmPrivateKey = strings.ReplaceAll(fcmPrivateKey, "\\n", "\n")
+			if fcmPrivateKey == "" {
+				Skip("Unable to load service fcmPrivateKey configuration property, skipping tests")
+			}
+			fmt.Printf("Service fcmPrivateKey: %s\n", fcmPrivateKey)
 
 			safariCertificatePath = config["SAFARI_CERTIFICATE"]
 			if safariCertificatePath == "" {
@@ -815,6 +837,38 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID11 = *destinationResponse.ID
+
+			createFCMV1DestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"FCM_destination_V1",
+				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
+			)
+
+			destinationFCMV1ConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
+				ProjectID:   core.StringPtr(fcmProjectID),
+				PrivateKey:  core.StringPtr(fcmPrivateKey),
+				ClientEmail: core.StringPtr(fcmClientEmail),
+			}
+
+			destinationFCMV1ConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationFCMV1ConfigParamsModel,
+			}
+
+			createDestinationOptions.SetConfig(destinationFCMV1ConfigModel)
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createFCMV1DestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID12 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1200,6 +1254,37 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			destination, response, err = eventNotificationsService.UpdateDestination(serviceNowUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//FCM V1
+
+			destinationConfigFCMV1ParamsModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
+				ProjectID:   core.StringPtr(fcmProjectID),
+				PrivateKey:  core.StringPtr(fcmPrivateKey),
+				ClientEmail: core.StringPtr(fcmClientEmail),
+			}
+			destinationConfigFCMV1Model := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigFCMV1ParamsModel,
+			}
+
+			updateFCMV1DestinationOptions := eventNotificationsService.NewUpdateDestinationOptions(
+				instanceID,
+				destinationID12,
+			)
+
+			updateFCMV1DestinationOptions.SetName("Admin FCM V1 Compliance")
+			updateFCMV1DestinationOptions.SetDescription("This destination is for creating admin FCM V1 to receive compliance notifications")
+			updateFCMV1DestinationOptions.SetConfig(destinationConfigFCMV1Model)
+
+			destination, response, err = eventNotificationsService.UpdateDestination(updateFCMV1DestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1782,7 +1867,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

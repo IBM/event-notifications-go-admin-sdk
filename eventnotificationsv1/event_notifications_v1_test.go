@@ -8372,13 +8372,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigOneOfFcmDestinationConfig successfully`, func() {
-				serverKey := "testString"
-				senderID := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigOneOfFcmDestinationConfig(serverKey, senderID)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfFirefoxDestinationConfig(websiteURL)
