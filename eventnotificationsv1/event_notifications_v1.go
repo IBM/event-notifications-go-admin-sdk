@@ -1351,8 +1351,8 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 	return
 }
 
-// CreateTagsSubscription : Create a new Tag subscription
-// Create a new Tag subscription.
+// CreateTagsSubscription : Create a new tag subscription
+// Create a new tag subscription.
 func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.CreateTagsSubscriptionWithContext(context.Background(), createTagsSubscriptionOptions)
 }
@@ -1425,8 +1425,8 @@ func (eventNotifications *EventNotificationsV1) CreateTagsSubscriptionWithContex
 	return
 }
 
-// ListTagsSubscription : List all Tag Subscriptions
-// List all Tag Subscriptions.
+// ListTagsSubscription : List all tag subscriptions
+// List all tag subscriptions.
 func (eventNotifications *EventNotificationsV1) ListTagsSubscription(listTagsSubscriptionOptions *ListTagsSubscriptionOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
 	return eventNotifications.ListTagsSubscriptionWithContext(context.Background(), listTagsSubscriptionOptions)
 }
@@ -1505,8 +1505,8 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionWithContext(
 	return
 }
 
-// DeleteTagsSubscription : Delete a Tag subcription
-// Delete a Tag subcription.
+// DeleteTagsSubscription : Delete a tag subscription
+// Delete a tag subscription.
 func (eventNotifications *EventNotificationsV1) DeleteTagsSubscription(deleteTagsSubscriptionOptions *DeleteTagsSubscriptionOptions) (response *core.DetailedResponse, err error) {
 	return eventNotifications.DeleteTagsSubscriptionWithContext(context.Background(), deleteTagsSubscriptionOptions)
 }
@@ -2924,10 +2924,10 @@ type DestinationConfigOneOf struct {
 	// List of sensitive headers from custom headers.
 	SensitiveHeaders []string `json:"sensitive_headers,omitempty"`
 
-	// FCM server_key(deprecated-FCM legacy HTTP API).
+	// FCM server_key.
 	ServerKey *string `json:"server_key,omitempty"`
 
-	// FCM sender_id(deprecated-FCM legacy HTTP API).
+	// FCM sender_id.
 	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
@@ -6743,13 +6743,13 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 	return
 }
 
-// DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration.
+// DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration. project_id, private_key and client_email for FCM HTTP v1 APIs.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
-	// FCM server_key(deprecated-FCM legacy HTTP API).
+	// FCM server_key.
 	ServerKey *string `json:"server_key,omitempty"`
 
-	// FCM sender_id(deprecated-FCM legacy HTTP API).
+	// FCM sender_id.
 	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
@@ -8153,9 +8153,7 @@ func UnmarshalSubscriptionUpdateAttributesWebhookAttributes(m map[string]json.Ra
 	return
 }
 
-//
 // SourcesPager can be used to simplify the use of the "ListSources" method.
-//
 type SourcesPager struct {
 	hasNext     bool
 	options     *ListSourcesOptions
@@ -8240,9 +8238,7 @@ func (pager *SourcesPager) GetAll() (allItems []SourceListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TopicsPager can be used to simplify the use of the "ListTopics" method.
-//
 type TopicsPager struct {
 	hasNext     bool
 	options     *ListTopicsOptions
@@ -8327,9 +8323,7 @@ func (pager *TopicsPager) GetAll() (allItems []TopicsListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // DestinationsPager can be used to simplify the use of the "ListDestinations" method.
-//
 type DestinationsPager struct {
 	hasNext     bool
 	options     *ListDestinationsOptions
@@ -8414,9 +8408,7 @@ func (pager *DestinationsPager) GetAll() (allItems []DestinationListItem, err er
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TagsSubscriptionPager can be used to simplify the use of the "ListTagsSubscription" method.
-//
 type TagsSubscriptionPager struct {
 	hasNext     bool
 	options     *ListTagsSubscriptionOptions
@@ -8501,9 +8493,7 @@ func (pager *TagsSubscriptionPager) GetAll() (allItems []TagsSubscriptionListIte
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // SubscriptionsPager can be used to simplify the use of the "ListSubscriptions" method.
-//
 type SubscriptionsPager struct {
 	hasNext     bool
 	options     *ListSubscriptionsOptions
@@ -8588,9 +8578,7 @@ func (pager *SubscriptionsPager) GetAll() (allItems []SubscriptionListItem, err 
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // IntegrationsPager can be used to simplify the use of the "ListIntegrations" method.
-//
 type IntegrationsPager struct {
 	hasNext     bool
 	options     *ListIntegrationsOptions

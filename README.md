@@ -39,7 +39,7 @@ Service Name | Package name
 
 * An [IBM Cloud][ibm-cloud-onboarding] account.
 * An Event Notifications Instance
-* Go version 1.16 or above.
+* Go version 1.18 or above.
 
 ## Installation
  Install using the command.
