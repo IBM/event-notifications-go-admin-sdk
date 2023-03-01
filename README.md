@@ -39,7 +39,7 @@ Service Name | Package name
 
 * An [IBM Cloud][ibm-cloud-onboarding] account.
 * An Event Notifications Instance
-* Go version 1.16 or above.
+* Go version 1.18 or above.
 
 ## Installation
  Install using the command.
@@ -671,7 +671,7 @@ notificationsSouce := "<notification-source>"
 specVersion := "1.0"
 
 notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
-notificationFcmBodyModel := "{\"title\" : \"Portugal vs. Denmark\", \"badge\": \"great match\"}"
+notificationFcmBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Alert message\",\"body\": \"Bob wants to play Poker\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"notification for the Poker\"}}}}"
 notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
 notificationSafariBodyModel := "{\"aps\":{\"alert\":{\"title\":\"FlightA998NowBoarding\",\"body\":\"BoardinghasbegunforFlightA998.\",\"action\":\"View\"},\"url-args\":[\"boarding\",\"A998\"]}}}"
 

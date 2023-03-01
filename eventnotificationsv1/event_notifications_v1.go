@@ -1351,8 +1351,8 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 	return
 }
 
-// CreateTagsSubscription : Create a new Tag subscription
-// Create a new Tag subscription.
+// CreateTagsSubscription : Create a new tag subscription
+// Create a new tag subscription.
 func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.CreateTagsSubscriptionWithContext(context.Background(), createTagsSubscriptionOptions)
 }
@@ -1425,8 +1425,8 @@ func (eventNotifications *EventNotificationsV1) CreateTagsSubscriptionWithContex
 	return
 }
 
-// ListTagsSubscription : List all Tag Subscriptions
-// List all Tag Subscriptions.
+// ListTagsSubscription : List all tag subscriptions
+// List all tag subscriptions.
 func (eventNotifications *EventNotificationsV1) ListTagsSubscription(listTagsSubscriptionOptions *ListTagsSubscriptionOptions) (result *TagsSubscriptionList, response *core.DetailedResponse, err error) {
 	return eventNotifications.ListTagsSubscriptionWithContext(context.Background(), listTagsSubscriptionOptions)
 }
@@ -1505,8 +1505,8 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionWithContext(
 	return
 }
 
-// DeleteTagsSubscription : Delete a Tag subcription
-// Delete a Tag subcription.
+// DeleteTagsSubscription : Delete a tag subscription
+// Delete a tag subscription.
 func (eventNotifications *EventNotificationsV1) DeleteTagsSubscription(deleteTagsSubscriptionOptions *DeleteTagsSubscriptionOptions) (response *core.DetailedResponse, err error) {
 	return eventNotifications.DeleteTagsSubscriptionWithContext(context.Background(), deleteTagsSubscriptionOptions)
 }
@@ -2933,6 +2933,15 @@ type DestinationConfigOneOf struct {
 	// If pre prod enabled.
 	PreProd *bool `json:"pre_prod,omitempty"`
 
+	// FCM project_id.
+	ProjectID *string `json:"project_id,omitempty"`
+
+	// FCM private_key.
+	PrivateKey *string `json:"private_key,omitempty"`
+
+	// FCM client_email.
+	ClientEmail *string `json:"client_email,omitempty"`
+
 	// Authentication type (p8 or p12).
 	CertType *string `json:"cert_type,omitempty"`
 
@@ -3028,6 +3037,18 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_id", &obj.ProjectID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "private_key", &obj.PrivateKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_email", &obj.ClientEmail)
 	if err != nil {
 		return
 	}
@@ -6722,27 +6743,26 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 	return
 }
 
-// DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration.
+// DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration. project_id, private_key and client_email for FCM HTTP v1 APIs.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
 	// FCM server_key.
-	ServerKey *string `json:"server_key" validate:"required"`
+	ServerKey *string `json:"server_key,omitempty"`
 
 	// FCM sender_id.
-	SenderID *string `json:"sender_id" validate:"required"`
+	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
 	PreProd *bool `json:"pre_prod,omitempty"`
-}
 
-// NewDestinationConfigOneOfFcmDestinationConfig : Instantiate DestinationConfigOneOfFcmDestinationConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewDestinationConfigOneOfFcmDestinationConfig(serverKey string, senderID string) (_model *DestinationConfigOneOfFcmDestinationConfig, err error) {
-	_model = &DestinationConfigOneOfFcmDestinationConfig{
-		ServerKey: core.StringPtr(serverKey),
-		SenderID:  core.StringPtr(senderID),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
+	// FCM project_id.
+	ProjectID *string `json:"project_id,omitempty"`
+
+	// FCM private_key.
+	PrivateKey *string `json:"private_key,omitempty"`
+
+	// FCM client_email.
+	ClientEmail *string `json:"client_email,omitempty"`
 }
 
 func (*DestinationConfigOneOfFcmDestinationConfig) isaDestinationConfigOneOf() bool {
@@ -6761,6 +6781,18 @@ func UnmarshalDestinationConfigOneOfFcmDestinationConfig(m map[string]json.RawMe
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_id", &obj.ProjectID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "private_key", &obj.PrivateKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_email", &obj.ClientEmail)
 	if err != nil {
 		return
 	}
@@ -8121,9 +8153,7 @@ func UnmarshalSubscriptionUpdateAttributesWebhookAttributes(m map[string]json.Ra
 	return
 }
 
-//
 // SourcesPager can be used to simplify the use of the "ListSources" method.
-//
 type SourcesPager struct {
 	hasNext     bool
 	options     *ListSourcesOptions
@@ -8208,9 +8238,7 @@ func (pager *SourcesPager) GetAll() (allItems []SourceListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TopicsPager can be used to simplify the use of the "ListTopics" method.
-//
 type TopicsPager struct {
 	hasNext     bool
 	options     *ListTopicsOptions
@@ -8295,9 +8323,7 @@ func (pager *TopicsPager) GetAll() (allItems []TopicsListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // DestinationsPager can be used to simplify the use of the "ListDestinations" method.
-//
 type DestinationsPager struct {
 	hasNext     bool
 	options     *ListDestinationsOptions
@@ -8382,9 +8408,7 @@ func (pager *DestinationsPager) GetAll() (allItems []DestinationListItem, err er
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TagsSubscriptionPager can be used to simplify the use of the "ListTagsSubscription" method.
-//
 type TagsSubscriptionPager struct {
 	hasNext     bool
 	options     *ListTagsSubscriptionOptions
@@ -8469,9 +8493,7 @@ func (pager *TagsSubscriptionPager) GetAll() (allItems []TagsSubscriptionListIte
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // SubscriptionsPager can be used to simplify the use of the "ListSubscriptions" method.
-//
 type SubscriptionsPager struct {
 	hasNext     bool
 	options     *ListSubscriptionsOptions
@@ -8556,9 +8578,7 @@ func (pager *SubscriptionsPager) GetAll() (allItems []SubscriptionListItem, err 
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // IntegrationsPager can be used to simplify the use of the "ListIntegrations" method.
-//
 type IntegrationsPager struct {
 	hasNext     bool
 	options     *ListIntegrationsOptions

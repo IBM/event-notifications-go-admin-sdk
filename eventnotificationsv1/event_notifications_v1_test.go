@@ -21,7 +21,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -67,14 +66,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				Expect(eventNotificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -103,8 +101,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				err := eventNotificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
@@ -122,13 +119,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-			})
+			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(eventNotificationsService).To(BeNil())
@@ -139,7 +135,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
+				"EVENT_NOTIFICATIONS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -1412,14 +1408,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SourceList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -1429,7 +1425,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -1439,7 +1435,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -1478,8 +1474,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
@@ -1505,8 +1501,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
@@ -2626,14 +2622,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.TopicList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -2643,7 +2639,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -2653,7 +2649,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -2692,8 +2688,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
@@ -2719,8 +2715,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
@@ -3946,14 +3942,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.DestinationList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -3963,7 +3959,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -3973,7 +3969,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -4012,8 +4008,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
@@ -4039,8 +4035,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
@@ -4505,7 +4501,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Invoke UpdateDestination with error: Param validation error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:  testServer.URL,
+					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
@@ -5243,14 +5239,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5260,7 +5256,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5270,7 +5266,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -5309,12 +5305,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					DeviceID: core.StringPtr("testString"),
-					UserID: core.StringPtr("testString"),
-					TagName: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					DeviceID:   core.StringPtr("testString"),
+					UserID:     core.StringPtr("testString"),
+					TagName:    core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
@@ -5340,12 +5336,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					DeviceID: core.StringPtr("testString"),
-					UserID: core.StringPtr("testString"),
-					TagName: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					DeviceID:   core.StringPtr("testString"),
+					UserID:     core.StringPtr("testString"),
+					TagName:    core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
@@ -5965,14 +5961,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SubscriptionList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5982,7 +5978,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5992,7 +5988,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -6031,8 +6027,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
@@ -6058,8 +6054,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
@@ -6960,14 +6956,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.IntegrationList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -6977,7 +6973,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -6987,7 +6983,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -7026,8 +7022,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
@@ -7053,8 +7049,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
@@ -8372,13 +8368,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigOneOfFcmDestinationConfig successfully`, func() {
-				serverKey := "testString"
-				senderID := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigOneOfFcmDestinationConfig(serverKey, senderID)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfFirefoxDestinationConfig(websiteURL)
@@ -8536,7 +8525,7 @@ func CreateMockUUID(mockData string) *strfmt.UUID {
 }
 
 func CreateMockReader(mockData string) io.ReadCloser {
-	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
+	return io.NopCloser(bytes.NewReader([]byte(mockData)))
 }
 
 func CreateMockDate(mockData string) *strfmt.Date {
