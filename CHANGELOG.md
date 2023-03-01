@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.8...v0.2.0) (2023-03-01)
+
+
+### Features
+
+* add FCM V1 destination support ([5502d4a](https://github.com/IBM/event-notifications-go-admin-sdk/commit/5502d4aff0ebc9170ba40c7550b988f947ca01af))
+
 ## [0.1.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.7...v0.1.8) (2023-02-01)
 
 
