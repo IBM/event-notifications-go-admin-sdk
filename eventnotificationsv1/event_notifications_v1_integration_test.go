@@ -72,6 +72,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID10           string
 		destinationID11           string
 		destinationID12           string
+		destinationID13           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -85,6 +86,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID10          string
 		subscriptionID11          string
 		subscriptionID12          string
+		subscriptionID13          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -96,6 +98,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		fcmPrivateKey             string
 		fcmProjectID              string
 		fcmClientEmail            string
+		codeEngineURL             string
 	)
 
 	var shouldSkipTest = func() {
@@ -192,6 +195,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load service sNowInstanceName configuration property, skipping tests")
 			}
 			fmt.Printf("Service sNowInstanceName: %s\n", sNowInstanceName)
+
+			codeEngineURL = config["CODE_ENGINE_URL"]
+			if codeEngineURL == "" {
+				Skip("Unable to load code engine url configuration property, skipping tests")
+			}
+			fmt.Printf("code engine url: %s\n", codeEngineURL)
 
 			shouldSkipTest = func() {}
 		})
@@ -949,6 +958,41 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID12 = *destinationResponse.ID
+
+			destinationConfigCEParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr(codeEngineURL),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"authorization": "api_key_value",
+				},
+				SensitiveHeaders: []string{"authorization"},
+			}
+
+			destinationConfigCEModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigCEParamsModel,
+			}
+
+			ceName := "codeengine_destination"
+			ceTypeVal := "ibmce"
+			ceDescription := "codeengine Destination"
+			createCEDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(ceName),
+				Type:        core.StringPtr(ceTypeVal),
+				Description: core.StringPtr(ceDescription),
+				Config:      destinationConfigCEModel,
+			}
+
+			destinationCEResponse, response, err := eventNotificationsService.CreateDestination(createCEDestinationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationCEResponse).ToNot(BeNil())
+			Expect(destinationCEResponse.Name).To(Equal(core.StringPtr(ceName)))
+			Expect(destinationCEResponse.Type).To(Equal(core.StringPtr(ceTypeVal)))
+			Expect(destinationCEResponse.Description).To(Equal(core.StringPtr(ceDescription)))
+
+			destinationID13 = *destinationCEResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1001,7 +1045,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			listDestinationsOptions = &eventnotificationsv1.ListDestinationsOptions{
 				InstanceID: core.StringPtr(instanceID),
-				Limit:      core.Int64Ptr(int64(10)),
+				Limit:      core.Int64Ptr(int64(15)),
 				Offset:     core.Int64Ptr(int64(0)),
 				Search:     core.StringPtr(search),
 			}
@@ -1396,6 +1440,37 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(fcmName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(fcmDescription)))
 
+			destinationConfigCEParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr(codeEngineURL),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"authorization": "authorization key",
+				},
+				SensitiveHeaders: []string{"authorization"},
+			}
+
+			destinationConfigCEModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigCEParamsModel,
+			}
+
+			ceName := "code engine updated"
+			ceDescription := "This destination is updated for creating code engine notifications"
+			updateCEDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID13),
+				Name:        core.StringPtr(ceName),
+				Description: core.StringPtr(ceDescription),
+				Config:      destinationConfigCEModel,
+			}
+
+			ceDestination, response, err := eventNotificationsService.UpdateDestination(updateCEDestinationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(ceDestination).ToNot(BeNil())
+			Expect(ceDestination.ID).To(Equal(core.StringPtr(destinationID13)))
+			Expect(ceDestination.Name).To(Equal(core.StringPtr(ceName)))
+			Expect(ceDestination.Description).To(Equal(core.StringPtr(ceDescription)))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1668,6 +1743,31 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID12 = string(*subscription.ID)
+
+			subscriptionCreateCEAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
+				SigningEnabled: core.BoolPtr(false),
+			}
+
+			ceName := core.StringPtr("subscription_code_engine")
+			ceDescription := core.StringPtr("Subscription for code engine")
+			createCESubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          ceName,
+				Description:   ceDescription,
+				DestinationID: core.StringPtr(destinationID13),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateCEAttributesModel,
+			}
+
+			ceSubscription, response, err := eventNotificationsService.CreateSubscription(createCESubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(ceSubscription).ToNot(BeNil())
+			Expect(ceSubscription.Attributes).ToNot(BeNil())
+			Expect(ceSubscription.Description).To(Equal(ceDescription))
+			Expect(ceSubscription.Name).To(Equal(ceName))
+			subscriptionID13 = *ceSubscription.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2039,6 +2139,29 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID12)))
 			Expect(subscription.Name).To(Equal(fcmName))
 			Expect(subscription.Description).To(Equal(fcmDescription))
+
+			subscriptionCEUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
+				SigningEnabled: core.BoolPtr(true),
+			}
+
+			ceName := core.StringPtr("code_engine_sub_updated")
+			ceDescription := core.StringPtr("Update code engine subscription")
+			updateCESubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionID13),
+				Name:        ceName,
+				Description: ceDescription,
+				Attributes:  subscriptionCEUpdateAttributesModel,
+			}
+
+			ceSubscription, response, err := eventNotificationsService.UpdateSubscription(updateCESubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(ceSubscription).ToNot(BeNil())
+			Expect(ceSubscription.ID).To(Equal(core.StringPtr(subscriptionID13)))
+			Expect(ceSubscription.Name).To(Equal(ceName))
+			Expect(ceSubscription.Description).To(Equal(ceDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2218,7 +2341,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -2276,7 +2399,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

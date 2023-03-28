@@ -69,6 +69,7 @@ var (
 	destinationID10           string
 	destinationID11           string
 	destinationID12           string
+	destinationID13           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -85,6 +86,7 @@ var (
 	fcmPrivateKey             string
 	fcmProjectID              string
 	fcmClientEmail            string
+	codeEngineURL             string
 )
 
 func shouldSkipTest() {
@@ -180,6 +182,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load service sNowInstanceName configuration property, skipping tests")
 			}
 			fmt.Printf("Service sNowInstanceName: %s\n", sNowInstanceName)
+
+			codeEngineURL = config["CODE_ENGINE_URL"]
+			if codeEngineURL == "" {
+				Skip("Unable to load code engine url configuration property, skipping tests")
+			}
+			fmt.Printf("code engine url: %s\n", codeEngineURL)
 
 			configLoaded = len(config) > 0
 		})
@@ -869,6 +877,44 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID12 = *destinationResponse.ID
+
+			destinationConfigCEParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr(codeEngineURL),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"authorization": "api_key_value",
+				},
+				SensitiveHeaders: []string{"authorization"},
+			}
+
+			destinationConfigCEModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigCEParamsModel,
+			}
+
+			ceName := "codeengine_destination"
+			ceTypeVal := "ibmce"
+			ceDescription := "codeengine Destination"
+			createCEDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(ceName),
+				Type:        core.StringPtr(ceTypeVal),
+				Description: core.StringPtr(ceDescription),
+				Config:      destinationConfigCEModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createCEDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID13 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1285,6 +1331,42 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			updateFCMV1DestinationOptions.SetConfig(destinationConfigFCMV1Model)
 
 			destination, response, err = eventNotificationsService.UpdateDestination(updateFCMV1DestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			//Code Engine
+
+			destinationConfigCEParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
+				URL:  core.StringPtr(codeEngineURL),
+				Verb: core.StringPtr("get"),
+				CustomHeaders: map[string]string{
+					"authorization": "authorization key",
+				},
+				SensitiveHeaders: []string{"authorization"},
+			}
+
+			destinationConfigCEModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigCEParamsModel,
+			}
+
+			ceName := "code engine updated"
+			ceDescription := "This destination is updated for creating code engine notifications"
+			updateCEDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID13),
+				Name:        core.StringPtr(ceName),
+				Description: core.StringPtr(ceDescription),
+				Config:      destinationConfigCEModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(updateCEDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1867,7 +1949,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
