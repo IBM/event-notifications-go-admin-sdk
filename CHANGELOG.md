@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.0...v0.2.1) (2023-03-28)
+
+
+### Bug Fixes
+
+* add code engine destination support ([aac7810](https://github.com/IBM/event-notifications-go-admin-sdk/commit/aac7810f02c78b6dfa728461150fdec8d8e78b1a))
+
 # [0.2.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.1.8...v0.2.0) (2023-03-01)
 
 
