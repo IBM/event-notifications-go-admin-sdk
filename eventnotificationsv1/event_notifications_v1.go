@@ -2195,6 +2195,7 @@ type CreateDestinationOptions struct {
 // Constants associated with the CreateDestinationOptions.Type property.
 // The type of Destination Webhook.
 const (
+	CreateDestinationOptionsTypeIbmceConst       = "ibmce"
 	CreateDestinationOptionsTypeIbmcfConst       = "ibmcf"
 	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
 	CreateDestinationOptionsTypePagerdutyConst   = "pagerduty"
@@ -2802,7 +2803,7 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
+	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2819,8 +2820,9 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
+// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
 const (
+	DestinationTypeIbmceConst       = "ibmce"
 	DestinationTypeIbmcfConst       = "ibmcf"
 	DestinationTypeMsteamsConst     = "msteams"
 	DestinationTypePagerdutyConst   = "pagerduty"
@@ -3227,6 +3229,7 @@ type DestinationListItem struct {
 // Constants associated with the DestinationListItem.Type property.
 // Destination type.
 const (
+	DestinationListItemTypeIbmceConst       = "ibmce"
 	DestinationListItemTypeIbmcfConst       = "ibmcf"
 	DestinationListItemTypeMsteamsConst     = "msteams"
 	DestinationListItemTypePagerdutyConst   = "pagerduty"
@@ -3299,6 +3302,7 @@ type DestinationResponse struct {
 // Constants associated with the DestinationResponse.Type property.
 // Destination type.
 const (
+	DestinationResponseTypeIbmceConst       = "ibmce"
 	DestinationResponseTypeIbmcfConst       = "ibmcf"
 	DestinationResponseTypeMsteamsConst     = "msteams"
 	DestinationResponseTypePagerdutyConst   = "pagerduty"
@@ -5247,6 +5251,7 @@ type Subscription struct {
 // Constants associated with the Subscription.DestinationType property.
 // The type of destination.
 const (
+	SubscriptionDestinationTypeIbmceConst       = "ibmce"
 	SubscriptionDestinationTypeIbmcfConst       = "ibmcf"
 	SubscriptionDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionDestinationTypePagerdutyConst   = "pagerduty"
@@ -5800,6 +5805,7 @@ type SubscriptionListItem struct {
 // Constants associated with the SubscriptionListItem.DestinationType property.
 // The type of destination.
 const (
+	SubscriptionListItemDestinationTypeIbmceConst       = "ibmce"
 	SubscriptionListItemDestinationTypeIbmcfConst       = "ibmcf"
 	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionListItemDestinationTypePagerdutyConst   = "pagerduty"
@@ -6960,7 +6966,7 @@ func UnmarshalDestinationConfigOneOfIosDestinationConfig(m map[string]json.RawMe
 // DestinationConfigOneOfMsTeamsDestinationConfig : Payload describing a MS Teams destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfMsTeamsDestinationConfig struct {
-	// URL of MS Teams Incoming Webhook.
+	// URL of MS Teams Incoming Notifications.
 	URL *string `json:"url" validate:"required"`
 }
 
@@ -7171,7 +7177,7 @@ func UnmarshalDestinationConfigOneOfServiceNowDestinationConfig(m map[string]jso
 // DestinationConfigOneOfSlackDestinationConfig : Payload describing a Slack destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfSlackDestinationConfig struct {
-	// URL of Slack Incoming Webhook.
+	// URL of Slack Incoming Notifications.
 	URL *string `json:"url" validate:"required"`
 }
 
