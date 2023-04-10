@@ -1587,12 +1587,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID3 = string(*subscription.ID)
 
+			subscriptionCreateSlackAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes{
+				AttachmentColor: core.StringPtr("#0000FF"),
+			}
+
 			createSlackSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				Name:          core.StringPtr("Slack subscription"),
 				Description:   core.StringPtr("Subscription for the Slack"),
 				DestinationID: core.StringPtr(destinationID4),
 				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateSlackAttributesModel,
 			}
 
 			subscription, response, err = eventNotificationsService.CreateSubscription(createSlackSubscriptionOptions)
@@ -1974,6 +1979,10 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(fcmName))
 			Expect(subscription.Description).To(Equal(fcmDescription))
 
+			subscriptionUpdateSlackAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes{
+				AttachmentColor: core.StringPtr("#0000FF"),
+			}
+
 			slackName := core.StringPtr("subscription_slack_update")
 			slackDescription := core.StringPtr("Subscription update for slack")
 			updateSlackSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
@@ -1981,6 +1990,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Name:        slackName,
 				Description: slackDescription,
 				ID:          core.StringPtr(subscriptionID4),
+				Attributes:  subscriptionUpdateSlackAttributesModel,
 			}
 
 			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSlackSubscriptionOptions)
