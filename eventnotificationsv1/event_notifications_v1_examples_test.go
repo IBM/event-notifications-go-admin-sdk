@@ -75,6 +75,7 @@ var (
 	subscriptionID2           string
 	subscriptionID3           string
 	subscriptionID4           string
+	subscriptionID5           string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -1507,6 +1508,27 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID4 = string(*subscription.ID)
 
+			subscriptionCreateSlackAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes{
+				AttachmentColor: core.StringPtr("#0000FF"),
+			}
+
+			createSlackSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Slack subscription"),
+				Description:   core.StringPtr("Subscription for the Slack"),
+				DestinationID: core.StringPtr(destinationID4),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateSlackAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSlackSubscriptionOptions)
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID5 = string(*subscription.ID)
+
 			// end-create_subscription
 
 		})
@@ -1718,6 +1740,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Name).To(Equal(serviceNowName))
 			Expect(subscription.Description).To(Equal(serviceNowDescription))
 
+			subscriptionUpdateSlackAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes{
+				AttachmentColor: core.StringPtr("#0000FF"),
+			}
+
+			slackName := core.StringPtr("subscription_slack_update")
+			slackDescription := core.StringPtr("Subscription update for slack")
+			updateSlackSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        slackName,
+				Description: slackDescription,
+				ID:          core.StringPtr(subscriptionID5),
+				Attributes:  subscriptionUpdateSlackAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSlackSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID5)))
+			Expect(subscription.Name).To(Equal(slackName))
+			Expect(subscription.Description).To(Equal(slackDescription))
 			// end-update_subscription
 
 		})
@@ -1893,7 +1942,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3} {
+			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),

@@ -7596,7 +7596,7 @@ func UnmarshalSubscriptionAttributesServiceNowAttributesResponse(m map[string]js
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesSlackAttributesResponse struct {
 	// Attachment Color for Slack Notification.
-	AttachmentColor *string `json:"attachment_color" validate:"required"`
+	AttachmentColor *string `json:"attachment_color,omitempty"`
 
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
@@ -7898,16 +7898,7 @@ func UnmarshalSubscriptionCreateAttributesServiceNowAttributes(m map[string]json
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesSlackAttributes struct {
 	// Attachment Color for the slack message.
-	AttachmentColor *string `json:"attachment_color" validate:"required"`
-}
-
-// NewSubscriptionCreateAttributesSlackAttributes : Instantiate SubscriptionCreateAttributesSlackAttributes (Generic Model Constructor)
-func (*EventNotificationsV1) NewSubscriptionCreateAttributesSlackAttributes(attachmentColor string) (_model *SubscriptionCreateAttributesSlackAttributes, err error) {
-	_model = &SubscriptionCreateAttributesSlackAttributes{
-		AttachmentColor: core.StringPtr(attachmentColor),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
+	AttachmentColor *string `json:"attachment_color,omitempty"`
 }
 
 func (*SubscriptionCreateAttributesSlackAttributes) isaSubscriptionCreateAttributes() bool {
@@ -8101,16 +8092,7 @@ func UnmarshalSubscriptionUpdateAttributesServiceNowAttributes(m map[string]json
 // This model "extends" SubscriptionUpdateAttributes
 type SubscriptionUpdateAttributesSlackAttributes struct {
 	// Attachment Color for the slack message.
-	AttachmentColor *string `json:"attachment_color" validate:"required"`
-}
-
-// NewSubscriptionUpdateAttributesSlackAttributes : Instantiate SubscriptionUpdateAttributesSlackAttributes (Generic Model Constructor)
-func (*EventNotificationsV1) NewSubscriptionUpdateAttributesSlackAttributes(attachmentColor string) (_model *SubscriptionUpdateAttributesSlackAttributes, err error) {
-	_model = &SubscriptionUpdateAttributesSlackAttributes{
-		AttachmentColor: core.StringPtr(attachmentColor),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
+	AttachmentColor *string `json:"attachment_color,omitempty"`
 }
 
 func (*SubscriptionUpdateAttributesSlackAttributes) isaSubscriptionUpdateAttributes() bool {
