@@ -73,6 +73,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID11           string
 		destinationID12           string
 		destinationID13           string
+		destinationID14           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -87,6 +88,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID11          string
 		subscriptionID12          string
 		subscriptionID13          string
+		subscriptionID14          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -993,6 +995,37 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationCEResponse.Description).To(Equal(core.StringPtr(ceDescription)))
 
 			destinationID13 = *destinationCEResponse.ID
+
+			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
+				BucketName: core.StringPtr("encosbucket"),
+				InstanceID: core.StringPtr("e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6"),
+				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+			}
+
+			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: cosDestinationConfigParamsModel,
+			}
+
+			cosName := "cos_destination"
+			costypeVal := eventnotificationsv1.CreateDestinationOptionsTypeIbmcosConst
+			cosDescription := "cos Destination"
+			cosCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(cosName),
+				Type:        core.StringPtr(costypeVal),
+				Description: core.StringPtr(cosDescription),
+				Config:      cosDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(cosCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID14 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1471,6 +1504,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(ceDestination.ID).To(Equal(core.StringPtr(destinationID13)))
 			Expect(ceDestination.Name).To(Equal(core.StringPtr(ceName)))
 			Expect(ceDestination.Description).To(Equal(core.StringPtr(ceDescription)))
+
+			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
+				BucketName: core.StringPtr("encosbucket"),
+				InstanceID: core.StringPtr("e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6"),
+				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+			}
+
+			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: cosDestinationConfigParamsModel,
+			}
+
+			cosName := "cos_destination update"
+			cosDescription := "cos Destination updated"
+			cosUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(cosName),
+				ID:          core.StringPtr(destinationID14),
+				Description: core.StringPtr(cosDescription),
+				Config:      cosDestinationConfigModel,
+			}
+
+			cosDestination, response, err := eventNotificationsService.UpdateDestination(cosUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(cosDestination).ToNot(BeNil())
+			Expect(cosDestination.ID).To(Equal(core.StringPtr(destinationID14)))
+			Expect(cosDestination.Name).To(Equal(core.StringPtr(cosName)))
+			Expect(cosDestination.Description).To(Equal(core.StringPtr(cosDescription)))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1773,6 +1834,23 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(ceSubscription.Description).To(Equal(ceDescription))
 			Expect(ceSubscription.Name).To(Equal(ceName))
 			subscriptionID13 = *ceSubscription.ID
+
+			createCOSSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("COS subscription"),
+				Description:   core.StringPtr("Subscription for the COS"),
+				DestinationID: core.StringPtr(destinationID14),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createCOSSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID14 = string(*subscription.ID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2172,6 +2250,24 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(ceSubscription.ID).To(Equal(core.StringPtr(subscriptionID13)))
 			Expect(ceSubscription.Name).To(Equal(ceName))
 			Expect(ceSubscription.Description).To(Equal(ceDescription))
+
+			cosName := core.StringPtr("subscription_COS_update")
+			cosDescription := core.StringPtr("Subscription update COS")
+			updatecCOSSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        cosName,
+				Description: cosDescription,
+				ID:          core.StringPtr(subscriptionID14),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updatecCOSSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID14)))
+			Expect(subscription.Name).To(Equal(cosName))
+			Expect(subscription.Description).To(Equal(cosDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2351,7 +2447,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID14} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -2409,7 +2505,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID14} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

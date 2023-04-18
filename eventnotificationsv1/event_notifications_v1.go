@@ -2197,6 +2197,7 @@ type CreateDestinationOptions struct {
 const (
 	CreateDestinationOptionsTypeIbmceConst       = "ibmce"
 	CreateDestinationOptionsTypeIbmcfConst       = "ibmcf"
+	CreateDestinationOptionsTypeIbmcosConst      = "ibmcos"
 	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
 	CreateDestinationOptionsTypePagerdutyConst   = "pagerduty"
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
@@ -2803,7 +2804,8 @@ type Destination struct {
 	// Destination description.
 	Description *string `json:"description" validate:"required"`
 
-	// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
+	// Destination type
+	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2820,10 +2822,12 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
+// Destination type
+// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
 const (
 	DestinationTypeIbmceConst       = "ibmce"
 	DestinationTypeIbmcfConst       = "ibmcf"
+	DestinationTypeIbmcosConst      = "ibmcos"
 	DestinationTypeMsteamsConst     = "msteams"
 	DestinationTypePagerdutyConst   = "pagerduty"
 	DestinationTypePushAndroidConst = "push_android"
@@ -2913,6 +2917,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
 // - DestinationConfigOneOfPagerDutyDestinationConfig
 // - DestinationConfigOneOfServiceNowDestinationConfig
+// - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
 type DestinationConfigOneOf struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -2994,6 +2999,15 @@ type DestinationConfigOneOf struct {
 
 	// Instance name for ServiceNow account.
 	InstanceName *string `json:"instance_name,omitempty"`
+
+	// Bucket Name for Cloud Object Storage.
+	BucketName *string `json:"bucket_name,omitempty"`
+
+	// Instance Id of Cloud Object Storage.
+	InstanceID *string `json:"instance_id,omitempty"`
+
+	// End Point of Cloud Object Storage.
+	Endpoint *string `json:"endpoint,omitempty"`
 }
 
 // Constants associated with the DestinationConfigOneOf.Verb property.
@@ -3122,6 +3136,18 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 	if err != nil {
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "bucket_name", &obj.BucketName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "endpoint", &obj.Endpoint)
+	if err != nil {
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -3231,6 +3257,7 @@ type DestinationListItem struct {
 const (
 	DestinationListItemTypeIbmceConst       = "ibmce"
 	DestinationListItemTypeIbmcfConst       = "ibmcf"
+	DestinationListItemTypeIbmcosConst      = "ibmcos"
 	DestinationListItemTypeMsteamsConst     = "msteams"
 	DestinationListItemTypePagerdutyConst   = "pagerduty"
 	DestinationListItemTypePushAndroidConst = "push_android"
@@ -3304,6 +3331,7 @@ type DestinationResponse struct {
 const (
 	DestinationResponseTypeIbmceConst       = "ibmce"
 	DestinationResponseTypeIbmcfConst       = "ibmcf"
+	DestinationResponseTypeIbmcosConst      = "ibmcos"
 	DestinationResponseTypeMsteamsConst     = "msteams"
 	DestinationResponseTypePagerdutyConst   = "pagerduty"
 	DestinationResponseTypePushAndroidConst = "push_android"
@@ -5253,6 +5281,7 @@ type Subscription struct {
 const (
 	SubscriptionDestinationTypeIbmceConst       = "ibmce"
 	SubscriptionDestinationTypeIbmcfConst       = "ibmcf"
+	SubscriptionDestinationTypeIbmcosConst      = "ibmcos"
 	SubscriptionDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionDestinationTypePushAndroidConst = "push_android"
@@ -5807,6 +5836,7 @@ type SubscriptionListItem struct {
 const (
 	SubscriptionListItemDestinationTypeIbmceConst       = "ibmce"
 	SubscriptionListItemDestinationTypeIbmcfConst       = "ibmcf"
+	SubscriptionListItemDestinationTypeIbmcosConst      = "ibmcos"
 	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
 	SubscriptionListItemDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
@@ -6882,6 +6912,53 @@ func UnmarshalDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(m map[str
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "api_key", &obj.APIKey)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig : Payload describing a Cloud Object Storage destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig struct {
+	// Bucket Name for Cloud Object Storage.
+	BucketName *string `json:"bucket_name" validate:"required"`
+
+	// Instance Id of Cloud Object Storage.
+	InstanceID *string `json:"instance_id" validate:"required"`
+
+	// End Point of Cloud Object Storage.
+	Endpoint *string `json:"endpoint" validate:"required"`
+}
+
+// NewDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig : Instantiate DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(bucketName string, instanceID string, endpoint string) (_model *DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
+		BucketName: core.StringPtr(bucketName),
+		InstanceID: core.StringPtr(instanceID),
+		Endpoint:   core.StringPtr(endpoint),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig unmarshals an instance of DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "bucket_name", &obj.BucketName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "instance_id", &obj.InstanceID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "endpoint", &obj.Endpoint)
 	if err != nil {
 		return
 	}

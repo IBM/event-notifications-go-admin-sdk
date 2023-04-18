@@ -70,6 +70,7 @@ var (
 	destinationID11           string
 	destinationID12           string
 	destinationID13           string
+	destinationID14           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -916,6 +917,41 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID13 = *destinationResponse.ID
+
+			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
+				BucketName: core.StringPtr("encosbucket"),
+				InstanceID: core.StringPtr("e8a6b5a3-3ff4-xxxx-xxxx-eaxxa4d4a3b6"),
+				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+			}
+
+			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: cosDestinationConfigParamsModel,
+			}
+
+			cosName := "cos_destination"
+			costypeVal := eventnotificationsv1.CreateDestinationOptionsTypeIbmcosConst
+			cosDescription := "cos Destination"
+			cosCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(cosName),
+				Type:        core.StringPtr(costypeVal),
+				Description: core.StringPtr(cosDescription),
+				Config:      cosDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(cosCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID14 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1368,6 +1404,37 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			destination, response, err = eventNotificationsService.UpdateDestination(updateCEDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
+				BucketName: core.StringPtr("encosbucket"),
+				InstanceID: core.StringPtr("e8a6b5a3-xxxx-xxxx-ad88-ea86a4d4a3b6"),
+				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+			}
+
+			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: cosDestinationConfigParamsModel,
+			}
+
+			cosName := "cos_destination update"
+			cosDescription := "cos Destination updated"
+			cosUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(cosName),
+				ID:          core.StringPtr(destinationID14),
+				Description: core.StringPtr(cosDescription),
+				Config:      cosDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(cosUpdateDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1998,7 +2065,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
