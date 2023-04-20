@@ -1,3 +1,10 @@
+## [0.2.2](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.1...v0.2.2) (2023-04-20)
+
+
+### Bug Fixes
+
+* adds COS destination support ([fee1c59](https://github.com/IBM/event-notifications-go-admin-sdk/commit/fee1c59cd5912cfee02f4d250038102d8a615f9f))
+
 ## [0.2.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.0...v0.2.1) (2023-03-28)
 
 
