@@ -8384,6 +8384,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig successfully`, func() {
+				bucketName := "testString"
+				instanceID := "testString"
+				endpoint := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(bucketName, instanceID, endpoint)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfIosDestinationConfig successfully`, func() {
 				certType := "p8"
 				isSandbox := false
