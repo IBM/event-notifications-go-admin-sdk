@@ -71,6 +71,7 @@ var (
 	destinationID12           string
 	destinationID13           string
 	destinationID14           string
+	destinationID15           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -89,6 +90,8 @@ var (
 	fcmProjectID              string
 	fcmClientEmail            string
 	codeEngineURL             string
+	huaweiClientSecret        string
+	huaweiClientID            string
 )
 
 func shouldSkipTest() {
@@ -190,6 +193,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load code engine url configuration property, skipping tests")
 			}
 			fmt.Printf("code engine url: %s\n", codeEngineURL)
+
+			huaweiClientID = config["HUAWEI_CLIENT_ID"]
+			if huaweiClientID == "" {
+				Skip("Unable to load huawei client ID configuration property, skipping tests")
+			}
+			fmt.Printf("huawei client ID: %s\n", huaweiClientID)
+
+			huaweiClientSecret = config["HUAWEI_CLIENT_SECRET"]
+			if huaweiClientSecret == "" {
+				Skip("Unable to load huawei client secret configuration property, skipping tests")
+			}
+			fmt.Printf("huawei client secret: %s\n", huaweiClientSecret)
 
 			configLoaded = len(config) > 0
 		})
@@ -952,6 +967,41 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID14 = *destinationResponse.ID
+
+			huaweiDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig{
+				ClientID:     core.StringPtr(huaweiClientID),
+				ClientSecret: core.StringPtr(huaweiClientSecret),
+				PreProd:      core.BoolPtr(false),
+			}
+
+			huaweiDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: huaweiDestinationConfigParamsModel,
+			}
+
+			huaweiName := "huawei_destination"
+			huaweitypeVal := eventnotificationsv1.CreateDestinationOptionsTypePushHuaweiConst
+			huaweiDescription := "huawei Destination"
+			huaweiCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(huaweiName),
+				Type:        core.StringPtr(huaweitypeVal),
+				Description: core.StringPtr(huaweiDescription),
+				Config:      huaweiDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(huaweiCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID15 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1435,6 +1485,37 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			destination, response, err = eventNotificationsService.UpdateDestination(cosUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			huaweiDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig{
+				ClientID:     core.StringPtr(huaweiClientID),
+				ClientSecret: core.StringPtr(huaweiClientSecret),
+				PreProd:      core.BoolPtr(false),
+			}
+
+			huaweiDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: huaweiDestinationConfigParamsModel,
+			}
+
+			huaweiName := "huawei_destination update"
+			huaweiDescription := "huawei Destination updated"
+			huaweiUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(huaweiName),
+				ID:          core.StringPtr(destinationID15),
+				Description: core.StringPtr(huaweiDescription),
+				Config:      huaweiDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(huaweiUpdateDestinationOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -2065,7 +2146,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
