@@ -2203,6 +2203,7 @@ const (
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
 	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
+	CreateDestinationOptionsTypePushHuaweiConst  = "push_huawei"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
 	CreateDestinationOptionsTypeServicenowConst  = "servicenow"
@@ -2831,6 +2832,7 @@ const (
 	DestinationTypeMsteamsConst     = "msteams"
 	DestinationTypePagerdutyConst   = "pagerduty"
 	DestinationTypePushAndroidConst = "push_android"
+	DestinationTypePushHuaweiConst  = "push_huawei"
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypePushSafariConst  = "push_safari"
 	DestinationTypeSMTPIBMConst     = "smtp_ibm"
@@ -2918,6 +2920,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfPagerDutyDestinationConfig
 // - DestinationConfigOneOfServiceNowDestinationConfig
 // - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
+// - DestinationConfigOneOfHuaweiDestinationConfig
 type DestinationConfigOneOf struct {
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
@@ -3261,6 +3264,7 @@ const (
 	DestinationListItemTypeMsteamsConst     = "msteams"
 	DestinationListItemTypePagerdutyConst   = "pagerduty"
 	DestinationListItemTypePushAndroidConst = "push_android"
+	DestinationListItemTypePushHuaweiConst  = "push_huawei"
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypePushSafariConst  = "push_safari"
 	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
@@ -3337,6 +3341,7 @@ const (
 	DestinationResponseTypePushAndroidConst = "push_android"
 	DestinationResponseTypePushChromeConst  = "push_chrome"
 	DestinationResponseTypePushFirefoxConst = "push_firefox"
+	DestinationResponseTypePushHuaweiConst  = "push_huawei"
 	DestinationResponseTypePushIosConst     = "push_ios"
 	DestinationResponseTypePushSafariConst  = "push_safari"
 	DestinationResponseTypeServicenowConst  = "servicenow"
@@ -5287,6 +5292,7 @@ const (
 	SubscriptionDestinationTypePushAndroidConst = "push_android"
 	SubscriptionDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionDestinationTypePushFirefoxConst = "push_firefox"
+	SubscriptionDestinationTypePushHuaweiConst  = "push_huawei"
 	SubscriptionDestinationTypePushIosConst     = "push_ios"
 	SubscriptionDestinationTypePushSafariConst  = "push_safari"
 	SubscriptionDestinationTypeSMTPIBMConst     = "smtp_ibm"
@@ -5842,6 +5848,7 @@ const (
 	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
 	SubscriptionListItemDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionListItemDestinationTypePushFirefoxConst = "push_firefox"
+	SubscriptionListItemDestinationTypePushHuaweiConst  = "push_huawei"
 	SubscriptionListItemDestinationTypePushIosConst     = "push_ios"
 	SubscriptionListItemDestinationTypePushSafariConst  = "push_safari"
 	SubscriptionListItemDestinationTypeSMTPIBMConst     = "smtp_ibm"
@@ -6870,6 +6877,52 @@ func UnmarshalDestinationConfigOneOfFirefoxDestinationConfig(m map[string]json.R
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigOneOfHuaweiDestinationConfig : Payload describing a Huawei destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfHuaweiDestinationConfig struct {
+	// ClientID for the Huawei account oauth.
+	ClientID *string `json:"client_id" validate:"required"`
+
+	// ClientSecret for the Huawei account oauth.
+	ClientSecret *string `json:"client_secret" validate:"required"`
+
+	// If pre prod enabled.
+	PreProd *bool `json:"pre_prod,omitempty"`
+}
+
+// NewDestinationConfigOneOfHuaweiDestinationConfig : Instantiate DestinationConfigOneOfHuaweiDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfHuaweiDestinationConfig(clientID string, clientSecret string) (_model *DestinationConfigOneOfHuaweiDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfHuaweiDestinationConfig{
+		ClientID:     core.StringPtr(clientID),
+		ClientSecret: core.StringPtr(clientSecret),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfHuaweiDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfHuaweiDestinationConfig unmarshals an instance of DestinationConfigOneOfHuaweiDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfHuaweiDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfHuaweiDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "client_id", &obj.ClientID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "client_secret", &obj.ClientSecret)
 	if err != nil {
 		return
 	}

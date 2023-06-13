@@ -8378,6 +8378,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigOneOfHuaweiDestinationConfig successfully`, func() {
+				clientID := "testString"
+				clientSecret := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfHuaweiDestinationConfig(clientID, clientSecret)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig successfully`, func() {
 				url := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(url)

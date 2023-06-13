@@ -74,6 +74,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID12           string
 		destinationID13           string
 		destinationID14           string
+		destinationID15           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -89,6 +90,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID12          string
 		subscriptionID13          string
 		subscriptionID14          string
+		subscriptionID15          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -101,6 +103,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		fcmProjectID              string
 		fcmClientEmail            string
 		codeEngineURL             string
+		huaweiClientSecret        string
+		huaweiClientID            string
 	)
 
 	var shouldSkipTest = func() {
@@ -203,6 +207,18 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load code engine url configuration property, skipping tests")
 			}
 			fmt.Printf("code engine url: %s\n", codeEngineURL)
+
+			huaweiClientID = config["HUAWEI_CLIENT_ID"]
+			if huaweiClientID == "" {
+				Skip("Unable to load huawei client ID configuration property, skipping tests")
+			}
+			fmt.Printf("huawei client ID: %s\n", huaweiClientID)
+
+			huaweiClientSecret = config["HUAWEI_CLIENT_SECRET"]
+			if huaweiClientSecret == "" {
+				Skip("Unable to load huawei client secret configuration property, skipping tests")
+			}
+			fmt.Printf("huawei client secret: %s\n", huaweiClientSecret)
 
 			shouldSkipTest = func() {}
 		})
@@ -1026,6 +1042,37 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID14 = *destinationResponse.ID
+
+			huaweiDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig{
+				ClientID:     core.StringPtr(huaweiClientID),
+				ClientSecret: core.StringPtr(huaweiClientSecret),
+				PreProd:      core.BoolPtr(false),
+			}
+
+			huaweiDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: huaweiDestinationConfigParamsModel,
+			}
+
+			huaweiName := "huawei_destination"
+			huaweitypeVal := eventnotificationsv1.CreateDestinationOptionsTypePushHuaweiConst
+			huaweiDescription := "huawei Destination"
+			huaweiCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(huaweiName),
+				Type:        core.StringPtr(huaweitypeVal),
+				Description: core.StringPtr(huaweiDescription),
+				Config:      huaweiDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(huaweiCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID15 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1532,6 +1579,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(cosDestination.ID).To(Equal(core.StringPtr(destinationID14)))
 			Expect(cosDestination.Name).To(Equal(core.StringPtr(cosName)))
 			Expect(cosDestination.Description).To(Equal(core.StringPtr(cosDescription)))
+
+			huaweiDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig{
+				ClientID:     core.StringPtr(huaweiClientID),
+				ClientSecret: core.StringPtr(huaweiClientSecret),
+				PreProd:      core.BoolPtr(false),
+			}
+
+			huaweiDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: huaweiDestinationConfigParamsModel,
+			}
+
+			huaweiName := "huawei_destination update"
+			huaweiDescription := "huawei Destination updated"
+			huaweiUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(huaweiName),
+				ID:          core.StringPtr(destinationID15),
+				Description: core.StringPtr(huaweiDescription),
+				Config:      huaweiDestinationConfigModel,
+			}
+
+			huaweiDestination, response, err := eventNotificationsService.UpdateDestination(huaweiUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(huaweiDestination).ToNot(BeNil())
+			Expect(huaweiDestination.ID).To(Equal(core.StringPtr(destinationID15)))
+			Expect(huaweiDestination.Name).To(Equal(core.StringPtr(huaweiName)))
+			Expect(huaweiDestination.Description).To(Equal(core.StringPtr(huaweiDescription)))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1851,6 +1926,23 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID14 = string(*subscription.ID)
+
+			createHuaweiSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Huawei subscription"),
+				Description:   core.StringPtr("Subscription for the Huawei"),
+				DestinationID: core.StringPtr(destinationID15),
+				TopicID:       core.StringPtr(topicID),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createHuaweiSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID15 = string(*subscription.ID)
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2268,6 +2360,24 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID14)))
 			Expect(subscription.Name).To(Equal(cosName))
 			Expect(subscription.Description).To(Equal(cosDescription))
+
+			huaweiName := core.StringPtr("subscription_Huawei_update")
+			huaweiDescription := core.StringPtr("Subscription update Huawei")
+			updatecHuaweiSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        huaweiName,
+				Description: huaweiDescription,
+				ID:          core.StringPtr(subscriptionID15),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updatecHuaweiSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID15)))
+			Expect(subscription.Name).To(Equal(huaweiName))
+			Expect(subscription.Description).To(Equal(huaweiDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2447,7 +2557,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID14} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -2505,7 +2615,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID14} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
