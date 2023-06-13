@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.2...v0.2.3) (2023-06-13)
+
+
+### Bug Fixes
+
+* add huawei destination support ([2ffa234](https://github.com/IBM/event-notifications-go-admin-sdk/commit/2ffa2340aa2cc207d4f092ef6c6be2f4886a2089))
+
 ## [0.2.2](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.1...v0.2.2) (2023-04-20)
 
 
