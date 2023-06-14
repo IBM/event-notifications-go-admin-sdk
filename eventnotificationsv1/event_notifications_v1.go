@@ -2806,7 +2806,7 @@ type Destination struct {
 	Description *string `json:"description" validate:"required"`
 
 	// Destination type
-	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
+	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a destination configuration.
@@ -2824,7 +2824,7 @@ type Destination struct {
 
 // Constants associated with the Destination.Type property.
 // Destination type
-// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
+// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
 const (
 	DestinationTypeIbmceConst       = "ibmce"
 	DestinationTypeIbmcfConst       = "ibmcf"
@@ -4317,6 +4317,9 @@ type NotificationCreate struct {
 	// Headers for a Firefox notification. Value should be stringified.
 	Ibmenfirefoxheaders *string `json:"ibmenfirefoxheaders,omitempty"`
 
+	// Payload describing a notification Huawei body. Value should be stringified.
+	Ibmenhuaweibody *string `json:"ibmenhuaweibody,omitempty"`
+
 	// Payload describing a notification Safari body. Value should be stringified.
 	Ibmensafaribody *string `json:"ibmensafaribody,omitempty"`
 
@@ -4433,6 +4436,9 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Ibmenfirefoxheaders != nil {
 		m["ibmenfirefoxheaders"] = o.Ibmenfirefoxheaders
 	}
+	if o.Ibmenhuaweibody != nil {
+		m["ibmenhuaweibody"] = o.Ibmenhuaweibody
+	}
 	if o.Ibmensafaribody != nil {
 		m["ibmensafaribody"] = o.Ibmensafaribody
 	}
@@ -4543,6 +4549,11 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "ibmenfirefoxheaders")
+	err = core.UnmarshalPrimitive(m, "ibmenhuaweibody", &obj.Ibmenhuaweibody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenhuaweibody")
 	err = core.UnmarshalPrimitive(m, "ibmensafaribody", &obj.Ibmensafaribody)
 	if err != nil {
 		return

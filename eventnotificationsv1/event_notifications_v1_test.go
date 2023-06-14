@@ -209,6 +209,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -302,6 +303,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -403,6 +405,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -449,6 +452,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -516,6 +520,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -583,6 +588,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -676,6 +682,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -777,6 +784,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -823,6 +831,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -890,6 +899,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
@@ -8109,6 +8119,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
@@ -8131,6 +8142,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
 				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmenhuaweibody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
 				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
@@ -8179,6 +8191,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenchromeheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenfirefoxbody = core.StringPtr("testString")
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
+				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
@@ -8201,6 +8214,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmenchromeheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
 				Expect(notificationCreateModel.Ibmenfirefoxbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
+				Expect(notificationCreateModel.Ibmenhuaweibody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
 				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
