@@ -92,6 +92,9 @@ var (
 	codeEngineURL             string
 	huaweiClientSecret        string
 	huaweiClientID            string
+	cosBucketName             string
+	cosInstanceID             string
+	cosEndPoint               string
 )
 
 func shouldSkipTest() {
@@ -205,6 +208,24 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load huawei client secret configuration property, skipping tests")
 			}
 			fmt.Printf("huawei client secret: %s\n", huaweiClientSecret)
+
+			cosBucketName = config["COS_BUCKET_NAME"]
+			if cosBucketName == "" {
+				Skip("Unable to load cos bucket name configuration property, skipping tests")
+			}
+			fmt.Printf("cos bucket name: %s\n", cosBucketName)
+
+			cosInstanceID = config["COS_INSTANCE"]
+			if cosInstanceID == "" {
+				Skip("Unable to load cos instance ID configuration property, skipping tests")
+			}
+			fmt.Printf("cos Instance ID: %s\n", cosInstanceID)
+
+			cosEndPoint = config["COS_ENDPOINT"]
+			if cosEndPoint == "" {
+				Skip("Unable to load cos end point configuration property, skipping tests")
+			}
+			fmt.Printf("cos end point: %s\n", cosEndPoint)
 
 			configLoaded = len(config) > 0
 		})
@@ -934,9 +955,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			destinationID13 = *destinationResponse.ID
 
 			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
-				BucketName: core.StringPtr("encosbucket"),
-				InstanceID: core.StringPtr("e8a6b5a3-3ff4-xxxx-xxxx-eaxxa4d4a3b6"),
-				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+				BucketName: core.StringPtr(cosBucketName),
+				InstanceID: core.StringPtr(cosInstanceID),
+				Endpoint:   core.StringPtr(cosEndPoint),
 			}
 
 			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1465,9 +1486,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
-				BucketName: core.StringPtr("encosbucket"),
-				InstanceID: core.StringPtr("e8a6b5a3-xxxx-xxxx-ad88-ea86a4d4a3b6"),
-				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+				BucketName: core.StringPtr(cosBucketName),
+				InstanceID: core.StringPtr(cosInstanceID),
+				Endpoint:   core.StringPtr(cosEndPoint),
 			}
 
 			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1940,7 +1961,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Time = &strfmt.DateTime{}
 			notificationCreateModel.Specversion = &specVersion
 
-			notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
+			notificationDevicesModel := "{\"platforms\":[\"push_ios\",\"push_android\",\"push_chrome\",\"push_firefox\",\"push_huawei\"]}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
@@ -1969,11 +1990,13 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			ibmenapnsheaderbody, _ := json.Marshal(apnsHeaders)
 			ibmenapnsheaderstring := string(ibmenapnsheaderbody)
+			notificationHuaweiBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Breaking News\",\"body\": \"New news story available.\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"description\"}}}}"
 
 			notificationCreateModel.Ibmenfcmbody = &ibmenfcmbodyString
 			notificationCreateModel.Ibmenapnsbody = &ibmenapnsbodyString
 			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
+			notificationCreateModel.Ibmenhuaweibody = &notificationHuaweiBodyModel
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("This is simple test alert from IBM Cloud Event Notifications service.")
 			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Hi, we are making sure from our side that the service is available for consumption.")
 

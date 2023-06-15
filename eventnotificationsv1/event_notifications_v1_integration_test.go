@@ -105,6 +105,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		codeEngineURL             string
 		huaweiClientSecret        string
 		huaweiClientID            string
+		cosBucketName             string
+		cosInstanceID             string
+		cosEndPoint               string
 	)
 
 	var shouldSkipTest = func() {
@@ -219,6 +222,24 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load huawei client secret configuration property, skipping tests")
 			}
 			fmt.Printf("huawei client secret: %s\n", huaweiClientSecret)
+
+			cosBucketName = config["COS_BUCKET_NAME"]
+			if cosBucketName == "" {
+				Skip("Unable to load cos bucket name configuration property, skipping tests")
+			}
+			fmt.Printf("cos bucket name: %s\n", cosBucketName)
+
+			cosInstanceID = config["COS_INSTANCE"]
+			if cosInstanceID == "" {
+				Skip("Unable to load cos instance ID configuration property, skipping tests")
+			}
+			fmt.Printf("cos Instance ID: %s\n", cosInstanceID)
+
+			cosEndPoint = config["COS_ENDPOINT"]
+			if cosEndPoint == "" {
+				Skip("Unable to load cos end point configuration property, skipping tests")
+			}
+			fmt.Printf("cos end point: %s\n", cosEndPoint)
 
 			shouldSkipTest = func() {}
 		})
@@ -1013,9 +1034,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			destinationID13 = *destinationCEResponse.ID
 
 			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
-				BucketName: core.StringPtr("encosbucket"),
-				InstanceID: core.StringPtr("e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6"),
-				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+				BucketName: core.StringPtr(cosBucketName),
+				InstanceID: core.StringPtr(cosInstanceID),
+				Endpoint:   core.StringPtr(cosEndPoint),
 			}
 
 			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1553,9 +1574,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(ceDestination.Description).To(Equal(core.StringPtr(ceDescription)))
 
 			cosDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
-				BucketName: core.StringPtr("encosbucket"),
-				InstanceID: core.StringPtr("e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6"),
-				Endpoint:   core.StringPtr("https://s3.us-west.cloud-object-storage.test.appdomain.cloud"),
+				BucketName: core.StringPtr(cosBucketName),
+				InstanceID: core.StringPtr(cosInstanceID),
+				Endpoint:   core.StringPtr(cosEndPoint),
 			}
 
 			cosDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -2398,8 +2419,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`SendNotifications(sendNotificationsOptions *SendNotificationsOptions)`, func() {
 
-			notificationDevicesModel := "{\"platforms\":[\"push_ios\",\"push_android\",\"push_chrome\",\"push_firefox\"]}"
+			notificationDevicesModel := "{\"platforms\":[\"push_ios\",\"push_android\",\"push_chrome\",\"push_firefox\",\"push_huawei\"]}"
 			notificationFcmBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Breaking News\",\"body\": \"New news story available.\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"description\"}}}}"
+			notificationHuaweiBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Breaking News\",\"body\": \"New news story available.\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"description\"}}}}"
 			notificationAPNsBodyModel := "{\"aps\":{\"alert\":{\"title\":\"Hello!! GameRequest\",\"body\":\"Bob wants to play poker\",\"action-loc-key\":\"PLAY\"},\"badge\":5}}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 
@@ -2419,6 +2441,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationCreateModel.Ibmenfcmbody = &notificationFcmBodyModel
 			notificationCreateModel.Ibmenapnsbody = &notificationAPNsBodyModel
 			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
+			notificationCreateModel.Ibmenhuaweibody = &notificationHuaweiBodyModel
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
 			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
