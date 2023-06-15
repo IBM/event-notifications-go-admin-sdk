@@ -1,3 +1,10 @@
+## [0.2.4](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.3...v0.2.4) (2023-06-15)
+
+
+### Bug Fixes
+
+* update notification payload for huawei ([250fb94](https://github.com/IBM/event-notifications-go-admin-sdk/commit/250fb944f28b6ac8513ed35d0387ee817ca4feac))
+
 ## [0.2.3](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.2...v0.2.3) (2023-06-13)
 
 
