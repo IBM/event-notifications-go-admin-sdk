@@ -21,7 +21,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -199,7 +198,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -293,7 +292,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -395,7 +394,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -442,7 +441,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -510,7 +509,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -578,7 +577,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -672,7 +671,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -774,7 +773,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -821,7 +820,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -889,7 +888,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -3381,12 +3380,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -3449,7 +3459,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateDestination successfully with retries`, func() {
@@ -3461,12 +3471,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -3532,7 +3553,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateDestination successfully`, func() {
@@ -3549,12 +3570,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -3598,12 +3630,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -3668,12 +3711,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -4127,7 +4181,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
 				}))
 			})
 			It(`Invoke GetDestination successfully with retries`, func() {
@@ -4182,7 +4236,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
 				}))
 			})
 			It(`Invoke GetDestination successfully`, func() {
@@ -4304,12 +4358,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -4372,7 +4437,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
 				}))
 			})
 			It(`Invoke UpdateDestination successfully with retries`, func() {
@@ -4384,12 +4449,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -4455,7 +4531,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"url": "URL", "verb": "get", "custom_headers": {"mapKey": "Inner"}, "sensitive_headers": ["SensitiveHeaders"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["SubscriptionNames"]}`)
 				}))
 			})
 			It(`Invoke UpdateDestination successfully`, func() {
@@ -4472,12 +4548,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -4537,12 +4624,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -4607,12 +4705,23 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -7591,17 +7700,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
 			It(`Invoke NewCreateDestinationOptions successfully`, func() {
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				Expect(dkimAttributesModel).ToNot(BeNil())
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+				Expect(dkimAttributesModel.PublicKey).To(Equal(core.StringPtr("testString")))
+				Expect(dkimAttributesModel.Selector).To(Equal(core.StringPtr("testString")))
+				Expect(dkimAttributesModel.Verification).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				Expect(spfAttributesModel).ToNot(BeNil())
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+				Expect(spfAttributesModel.TxtName).To(Equal(core.StringPtr("testString")))
+				Expect(spfAttributesModel.TxtValue).To(Equal(core.StringPtr("testString")))
+				Expect(spfAttributesModel.Verification).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
 				Expect(destinationConfigOneOfModel).ToNot(BeNil())
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
-				Expect(destinationConfigOneOfModel.URL).To(Equal(core.StringPtr("testString")))
-				Expect(destinationConfigOneOfModel.Verb).To(Equal(core.StringPtr("get")))
-				Expect(destinationConfigOneOfModel.CustomHeaders).To(Equal(make(map[string]string)))
-				Expect(destinationConfigOneOfModel.SensitiveHeaders).To(Equal([]string{"testString"}))
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
+				Expect(destinationConfigOneOfModel.Domain).To(Equal(core.StringPtr("testString")))
+				Expect(destinationConfigOneOfModel.Dkim).To(Equal(dkimAttributesModel))
+				Expect(destinationConfigOneOfModel.Spf).To(Equal(spfAttributesModel))
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -8109,7 +8236,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -8132,7 +8259,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
 				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))
 				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
@@ -8181,7 +8308,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
-				notificationCreateModel.Data = make(map[string]interface{})
+				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
 				notificationCreateModel.Ibmenfcmbody = core.StringPtr("testString")
@@ -8204,7 +8331,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Data).To(Equal(make(map[string]interface{})))
+				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
 				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))
 				Expect(notificationCreateModel.Ibmenfcmbody).To(Equal(core.StringPtr("testString")))
@@ -8247,17 +8374,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(err).To(BeNil())
 			})
 			It(`Invoke NewUpdateDestinationOptions successfully`, func() {
-				// Construct an instance of the DestinationConfigOneOfWebhookDestinationConfig model
-				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				// Construct an instance of the DkimAttributes model
+				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
+				Expect(dkimAttributesModel).ToNot(BeNil())
+				dkimAttributesModel.PublicKey = core.StringPtr("testString")
+				dkimAttributesModel.Selector = core.StringPtr("testString")
+				dkimAttributesModel.Verification = core.StringPtr("testString")
+				Expect(dkimAttributesModel.PublicKey).To(Equal(core.StringPtr("testString")))
+				Expect(dkimAttributesModel.Selector).To(Equal(core.StringPtr("testString")))
+				Expect(dkimAttributesModel.Verification).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the SpfAttributes model
+				spfAttributesModel := new(eventnotificationsv1.SpfAttributes)
+				Expect(spfAttributesModel).ToNot(BeNil())
+				spfAttributesModel.TxtName = core.StringPtr("testString")
+				spfAttributesModel.TxtValue = core.StringPtr("testString")
+				spfAttributesModel.Verification = core.StringPtr("testString")
+				Expect(spfAttributesModel.TxtName).To(Equal(core.StringPtr("testString")))
+				Expect(spfAttributesModel.TxtValue).To(Equal(core.StringPtr("testString")))
+				Expect(spfAttributesModel.Verification).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+				destinationConfigOneOfModel := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
 				Expect(destinationConfigOneOfModel).ToNot(BeNil())
-				destinationConfigOneOfModel.URL = core.StringPtr("testString")
-				destinationConfigOneOfModel.Verb = core.StringPtr("get")
-				destinationConfigOneOfModel.CustomHeaders = make(map[string]string)
-				destinationConfigOneOfModel.SensitiveHeaders = []string{"testString"}
-				Expect(destinationConfigOneOfModel.URL).To(Equal(core.StringPtr("testString")))
-				Expect(destinationConfigOneOfModel.Verb).To(Equal(core.StringPtr("get")))
-				Expect(destinationConfigOneOfModel.CustomHeaders).To(Equal(make(map[string]string)))
-				Expect(destinationConfigOneOfModel.SensitiveHeaders).To(Equal([]string{"testString"}))
+				destinationConfigOneOfModel.Domain = core.StringPtr("testString")
+				destinationConfigOneOfModel.Dkim = dkimAttributesModel
+				destinationConfigOneOfModel.Spf = spfAttributesModel
+				Expect(destinationConfigOneOfModel.Domain).To(Equal(core.StringPtr("testString")))
+				Expect(destinationConfigOneOfModel.Dkim).To(Equal(dkimAttributesModel))
+				Expect(destinationConfigOneOfModel.Spf).To(Equal(spfAttributesModel))
 
 				// Construct an instance of the DestinationConfig model
 				destinationConfigModel := new(eventnotificationsv1.DestinationConfig)
@@ -8386,6 +8531,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigOneOfCustomDomainEmailDestinationConfig successfully`, func() {
+				domain := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfCustomDomainEmailDestinationConfig(domain)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfFirefoxDestinationConfig(websiteURL)
@@ -8467,6 +8618,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewSubscriptionCreateAttributesCustomEmailAttributes successfully`, func() {
+				invited := []string{"testString"}
+				addNotificationPayload := false
+				replyToMail := "testString"
+				replyToName := "testString"
+				fromName := "testString"
+				fromEmail := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesCustomEmailAttributes(invited, addNotificationPayload, replyToMail, replyToName, fromName, fromEmail)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewSubscriptionCreateAttributesEmailAttributes successfully`, func() {
 				invited := []string{"testString"}
 				addNotificationPayload := false
@@ -8486,6 +8648,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewSubscriptionCreateAttributesWebhookAttributes successfully`, func() {
 				signingEnabled := true
 				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesWebhookAttributes(signingEnabled)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes successfully`, func() {
+				addNotificationPayload := false
+				replyToMail := "testString"
+				replyToName := "testString"
+				fromName := "testString"
+				fromEmail := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes(addNotificationPayload, replyToMail, replyToName, fromName, fromEmail)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -8546,7 +8718,7 @@ func CreateMockUUID(mockData string) *strfmt.UUID {
 }
 
 func CreateMockReader(mockData string) io.ReadCloser {
-	return ioutil.NopCloser(bytes.NewReader([]byte(mockData)))
+	return io.NopCloser(bytes.NewReader([]byte(mockData)))
 }
 
 func CreateMockDate(mockData string) *strfmt.Date {
