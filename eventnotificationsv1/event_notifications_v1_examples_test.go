@@ -1027,7 +1027,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			destinationID15 = *destinationResponse.ID
 
 			customDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig{
-				Domain: core.StringPtr("ashwin.event-notifications.test.cloud.ibm.com"),
+				Domain: core.StringPtr("abc.event-notifications.test.cloud.ibm.com"),
 			}
 
 			customDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1579,7 +1579,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 			customDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig{
-				Domain: core.StringPtr("ashwin.event-notifications.test.cloud.ibm.com"),
+				Domain: core.StringPtr("abc.event-notifications.test.cloud.ibm.com"),
 			}
 
 			customDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1759,12 +1759,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			subscriptionID5 = string(*subscription.ID)
 
 			subscriptionCreateAttributesCustomEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes{
-				Invited:                []string{"nitishkulkarni005@gmail.com", "tester3@ibm.com"},
+				Invited:                []string{"abc@gmail.com", "tester3@ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
 				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
-				FromEmail:              core.StringPtr("test@ashwin.event-notifications.test.cloud.ibm.com"),
+				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
 			}
 			customEmailName := core.StringPtr("subscription_custom_email")
 			customEmailDescription := core.StringPtr("Subscription for custom email")
@@ -2025,7 +2025,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Description).To(Equal(slackDescription))
 
 			UpdateAttributesCustomInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
-			UpdateAttributesCustomInvitedModel.Add = []string{"nitishkulkarni005@gmail.com", "tester3@ibm.com"}
+			UpdateAttributesCustomInvitedModel.Add = []string{"abc@gmail.com", "tester3@ibm.com"}
 
 			UpdateAttributesCustomSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
 			UpdateAttributesCustomSubscribedModel.Remove = []string{"tester3@ibm.com"}
@@ -2039,7 +2039,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
-				FromEmail:              core.StringPtr("test@ashwin.event-notifications.test.cloud.ibm.com"),
+				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
 				Subscribed:             UpdateAttributesCustomSubscribedModel,
 				Unsubscribed:           UpdateAttributesCustomUnSubscribedModel,
 			}
