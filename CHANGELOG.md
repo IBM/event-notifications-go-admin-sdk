@@ -1,3 +1,10 @@
+## [0.2.5](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.4...v0.2.5) (2023-08-02)
+
+
+### Bug Fixes
+
+* adds custom domain email support ([775bbb1](https://github.com/IBM/event-notifications-go-admin-sdk/commit/775bbb1fc562ba8914b1b7321a1f110aec2a2e49))
+
 ## [0.2.4](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.3...v0.2.4) (2023-06-15)
 
 
