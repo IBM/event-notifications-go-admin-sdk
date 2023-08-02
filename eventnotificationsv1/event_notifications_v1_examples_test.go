@@ -72,12 +72,14 @@ var (
 	destinationID13           string
 	destinationID14           string
 	destinationID15           string
+	destinationID16           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
 	subscriptionID3           string
 	subscriptionID4           string
 	subscriptionID5           string
+	subscriptionID6           string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -1023,6 +1025,35 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID15 = *destinationResponse.ID
+
+			customDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig{
+				Domain: core.StringPtr("abc.event-notifications.test.cloud.ibm.com"),
+			}
+
+			customDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: customDestinationConfigParamsModel,
+			}
+
+			customName := "custom_email_destination"
+			customtypeVal := eventnotificationsv1.CreateDestinationOptionsTypeSMTPCustomConst
+			customDescription := "custom Destination"
+			customCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(customName),
+				Type:        core.StringPtr(customtypeVal),
+				Description: core.StringPtr(customDescription),
+				Config:      customDestinationConfigModel,
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(customCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID16 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1546,6 +1577,52 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
+
+			customDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig{
+				Domain: core.StringPtr("abc.event-notifications.test.cloud.ibm.com"),
+			}
+
+			customDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: customDestinationConfigParamsModel,
+			}
+
+			customName := "custom_email_destination update"
+			customDescription := "custom email Destination updated"
+			customUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(customName),
+				ID:          core.StringPtr(destinationID16),
+				Description: core.StringPtr(customDescription),
+				Config:      customDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(customUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(destination, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+
+			customEmailUpdateDestinationOptions := &eventnotificationsv1.UpdateVerifyDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID16),
+				Type:       core.StringPtr("spf/dkim"),
+			}
+
+			spfDkimResult, response, err := eventNotificationsService.UpdateVerifyDestination(customEmailUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(spfDkimResult, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(spfDkimResult).ToNot(BeNil())
 			// end-update_destination
 		})
 
@@ -1698,6 +1775,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID5 = string(*subscription.ID)
 
+			subscriptionCreateAttributesCustomEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes{
+				Invited:                []string{"abc@gmail.com", "tester3@ibm.com"},
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
+				ReplyToName:            core.StringPtr("rester_reply"),
+				FromName:               core.StringPtr("Test IBM email"),
+				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
+			}
+			customEmailName := core.StringPtr("subscription_custom_email")
+			customEmailDescription := core.StringPtr("Subscription for custom email")
+			createCustomEmailSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          customEmailName,
+				Description:   customEmailDescription,
+				DestinationID: core.StringPtr(destinationID16),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesCustomEmailModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createCustomEmailSubscriptionOptions)
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID6 = string(*subscription.ID)
 			// end-create_subscription
 
 		})
@@ -1936,6 +2040,49 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID5)))
 			Expect(subscription.Name).To(Equal(slackName))
 			Expect(subscription.Description).To(Equal(slackDescription))
+
+			UpdateAttributesCustomInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
+			UpdateAttributesCustomInvitedModel.Add = []string{"abc@gmail.com", "tester3@ibm.com"}
+
+			UpdateAttributesCustomSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
+			UpdateAttributesCustomSubscribedModel.Remove = []string{"tester3@ibm.com"}
+
+			UpdateAttributesCustomUnSubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+			UpdateAttributesCustomUnSubscribedModel.Remove = []string{"tester3@ibm.com"}
+
+			subscriptionUpdateCustomEmailAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailUpdateAttributes{
+				Invited:                UpdateAttributesCustomInvitedModel,
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
+				ReplyToName:            core.StringPtr("rester_reply"),
+				FromName:               core.StringPtr("Test IBM email"),
+				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
+				Subscribed:             UpdateAttributesCustomSubscribedModel,
+				Unsubscribed:           UpdateAttributesCustomUnSubscribedModel,
+			}
+			customEmailName := core.StringPtr("subscription_custom_email_update")
+			CustomEmailDescription := core.StringPtr("Subscription update for custom email")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        customEmailName,
+				Description: CustomEmailDescription,
+				ID:          core.StringPtr(subscriptionID6),
+				Attributes:  subscriptionUpdateCustomEmailAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID6)))
+			Expect(subscription.Name).To(Equal(customEmailName))
+			Expect(subscription.Description).To(Equal(CustomEmailDescription))
 			// end-update_subscription
 
 		})
@@ -2113,7 +2260,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5} {
+			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -2169,7 +2316,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

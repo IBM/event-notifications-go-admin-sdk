@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.54.0-af6d2126-20220803-151219
+ * IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -1351,6 +1351,69 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 	return
 }
 
+// UpdateVerifyDestination : Verify status of spf or dkim records of custom email
+// Verify status of spf or dkim records of custom email.
+func (eventNotifications *EventNotificationsV1) UpdateVerifyDestination(updateVerifyDestinationOptions *UpdateVerifyDestinationOptions) (result *VerificationResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateVerifyDestinationWithContext(context.Background(), updateVerifyDestinationOptions)
+}
+
+// UpdateVerifyDestinationWithContext is an alternate form of the UpdateVerifyDestination method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateVerifyDestinationWithContext(ctx context.Context, updateVerifyDestinationOptions *UpdateVerifyDestinationOptions) (result *VerificationResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateVerifyDestinationOptions, "updateVerifyDestinationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateVerifyDestinationOptions, "updateVerifyDestinationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateVerifyDestinationOptions.InstanceID,
+		"id":          *updateVerifyDestinationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/verify`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateVerifyDestinationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateVerifyDestination")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("type", fmt.Sprint(*updateVerifyDestinationOptions.Type))
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalVerificationResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // CreateTagsSubscription : Create a new tag subscription
 // Create a new tag subscription.
 func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
@@ -2206,6 +2269,7 @@ const (
 	CreateDestinationOptionsTypePushHuaweiConst  = "push_huawei"
 	CreateDestinationOptionsTypePushIosConst     = "push_ios"
 	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
+	CreateDestinationOptionsTypeSMTPCustomConst  = "smtp_custom"
 	CreateDestinationOptionsTypeServicenowConst  = "servicenow"
 	CreateDestinationOptionsTypeSlackConst       = "slack"
 	CreateDestinationOptionsTypeWebhookConst     = "webhook"
@@ -2586,6 +2650,37 @@ func (options *CreateTopicOptions) SetHeaders(param map[string]string) *CreateTo
 	return options
 }
 
+// DkimAttributes : The DKIM attributes.
+type DkimAttributes struct {
+	// dkim public key.
+	PublicKey *string `json:"public_key,omitempty"`
+
+	// dkim selector.
+	Selector *string `json:"selector,omitempty"`
+
+	// dkim verification.
+	Verification *string `json:"verification,omitempty"`
+}
+
+// UnmarshalDkimAttributes unmarshals an instance of DkimAttributes from the specified map of raw messages.
+func UnmarshalDkimAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DkimAttributes)
+	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "selector", &obj.Selector)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DeleteDestinationOptions : The DeleteDestination options.
 type DeleteDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2835,6 +2930,7 @@ const (
 	DestinationTypePushHuaweiConst  = "push_huawei"
 	DestinationTypePushIosConst     = "push_ios"
 	DestinationTypePushSafariConst  = "push_safari"
+	DestinationTypeSMTPCustomConst  = "smtp_custom"
 	DestinationTypeSMTPIBMConst     = "smtp_ibm"
 	DestinationTypeServicenowConst  = "servicenow"
 	DestinationTypeSlackConst       = "slack"
@@ -2908,6 +3004,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 
 // DestinationConfigOneOf : DestinationConfigOneOf struct
 // Models which "extend" this model:
+// - DestinationConfigOneOfCustomDomainEmailDestinationConfig
 // - DestinationConfigOneOfWebhookDestinationConfig
 // - DestinationConfigOneOfFcmDestinationConfig
 // - DestinationConfigOneOfIosDestinationConfig
@@ -2922,6 +3019,15 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
 // - DestinationConfigOneOfHuaweiDestinationConfig
 type DestinationConfigOneOf struct {
+	// Email Domain.
+	Domain *string `json:"domain,omitempty"`
+
+	// The DKIM attributes.
+	Dkim *DkimAttributes `json:"dkim,omitempty"`
+
+	// The SPF attributes.
+	Spf *SpfAttributes `json:"spf,omitempty"`
+
 	// URL of webhook.
 	URL *string `json:"url,omitempty"`
 
@@ -2935,9 +3041,11 @@ type DestinationConfigOneOf struct {
 	SensitiveHeaders []string `json:"sensitive_headers,omitempty"`
 
 	// FCM server_key.
+	// Deprecated: this field is deprecated and may be removed in a future release.
 	ServerKey *string `json:"server_key,omitempty"`
 
 	// FCM sender_id.
+	// Deprecated: this field is deprecated and may be removed in a future release.
 	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
@@ -3031,6 +3139,18 @@ type DestinationConfigOneOfIntf interface {
 // UnmarshalDestinationConfigOneOf unmarshals an instance of DestinationConfigOneOf from the specified map of raw messages.
 func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(DestinationConfigOneOf)
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "dkim", &obj.Dkim, UnmarshalDkimAttributes)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "spf", &obj.Spf, UnmarshalSpfAttributes)
+	if err != nil {
+		return
+	}
 	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
 	if err != nil {
 		return
@@ -3267,6 +3387,7 @@ const (
 	DestinationListItemTypePushHuaweiConst  = "push_huawei"
 	DestinationListItemTypePushIosConst     = "push_ios"
 	DestinationListItemTypePushSafariConst  = "push_safari"
+	DestinationListItemTypeSMTPCustomConst  = "smtp_custom"
 	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
 	DestinationListItemTypeServicenowConst  = "servicenow"
 	DestinationListItemTypeSlackConst       = "slack"
@@ -3344,6 +3465,7 @@ const (
 	DestinationResponseTypePushHuaweiConst  = "push_huawei"
 	DestinationResponseTypePushIosConst     = "push_ios"
 	DestinationResponseTypePushSafariConst  = "push_safari"
+	DestinationResponseTypeSMTPCustomConst  = "smtp_custom"
 	DestinationResponseTypeServicenowConst  = "servicenow"
 	DestinationResponseTypeSlackConst       = "slack"
 	DestinationResponseTypeWebhookConst     = "webhook"
@@ -4869,6 +4991,37 @@ func UnmarshalSmsInviteAttributesItems(m map[string]json.RawMessage, result inte
 	return
 }
 
+// SpfAttributes : The SPF attributes.
+type SpfAttributes struct {
+	// spf text name.
+	TxtName *string `json:"txt_name,omitempty"`
+
+	// spf text value.
+	TxtValue *string `json:"txt_value,omitempty"`
+
+	// spf verification.
+	Verification *string `json:"verification,omitempty"`
+}
+
+// UnmarshalSpfAttributes unmarshals an instance of SpfAttributes from the specified map of raw messages.
+func UnmarshalSpfAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SpfAttributes)
+	err = core.UnmarshalPrimitive(m, "txt_name", &obj.TxtName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "txt_value", &obj.TxtValue)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SendBulkNotificationsOptions : The SendBulkNotifications options.
 type SendBulkNotificationsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -5306,6 +5459,7 @@ const (
 	SubscriptionDestinationTypePushHuaweiConst  = "push_huawei"
 	SubscriptionDestinationTypePushIosConst     = "push_ios"
 	SubscriptionDestinationTypePushSafariConst  = "push_safari"
+	SubscriptionDestinationTypeSMTPCustomConst  = "smtp_custom"
 	SubscriptionDestinationTypeSMTPIBMConst     = "smtp_ibm"
 	SubscriptionDestinationTypeServicenowConst  = "servicenow"
 	SubscriptionDestinationTypeSlackConst       = "slack"
@@ -5459,6 +5613,7 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // Models which "extend" this model:
 // - SubscriptionAttributesSmsAttributesResponse
 // - SubscriptionAttributesEmailAttributesResponse
+// - SubscriptionAttributesCustomEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
 // - SubscriptionAttributesSlackAttributesResponse
 // - SubscriptionAttributesServiceNowAttributesResponse
@@ -5483,6 +5638,9 @@ type SubscriptionAttributes struct {
 
 	// The email name of From.
 	FromName *string `json:"from_name,omitempty"`
+
+	// The email from.
+	FromEmail *string `json:"from_email,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -5567,6 +5725,9 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 	if o.FromName != nil {
 		m["from_name"] = o.FromName
 	}
+	if o.FromEmail != nil {
+		m["from_email"] = o.FromEmail
+	}
 	if o.SigningEnabled != nil {
 		m["signing_enabled"] = o.SigningEnabled
 	}
@@ -5621,6 +5782,11 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 		return
 	}
 	delete(m, "from_name")
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
+	if err != nil {
+		return
+	}
+	delete(m, "from_email")
 	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
 	if err != nil {
 		return
@@ -5658,6 +5824,7 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // Models which "extend" this model:
 // - SubscriptionCreateAttributesSmsAttributes
 // - SubscriptionCreateAttributesEmailAttributes
+// - SubscriptionCreateAttributesCustomEmailAttributes
 // - SubscriptionCreateAttributesWebhookAttributes
 // - SubscriptionCreateAttributesFcmAttributes
 // - SubscriptionCreateAttributesSlackAttributes
@@ -5677,6 +5844,9 @@ type SubscriptionCreateAttributes struct {
 
 	// The email name of From.
 	FromName *string `json:"from_name,omitempty"`
+
+	// The email from.
+	FromEmail *string `json:"from_email,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -5719,6 +5889,10 @@ func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
 	if err != nil {
 		return
 	}
@@ -5862,6 +6036,7 @@ const (
 	SubscriptionListItemDestinationTypePushHuaweiConst  = "push_huawei"
 	SubscriptionListItemDestinationTypePushIosConst     = "push_ios"
 	SubscriptionListItemDestinationTypePushSafariConst  = "push_safari"
+	SubscriptionListItemDestinationTypeSMTPCustomConst  = "smtp_custom"
 	SubscriptionListItemDestinationTypeSMTPIBMConst     = "smtp_ibm"
 	SubscriptionListItemDestinationTypeServicenowConst  = "servicenow"
 	SubscriptionListItemDestinationTypeSlackConst       = "slack"
@@ -5916,6 +6091,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // Models which "extend" this model:
 // - SubscriptionUpdateAttributesSmsUpdateAttributes
 // - SubscriptionUpdateAttributesEmailUpdateAttributes
+// - SubscriptionUpdateAttributesCustomEmailUpdateAttributes
 // - SubscriptionUpdateAttributesWebhookAttributes
 // - SubscriptionUpdateAttributesSlackAttributes
 // - SubscriptionUpdateAttributesServiceNowAttributes
@@ -5940,6 +6116,9 @@ type SubscriptionUpdateAttributes struct {
 
 	// The email name of From.
 	FromName *string `json:"from_name,omitempty"`
+
+	// The email from.
+	FromEmail *string `json:"from_email,omitempty"`
 
 	// Signing webhook attributes.
 	SigningEnabled *bool `json:"signing_enabled,omitempty"`
@@ -5990,6 +6169,10 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
 	if err != nil {
 		return
 	}
@@ -6744,6 +6927,78 @@ func (options *UpdateSubscriptionOptions) SetHeaders(param map[string]string) *U
 	return options
 }
 
+// UpdateVerifyDestinationOptions : The UpdateVerifyDestination options.
+type UpdateVerifyDestinationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Destination.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateVerifyDestinationOptions : Instantiate UpdateVerifyDestinationOptions
+func (*EventNotificationsV1) NewUpdateVerifyDestinationOptions(instanceID string, id string, typeVar string) *UpdateVerifyDestinationOptions {
+	return &UpdateVerifyDestinationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateVerifyDestinationOptions) SetInstanceID(instanceID string) *UpdateVerifyDestinationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateVerifyDestinationOptions) SetID(id string) *UpdateVerifyDestinationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetType : Allow user to set Type
+func (_options *UpdateVerifyDestinationOptions) SetType(typeVar string) *UpdateVerifyDestinationOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateVerifyDestinationOptions) SetHeaders(param map[string]string) *UpdateVerifyDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// VerificationResponse : Destination verification object.
+type VerificationResponse struct {
+	// verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// verification status.
+	Verification *string `json:"verification" validate:"required"`
+}
+
+// UnmarshalVerificationResponse unmarshals an instance of VerificationResponse from the specified map of raw messages.
+func UnmarshalVerificationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(VerificationResponse)
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DestinationConfigOneOfChromeDestinationConfig : Payload describing a Chrome destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfChromeDestinationConfig struct {
@@ -6797,13 +7052,60 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 	return
 }
 
+// DestinationConfigOneOfCustomDomainEmailDestinationConfig : Payload describing a custom Domain Email destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfCustomDomainEmailDestinationConfig struct {
+	// Email Domain.
+	Domain *string `json:"domain" validate:"required"`
+
+	// The DKIM attributes.
+	Dkim *DkimAttributes `json:"dkim,omitempty"`
+
+	// The SPF attributes.
+	Spf *SpfAttributes `json:"spf,omitempty"`
+}
+
+// NewDestinationConfigOneOfCustomDomainEmailDestinationConfig : Instantiate DestinationConfigOneOfCustomDomainEmailDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfCustomDomainEmailDestinationConfig(domain string) (_model *DestinationConfigOneOfCustomDomainEmailDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfCustomDomainEmailDestinationConfig{
+		Domain: core.StringPtr(domain),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfCustomDomainEmailDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig unmarshals an instance of DestinationConfigOneOfCustomDomainEmailDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "dkim", &obj.Dkim, UnmarshalDkimAttributes)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "spf", &obj.Spf, UnmarshalSpfAttributes)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration. project_id, private_key and client_email for FCM HTTP v1 APIs.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
 	// FCM server_key.
+	// Deprecated: this field is deprecated and may be removed in a future release.
 	ServerKey *string `json:"server_key,omitempty"`
 
 	// FCM sender_id.
+	// Deprecated: this field is deprecated and may be removed in a future release.
 	SenderID *string `json:"sender_id,omitempty"`
 
 	// If pre prod enabled.
@@ -7406,6 +7708,159 @@ func UnmarshalDestinationConfigOneOfWebhookDestinationConfig(m map[string]json.R
 	return
 }
 
+// SubscriptionAttributesCustomEmailAttributesResponse : The attributes reponse for an email destination.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesCustomEmailAttributesResponse struct {
+	// The email id string.
+	Invited []EmailAttributesResponseInvitedItems `json:"invited,omitempty"`
+
+	// The unsubscribe list.
+	Subscribed []EmailAttributesResponseSubscribedUnsubscribedItems `json:"subscribed,omitempty"`
+
+	// The subscribed list.
+	Unsubscribed []EmailAttributesResponseSubscribedUnsubscribedItems `json:"unsubscribed,omitempty"`
+
+	// Whether to add the notification payload to the email.
+	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
+
+	// The email address to reply to.
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
+
+	// The email name of From.
+	FromName *string `json:"from_name" validate:"required"`
+
+	// The email from.
+	FromEmail *string `json:"from_email" validate:"required"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesCustomEmailAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesCustomEmailAttributesResponse
+func (o *SubscriptionAttributesCustomEmailAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesCustomEmailAttributesResponse
+func (o *SubscriptionAttributesCustomEmailAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesCustomEmailAttributesResponse
+func (o *SubscriptionAttributesCustomEmailAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesCustomEmailAttributesResponse
+func (o *SubscriptionAttributesCustomEmailAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesCustomEmailAttributesResponse
+func (o *SubscriptionAttributesCustomEmailAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.Invited != nil {
+		m["invited"] = o.Invited
+	}
+	if o.Subscribed != nil {
+		m["subscribed"] = o.Subscribed
+	}
+	if o.Unsubscribed != nil {
+		m["unsubscribed"] = o.Unsubscribed
+	}
+	if o.AddNotificationPayload != nil {
+		m["add_notification_payload"] = o.AddNotificationPayload
+	}
+	if o.ReplyToMail != nil {
+		m["reply_to_mail"] = o.ReplyToMail
+	}
+	if o.ReplyToName != nil {
+		m["reply_to_name"] = o.ReplyToName
+	}
+	if o.FromName != nil {
+		m["from_name"] = o.FromName
+	}
+	if o.FromEmail != nil {
+		m["from_email"] = o.FromEmail
+	}
+	buffer, err = json.Marshal(m)
+	return
+}
+
+// UnmarshalSubscriptionAttributesCustomEmailAttributesResponse unmarshals an instance of SubscriptionAttributesCustomEmailAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesCustomEmailAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesCustomEmailAttributesResponse)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalEmailAttributesResponseInvitedItems)
+	if err != nil {
+		return
+	}
+	delete(m, "invited")
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalEmailAttributesResponseSubscribedUnsubscribedItems)
+	if err != nil {
+		return
+	}
+	delete(m, "subscribed")
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalEmailAttributesResponseSubscribedUnsubscribedItems)
+	if err != nil {
+		return
+	}
+	delete(m, "unsubscribed")
+	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
+	if err != nil {
+		return
+	}
+	delete(m, "add_notification_payload")
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_mail")
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	delete(m, "reply_to_name")
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	delete(m, "from_name")
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
+	if err != nil {
+		return
+	}
+	delete(m, "from_email")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = e
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionAttributesEmailAttributesResponse : The attributes reponse for an email destination.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesEmailAttributesResponse struct {
@@ -7896,6 +8351,77 @@ func UnmarshalSubscriptionAttributesWebhookAttributesResponse(m map[string]json.
 	return
 }
 
+// SubscriptionCreateAttributesCustomEmailAttributes : The attributes for an email notification.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesCustomEmailAttributes struct {
+	// The email id string.
+	Invited []string `json:"invited" validate:"required"`
+
+	// Whether to add the notification payload to the email.
+	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
+
+	// The email address to reply to.
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
+
+	// The email name of From.
+	FromName *string `json:"from_name" validate:"required"`
+
+	// The email from.
+	FromEmail *string `json:"from_email" validate:"required"`
+}
+
+// NewSubscriptionCreateAttributesCustomEmailAttributes : Instantiate SubscriptionCreateAttributesCustomEmailAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionCreateAttributesCustomEmailAttributes(invited []string, addNotificationPayload bool, replyToMail string, replyToName string, fromName string, fromEmail string) (_model *SubscriptionCreateAttributesCustomEmailAttributes, err error) {
+	_model = &SubscriptionCreateAttributesCustomEmailAttributes{
+		Invited:                invited,
+		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
+		FromEmail:              core.StringPtr(fromEmail),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*SubscriptionCreateAttributesCustomEmailAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesCustomEmailAttributes unmarshals an instance of SubscriptionCreateAttributesCustomEmailAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesCustomEmailAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesCustomEmailAttributes)
+	err = core.UnmarshalPrimitive(m, "invited", &obj.Invited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionCreateAttributesEmailAttributes : The attributes for an email notification.
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesEmailAttributes struct {
@@ -8081,6 +8607,90 @@ func (*SubscriptionCreateAttributesWebhookAttributes) isaSubscriptionCreateAttri
 func UnmarshalSubscriptionCreateAttributesWebhookAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionCreateAttributesWebhookAttributes)
 	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionUpdateAttributesCustomEmailUpdateAttributes : The attributes for an email notification.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesCustomEmailUpdateAttributes struct {
+	// The email ids or phone numbers.
+	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
+
+	// Whether to add the notification payload to the email.
+	AddNotificationPayload *bool `json:"add_notification_payload" validate:"required"`
+
+	// The email address to reply to.
+	ReplyToMail *string `json:"reply_to_mail" validate:"required"`
+
+	// The email name to reply to.
+	ReplyToName *string `json:"reply_to_name" validate:"required"`
+
+	// The email name of From.
+	FromName *string `json:"from_name" validate:"required"`
+
+	// The email from.
+	FromEmail *string `json:"from_email" validate:"required"`
+
+	// The email ids or phone numbers.
+	Subscribed *UpdateAttributesSubscribed `json:"subscribed,omitempty"`
+
+	// The email ids or phone numbers.
+	Unsubscribed *UpdateAttributesUnsubscribed `json:"unsubscribed,omitempty"`
+}
+
+// NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes : Instantiate SubscriptionUpdateAttributesCustomEmailUpdateAttributes (Generic Model Constructor)
+func (*EventNotificationsV1) NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes(addNotificationPayload bool, replyToMail string, replyToName string, fromName string, fromEmail string) (_model *SubscriptionUpdateAttributesCustomEmailUpdateAttributes, err error) {
+	_model = &SubscriptionUpdateAttributesCustomEmailUpdateAttributes{
+		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
+		FromEmail:              core.StringPtr(fromEmail),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*SubscriptionUpdateAttributesCustomEmailUpdateAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesCustomEmailUpdateAttributes unmarshals an instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesCustomEmailUpdateAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesCustomEmailUpdateAttributes)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalUpdateAttributesInvited)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "add_notification_payload", &obj.AddNotificationPayload)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_mail", &obj.ReplyToMail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "reply_to_name", &obj.ReplyToName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_name", &obj.FromName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "from_email", &obj.FromEmail)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalUpdateAttributesSubscribed)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalUpdateAttributesUnsubscribed)
 	if err != nil {
 		return
 	}
