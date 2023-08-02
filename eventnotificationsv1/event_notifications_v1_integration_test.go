@@ -1685,6 +1685,29 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(customDestination.ID).To(Equal(core.StringPtr(destinationID16)))
 			Expect(customDestination.Name).To(Equal(core.StringPtr(customName)))
 			Expect(customDestination.Description).To(Equal(core.StringPtr(customDescription)))
+
+			customSpfUpdateDestinationOptions := &eventnotificationsv1.UpdateVerifyDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID16),
+				Type:       core.StringPtr("spf"),
+			}
+
+			spfResult, response, err := eventNotificationsService.UpdateVerifyDestination(customSpfUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(spfResult).ToNot(BeNil())
+
+			customDkimUpdateDestinationOptions := &eventnotificationsv1.UpdateVerifyDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID16),
+				Type:       core.StringPtr("dkim"),
+			}
+
+			dkimResult, response, err := eventNotificationsService.UpdateVerifyDestination(customDkimUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(dkimResult).ToNot(BeNil())
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.

@@ -1351,6 +1351,69 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 	return
 }
 
+// UpdateVerifyDestination : Verify status of spf or dkim records of custom email
+// Verify status of spf or dkim records of custom email.
+func (eventNotifications *EventNotificationsV1) UpdateVerifyDestination(updateVerifyDestinationOptions *UpdateVerifyDestinationOptions) (result *VerificationResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateVerifyDestinationWithContext(context.Background(), updateVerifyDestinationOptions)
+}
+
+// UpdateVerifyDestinationWithContext is an alternate form of the UpdateVerifyDestination method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateVerifyDestinationWithContext(ctx context.Context, updateVerifyDestinationOptions *UpdateVerifyDestinationOptions) (result *VerificationResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateVerifyDestinationOptions, "updateVerifyDestinationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateVerifyDestinationOptions, "updateVerifyDestinationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateVerifyDestinationOptions.InstanceID,
+		"id":          *updateVerifyDestinationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/verify`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateVerifyDestinationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateVerifyDestination")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("type", fmt.Sprint(*updateVerifyDestinationOptions.Type))
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalVerificationResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // CreateTagsSubscription : Create a new tag subscription
 // Create a new tag subscription.
 func (eventNotifications *EventNotificationsV1) CreateTagsSubscription(createTagsSubscriptionOptions *CreateTagsSubscriptionOptions) (result *DestinationTagsSubscriptionResponse, response *core.DetailedResponse, err error) {
@@ -6862,6 +6925,78 @@ func (_options *UpdateSubscriptionOptions) SetAttributes(attributes Subscription
 func (options *UpdateSubscriptionOptions) SetHeaders(param map[string]string) *UpdateSubscriptionOptions {
 	options.Headers = param
 	return options
+}
+
+// UpdateVerifyDestinationOptions : The UpdateVerifyDestination options.
+type UpdateVerifyDestinationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Destination.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateVerifyDestinationOptions : Instantiate UpdateVerifyDestinationOptions
+func (*EventNotificationsV1) NewUpdateVerifyDestinationOptions(instanceID string, id string, typeVar string) *UpdateVerifyDestinationOptions {
+	return &UpdateVerifyDestinationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateVerifyDestinationOptions) SetInstanceID(instanceID string) *UpdateVerifyDestinationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateVerifyDestinationOptions) SetID(id string) *UpdateVerifyDestinationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetType : Allow user to set Type
+func (_options *UpdateVerifyDestinationOptions) SetType(typeVar string) *UpdateVerifyDestinationOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateVerifyDestinationOptions) SetHeaders(param map[string]string) *UpdateVerifyDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// VerificationResponse : Destination verification object.
+type VerificationResponse struct {
+	// verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// verification status.
+	Verification *string `json:"verification" validate:"required"`
+}
+
+// UnmarshalVerificationResponse unmarshals an instance of VerificationResponse from the specified map of raw messages.
+func UnmarshalVerificationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(VerificationResponse)
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
 }
 
 // DestinationConfigOneOfChromeDestinationConfig : Payload describing a Chrome destination configuration.

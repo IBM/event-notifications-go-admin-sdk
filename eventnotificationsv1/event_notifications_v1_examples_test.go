@@ -1606,6 +1606,23 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
+
+			customEmailUpdateDestinationOptions := &eventnotificationsv1.UpdateVerifyDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID16),
+				Type:       core.StringPtr("spf/dkim"),
+			}
+
+			spfDkimResult, response, err := eventNotificationsService.UpdateVerifyDestination(customEmailUpdateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ = json.MarshalIndent(spfDkimResult, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(spfDkimResult).ToNot(BeNil())
 			// end-update_destination
 		})
 
