@@ -1,3 +1,10 @@
+## [0.2.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.5...v0.2.6) (2023-08-21)
+
+
+### Bug Fixes
+
+* update ibm core SDK ([#46](https://github.com/IBM/event-notifications-go-admin-sdk/issues/46)) ([fa0cd24](https://github.com/IBM/event-notifications-go-admin-sdk/commit/fa0cd2414a03cc8a34685f4876bf646068d39049))
+
 ## [0.2.5](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.4...v0.2.5) (2023-08-02)
 
 
