@@ -134,6 +134,12 @@ SDK Methods to consume
 	- [Update Destination](#update-destination)
 	- [Delete Destination](#delete-destination)
 	- [Custom Domain_Name_verification](#custom-domain-name-verification)
+- [Templates](#templates)
+	- [Create Template](#create-template)
+	- [List Templates](#list-templates)
+	- [Get Template](#get-template)
+	- [Update Template](#update-template)
+	- [Delete Template](#delete-template)
 - [Push Destination APIs](#push-destination-apis)
 	- [Create Destination tag subscription](#create-destination-tag-subscription)
 	- [List Destination tag subscription](#list-destination-tag-subscription)
@@ -471,6 +477,79 @@ result, response, err := eventNotificationsService.UpdateVerifyDestination(custo
 if err != nil {
 	panic(err)
 }
+```
+
+## Templates
+
+Template is a pre-defined layout, that may include content like images, text and dynamic content based on event. Rather than creating a new content from scratch each time, you can use a template as a base and configure them in subscription. 
+supports the following templates:
+
+- Custom Email notification
+- Custom Email invitation
+
+### Create Template
+```go
+templConfig := &eventnotificationsv1.TemplateConfig{
+	Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+	Subject: core.StringPtr("Hi this is invitation for invitation message"),
+}
+
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
+### List Templates
+```go
+listTemplatesOptions := eventNotificationsService.NewListTemplatesOptions(
+	InstanceID: core.StringPtr(<instance-id>),
+)
+
+templatesList, response, err := eventNotificationsService.ListTemplates(listTemplatesOptions)
+```
+
+### Get Template
+```go
+getTemplateOptions := &eventnotificationsv1.GetTemplateOptions{
+	InstanceID: core.StringPtr(<instance-id>),
+	ID:         core.StringPtr(<template-id>),
+}
+
+template, response, err := eventNotificationsService.GetTemplate(getTemplateOptions)
+```
+
+### Update Template
+```go
+templateConfig := &eventnotificationsv1.TemplateConfig{
+	Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+	Subject: core.StringPtr("Hi this is invitation for invitation message"),
+}
+
+updateTemplateOptions := &eventnotificationsv1.UpdateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+```
+
+### Delete Template
+```go
+deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
+	InstanceID: core.StringPtr(<instance-id>),
+	ID:         core.StringPtr(<template-id>),
+}
+
+response, err := eventNotificationsService.DeleteTemplate(deleteTemplateOptions)
 ```
 
 ## Push Destination APIs

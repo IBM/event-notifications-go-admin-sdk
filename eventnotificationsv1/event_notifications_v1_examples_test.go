@@ -97,6 +97,8 @@ var (
 	cosBucketName             string
 	cosInstanceID             string
 	cosEndPoint               string
+	templateInvitationID      string
+	templateNotificationID    string
 )
 
 func shouldSkipTest() {
@@ -1057,6 +1059,64 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// end-create_destination
 
 		})
+
+		It(`CreateTemplate request example`, func() {
+			fmt.Println("\nCreateTemplate() result:")
+			// begin-create_template
+			name := "template invitation"
+			description := "template invitation description"
+
+			templConfig := &eventnotificationsv1.TemplateConfig{
+				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Subject: core.StringPtr("Hi this is invitation for invitation message"),
+			}
+
+			createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomInvitationConst),
+				Description: core.StringPtr(description),
+				Params:      templConfig,
+			}
+
+			templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+
+			templateInvitationID = *templateResponse.ID
+
+			name = "template notification"
+			description = "template notification description"
+
+			templConfig = &eventnotificationsv1.TemplateConfig{
+				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Subject: core.StringPtr("Hi this is template for notification"),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomNotificationConst),
+				Description: core.StringPtr(description),
+				Params:      templConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+
+			templateNotificationID = *templateResponse.ID
+			// end-create_template
+		})
+
 		It(`ListDestinations request example`, func() {
 			fmt.Println("\nListDestinations() result:")
 			// begin-list_destinations
@@ -1117,6 +1177,25 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destination).ToNot(BeNil())
 
 		})
+
+		It(`GetTemplate request example`, func() {
+			fmt.Println("\nGetTemplate() result:")
+			// begin-get_template
+
+			getTemplateOptions := &eventnotificationsv1.GetTemplateOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(templateInvitationID),
+			}
+
+			template, response, err := eventNotificationsService.GetTemplate(getTemplateOptions)
+			// end-get_template
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(template).ToNot(BeNil())
+
+		})
+
 		It(`UpdateDestination request example`, func() {
 			fmt.Println("\nUpdateDestination() result:")
 			// begin-update_destination
@@ -1626,6 +1705,68 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// end-update_destination
 		})
 
+		It(`UpdateTemplate request example`, func() {
+			fmt.Println("\nUpdateTemplate() result:")
+			// begin-update_template
+			name := "template invitation"
+			description := "template invitation description"
+
+			templateConfig := &eventnotificationsv1.TemplateConfig{
+				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Subject: core.StringPtr("Hi this is invitation for invitation message"),
+			}
+
+			updateTemplateOptions := &eventnotificationsv1.UpdateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(templateInvitationID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomInvitationConst),
+				Description: core.StringPtr(description),
+				Params:      templateConfig,
+			}
+
+			templateResponse, response, err := eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(templateInvitationID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "template notification"
+			description = "template notification description"
+
+			templateConfig = &eventnotificationsv1.TemplateConfig{
+				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Subject: core.StringPtr("Hi this is template for notification"),
+			}
+
+			updateTemplateOptions = &eventnotificationsv1.UpdateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(templateNotificationID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomNotificationConst),
+				Description: core.StringPtr(description),
+				Params:      templateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(templateNotificationID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+			// end-update_template
+
+		})
+
 		It(`CreateSubscription request example`, func() {
 			fmt.Println("\nCreateSubscription() result:")
 
@@ -1782,6 +1923,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
 				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
+				TemplateIDInvitation:   core.StringPtr(templateInvitationID),
+				TemplateIDNotification: core.StringPtr(templateNotificationID),
 			}
 			customEmailName := core.StringPtr("subscription_custom_email")
 			customEmailDescription := core.StringPtr("Subscription for custom email")
@@ -1825,6 +1968,28 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(subscriptionList).ToNot(BeNil())
+
+		})
+		It(`ListTemplates request example`, func() {
+			fmt.Println("\nListTemplates() result:")
+			// begin-list_templates
+
+			listTemplatesOptions := eventNotificationsService.NewListTemplatesOptions(
+				instanceID,
+			)
+
+			templatesList, response, err := eventNotificationsService.ListTemplates(listTemplatesOptions)
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(templatesList, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_templates
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templatesList).ToNot(BeNil())
 
 		})
 		It(`GetSubscription request example`, func() {
@@ -2059,6 +2224,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				FromEmail:              core.StringPtr("test@abc.event-notifications.test.cloud.ibm.com"),
 				Subscribed:             UpdateAttributesCustomSubscribedModel,
 				Unsubscribed:           UpdateAttributesCustomUnSubscribedModel,
+				TemplateIDInvitation:   core.StringPtr(templateInvitationID),
+				TemplateIDNotification: core.StringPtr(templateNotificationID),
 			}
 			customEmailName := core.StringPtr("subscription_custom_email_update")
 			CustomEmailDescription := core.StringPtr("Subscription update for custom email")
@@ -2241,6 +2408,23 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(202))
 			Expect(notificationResponse).ToNot(BeNil())
 
+		})
+
+		It(`DeleteTemplate request example`, func() {
+			// begin-delete_template
+			for _, ID := range []string{templateInvitationID, templateNotificationID} {
+
+				deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(ID),
+				}
+
+				response, err := eventNotificationsService.DeleteTemplate(deleteTemplateOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
+			}
+			// end-delete_template
 		})
 
 		It(`DeleteSubscription request example`, func() {
