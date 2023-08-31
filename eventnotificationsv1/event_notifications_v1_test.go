@@ -3357,6 +3357,1225 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
+	Describe(`CreateTemplate(createTemplateOptions *CreateTemplateOptions) - Operation response error`, func() {
+		createTemplatePath := "/v1/instances/testString/templates"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTemplatePath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke CreateTemplate with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the CreateTemplateOptions model
+				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
+				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				createTemplateOptionsModel.Name = core.StringPtr("testString")
+				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Description = core.StringPtr("testString")
+				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`CreateTemplate(createTemplateOptions *CreateTemplateOptions)`, func() {
+		createTemplatePath := "/v1/instances/testString/templates"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTemplatePath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateTemplate successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the CreateTemplateOptions model
+				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
+				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				createTemplateOptionsModel.Name = core.StringPtr("testString")
+				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Description = core.StringPtr("testString")
+				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.CreateTemplateWithContext(ctx, createTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.CreateTemplateWithContext(ctx, createTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createTemplatePath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.CreateTemplate(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the CreateTemplateOptions model
+				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
+				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				createTemplateOptionsModel.Name = core.StringPtr("testString")
+				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Description = core.StringPtr("testString")
+				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke CreateTemplate with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the CreateTemplateOptions model
+				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
+				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				createTemplateOptionsModel.Name = core.StringPtr("testString")
+				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Description = core.StringPtr("testString")
+				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the CreateTemplateOptions model with no property values
+				createTemplateOptionsModelNew := new(eventnotificationsv1.CreateTemplateOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.CreateTemplate(createTemplateOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the CreateTemplateOptions model
+				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
+				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				createTemplateOptionsModel.Name = core.StringPtr("testString")
+				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Description = core.StringPtr("testString")
+				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.CreateTemplate(createTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListTemplates(listTemplatesOptions *ListTemplatesOptions) - Operation response error`, func() {
+		listTemplatesPath := "/v1/instances/testString/templates"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTemplatesPath))
+					Expect(req.Method).To(Equal("GET"))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ListTemplates with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListTemplatesOptions model
+				listTemplatesOptionsModel := new(eventnotificationsv1.ListTemplatesOptions)
+				listTemplatesOptionsModel.InstanceID = core.StringPtr("testString")
+				listTemplatesOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listTemplatesOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTemplatesOptionsModel.Search = core.StringPtr("testString")
+				listTemplatesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListTemplates(listTemplatesOptions *ListTemplatesOptions)`, func() {
+		listTemplatesPath := "/v1/instances/testString/templates"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTemplatesPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListTemplates successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the ListTemplatesOptions model
+				listTemplatesOptionsModel := new(eventnotificationsv1.ListTemplatesOptions)
+				listTemplatesOptionsModel.InstanceID = core.StringPtr("testString")
+				listTemplatesOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listTemplatesOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTemplatesOptionsModel.Search = core.StringPtr("testString")
+				listTemplatesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.ListTemplatesWithContext(ctx, listTemplatesOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.ListTemplatesWithContext(ctx, listTemplatesOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTemplatesPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListTemplates successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.ListTemplates(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the ListTemplatesOptions model
+				listTemplatesOptionsModel := new(eventnotificationsv1.ListTemplatesOptions)
+				listTemplatesOptionsModel.InstanceID = core.StringPtr("testString")
+				listTemplatesOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listTemplatesOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTemplatesOptionsModel.Search = core.StringPtr("testString")
+				listTemplatesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ListTemplates with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListTemplatesOptions model
+				listTemplatesOptionsModel := new(eventnotificationsv1.ListTemplatesOptions)
+				listTemplatesOptionsModel.InstanceID = core.StringPtr("testString")
+				listTemplatesOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listTemplatesOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTemplatesOptionsModel.Search = core.StringPtr("testString")
+				listTemplatesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ListTemplatesOptions model with no property values
+				listTemplatesOptionsModelNew := new(eventnotificationsv1.ListTemplatesOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.ListTemplates(listTemplatesOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListTemplates successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListTemplatesOptions model
+				listTemplatesOptionsModel := new(eventnotificationsv1.ListTemplatesOptions)
+				listTemplatesOptionsModel.InstanceID = core.StringPtr("testString")
+				listTemplatesOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listTemplatesOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listTemplatesOptionsModel.Search = core.StringPtr("testString")
+				listTemplatesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.ListTemplates(listTemplatesOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.TemplateList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.TemplateList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TemplateList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.TemplateList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listTemplatesPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"smtp_custom.notification","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"smtp_custom.notification","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use TemplatesPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTemplatesOptionsModel := &eventnotificationsv1.ListTemplatesOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTemplatesPager(listTemplatesOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.Template
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use TemplatesPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listTemplatesOptionsModel := &eventnotificationsv1.ListTemplatesOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewTemplatesPager(listTemplatesOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
+			})
+		})
+	})
+	Describe(`GetTemplate(getTemplateOptions *GetTemplateOptions) - Operation response error`, func() {
+		getTemplatePath := "/v1/instances/testString/templates/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getTemplatePath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetTemplate with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetTemplateOptions model
+				getTemplateOptionsModel := new(eventnotificationsv1.GetTemplateOptions)
+				getTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				getTemplateOptionsModel.ID = core.StringPtr("testString")
+				getTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetTemplate(getTemplateOptions *GetTemplateOptions)`, func() {
+		getTemplatePath := "/v1/instances/testString/templates/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getTemplatePath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetTemplate successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetTemplateOptions model
+				getTemplateOptionsModel := new(eventnotificationsv1.GetTemplateOptions)
+				getTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				getTemplateOptionsModel.ID = core.StringPtr("testString")
+				getTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetTemplateWithContext(ctx, getTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetTemplateWithContext(ctx, getTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getTemplatePath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetTemplate(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetTemplateOptions model
+				getTemplateOptionsModel := new(eventnotificationsv1.GetTemplateOptions)
+				getTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				getTemplateOptionsModel.ID = core.StringPtr("testString")
+				getTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetTemplate with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetTemplateOptions model
+				getTemplateOptionsModel := new(eventnotificationsv1.GetTemplateOptions)
+				getTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				getTemplateOptionsModel.ID = core.StringPtr("testString")
+				getTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetTemplateOptions model with no property values
+				getTemplateOptionsModelNew := new(eventnotificationsv1.GetTemplateOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetTemplate(getTemplateOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetTemplateOptions model
+				getTemplateOptionsModel := new(eventnotificationsv1.GetTemplateOptions)
+				getTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				getTemplateOptionsModel.ID = core.StringPtr("testString")
+				getTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetTemplate(getTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateTemplate(updateTemplateOptions *UpdateTemplateOptions) - Operation response error`, func() {
+		updateTemplatePath := "/v1/instances/testString/templates/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateTemplatePath))
+					Expect(req.Method).To(Equal("PUT"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateTemplate with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateTemplateOptions model
+				updateTemplateOptionsModel := new(eventnotificationsv1.UpdateTemplateOptions)
+				updateTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				updateTemplateOptionsModel.ID = core.StringPtr("testString")
+				updateTemplateOptionsModel.Name = core.StringPtr("testString")
+				updateTemplateOptionsModel.Description = core.StringPtr("testString")
+				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Params = templateConfigModel
+				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateTemplate(updateTemplateOptions *UpdateTemplateOptions)`, func() {
+		updateTemplatePath := "/v1/instances/testString/templates/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateTemplatePath))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateTemplate successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateTemplateOptions model
+				updateTemplateOptionsModel := new(eventnotificationsv1.UpdateTemplateOptions)
+				updateTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				updateTemplateOptionsModel.ID = core.StringPtr("testString")
+				updateTemplateOptionsModel.Name = core.StringPtr("testString")
+				updateTemplateOptionsModel.Description = core.StringPtr("testString")
+				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Params = templateConfigModel
+				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateTemplateWithContext(ctx, updateTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateTemplateWithContext(ctx, updateTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateTemplatePath))
+					Expect(req.Method).To(Equal("PUT"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateTemplate(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateTemplateOptions model
+				updateTemplateOptionsModel := new(eventnotificationsv1.UpdateTemplateOptions)
+				updateTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				updateTemplateOptionsModel.ID = core.StringPtr("testString")
+				updateTemplateOptionsModel.Name = core.StringPtr("testString")
+				updateTemplateOptionsModel.Description = core.StringPtr("testString")
+				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Params = templateConfigModel
+				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateTemplate with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateTemplateOptions model
+				updateTemplateOptionsModel := new(eventnotificationsv1.UpdateTemplateOptions)
+				updateTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				updateTemplateOptionsModel.ID = core.StringPtr("testString")
+				updateTemplateOptionsModel.Name = core.StringPtr("testString")
+				updateTemplateOptionsModel.Description = core.StringPtr("testString")
+				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Params = templateConfigModel
+				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateTemplateOptions model with no property values
+				updateTemplateOptionsModelNew := new(eventnotificationsv1.UpdateTemplateOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateTemplate(updateTemplateOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+
+				// Construct an instance of the UpdateTemplateOptions model
+				updateTemplateOptionsModel := new(eventnotificationsv1.UpdateTemplateOptions)
+				updateTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				updateTemplateOptionsModel.ID = core.StringPtr("testString")
+				updateTemplateOptionsModel.Name = core.StringPtr("testString")
+				updateTemplateOptionsModel.Description = core.StringPtr("testString")
+				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Params = templateConfigModel
+				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateTemplate(updateTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions)`, func() {
+		deleteTemplatePath := "/v1/instances/testString/templates/testString"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(deleteTemplatePath))
+					Expect(req.Method).To(Equal("DELETE"))
+
+					res.WriteHeader(204)
+				}))
+			})
+			It(`Invoke DeleteTemplate successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := eventNotificationsService.DeleteTemplate(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the DeleteTemplateOptions model
+				deleteTemplateOptionsModel := new(eventnotificationsv1.DeleteTemplateOptions)
+				deleteTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteTemplateOptionsModel.ID = core.StringPtr("testString")
+				deleteTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = eventNotificationsService.DeleteTemplate(deleteTemplateOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke DeleteTemplate with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteTemplateOptions model
+				deleteTemplateOptionsModel := new(eventnotificationsv1.DeleteTemplateOptions)
+				deleteTemplateOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteTemplateOptionsModel.ID = core.StringPtr("testString")
+				deleteTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := eventNotificationsService.DeleteTemplate(deleteTemplateOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				// Construct a second instance of the DeleteTemplateOptions model with no property values
+				deleteTemplateOptionsModelNew := new(eventnotificationsv1.DeleteTemplateOptions)
+				// Invoke operation with invalid model (negative test)
+				response, operationErr = eventNotificationsService.DeleteTemplate(deleteTemplateOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`CreateDestination(createDestinationOptions *CreateDestinationOptions) - Operation response error`, func() {
 		createDestinationPath := "/v1/instances/testString/destinations"
 		Context(`Using mock server endpoint with invalid JSON response`, func() {
@@ -8074,6 +9293,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createTagsSubscriptionOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
 				Expect(createTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewCreateTemplateOptions successfully`, func() {
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				Expect(templateConfigModel).ToNot(BeNil())
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+				Expect(templateConfigModel.Body).To(Equal(core.StringPtr("testString")))
+				Expect(templateConfigModel.Subject).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the CreateTemplateOptions model
+				instanceID := "testString"
+				createTemplateOptionsName := "testString"
+				createTemplateOptionsType := "smtp_custom.notification"
+				var createTemplateOptionsParams *eventnotificationsv1.TemplateConfig = nil
+				createTemplateOptionsModel := eventNotificationsService.NewCreateTemplateOptions(instanceID, createTemplateOptionsName, createTemplateOptionsType, createTemplateOptionsParams)
+				createTemplateOptionsModel.SetInstanceID("testString")
+				createTemplateOptionsModel.SetName("testString")
+				createTemplateOptionsModel.SetType("smtp_custom.notification")
+				createTemplateOptionsModel.SetParams(templateConfigModel)
+				createTemplateOptionsModel.SetDescription("testString")
+				createTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(createTemplateOptionsModel).ToNot(BeNil())
+				Expect(createTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(createTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
+				Expect(createTemplateOptionsModel.Type).To(Equal(core.StringPtr("smtp_custom.notification")))
+				Expect(createTemplateOptionsModel.Params).To(Equal(templateConfigModel))
+				Expect(createTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(createTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewCreateTopicOptions successfully`, func() {
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
@@ -8165,6 +9413,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(deleteTagsSubscriptionOptionsModel.TagName).To(Equal(core.StringPtr("testString")))
 				Expect(deleteTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewDeleteTemplateOptions successfully`, func() {
+				// Construct an instance of the DeleteTemplateOptions model
+				instanceID := "testString"
+				id := "testString"
+				deleteTemplateOptionsModel := eventNotificationsService.NewDeleteTemplateOptions(instanceID, id)
+				deleteTemplateOptionsModel.SetInstanceID("testString")
+				deleteTemplateOptionsModel.SetID("testString")
+				deleteTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(deleteTemplateOptionsModel).ToNot(BeNil())
+				Expect(deleteTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteTemplateOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewDeleteTopicOptions successfully`, func() {
 				// Construct an instance of the DeleteTopicOptions model
 				instanceID := "testString"
@@ -8234,6 +9495,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getSubscriptionOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(getSubscriptionOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetTemplateOptions successfully`, func() {
+				// Construct an instance of the GetTemplateOptions model
+				instanceID := "testString"
+				id := "testString"
+				getTemplateOptionsModel := eventNotificationsService.NewGetTemplateOptions(instanceID, id)
+				getTemplateOptionsModel.SetInstanceID("testString")
+				getTemplateOptionsModel.SetID("testString")
+				getTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getTemplateOptionsModel).ToNot(BeNil())
+				Expect(getTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getTemplateOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetTopicOptions successfully`, func() {
 				// Construct an instance of the GetTopicOptions model
@@ -8346,6 +9620,22 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listTagsSubscriptionOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
 				Expect(listTagsSubscriptionOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewListTemplatesOptions successfully`, func() {
+				// Construct an instance of the ListTemplatesOptions model
+				instanceID := "testString"
+				listTemplatesOptionsModel := eventNotificationsService.NewListTemplatesOptions(instanceID)
+				listTemplatesOptionsModel.SetInstanceID("testString")
+				listTemplatesOptionsModel.SetLimit(int64(10))
+				listTemplatesOptionsModel.SetOffset(int64(0))
+				listTemplatesOptionsModel.SetSearch("testString")
+				listTemplatesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(listTemplatesOptionsModel).ToNot(BeNil())
+				Expect(listTemplatesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(listTemplatesOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
+				Expect(listTemplatesOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(listTemplatesOptionsModel.Search).To(Equal(core.StringPtr("testString")))
+				Expect(listTemplatesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewListTopicsOptions successfully`, func() {
 				// Construct an instance of the ListTopicsOptions model
@@ -8598,6 +9888,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewTemplateConfig successfully`, func() {
+				body := "testString"
+				subject := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfig(body, subject)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewUpdateDestinationOptions successfully`, func() {
 				// Construct an instance of the DkimAttributes model
 				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
@@ -8748,6 +10045,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSubscriptionOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(updateSubscriptionOptionsModel.Attributes).To(Equal(subscriptionUpdateAttributesModel))
 				Expect(updateSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateTemplateOptions successfully`, func() {
+				// Construct an instance of the TemplateConfig model
+				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
+				Expect(templateConfigModel).ToNot(BeNil())
+				templateConfigModel.Body = core.StringPtr("testString")
+				templateConfigModel.Subject = core.StringPtr("testString")
+				Expect(templateConfigModel.Body).To(Equal(core.StringPtr("testString")))
+				Expect(templateConfigModel.Subject).To(Equal(core.StringPtr("testString")))
+
+				// Construct an instance of the UpdateTemplateOptions model
+				instanceID := "testString"
+				id := "testString"
+				updateTemplateOptionsModel := eventNotificationsService.NewUpdateTemplateOptions(instanceID, id)
+				updateTemplateOptionsModel.SetInstanceID("testString")
+				updateTemplateOptionsModel.SetID("testString")
+				updateTemplateOptionsModel.SetName("testString")
+				updateTemplateOptionsModel.SetDescription("testString")
+				updateTemplateOptionsModel.SetType("smtp_custom.notification")
+				updateTemplateOptionsModel.SetParams(templateConfigModel)
+				updateTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateTemplateOptionsModel).ToNot(BeNil())
+				Expect(updateTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateTemplateOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
+				Expect(updateTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(updateTemplateOptionsModel.Type).To(Equal(core.StringPtr("smtp_custom.notification")))
+				Expect(updateTemplateOptionsModel.Params).To(Equal(templateConfigModel))
+				Expect(updateTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewUpdateVerifyDestinationOptions successfully`, func() {
 				// Construct an instance of the UpdateVerifyDestinationOptions model
