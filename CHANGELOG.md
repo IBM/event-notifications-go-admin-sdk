@@ -1,3 +1,10 @@
+## [0.2.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.6...v0.2.7) (2023-08-31)
+
+
+### Bug Fixes
+
+* adds templates support ([#47](https://github.com/IBM/event-notifications-go-admin-sdk/issues/47)) ([73b18d0](https://github.com/IBM/event-notifications-go-admin-sdk/commit/73b18d05d435e7d3fdcaa9e446723fc7c412c045))
+
 ## [0.2.6](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.5...v0.2.6) (2023-08-21)
 
 
