@@ -774,6 +774,8 @@ notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 notificationFcmBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Alert message\",\"body\": \"Bob wants to play Poker\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"notification for the Poker\"}}}}"
 notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
 notificationSafariBodyModel := "{\"aps\":{\"alert\":{\"title\":\"FlightA998NowBoarding\",\"body\":\"BoardinghasbegunforFlightA998.\",\"action\":\"View\"},\"url-args\":[\"boarding\",\"A998\"]}}}"
+mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
+htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 notificationSeverity := "MEDIUM"
 typeValue := "com.acme.offer:new"
@@ -792,6 +794,9 @@ notificationCreateModel.Ibmenfcmbody = &notificationFcmBodyModel
 notificationCreateModel.Ibmenapnsbody = &notificationAPNsBodyModel
 notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 notificationCreateModel.Ibmenpushto = &devicesbodyString
+notificationCreateModel.Ibmenmailto = &mailTo
+notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
+notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
 notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
 

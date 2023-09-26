@@ -2954,13 +2954,6 @@ type CreateTemplateOptions struct {
 	Headers map[string]string
 }
 
-// Constants associated with the CreateTemplateOptions.Type property.
-// The type of template.
-const (
-	CreateTemplateOptionsTypeSMTPCustomInvitationConst   = "smtp_custom.invitation"
-	CreateTemplateOptionsTypeSMTPCustomNotificationConst = "smtp_custom.notification"
-)
-
 // NewCreateTemplateOptions : Instantiate CreateTemplateOptions
 func (*EventNotificationsV1) NewCreateTemplateOptions(instanceID string, name string, typeVar string, params *TemplateConfig) *CreateTemplateOptions {
 	return &CreateTemplateOptions{
@@ -4950,6 +4943,15 @@ type NotificationCreate struct {
 	Ibmendefaultlong *string `json:"ibmendefaultlong" validate:"required"`
 
 	// The subject of the notification.
+	Ibmensubject *string `json:"ibmensubject,omitempty"`
+
+	// The email id string.
+	Ibmenmailto *string `json:"ibmenmailto,omitempty"`
+
+	// The html body of notification.
+	Ibmenhtmlbody *string `json:"ibmenhtmlbody,omitempty"`
+
+	// The subject of the notification.
 	Subject *string `json:"subject,omitempty"`
 
 	// The payload for webhook notification.
@@ -5069,6 +5071,15 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Ibmendefaultlong != nil {
 		m["ibmendefaultlong"] = o.Ibmendefaultlong
 	}
+	if o.Ibmensubject != nil {
+		m["ibmensubject"] = o.Ibmensubject
+	}
+	if o.Ibmenmailto != nil {
+		m["ibmenmailto"] = o.Ibmenmailto
+	}
+	if o.Ibmenhtmlbody != nil {
+		m["ibmenhtmlbody"] = o.Ibmenhtmlbody
+	}
 	if o.Subject != nil {
 		m["subject"] = o.Subject
 	}
@@ -5160,6 +5171,21 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "ibmendefaultlong")
+	err = core.UnmarshalPrimitive(m, "ibmensubject", &obj.Ibmensubject)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmensubject")
+	err = core.UnmarshalPrimitive(m, "ibmenmailto", &obj.Ibmenmailto)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenmailto")
+	err = core.UnmarshalPrimitive(m, "ibmenhtmlbody", &obj.Ibmenhtmlbody)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenhtmlbody")
 	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
 	if err != nil {
 		return
@@ -6922,7 +6948,7 @@ type Template struct {
 	// Template description.
 	Description *string `json:"description" validate:"required"`
 
-	// template type.
+	// The type of template.
 	Type *string `json:"type" validate:"required"`
 
 	// Subscription count.
@@ -6934,13 +6960,6 @@ type Template struct {
 	// Updated at.
 	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
 }
-
-// Constants associated with the Template.Type property.
-// template type.
-const (
-	TemplateTypeSMTPCustomInvitationConst   = "smtp_custom.invitation"
-	TemplateTypeSMTPCustomNotificationConst = "smtp_custom.notification"
-)
 
 // UnmarshalTemplate unmarshals an instance of Template from the specified map of raw messages.
 func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -7098,7 +7117,7 @@ type TemplateResponse struct {
 	// Template description.
 	Description *string `json:"description,omitempty"`
 
-	// Template type.
+	// The type of template.
 	Type *string `json:"type" validate:"required"`
 
 	// Payload describing a template configuration.
@@ -7107,13 +7126,6 @@ type TemplateResponse struct {
 	// Created time.
 	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
 }
-
-// Constants associated with the TemplateResponse.Type property.
-// Template type.
-const (
-	TemplateResponseTypeSMTPCustomInvitationConst   = "smtp_custom.invitation"
-	TemplateResponseTypeSMTPCustomNotificationConst = "smtp_custom.notification"
-)
 
 // UnmarshalTemplateResponse unmarshals an instance of TemplateResponse from the specified map of raw messages.
 func UnmarshalTemplateResponse(m map[string]json.RawMessage, result interface{}) (err error) {
@@ -7779,13 +7791,6 @@ type UpdateTemplateOptions struct {
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
-
-// Constants associated with the UpdateTemplateOptions.Type property.
-// The type of template.
-const (
-	UpdateTemplateOptionsTypeSMTPCustomInvitationConst   = "smtp_custom.invitation"
-	UpdateTemplateOptionsTypeSMTPCustomNotificationConst = "smtp_custom.notification"
-)
 
 // NewUpdateTemplateOptions : Instantiate UpdateTemplateOptions
 func (*EventNotificationsV1) NewUpdateTemplateOptions(instanceID string, id string) *UpdateTemplateOptions {

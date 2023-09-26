@@ -1065,6 +1065,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// begin-create_template
 			name := "template invitation"
 			description := "template invitation description"
+			templateTypeInvitation := "smtp_custom.invitation"
+			templateTypeNotification := "smtp_custom.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfig{
 				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
@@ -1074,7 +1076,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomInvitationConst),
+				Type:        core.StringPtr(templateTypeInvitation),
 				Description: core.StringPtr(description),
 				Params:      templConfig,
 			}
@@ -1100,7 +1102,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomNotificationConst),
+				Type:        core.StringPtr(templateTypeNotification),
 				Description: core.StringPtr(description),
 				Params:      templConfig,
 			}
@@ -1710,6 +1712,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// begin-update_template
 			name := "template invitation"
 			description := "template invitation description"
+			templateTypeInvitation := "smtp_custom.invitation"
+			templateTypeNotification := "smtp_custom.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfig{
 				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
@@ -1720,7 +1724,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(templateInvitationID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomInvitationConst),
+				Type:        core.StringPtr(templateTypeInvitation),
 				Description: core.StringPtr(description),
 				Params:      templateConfig,
 			}
@@ -1748,7 +1752,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(templateNotificationID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(eventnotificationsv1.CreateTemplateOptionsTypeSMTPCustomNotificationConst),
+				Type:        core.StringPtr(templateTypeNotification),
 				Description: core.StringPtr(description),
 				Params:      templateConfig,
 			}
@@ -2277,6 +2281,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			notificationDevicesModel := "{\"platforms\":[\"push_ios\",\"push_android\",\"push_chrome\",\"push_firefox\",\"push_huawei\"]}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
+			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
+			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
 
@@ -2311,6 +2317,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 			notificationCreateModel.Ibmenhuaweibody = &notificationHuaweiBodyModel
+			notificationCreateModel.Ibmenmailto = &mailTo
+			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
+			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("This is simple test alert from IBM Cloud Event Notifications service.")
 			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Hi, we are making sure from our side that the service is available for consumption.")
 
