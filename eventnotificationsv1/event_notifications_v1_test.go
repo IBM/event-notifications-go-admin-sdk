@@ -197,6 +197,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -291,6 +294,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -393,6 +399,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -440,6 +449,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -508,6 +520,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -576,6 +591,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -670,6 +688,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -772,6 +793,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -819,6 +843,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -887,6 +914,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -3389,7 +3419,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
-				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Type = core.StringPtr("testString")
 				createTemplateOptionsModel.Params = templateConfigModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3444,7 +3474,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateTemplate successfully with retries`, func() {
@@ -3465,7 +3495,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
-				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Type = core.StringPtr("testString")
 				createTemplateOptionsModel.Params = templateConfigModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3523,7 +3553,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "params": {"body": "Body", "subject": "Subject"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateTemplate successfully`, func() {
@@ -3549,7 +3579,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
-				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Type = core.StringPtr("testString")
 				createTemplateOptionsModel.Params = templateConfigModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3578,7 +3608,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
-				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Type = core.StringPtr("testString")
 				createTemplateOptionsModel.Params = templateConfigModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3628,7 +3658,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
-				createTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				createTemplateOptionsModel.Type = core.StringPtr("testString")
 				createTemplateOptionsModel.Params = templateConfigModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
@@ -3717,7 +3747,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTemplates successfully with retries`, func() {
@@ -3777,7 +3807,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "templates": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListTemplates successfully`, func() {
@@ -3935,9 +3965,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 					requestNumber++
 					if requestNumber == 1 {
-						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"smtp_custom.notification","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"Type","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
 					} else if requestNumber == 2 {
-						fmt.Fprintf(res, "%s", `{"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"smtp_custom.notification","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
+						fmt.Fprintf(res, "%s", `{"total_count":2,"templates":[{"id":"ID","name":"Name","description":"Description","type":"Type","subscription_count":17,"subscription_names":["SubscriptionNames"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}`)
 					} else {
 						res.WriteHeader(400)
 					}
@@ -4058,7 +4088,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke GetTemplate successfully with retries`, func() {
@@ -4113,7 +4143,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke GetTemplate successfully`, func() {
@@ -4246,7 +4276,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.ID = core.StringPtr("testString")
 				updateTemplateOptionsModel.Name = core.StringPtr("testString")
 				updateTemplateOptionsModel.Description = core.StringPtr("testString")
-				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Type = core.StringPtr("testString")
 				updateTemplateOptionsModel.Params = templateConfigModel
 				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -4300,7 +4330,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke UpdateTemplate successfully with retries`, func() {
@@ -4323,7 +4353,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.ID = core.StringPtr("testString")
 				updateTemplateOptionsModel.Name = core.StringPtr("testString")
 				updateTemplateOptionsModel.Description = core.StringPtr("testString")
-				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Type = core.StringPtr("testString")
 				updateTemplateOptionsModel.Params = templateConfigModel
 				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4380,7 +4410,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "smtp_custom.notification", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "subscription_count": 17, "subscription_names": ["SubscriptionNames"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke UpdateTemplate successfully`, func() {
@@ -4408,7 +4438,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.ID = core.StringPtr("testString")
 				updateTemplateOptionsModel.Name = core.StringPtr("testString")
 				updateTemplateOptionsModel.Description = core.StringPtr("testString")
-				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Type = core.StringPtr("testString")
 				updateTemplateOptionsModel.Params = templateConfigModel
 				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -4438,7 +4468,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.ID = core.StringPtr("testString")
 				updateTemplateOptionsModel.Name = core.StringPtr("testString")
 				updateTemplateOptionsModel.Description = core.StringPtr("testString")
-				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Type = core.StringPtr("testString")
 				updateTemplateOptionsModel.Params = templateConfigModel
 				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -4489,7 +4519,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.ID = core.StringPtr("testString")
 				updateTemplateOptionsModel.Name = core.StringPtr("testString")
 				updateTemplateOptionsModel.Description = core.StringPtr("testString")
-				updateTemplateOptionsModel.Type = core.StringPtr("smtp_custom.notification")
+				updateTemplateOptionsModel.Type = core.StringPtr("testString")
 				updateTemplateOptionsModel.Params = templateConfigModel
 				updateTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -9305,19 +9335,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				// Construct an instance of the CreateTemplateOptions model
 				instanceID := "testString"
 				createTemplateOptionsName := "testString"
-				createTemplateOptionsType := "smtp_custom.notification"
+				createTemplateOptionsType := "testString"
 				var createTemplateOptionsParams *eventnotificationsv1.TemplateConfig = nil
 				createTemplateOptionsModel := eventNotificationsService.NewCreateTemplateOptions(instanceID, createTemplateOptionsName, createTemplateOptionsType, createTemplateOptionsParams)
 				createTemplateOptionsModel.SetInstanceID("testString")
 				createTemplateOptionsModel.SetName("testString")
-				createTemplateOptionsModel.SetType("smtp_custom.notification")
+				createTemplateOptionsModel.SetType("testString")
 				createTemplateOptionsModel.SetParams(templateConfigModel)
 				createTemplateOptionsModel.SetDescription("testString")
 				createTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createTemplateOptionsModel).ToNot(BeNil())
 				Expect(createTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
-				Expect(createTemplateOptionsModel.Type).To(Equal(core.StringPtr("smtp_custom.notification")))
+				Expect(createTemplateOptionsModel.Type).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Params).To(Equal(templateConfigModel))
 				Expect(createTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
@@ -9750,6 +9780,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -9773,6 +9806,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensubject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenmailto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
@@ -9822,6 +9858,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensourceid = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
+				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
@@ -9845,6 +9884,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmensourceid).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensubject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenmailto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
@@ -10063,7 +10105,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateTemplateOptionsModel.SetID("testString")
 				updateTemplateOptionsModel.SetName("testString")
 				updateTemplateOptionsModel.SetDescription("testString")
-				updateTemplateOptionsModel.SetType("smtp_custom.notification")
+				updateTemplateOptionsModel.SetType("testString")
 				updateTemplateOptionsModel.SetParams(templateConfigModel)
 				updateTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateTemplateOptionsModel).ToNot(BeNil())
@@ -10071,7 +10113,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateTemplateOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(updateTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
-				Expect(updateTemplateOptionsModel.Type).To(Equal(core.StringPtr("smtp_custom.notification")))
+				Expect(updateTemplateOptionsModel.Type).To(Equal(core.StringPtr("testString")))
 				Expect(updateTemplateOptionsModel.Params).To(Equal(templateConfigModel))
 				Expect(updateTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
