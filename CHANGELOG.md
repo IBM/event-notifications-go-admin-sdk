@@ -1,3 +1,10 @@
+## [0.2.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.7...v0.2.8) (2023-09-27)
+
+
+### Bug Fixes
+
+* custom email notification payload update ([#48](https://github.com/IBM/event-notifications-go-admin-sdk/issues/48)) ([0fd52bb](https://github.com/IBM/event-notifications-go-admin-sdk/commit/0fd52bb2dcc41138b4c4e6cc8ddb1ccc56a831e0))
+
 ## [0.2.7](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.6...v0.2.7) (2023-08-31)
 
 
