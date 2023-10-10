@@ -1310,6 +1310,67 @@ func (eventNotifications *EventNotificationsV1) DeleteTemplateWithContext(ctx co
 	return
 }
 
+// TestDestination : Test a destination
+// Test a destination.
+func (eventNotifications *EventNotificationsV1) TestDestination(testDestinationOptions *TestDestinationOptions) (result *TestDestinationResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.TestDestinationWithContext(context.Background(), testDestinationOptions)
+}
+
+// TestDestinationWithContext is an alternate form of the TestDestination method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) TestDestinationWithContext(ctx context.Context, testDestinationOptions *TestDestinationOptions) (result *TestDestinationResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(testDestinationOptions, "testDestinationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(testDestinationOptions, "testDestinationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *testDestinationOptions.InstanceID,
+		"id":          *testDestinationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/destinations/{id}/test`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range testDestinationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "TestDestination")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalTestDestinationResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // CreateDestination : Create a new Destination
 // Create a new Destination.
 func (eventNotifications *EventNotificationsV1) CreateDestination(createDestinationOptions *CreateDestinationOptions) (result *DestinationResponse, response *core.DetailedResponse, err error) {
@@ -7151,6 +7212,61 @@ func UnmarshalTemplateResponse(m map[string]json.RawMessage, result interface{})
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TestDestinationOptions : The TestDestination options.
+type TestDestinationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Destination.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewTestDestinationOptions : Instantiate TestDestinationOptions
+func (*EventNotificationsV1) NewTestDestinationOptions(instanceID string, id string) *TestDestinationOptions {
+	return &TestDestinationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *TestDestinationOptions) SetInstanceID(instanceID string) *TestDestinationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *TestDestinationOptions) SetID(id string) *TestDestinationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *TestDestinationOptions) SetHeaders(param map[string]string) *TestDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// TestDestinationResponse : Destination test object.
+type TestDestinationResponse struct {
+	// test destiantion status.
+	Status *string `json:"status" validate:"required"`
+}
+
+// UnmarshalTestDestinationResponse unmarshals an instance of TestDestinationResponse from the specified map of raw messages.
+func UnmarshalTestDestinationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TestDestinationResponse)
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
 		return
 	}

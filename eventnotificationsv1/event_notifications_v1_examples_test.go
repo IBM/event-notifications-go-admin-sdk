@@ -1060,6 +1060,23 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		})
 
+		It(`TestDestination(TestDestinationOptions *testDestinationOptions)`, func() {
+
+			// begin-test_destination
+			testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID14),
+			}
+
+			_, response, err := eventNotificationsService.TestDestination(testDestinationOptions)
+			// end-test_destination
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+		})
+
 		It(`CreateTemplate request example`, func() {
 			fmt.Println("\nCreateTemplate() result:")
 			// begin-create_template
