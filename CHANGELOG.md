@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.8...v0.3.0) (2023-10-10)
+
+
+### Features
+
+* add test http destination support ([#49](https://github.com/IBM/event-notifications-go-admin-sdk/issues/49)) ([c86a553](https://github.com/IBM/event-notifications-go-admin-sdk/commit/c86a553ddd17c5f6564ebeaa6a9f05091681b914))
+
 ## [0.2.8](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.7...v0.2.8) (2023-09-27)
 
 
