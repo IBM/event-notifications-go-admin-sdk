@@ -112,6 +112,10 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		cosEndPoint               string
 		templateInvitationID      string
 		templateNotificationID    string
+		slackURL                  string
+		teamsURL                  string
+		pagerDutyApiKey           string
+		pagerDutyRoutingKey       string
 	)
 
 	var shouldSkipTest = func() {
@@ -244,6 +248,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load cos end point configuration property, skipping tests")
 			}
 			fmt.Printf("cos end point: %s\n", cosEndPoint)
+
+			slackURL = config["SLACK_URL"]
+			if slackURL == "" {
+				Skip("Unable to load slack configuration property, skipping tests")
+			}
+			fmt.Printf("slack url: %s\n", slackURL)
+
+			teamsURL = config["MS_TEAMS_URL"]
+			if teamsURL == "" {
+				Skip("Unable to load msteams end point configuration property, skipping tests")
+			}
+			fmt.Printf("msteams url: %s\n", teamsURL)
+
+			pagerDutyApiKey = config["PD_API_KEY"]
+			if pagerDutyApiKey == "" {
+				Skip("Unable to load  pagerDutyApiKey configuration property, skipping tests")
+			}
+			fmt.Printf(" pagerDutyApiKey: %s\n", pagerDutyApiKey)
+
+			pagerDutyRoutingKey = config["PD_ROUTING_KEY"]
+			if pagerDutyRoutingKey == "" {
+				Skip("Unable to load pagerDutyRoutingKey configuration property, skipping tests")
+			}
+			fmt.Printf("pagerDutyRoutingKey: %s\n", pagerDutyRoutingKey)
 
 			shouldSkipTest = func() {}
 		})
@@ -764,7 +792,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			)
 
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL: core.StringPtr(slackURL),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -824,7 +852,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			)
 
 			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
-				URL: core.StringPtr("https://teams.microsoft.com"),
+				URL: core.StringPtr(teamsURL),
 			}
 
 			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -926,8 +954,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			)
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr("usedfsdfsdfsdfsdfs"),
-				RoutingKey: core.StringPtr("2e332432423423w3rwfewf8"),
+				APIKey:     core.StringPtr(pagerDutyApiKey),
+				RoutingKey: core.StringPtr(pagerDutyRoutingKey),
 			}
 
 			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1137,6 +1165,28 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			// 415
 			// 500
 			//
+		})
+	})
+
+	Describe(`TestDestination - Test Destination`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`TestDestination(TestDestinationOptions *testDestinationOptions)`, func() {
+
+			for _, ID := range []string{destinationID4, destinationID6, destinationID10, destinationID14} {
+				testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(ID),
+				}
+
+				_, response, err := eventNotificationsService.TestDestination(testDestinationOptions)
+				if err != nil {
+					panic(err)
+				}
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(200))
+			}
 		})
 	})
 
@@ -1397,7 +1447,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			//slack
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL: core.StringPtr(slackURL),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1465,7 +1515,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			//MSTeams
 
 			destinationConfigParamsMSTeaMSModel := &eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig{
-				URL: core.StringPtr("https://teams.microsoft.com"),
+				URL: core.StringPtr(teamsURL),
 			}
 
 			msTeamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1575,8 +1625,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Description).To(Equal(core.StringPtr(fireDescription)))
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr("udsfsdfsdfsdfqwesdfsdfsdfs"),
-				RoutingKey: core.StringPtr("sdfwer34r345343453534534534"),
+				APIKey:     core.StringPtr(pagerDutyApiKey),
+				RoutingKey: core.StringPtr(pagerDutyRoutingKey),
 			}
 
 			pagerDutyDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
