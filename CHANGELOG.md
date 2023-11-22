@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.3.0...v0.4.0) (2023-11-22)
+
+
+### Features
+
+* adds custom sms support ([#50](https://github.com/IBM/event-notifications-go-admin-sdk/issues/50)) ([e4902e7](https://github.com/IBM/event-notifications-go-admin-sdk/commit/e4902e727706cc83cdf9d700d4e7902e7ef0dfb5))
+
 # [0.3.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.2.8...v0.3.0) (2023-10-10)
 
 
