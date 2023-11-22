@@ -73,6 +73,7 @@ var (
 	destinationID14           string
 	destinationID15           string
 	destinationID16           string
+	destinationID17           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -80,6 +81,7 @@ var (
 	subscriptionID4           string
 	subscriptionID5           string
 	subscriptionID6           string
+	subscriptionID7           string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -99,6 +101,9 @@ var (
 	cosEndPoint               string
 	templateInvitationID      string
 	templateNotificationID    string
+	templateBody              string
+	cosInstanceCRN            string
+	cosIntegrationID          string
 )
 
 func shouldSkipTest() {
@@ -231,6 +236,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			fmt.Printf("cos end point: %s\n", cosEndPoint)
 
+			templateBody = config["TEMPLATE_BODY"]
+			if templateBody == "" {
+				Skip("Unable to load templateBody configuration property, skipping tests")
+			}
+			fmt.Printf("TemplateBody: %s\n", templateBody)
+
+			cosInstanceCRN = config["COS_INSTANCE_CRN"]
+			if cosInstanceCRN == "" {
+				Skip("Unable to load cosInstanceCRN configuration property, skipping tests")
+			}
+			fmt.Printf("cosInstanceCRN: %s\n", cosInstanceCRN)
+
 			configLoaded = len(config) > 0
 		})
 	})
@@ -255,6 +272,34 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// end-common
 
 			Expect(eventNotificationsService).ToNot(BeNil())
+		})
+	})
+
+	Describe(`CreateIntegration - Create integration of an instance`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateIntegration(createIntegrationOptions *CreateIntegrationOptions)`, func() {
+			// begin-create_integration
+			integrationMetadata := &eventnotificationsv1.IntegrationCreateMetadata{
+				Endpoint:   core.StringPtr(cosEndPoint),
+				CRN:        core.StringPtr(cosInstanceCRN),
+				BucketName: core.StringPtr(cosBucketName),
+			}
+
+			createIntegrationsOptions := &eventnotificationsv1.CreateIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Type:       core.StringPtr("collect_failed_events"),
+				Metadata:   integrationMetadata,
+			}
+
+			integrationCreateResponse, response, err := eventNotificationsService.CreateIntegration(createIntegrationsOptions)
+
+			cosIntegrationID = string(*integrationCreateResponse.ID)
+			// end-create_integration
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(integrationCreateResponse).ToNot(BeNil())
 		})
 	})
 
@@ -329,6 +374,29 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			_, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			if response.StatusCode != 204 {
+				fmt.Printf("\nUnexpected response status code received from updateIntegration(): %d\n", response.StatusCode)
+			}
+
+			//COS Integration
+			integrationCOSMetadata := &eventnotificationsv1.IntegrationMetadata{
+				Endpoint:   core.StringPtr(cosEndPoint),
+				CRN:        core.StringPtr(cosInstanceCRN),
+				BucketName: core.StringPtr(cosBucketName),
+			}
+
+			replaceCOSIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(cosIntegrationID),
+				Type:       core.StringPtr("collect_failed_events"),
+				Metadata:   integrationCOSMetadata,
+			}
+
+			_, response, err = eventNotificationsService.ReplaceIntegration(replaceCOSIntegrationsOptions)
 
 			if err != nil {
 				panic(err)
@@ -1056,6 +1124,27 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID16 = *destinationResponse.ID
+
+			customSMSName := "custom_sms_destination"
+			customSMSTypeVal := eventnotificationsv1.CreateDestinationOptionsTypeSmsCustomConst
+			customSMSDescription := "custom sms Destination"
+			customSMSCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:          core.StringPtr(instanceID),
+				Name:                core.StringPtr(customSMSName),
+				Type:                core.StringPtr(customSMSTypeVal),
+				Description:         core.StringPtr(customSMSDescription),
+				CollectFailedEvents: core.BoolPtr(false),
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(customSMSCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID17 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1086,7 +1175,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			templateTypeNotification := "smtp_custom.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfig{
-				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is invitation for invitation message"),
 			}
 
@@ -1112,7 +1201,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			description = "template notification description"
 
 			templConfig = &eventnotificationsv1.TemplateConfig{
-				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is template for notification"),
 			}
 
@@ -1721,6 +1810,24 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(spfDkimResult).ToNot(BeNil())
+
+			customSMSName := "custom_sms_destination update"
+			customSMSDescription := "custom sms Destination updated"
+			customSMSUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:          core.StringPtr(instanceID),
+				Name:                core.StringPtr(customSMSName),
+				ID:                  core.StringPtr(destinationID17),
+				Description:         core.StringPtr(customSMSDescription),
+				CollectFailedEvents: core.BoolPtr(false),
+			}
+
+			customSMSDestination, response, err := eventNotificationsService.UpdateDestination(customSMSUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(customSMSDestination).ToNot(BeNil())
+			Expect(customSMSDestination.ID).To(Equal(core.StringPtr(destinationID17)))
+			Expect(customSMSDestination.Name).To(Equal(core.StringPtr(customSMSName)))
+			Expect(customSMSDestination.Description).To(Equal(core.StringPtr(customSMSDescription)))
 			// end-update_destination
 		})
 
@@ -1733,11 +1840,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			templateTypeNotification := "smtp_custom.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfig{
-				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is invitation for invitation message"),
 			}
 
-			updateTemplateOptions := &eventnotificationsv1.UpdateTemplateOptions{
+			replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(templateInvitationID),
 				Name:        core.StringPtr(name),
@@ -1746,7 +1853,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Params:      templateConfig,
 			}
 
-			templateResponse, response, err := eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+			templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1761,11 +1868,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			description = "template notification description"
 
 			templateConfig = &eventnotificationsv1.TemplateConfig{
-				Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is template for notification"),
 			}
 
-			updateTemplateOptions = &eventnotificationsv1.UpdateTemplateOptions{
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(templateNotificationID),
 				Name:        core.StringPtr(name),
@@ -1774,7 +1881,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Params:      templateConfig,
 			}
 
-			templateResponse, response, err = eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 			if err != nil {
 				panic(err)
 			}
@@ -1784,8 +1891,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(templateNotificationID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
-			// end-update_template
 
+			// end-update_template
 		})
 
 		It(`CreateSubscription request example`, func() {
@@ -1966,6 +2073,31 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID6 = string(*subscription.ID)
+
+			subscriptionCreateAttributesCustomSMSModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomSmsAttributes{
+				Invited: []string{"+12064563059", "+12267054625"},
+			}
+			customSMSName := core.StringPtr("subscription_custom_sms")
+			customSMSDescription := core.StringPtr("Subscription for custom sms")
+			createCustomSMSSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          customSMSName,
+				Description:   customSMSDescription,
+				DestinationID: core.StringPtr(destinationID17),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesCustomSMSModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createCustomSMSSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.Attributes).ToNot(BeNil())
+			Expect(subscription.Description).To(Equal(customSMSDescription))
+			Expect(subscription.Name).To(Equal(customSMSName))
+			subscriptionID7 = *subscription.ID
+
 			// end-create_subscription
 
 		})
@@ -2271,9 +2403,60 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID6)))
 			Expect(subscription.Name).To(Equal(customEmailName))
 			Expect(subscription.Description).To(Equal(CustomEmailDescription))
+
+			UpdateAttributesCustomSMSInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
+			UpdateAttributesCustomSMSInvitedModel.Add = []string{"+12064512559"}
+
+			UpdateAttributesCustomSMSSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
+			UpdateAttributesCustomSMSSubscribedModel.Remove = []string{"+12064512559"}
+
+			UpdateAttributesCustomSMSUnSubscribedModel := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+			UpdateAttributesCustomSMSUnSubscribedModel.Remove = []string{"+12064512559"}
+
+			subscriptionUpdateCustomSMSAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCustomSmsUpdateAttributes{
+				Invited:      UpdateAttributesSMSInvitedModel,
+				Subscribed:   UpdateAttributesSMSSubscribedModel,
+				Unsubscribed: UpdateAttributesSMSUnSubscribedModel,
+			}
+			customSMSName := core.StringPtr("subscription_custom_sms_update")
+			customSMSDescription := core.StringPtr("Subscription update for custom sms")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        customSMSName,
+				Description: customSMSDescription,
+				ID:          core.StringPtr(subscriptionID7),
+				Attributes:  subscriptionUpdateCustomSMSAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID7)))
+			Expect(subscription.Name).To(Equal(customSMSName))
+			Expect(subscription.Description).To(Equal(customSMSDescription))
+
 			// end-update_subscription
 
 		})
+
+		It(`GetEnabledCountries request example`, func() {
+			fmt.Println("\nGetEnabledCountries() result:")
+			// begin-get_enabled_countries
+			getEnabledCountriesOptions := &eventnotificationsv1.GetEnabledCountriesOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID17),
+			}
+
+			enabledCountries, response, err := eventNotificationsService.GetEnabledCountries(getEnabledCountriesOptions)
+			// end-get_enabled_countries
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(enabledCountries).ToNot(BeNil())
+		})
+
 		It(`SendNotifications request example`, func() {
 			fmt.Println("\nSendNotifications() result:")
 
@@ -2299,6 +2482,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationDevicesModel := "{\"platforms\":[\"push_ios\",\"push_android\",\"push_chrome\",\"push_firefox\",\"push_huawei\"]}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
+			smsTo := "[\"+911234567890\", \"+911224567890\"]"
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
@@ -2335,6 +2519,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 			notificationCreateModel.Ibmenhuaweibody = &notificationHuaweiBodyModel
 			notificationCreateModel.Ibmenmailto = &mailTo
+			notificationCreateModel.Ibmensmsto = &smsTo
 			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("This is simple test alert from IBM Cloud Event Notifications service.")
