@@ -16,7 +16,7 @@ env:
 
 before_install:
   - sudo apt-get update
-  - pyenv global 3.8
+  - python -V
 
 install:
   - curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.51.2
