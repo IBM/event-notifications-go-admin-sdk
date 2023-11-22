@@ -1891,8 +1891,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(templateNotificationID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
-			// end-update_template
 
+			// end-update_template
 		})
 
 		It(`CreateSubscription request example`, func() {
@@ -2443,12 +2443,14 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		It(`GetEnabledCountries request example`, func() {
 			fmt.Println("\nGetEnabledCountries() result:")
+			// begin-get_enabled_countries
 			getEnabledCountriesOptions := &eventnotificationsv1.GetEnabledCountriesOptions{
 				InstanceID: core.StringPtr(instanceID),
 				ID:         core.StringPtr(destinationID17),
 			}
 
 			enabledCountries, response, err := eventNotificationsService.GetEnabledCountries(getEnabledCountriesOptions)
+			// end-get_enabled_countries
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))

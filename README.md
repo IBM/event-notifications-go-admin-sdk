@@ -152,6 +152,7 @@ SDK Methods to consume
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
 - [Integration](#integration)
+	- [Create Integration](#create-integration)
 	- [Get Integration](#get-integration)
 	- [List Integrations](#list-integrations)
 	- [Update Integration](#update-integration)	
@@ -517,7 +518,7 @@ supports the following templates:
 ### Create Template
 ```go
 templConfig := &eventnotificationsv1.TemplateConfig{
-	Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+	Body:    core.StringPtr("base 64 encoded html content"),
 	Subject: core.StringPtr("Hi this is invitation for invitation message"),
 }
 
@@ -553,11 +554,11 @@ template, response, err := eventNotificationsService.GetTemplate(getTemplateOpti
 ### Update Template
 ```go
 templateConfig := &eventnotificationsv1.TemplateConfig{
-	Body:    core.StringPtr("<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>"),
+	Body:    core.StringPtr("base 64 encoded html content"),
 	Subject: core.StringPtr("Hi this is invitation for invitation message"),
 }
 
-updateTemplateOptions := &eventnotificationsv1.UpdateTemplateOptions{
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
@@ -566,7 +567,7 @@ updateTemplateOptions := &eventnotificationsv1.UpdateTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.UpdateTemplate(updateTemplateOptions)
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 ```
 
 ### Delete Template
@@ -736,6 +737,25 @@ if err != nil {
 ```
 ## Integration
 
+### Create Integration
+
+```go
+integrationMetadata := &eventnotificationsv1.IntegrationCreateMetadata{
+	Endpoint:   core.StringPtr(cosEndPoint),
+	CRN:        core.StringPtr(cosInstanceCRN),
+	BucketName: core.StringPtr(cosBucketName),
+}
+
+createIntegrationsOptions := &eventnotificationsv1.CreateIntegrationOptions{
+	InstanceID: core.StringPtr(instanceID),
+	Type:       core.StringPtr("collect_failed_events"),
+	Metadata:   integrationMetadata,
+}
+
+integrationCreateResponse, response, err := eventNotificationsService.CreateIntegration(createIntegrationsOptions)
+
+```
+
 ### Get Integration
 
 ```go
@@ -760,6 +780,9 @@ listIntegrationsOptions := &eventnotificationsv1.ListIntegrationsOptions{
 integrationResponse, response, err := eventNotificationsService.ListIntegrations(listIntegrationsOptions)
 ```
 ### Update Integration
+
+For kms/hs-crypto-
+
 ```go
 integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
 	Endpoint:  core.StringPtr(<end-point-url>),
@@ -770,7 +793,26 @@ integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
 replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
 	InstanceID: core.StringPtr(instanceID),
 	ID:         core.StringPtr(integrationId),
-	Type:       core.StringPtr(<integration-type>),
+	Type:       core.StringPtr("kms/hs-crypto"),
+	Metadata:   integrationMetadata,
+}
+
+integrationResponse, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
+```
+
+For Cloud Object Storage-
+
+```go
+integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
+	Endpoint:  core.StringPtr(<COS-end-point-url>),
+	CRN:       core.StringPtr(<COS-instance-crn>),
+	BucketName: core.StringPtr(<COS-bucket-name>),
+}
+
+replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
+	InstanceID: core.StringPtr(instanceID),
+	ID:         core.StringPtr(integrationId),
+	Type:       core.StringPtr("collect-failed-events"),
 	Metadata:   integrationMetadata,
 }
 
@@ -802,6 +844,7 @@ notificationFcmBodyModel := "{\"message\": {\"android\": {\"notification\": {\"t
 notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
 notificationSafariBodyModel := "{\"aps\":{\"alert\":{\"title\":\"FlightA998NowBoarding\",\"body\":\"BoardinghasbegunforFlightA998.\",\"action\":\"View\"},\"url-args\":[\"boarding\",\"A998\"]}}}"
 mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
+smsTo := "[\"+911234567890\", \"+911224567890\"]"
 htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 notificationSeverity := "MEDIUM"
@@ -822,6 +865,7 @@ notificationCreateModel.Ibmenapnsbody = &notificationAPNsBodyModel
 notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 notificationCreateModel.Ibmenpushto = &devicesbodyString
 notificationCreateModel.Ibmenmailto = &mailTo
+notificationCreateModel.Ibmensmsto = &smsTo
 notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
@@ -842,42 +886,46 @@ if err != nil {
 <summary>Send Notifications Variables</summary>
 <br>
 
-- **Ibmenpushto** - Set up the the push notifications tragets.
-  - *user_ids* (Array of **String**) - Send notification to the specified userIds.
-  - *fcm_devices* (Array of **String**) - Send notification to the list of specified Android devices.
-  - *fcm_devices* (Array of **String**) - Send notification to the list of specified iOS devices.
-  - *_devices* (Array of **String**) - Send notification to the list of specified Chrome devices.
-  - *firefox_devices* (Array of **String**) - Send notification to the list of specified Firefox devices.
-  - *tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
-  - *platforms* (Array of **String**) - Send notification to the devices of the specified platforms. 
-  	- Pass 'G' for google (Android) devices.
-	- Pass 'A' for iOS devices.
-	- Pass 'WEB_FIREFOX' for Firefox browser.
-	- Pass 'WEB_CHROME' for Chrome browser.
-- **ibmenfcmbody** - Set payload specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
-- **ibmenfcmbody** - Set payload specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
-- **ibmenapnsheaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
-- **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
-  - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
-  - *ibmenseverity* (**String**) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event.
-  - *ID* (**String**) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
-  - *Source* (**String**) - This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with.
-  - *Ibmensourceid* (**String**) - This is the ID of the source created in EN. This is available in the EN UI in the "Sources" section.
-  - *Type* (**String**) - This describes the type of event. It is of the form <event-type-name>:<sub-type> This type is defined by the producer. The event type name has to be prefixed with the reverse DNS names so the event type is uniquely identified. The same event type can be produced by 2 different sources. It is highly recommended to use hyphen - as a separator instead of _.
-  - *Time* (**String**) - Time of the notifications. UTC time stamp when the event occurred. Must be in the RFC 3339 format.
-  - *Ibmenpushto* (**string**) - Targets for the FCM notifications. This contains details about the destination where you want to send push notification. This attribute is mandatory for successful delivery from an Android FCM or APNS destination
-  - *Ibmenfcmbody* (**string**) - Message body for the FCM notifications. [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
-  - *Ibmenapnsbody* (**string**) - Message body for the APNs notifications. [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
-  - *Ibmensafaribody* (**string**) - Message body for the Safari notifications. [Refer this Safari official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
-  - *Ibmenapnsheaders* (**string**) - Headers for the APNs notifications. [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
-  - *Ibmenchromebody* (**string**) - Message body for the Chrome notifications. [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
-  - *Ibmenfirefoxbody* (**string**) - Message body for the Firefox notifications. [Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more].
-  - *Ibmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
-  - *Ibmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
-  - *Ibmendefaultshort* (**string**) - Default short text for the message.
-  - *Ibmendefaultlong* (**string**) - Default long text for the message.
-  - *Specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
+- **ibmenpushto** - Set up the push notifications targets.
+  - **user_ids** (_Array of String_) - Send notification to the specified userIds.
+  - **fcm_devices** (_Array of String_) - Send notification to the list of specified Android devices.
+  - **apns_devices** (_Array of String_) - Send notification to the list of specified iOS devices.
+  - **chrome_devices** (_Array of String_) - Send notification to the list of specified Chrome devices.
+  - **firefox_devices** (_Array of string_) - Send notification to the list of specified Firefox devices.
+  - **tags** (_Array of string_) - Send notification to the devices that have subscribed to any of these tags.
+  - **platforms** (_Array of string_) - Send notification to the devices of the specified platforms.
+    - Pass 'G' for google (Android) devices.
+    - Pass 'A' for iOS devices.
+    - Pass 'WEB_FIREFOX' for Firefox browser.
+    - Pass 'WEB_CHROME' for Chrome browser.
+- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method.
+  - **instance_id** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
+  - **ibmenseverity** (_string_) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event. example: LOW, HIGH, MEDIUM
+  - **id*** (_string_) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
+  - **source*** (_string_) - Source of the notifications. This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with.
+  - **ibmensourceid*** (_string_) - This is the ID of the source created in EN. This is available in the EN UI in the "Sources" section.
+  - **type** (_string_) - This describes the type of event. It is of the form <event-type-name>:<sub-type> This type is defined by the producer. The event type name has to be prefixed with the reverse DNS names so the event type is uniquely identified. The same event type can be produced by 2 different sources. It is highly recommended to use hyphen - as a separator instead of _.
+  - **data** (_string_) - The payload for webhook notification. If data is added as part of payload then its mandatory to add **datacontenttype**.
+  - **datacontenttype** - The notification content type. example: application/json
+  - **time** (_string_) - Time of the notifications. UTC time stamp when the event occurred. Must be in the RFC 3339 format.
+  - **ibmenpushto** (_string_) - Targets for the FCM notifications. This contains details about the destination where you want to send push notification. This attribute is mandatory for successful delivery from an Android FCM or APNS destination.
+  - **ibmenfcmbody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
+  - **ibmenhuaweibody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
+  - **ibmenapnsbody** (_string_) - Set payload string specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - **ibmensafaribody** (_string_) - Set payload string specific to safari platform [Refer this Safari official doc [link](https://developer.huawei.com/consumer/en/hms/huawei-pushkit)].
+  - **ibmenapnsheaders** (_string_) - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
+  - **ibmenchromebody** (_string_) - Message body for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - **ibmenfirefoxbody** (_string_) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - **ibmenchromeheaders** (_string_) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - **ibmenfirefoxheaders** (_string_) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - **ibmendefaultshort*** (_string_) - Default short text for the message.
+  - **ibmendefaultlong*** (_string_) - Default long text for the message.
+  - **specversion*** (_string_) - Spec version of the Event Notifications. Default value is `1.0`.
+  - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
+  - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
+  - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
 
+Note: variable with * represents the mandatory attribute.
 </details>
 
 ## Set Environment
