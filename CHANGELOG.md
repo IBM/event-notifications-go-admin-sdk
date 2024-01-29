@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.4.0...v0.4.1) (2024-01-29)
+
+
+### Bug Fixes
+
+* vulnerability fix ([#51](https://github.com/IBM/event-notifications-go-admin-sdk/issues/51)) ([e0c7eb0](https://github.com/IBM/event-notifications-go-admin-sdk/commit/e0c7eb06b5eb3a509c3c6c346be80d0473d3f129))
+
 # [0.4.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.3.0...v0.4.0) (2023-11-22)
 
 
