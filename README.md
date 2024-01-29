@@ -357,7 +357,7 @@ createDestinationOptions := eventNotificationsService.NewCreateDestinationOption
 	<destination-name>,
 	<destination-type>,
 )
-destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
+destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
 	URL:              core.StringPtr(<destination-config-url>),
 	Verb:             core.StringPtr(<destination-config-verb>),
 	CustomHeaders:    make(map[string]string),
@@ -417,7 +417,7 @@ fmt.Println(string(b))
 
 ### Update Destination
 ```go
-destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigParamsWebhookDestinationConfig{
+destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
 	URL:              core.StringPtr(<destination-config-update-url>),
 	Verb:             core.StringPtr(<destination-config-update-verb>),
 	CustomHeaders:    make(map[string]string),
