@@ -250,6 +250,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			fmt.Printf("cosInstanceCRN: %s\n", cosInstanceCRN)
 
+			codeEngineProjectCRN = config["CODE_ENGINE_PROJECT_CRN"]
+			if codeEngineProjectCRN == "" {
+				Skip("Unable to load CODE_ENGINE_PROJECT_CRN configuration property, skipping tests")
+			}
+			fmt.Printf("CODE_ENGINE_PROJECT_CRN: %s\n", codeEngineProjectCRN)
+
 			configLoaded = len(config) > 0
 		})
 	})
