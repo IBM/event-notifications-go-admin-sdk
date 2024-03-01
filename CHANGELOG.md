@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.4.1...v0.5.0) (2024-03-01)
+
+
+### Features
+
+* code engine destination changes ([#52](https://github.com/IBM/event-notifications-go-admin-sdk/issues/52)) ([fe50776](https://github.com/IBM/event-notifications-go-admin-sdk/commit/fe507767ed8a8215a5b347fd95b2a0ecd702524a))
+
 ## [0.4.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.4.0...v0.4.1) (2024-01-29)
 
 
