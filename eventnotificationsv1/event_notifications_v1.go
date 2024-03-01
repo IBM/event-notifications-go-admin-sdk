@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -223,75 +223,6 @@ func (eventNotifications *EventNotificationsV1) SendNotificationsWithContext(ctx
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalNotificationResponse)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
-// SendBulkNotifications : Send Bulk notification
-func (eventNotifications *EventNotificationsV1) SendBulkNotifications(sendBulkNotificationsOptions *SendBulkNotificationsOptions) (result *BulkNotificationResponse, response *core.DetailedResponse, err error) {
-	return eventNotifications.SendBulkNotificationsWithContext(context.Background(), sendBulkNotificationsOptions)
-}
-
-// SendBulkNotificationsWithContext is an alternate form of the SendBulkNotifications method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) SendBulkNotificationsWithContext(ctx context.Context, sendBulkNotificationsOptions *SendBulkNotificationsOptions) (result *BulkNotificationResponse, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(sendBulkNotificationsOptions, "sendBulkNotificationsOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(sendBulkNotificationsOptions, "sendBulkNotificationsOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *sendBulkNotificationsOptions.InstanceID,
-	}
-
-	builder := core.NewRequestBuilder(core.POST)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/notifications/bulk`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range sendBulkNotificationsOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "SendBulkNotifications")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if sendBulkNotificationsOptions.BulkMessages != nil {
-		body["bulk_messages"] = sendBulkNotificationsOptions.BulkMessages
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalBulkNotificationResponse)
 		if err != nil {
 			return
 		}
@@ -2708,30 +2639,6 @@ func (eventNotifications *EventNotificationsV1) ReplaceIntegrationWithContext(ct
 	return
 }
 
-// BulkNotificationResponse : Payload describing a notifications response.
-type BulkNotificationResponse struct {
-	// Bulk Notification ID.
-	BulkNotificationID *string `json:"bulk_notification_id,omitempty"`
-
-	// List of Notifications.
-	BulkMessages []interface{} `json:"bulk_messages,omitempty"`
-}
-
-// UnmarshalBulkNotificationResponse unmarshals an instance of BulkNotificationResponse from the specified map of raw messages.
-func UnmarshalBulkNotificationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(BulkNotificationResponse)
-	err = core.UnmarshalPrimitive(m, "bulk_notification_id", &obj.BulkNotificationID)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "bulk_messages", &obj.BulkMessages)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // CreateDestinationOptions : The CreateDestination options.
 type CreateDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3723,6 +3630,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // Models which "extend" this model:
 // - DestinationConfigOneOfCustomDomainEmailDestinationConfig
 // - DestinationConfigOneOfWebhookDestinationConfig
+// - DestinationConfigOneOfCodeEngineDestinationConfig
 // - DestinationConfigOneOfFcmDestinationConfig
 // - DestinationConfigOneOfIosDestinationConfig
 // - DestinationConfigOneOfChromeDestinationConfig
@@ -3756,6 +3664,15 @@ type DestinationConfigOneOf struct {
 
 	// List of sensitive headers from custom headers.
 	SensitiveHeaders []string `json:"sensitive_headers,omitempty"`
+
+	// The code engine destination type.
+	Type *string `json:"type,omitempty"`
+
+	// CRN of the code engine project.
+	ProjectCRN *string `json:"project_crn,omitempty"`
+
+	// name of the code engine job.
+	JobName *string `json:"job_name,omitempty"`
 
 	// FCM server_key.
 	// Deprecated: this field is deprecated and may be removed in a future release.
@@ -3845,6 +3762,13 @@ const (
 	DestinationConfigOneOfVerbPostConst = "post"
 )
 
+// Constants associated with the DestinationConfigOneOf.Type property.
+// The code engine destination type.
+const (
+	DestinationConfigOneOfTypeApplicationConst = "application"
+	DestinationConfigOneOfTypeJobConst         = "job"
+)
+
 func (*DestinationConfigOneOf) isaDestinationConfigOneOf() bool {
 	return true
 }
@@ -3881,6 +3805,18 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "sensitive_headers", &obj.SensitiveHeaders)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_crn", &obj.ProjectCRN)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "job_name", &obj.JobName)
 	if err != nil {
 		return
 	}
@@ -6136,43 +6072,6 @@ func UnmarshalSpfAttributes(m map[string]json.RawMessage, result interface{}) (e
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
-}
-
-// SendBulkNotificationsOptions : The SendBulkNotifications options.
-type SendBulkNotificationsOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// List of notifications body.
-	BulkMessages []NotificationCreate `json:"bulk_messages,omitempty"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewSendBulkNotificationsOptions : Instantiate SendBulkNotificationsOptions
-func (*EventNotificationsV1) NewSendBulkNotificationsOptions(instanceID string) *SendBulkNotificationsOptions {
-	return &SendBulkNotificationsOptions{
-		InstanceID: core.StringPtr(instanceID),
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *SendBulkNotificationsOptions) SetInstanceID(instanceID string) *SendBulkNotificationsOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetBulkMessages : Allow user to set BulkMessages
-func (_options *SendBulkNotificationsOptions) SetBulkMessages(bulkMessages []NotificationCreate) *SendBulkNotificationsOptions {
-	_options.BulkMessages = bulkMessages
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *SendBulkNotificationsOptions) SetHeaders(param map[string]string) *SendBulkNotificationsOptions {
-	options.Headers = param
-	return options
 }
 
 // SendNotificationsOptions : The SendNotifications options.
@@ -8501,6 +8400,93 @@ func UnmarshalDestinationConfigOneOfChromeDestinationConfig(m map[string]json.Ra
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "pre_prod", &obj.PreProd)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// DestinationConfigOneOfCodeEngineDestinationConfig : Payload describing a code engine destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfCodeEngineDestinationConfig struct {
+	// URL of code engine.
+	URL *string `json:"url,omitempty"`
+
+	// HTTP method of code engine.
+	Verb *string `json:"verb,omitempty"`
+
+	// The code engine destination type.
+	Type *string `json:"type" validate:"required"`
+
+	// CRN of the code engine project.
+	ProjectCRN *string `json:"project_crn,omitempty"`
+
+	// name of the code engine job.
+	JobName *string `json:"job_name,omitempty"`
+
+	// Custom headers (Key-Value pair) for webhook call.
+	CustomHeaders map[string]string `json:"custom_headers,omitempty"`
+
+	// List of sensitive headers from custom headers.
+	SensitiveHeaders []string `json:"sensitive_headers,omitempty"`
+}
+
+// Constants associated with the DestinationConfigOneOfCodeEngineDestinationConfig.Verb property.
+// HTTP method of code engine.
+const (
+	DestinationConfigOneOfCodeEngineDestinationConfigVerbGetConst  = "get"
+	DestinationConfigOneOfCodeEngineDestinationConfigVerbPostConst = "post"
+)
+
+// Constants associated with the DestinationConfigOneOfCodeEngineDestinationConfig.Type property.
+// The code engine destination type.
+const (
+	DestinationConfigOneOfCodeEngineDestinationConfigTypeApplicationConst = "application"
+	DestinationConfigOneOfCodeEngineDestinationConfigTypeJobConst         = "job"
+)
+
+// NewDestinationConfigOneOfCodeEngineDestinationConfig : Instantiate DestinationConfigOneOfCodeEngineDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfCodeEngineDestinationConfig(typeVar string) (_model *DestinationConfigOneOfCodeEngineDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfCodeEngineDestinationConfig{
+		Type: core.StringPtr(typeVar),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*DestinationConfigOneOfCodeEngineDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfCodeEngineDestinationConfig unmarshals an instance of DestinationConfigOneOfCodeEngineDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfCodeEngineDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfCodeEngineDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verb", &obj.Verb)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "project_crn", &obj.ProjectCRN)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "job_name", &obj.JobName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "custom_headers", &obj.CustomHeaders)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "sensitive_headers", &obj.SensitiveHeaders)
 	if err != nil {
 		return
 	}
