@@ -156,6 +156,21 @@ SDK Methods to consume
 	- [Get Integration](#get-integration)
 	- [List Integrations](#list-integrations)
 	- [Update Integration](#update-integration)	
+- [SMTP Configurations](#SMTPConfigurations)
+	- [Create SMTP Configuration](#create-smtp-configuration)
+	- [Create SMTP User](#create-smtp-user)
+	- [Get SMTP Configuration](#get-smtp-configuration)
+	- [Get SMTP User](#get-smtp-user)	
+	- [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
+	- [List SMTP Configurations](#list-smtp-configurations)
+	- [List SMTP Users](#list-smtp-users)
+	- [Update SMTP Configuration](#update-smtp-configuration)
+	- [Update SMTP User](#update-smtp-user)
+	- [Update SMTP Allowed Ips](#update-smtp-allowed-ips)
+	- [Delete SMTP User](#delete-smtp-user)
+	- [Delete SMTP Configuration](#delete-smtp-user)
+	- [Verify SMTP](#verify-smtp)
+
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -516,10 +531,12 @@ supports the following templates:
 - Custom Email invitation
 
 ### Create Template
+
+#### Custom Email Template
 ```go
-templConfig := &eventnotificationsv1.TemplateConfig{
-	Body:    core.StringPtr("base 64 encoded html content"),
-	Subject: core.StringPtr("Hi this is invitation for invitation message"),
+templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded html content>),
+	Subject: core.StringPtr(<email-subject>),
 }
 
 createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
@@ -532,6 +549,26 @@ createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 
 templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
+For custom email supported template type values: smtp_custom.invitation, smtp_custom.notification 
+
+#### Slack Template
+```go
+slackTemplConfig := &eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig{
+	Body: core.StringPtr(<json body encoded in to base 64 format>),
+}
+
+createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      slackTemplConfig,
+}
+
+templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
+For slack template supported template type value: slack.notification
+
 ### List Templates
 ```go
 listTemplatesOptions := eventNotificationsService.NewListTemplatesOptions(
@@ -552,10 +589,12 @@ template, response, err := eventNotificationsService.GetTemplate(getTemplateOpti
 ```
 
 ### Update Template
+
+#### Update Email Template
 ```go
-templateConfig := &eventnotificationsv1.TemplateConfig{
-	Body:    core.StringPtr("base 64 encoded html content"),
-	Subject: core.StringPtr("Hi this is invitation for invitation message"),
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded html content>),
+	Subject: core.StringPtr(<email-subject>),
 }
 
 replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
@@ -569,6 +608,26 @@ replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 
 templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 ```
+For custom email supported template type values: smtp_custom.invitation, smtp_custom.notification 
+
+#### Update Slack Template
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+For slack template supported template type value: slack.notification
 
 ### Delete Template
 ```go
@@ -819,6 +878,171 @@ replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
 integrationResponse, response, err := eventNotificationsService.ReplaceIntegration(replaceIntegrationsOptions)
 ```
 
+## SMTPConfigurations
+
+### Create SMTP Configuration
+
+```go
+createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	Domain:      core.StringPtr(<domain-name>),
+	Description: core.StringPtr(<description>),
+	Name:        core.StringPtr(<name>),
+}
+
+smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
+
+```
+
+### Create SMTP User
+
+```go
+createSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Description: core.StringPtr(<description),
+}
+
+user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
+
+```
+
+### Get SMTP Configuration
+
+```go
+getSMTPconfigurationOptions := &eventnotificationsv1.GetSMTPConfigurationOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+}
+
+smtpConfiguration, response, err := eventNotificationsService.GetSMTPConfiguration(getSMTPconfigurationOptions)
+
+```
+
+### Get SMTP User
+
+```go
+getSMTPUserOptions := &eventnotificationsv1.GetSMTPUserOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	UserID:     core.StringPtr(<user-id>),
+}
+
+SMTPUser, response, err := eventNotificationsService.GetSMTPUser(getSMTPUserOptions)
+```
+
+### Get SMTP Allowed Ips
+
+```go
+getSMTPAllowedIPsOptions := &eventnotificationsv1.GetSMTPAllowedIpsOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+}
+
+smtpAllowedIPs, response, err := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIPsOptions)
+```
+
+### List SMTP Configurations
+
+```go
+listSMTPConfigurationsOptions := &eventnotificationsv1.ListSMTPConfigurationsOptions{
+	InstanceID: core.StringPtr(<instance-id>),
+	Limit:      core.Int64Ptr(<limit>),
+	Offset:     core.Int64Ptr(<offset>),
+	Search:     core.StringPtr(<search>),
+}
+
+smtpConfigurations, response, err := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptions)
+```
+
+### List SMTP Users
+
+```go
+listSMTPUsersOptions := &eventnotificationsv1.ListSMTPUsersOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Limit:      core.Int64Ptr(<limit>),
+	Offset:     core.Int64Ptr(<offset>),
+	Search:     core.StringPtr(<search>),
+}
+
+smtpUsers, response, err := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptions)
+```
+
+### Update SMTP Configuration
+
+```go
+updateSMTPConfigurationOptions := &eventnotificationsv1.UpdateSMTPConfigurationOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Name:        core.StringPtr(<name>),
+	Description: core.StringPtr(<description>),
+}
+
+updateSMTPConfiguration, response, err := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptions)
+```
+
+### Update SMTP User
+
+```go
+updateSMTPUserOptions := &eventnotificationsv1.UpdateSMTPUserOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Description: core.StringPtr(<description>),
+	UserID:      core.StringPtr(<user-id>),
+}
+
+updateSMTPUser, response, err := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptions)
+```
+
+### Update SMTP Allowed IPs
+
+```go
+updateSMTPAllowedOptions := &eventnotificationsv1.UpdateSMTPAllowedIpsOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Subnets:    []string{"<subnet-ip>"},
+}
+
+subnets, response, err := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedOptions)
+```
+
+### Delete SMTP User
+
+```go
+deleteSMTPUserOptions := &eventnotificationsv1.DeleteSMTPUserOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	UserID:     core.StringPtr(<user-id>),
+}
+
+response, err := eventNotificationsService.DeleteSMTPUser(deleteSMTPUserOptions)
+```
+
+### Delete SMTP Configuration
+
+```go
+deleteSMTPConfigurationOptions := &eventnotificationsv1.DeleteSMTPConfigurationOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+}
+
+response, err := eventNotificationsService.DeleteSMTPConfiguration(deleteSMTPConfigurationOptions)
+```
+
+### Verify SMTP
+
+```go
+updateVerifySMTPOptions := &eventnotificationsv1.UpdateVerifySMTPOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Type:       core.StringPtr(<verification-type>),
+}
+
+verifySMTP, response, err := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptions)
+```
+supported verification types are dkim,spf and en_authorization.
+
 ## Send Notifications
 
 ```go
@@ -845,6 +1069,7 @@ notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
 notificationSafariBodyModel := "{\"aps\":{\"alert\":{\"title\":\"FlightA998NowBoarding\",\"body\":\"BoardinghasbegunforFlightA998.\",\"action\":\"View\"},\"url-args\":[\"boarding\",\"A998\"]}}}"
 mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 smsTo := "[\"+911234567890\", \"+911224567890\"]"
+templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 notificationSeverity := "MEDIUM"
@@ -866,6 +1091,7 @@ notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 notificationCreateModel.Ibmenpushto = &devicesbodyString
 notificationCreateModel.Ibmenmailto = &mailTo
 notificationCreateModel.Ibmensmsto = &smsTo
+notificationCreateModel.Ibmentemplates = &templates
 notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
@@ -924,6 +1150,7 @@ if err != nil {
   - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
   - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
   - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
 Note: variable with * represents the mandatory attribute.
 </details>
@@ -940,7 +1167,33 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_AUTH_URL` - Add the IAM url if you are using IBM test cloud.
 - `EVENT_NOTIFICATIONS_FCM_KEY` - Add firebase server key for Android FCM destination.
 - `EVENT_NOTIFICATIONS_FCM_ID` - Add firebase sender Id for Android FCM destination.
+- `EVENT_NOTIFICATIONS_FCM_PROJECT_ID` - fcm project id
+- `EVENT_NOTIFICATIONS_FCM_CLIENT_EMAIL` - fcm client email
+- `EVENT_NOTIFICATIONS_FCM_PRIVATE_KEY` - fcm private key
+- `EVENT_NOTIFICATIONS_SAFARI_CERTIFICATE` - safari certificate path
 
+- `EVENT_NOTIFICATIONS_SNOW_CLIENT_ID` - service now client id
+- `EVENT_NOTIFICATIONS_SNOW_CLIENT_SECRET` - service now client secret
+- `EVENT_NOTIFICATIONS_SNOW_USER_NAME` - service now user name
+- `EVENT_NOTIFICATIONS_SNOW_PASSWORD` - service now password
+- `EVENT_NOTIFICATIONS_SNOW_INSTANCE_NAME` - service now instance name
+
+- `EVENT_NOTIFICATIONS_COS_BUCKET_NAME` - cloud object storage bucket name
+- `EVENT_NOTIFICATIONS_COS_INSTANCE` - cloud object storage instance id
+- `EVENT_NOTIFICATIONS_COS_INSTANCE_CRN` - cloud object storage instance crn
+- `EVENT_NOTIFICATIONS_COS_ENDPOINT` - cloud object storage end point
+
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_URL` - code engine app url
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_PROJECT_CRN` - code engine project crn
+- `EVENT_NOTIFICATIONS_HUAWEI_CLIENT_SECRET` - huawei client secret
+- `EVENT_NOTIFICATIONS_HUAWEI_CLIENT_ID` - huawei client id
+
+- `EVENT_NOTIFICATIONS_SLACK_URL` - slack webhook url
+- `EVENT_NOTIFICATIONS_MS_TEAMS_URL` - msteams webhook url
+- `EVENT_NOTIFICATIONS_PD_ROUTING_KEY` - pagerduty routing key
+- `EVENT_NOTIFICATIONS_PD_API_KEY` - pagerduty api key
+- `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
+- `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 

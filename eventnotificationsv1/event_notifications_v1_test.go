@@ -198,8 +198,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -296,8 +297,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -402,8 +404,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -453,8 +456,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -525,8 +529,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -3021,17 +3026,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the CreateTemplateOptions model
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
 				createTemplateOptionsModel.Type = core.StringPtr("testString")
-				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Params = templateConfigOneOfModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
@@ -3097,17 +3102,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the CreateTemplateOptions model
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
 				createTemplateOptionsModel.Type = core.StringPtr("testString")
-				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Params = templateConfigOneOfModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3181,17 +3186,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the CreateTemplateOptions model
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
 				createTemplateOptionsModel.Type = core.StringPtr("testString")
-				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Params = templateConfigOneOfModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3210,17 +3215,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the CreateTemplateOptions model
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
 				createTemplateOptionsModel.Type = core.StringPtr("testString")
-				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Params = templateConfigOneOfModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
@@ -3260,17 +3265,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the CreateTemplateOptions model
 				createTemplateOptionsModel := new(eventnotificationsv1.CreateTemplateOptions)
 				createTemplateOptionsModel.InstanceID = core.StringPtr("testString")
 				createTemplateOptionsModel.Name = core.StringPtr("testString")
 				createTemplateOptionsModel.Type = core.StringPtr("testString")
-				createTemplateOptionsModel.Params = templateConfigModel
+				createTemplateOptionsModel.Params = templateConfigOneOfModel
 				createTemplateOptionsModel.Description = core.StringPtr("testString")
 				createTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
@@ -3876,10 +3881,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				replaceTemplateOptionsModel := new(eventnotificationsv1.ReplaceTemplateOptions)
@@ -3888,7 +3893,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.Name = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Description = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Type = core.StringPtr("testString")
-				replaceTemplateOptionsModel.Params = templateConfigModel
+				replaceTemplateOptionsModel.Params = templateConfigOneOfModel
 				replaceTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.ReplaceTemplate(replaceTemplateOptionsModel)
@@ -3953,10 +3958,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				replaceTemplateOptionsModel := new(eventnotificationsv1.ReplaceTemplateOptions)
@@ -3965,7 +3970,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.Name = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Description = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Type = core.StringPtr("testString")
-				replaceTemplateOptionsModel.Params = templateConfigModel
+				replaceTemplateOptionsModel.Params = templateConfigOneOfModel
 				replaceTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -4038,10 +4043,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				replaceTemplateOptionsModel := new(eventnotificationsv1.ReplaceTemplateOptions)
@@ -4050,7 +4055,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.Name = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Description = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Type = core.StringPtr("testString")
-				replaceTemplateOptionsModel.Params = templateConfigModel
+				replaceTemplateOptionsModel.Params = templateConfigOneOfModel
 				replaceTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -4068,10 +4073,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				replaceTemplateOptionsModel := new(eventnotificationsv1.ReplaceTemplateOptions)
@@ -4080,7 +4085,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.Name = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Description = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Type = core.StringPtr("testString")
-				replaceTemplateOptionsModel.Params = templateConfigModel
+				replaceTemplateOptionsModel.Params = templateConfigOneOfModel
 				replaceTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -4119,10 +4124,10 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				replaceTemplateOptionsModel := new(eventnotificationsv1.ReplaceTemplateOptions)
@@ -4131,7 +4136,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.Name = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Description = core.StringPtr("testString")
 				replaceTemplateOptionsModel.Type = core.StringPtr("testString")
-				replaceTemplateOptionsModel.Params = templateConfigModel
+				replaceTemplateOptionsModel.Params = templateConfigOneOfModel
 				replaceTemplateOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -8378,7 +8383,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.EscapedPath()).To(Equal(createIntegrationPath))
 					Expect(req.Method).To(Equal("POST"))
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
+					res.WriteHeader(201)
 					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
@@ -8452,7 +8457,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
+					res.WriteHeader(201)
 					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "bucket_name": "BucketName"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
@@ -8530,7 +8535,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
-					res.WriteHeader(200)
+					res.WriteHeader(201)
 					fmt.Fprintf(res, "%s", `{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "Type", "metadata": {"endpoint": "Endpoint", "crn": "CRN", "bucket_name": "BucketName"}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
@@ -8614,7 +8619,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					defer GinkgoRecover()
 
 					// Set success status code with no respoonse body
-					res.WriteHeader(200)
+					res.WriteHeader(201)
 				}))
 			})
 			It(`Invoke CreateIntegration successfully`, func() {
@@ -9511,6 +9516,3019 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
+	Describe(`CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions) - Operation response error`, func() {
+		createSMTPConfigurationPath := "/v1/instances/testString/smtp/config"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke CreateSMTPConfiguration with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				createSMTPConfigurationOptionsModel := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				createSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Domain = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions)`, func() {
+		createSMTPConfigurationPath := "/v1/instances/testString/smtp/config"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateSMTPConfiguration successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				createSMTPConfigurationOptionsModel := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				createSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Domain = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.CreateSMTPConfigurationWithContext(ctx, createSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.CreateSMTPConfigurationWithContext(ctx, createSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.CreateSMTPConfiguration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				createSMTPConfigurationOptionsModel := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				createSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Domain = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke CreateSMTPConfiguration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				createSMTPConfigurationOptionsModel := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				createSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Domain = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the CreateSMTPConfigurationOptions model with no property values
+				createSMTPConfigurationOptionsModelNew := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				createSMTPConfigurationOptionsModel := new(eventnotificationsv1.CreateSMTPConfigurationOptions)
+				createSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Domain = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				createSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListSMTPConfigurations(listSMTPConfigurationsOptions *ListSMTPConfigurationsOptions) - Operation response error`, func() {
+		listSMTPConfigurationsPath := "/v1/instances/testString/smtp/config"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPConfigurationsPath))
+					Expect(req.Method).To(Equal("GET"))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ListSMTPConfigurations with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				listSMTPConfigurationsOptionsModel := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				listSMTPConfigurationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPConfigurationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPConfigurationsOptionsModel.Search = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListSMTPConfigurations(listSMTPConfigurationsOptions *ListSMTPConfigurationsOptions)`, func() {
+		listSMTPConfigurationsPath := "/v1/instances/testString/smtp/config"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPConfigurationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListSMTPConfigurations successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				listSMTPConfigurationsOptionsModel := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				listSMTPConfigurationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPConfigurationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPConfigurationsOptionsModel.Search = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.ListSMTPConfigurationsWithContext(ctx, listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.ListSMTPConfigurationsWithContext(ctx, listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPConfigurationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListSMTPConfigurations successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.ListSMTPConfigurations(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				listSMTPConfigurationsOptionsModel := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				listSMTPConfigurationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPConfigurationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPConfigurationsOptionsModel.Search = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ListSMTPConfigurations with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				listSMTPConfigurationsOptionsModel := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				listSMTPConfigurationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPConfigurationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPConfigurationsOptionsModel.Search = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ListSMTPConfigurationsOptions model with no property values
+				listSMTPConfigurationsOptionsModelNew := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListSMTPConfigurations successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				listSMTPConfigurationsOptionsModel := new(eventnotificationsv1.ListSMTPConfigurationsOptions)
+				listSMTPConfigurationsOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPConfigurationsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPConfigurationsOptionsModel.Search = core.StringPtr("testString")
+				listSMTPConfigurationsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.SMTPConfigurationsList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.SMTPConfigurationsList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SMTPConfigurationsList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SMTPConfigurationsList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPConfigurationsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"public_key":"PublicKey","selector":"Selector","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"public_key":"PublicKey","selector":"Selector","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use SMTPConfigurationsPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSMTPConfigurationsOptionsModel := &eventnotificationsv1.ListSMTPConfigurationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSMTPConfigurationsPager(listSMTPConfigurationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.SMTPConfiguration
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use SMTPConfigurationsPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSMTPConfigurationsOptionsModel := &eventnotificationsv1.ListSMTPConfigurationsOptions{
+					InstanceID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSMTPConfigurationsPager(listSMTPConfigurationsOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
+			})
+		})
+	})
+	Describe(`CreateSMTPUser(createSMTPUserOptions *CreateSMTPUserOptions) - Operation response error`, func() {
+		createSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPUserPath))
+					Expect(req.Method).To(Equal("POST"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke CreateSMTPUser with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPUserOptions model
+				createSMTPUserOptionsModel := new(eventnotificationsv1.CreateSMTPUserOptions)
+				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`CreateSMTPUser(createSMTPUserOptions *CreateSMTPUserOptions)`, func() {
+		createSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPUserPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "domain": "Domain", "smtp_config_id": "SMTPConfigID", "username": "Username", "password": "Password", "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateSMTPUser successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the CreateSMTPUserOptions model
+				createSMTPUserOptionsModel := new(eventnotificationsv1.CreateSMTPUserOptions)
+				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.CreateSMTPUserWithContext(ctx, createSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.CreateSMTPUserWithContext(ctx, createSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(createSMTPUserPath))
+					Expect(req.Method).To(Equal("POST"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(201)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "domain": "Domain", "smtp_config_id": "SMTPConfigID", "username": "Username", "password": "Password", "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke CreateSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.CreateSMTPUser(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the CreateSMTPUserOptions model
+				createSMTPUserOptionsModel := new(eventnotificationsv1.CreateSMTPUserOptions)
+				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke CreateSMTPUser with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPUserOptions model
+				createSMTPUserOptionsModel := new(eventnotificationsv1.CreateSMTPUserOptions)
+				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the CreateSMTPUserOptions model with no property values
+				createSMTPUserOptionsModelNew := new(eventnotificationsv1.CreateSMTPUserOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(201)
+				}))
+			})
+			It(`Invoke CreateSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the CreateSMTPUserOptions model
+				createSMTPUserOptionsModel := new(eventnotificationsv1.CreateSMTPUserOptions)
+				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListSMTPUsers(listSMTPUsersOptions *ListSMTPUsersOptions) - Operation response error`, func() {
+		listSMTPUsersPath := "/v1/instances/testString/smtp/config/testString/users"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPUsersPath))
+					Expect(req.Method).To(Equal("GET"))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke ListSMTPUsers with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPUsersOptions model
+				listSMTPUsersOptionsModel := new(eventnotificationsv1.ListSMTPUsersOptions)
+				listSMTPUsersOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.ID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPUsersOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPUsersOptionsModel.Search = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`ListSMTPUsers(listSMTPUsersOptions *ListSMTPUsersOptions)`, func() {
+		listSMTPUsersPath := "/v1/instances/testString/smtp/config/testString/users"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPUsersPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "users": [{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListSMTPUsers successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the ListSMTPUsersOptions model
+				listSMTPUsersOptionsModel := new(eventnotificationsv1.ListSMTPUsersOptions)
+				listSMTPUsersOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.ID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPUsersOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPUsersOptionsModel.Search = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.ListSMTPUsersWithContext(ctx, listSMTPUsersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.ListSMTPUsersWithContext(ctx, listSMTPUsersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPUsersPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					Expect(req.URL.Query()["search"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "users": [{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+				}))
+			})
+			It(`Invoke ListSMTPUsers successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.ListSMTPUsers(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the ListSMTPUsersOptions model
+				listSMTPUsersOptionsModel := new(eventnotificationsv1.ListSMTPUsersOptions)
+				listSMTPUsersOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.ID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPUsersOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPUsersOptionsModel.Search = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke ListSMTPUsers with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPUsersOptions model
+				listSMTPUsersOptionsModel := new(eventnotificationsv1.ListSMTPUsersOptions)
+				listSMTPUsersOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.ID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPUsersOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPUsersOptionsModel.Search = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the ListSMTPUsersOptions model with no property values
+				listSMTPUsersOptionsModelNew := new(eventnotificationsv1.ListSMTPUsersOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke ListSMTPUsers successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the ListSMTPUsersOptions model
+				listSMTPUsersOptionsModel := new(eventnotificationsv1.ListSMTPUsersOptions)
+				listSMTPUsersOptionsModel.InstanceID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.ID = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Limit = core.Int64Ptr(int64(10))
+				listSMTPUsersOptionsModel.Offset = core.Int64Ptr(int64(0))
+				listSMTPUsersOptionsModel.Search = core.StringPtr("testString")
+				listSMTPUsersOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Test pagination helper method on response`, func() {
+			It(`Invoke GetNextOffset successfully`, func() {
+				responseObject := new(eventnotificationsv1.SMTPUsersList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=135")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
+			})
+			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
+				responseObject := new(eventnotificationsv1.SMTPUsersList)
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset without any query params in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SMTPUsersList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).To(BeNil())
+				Expect(value).To(BeNil())
+			})
+			It(`Invoke GetNextOffset with a non-integer query param in the "Next" URL`, func() {
+				responseObject := new(eventnotificationsv1.SMTPUsersList)
+				nextObject := new(eventnotificationsv1.PageHrefResponse)
+				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
+				responseObject.Next = nextObject
+	
+				value, err := responseObject.GetNextOffset()
+				Expect(err).NotTo(BeNil())
+				Expect(value).To(BeNil())
+			})
+		})
+		Context(`Using mock server endpoint - paginated response`, func() {
+			BeforeEach(func() {
+				var requestNumber int = 0
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(listSMTPUsersPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					requestNumber++
+					if requestNumber == 1 {
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"users":[{"id":"ID","smtp_config_id":"SMTPConfigID","description":"Description","domain":"Domain","username":"Username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else if requestNumber == 2 {
+						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"users":[{"id":"ID","smtp_config_id":"SMTPConfigID","description":"Description","domain":"Domain","username":"Username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+					} else {
+						res.WriteHeader(400)
+					}
+				}))
+			})
+			It(`Use SMTPUsersPager.GetNext successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSMTPUsersOptionsModel := &eventnotificationsv1.ListSMTPUsersOptions{
+					InstanceID: core.StringPtr("testString"),
+					ID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSMTPUsersPager(listSMTPUsersOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				var allResults []eventnotificationsv1.SMTPUser
+				for pager.HasNext() {
+					nextPage, err := pager.GetNext()
+					Expect(err).To(BeNil())
+					Expect(nextPage).ToNot(BeNil())
+					allResults = append(allResults, nextPage...)
+				}
+				Expect(len(allResults)).To(Equal(2))
+			})
+			It(`Use SMTPUsersPager.GetAll successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				listSMTPUsersOptionsModel := &eventnotificationsv1.ListSMTPUsersOptions{
+					InstanceID: core.StringPtr("testString"),
+					ID: core.StringPtr("testString"),
+					Limit: core.Int64Ptr(int64(10)),
+					Search: core.StringPtr("testString"),
+				}
+
+				pager, err := eventNotificationsService.NewSMTPUsersPager(listSMTPUsersOptionsModel)
+				Expect(err).To(BeNil())
+				Expect(pager).ToNot(BeNil())
+
+				allResults, err := pager.GetAll()
+				Expect(err).To(BeNil())
+				Expect(allResults).ToNot(BeNil())
+				Expect(len(allResults)).To(Equal(2))
+			})
+		})
+	})
+	Describe(`GetSMTPConfiguration(getSMTPConfigurationOptions *GetSMTPConfigurationOptions) - Operation response error`, func() {
+		getSMTPConfigurationPath := "/v1/instances/testString/smtp/config/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetSMTPConfiguration with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				getSMTPConfigurationOptionsModel := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				getSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSMTPConfiguration(getSMTPConfigurationOptions *GetSMTPConfigurationOptions)`, func() {
+		getSMTPConfigurationPath := "/v1/instances/testString/smtp/config/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPConfiguration successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				getSMTPConfigurationOptionsModel := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				getSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetSMTPConfigurationWithContext(ctx, getSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetSMTPConfigurationWithContext(ctx, getSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetSMTPConfiguration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				getSMTPConfigurationOptionsModel := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				getSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetSMTPConfiguration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				getSMTPConfigurationOptionsModel := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				getSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetSMTPConfigurationOptions model with no property values
+				getSMTPConfigurationOptionsModelNew := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				getSMTPConfigurationOptionsModel := new(eventnotificationsv1.GetSMTPConfigurationOptions)
+				getSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				getSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetSMTPConfiguration(getSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions) - Operation response error`, func() {
+		updateSMTPConfigurationPath := "/v1/instances/testString/smtp/config/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateSMTPConfiguration with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				updateSMTPConfigurationOptionsModel := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				updateSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions)`, func() {
+		updateSMTPConfigurationPath := "/v1/instances/testString/smtp/config/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPConfiguration successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				updateSMTPConfigurationOptionsModel := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				updateSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateSMTPConfigurationWithContext(ctx, updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateSMTPConfigurationWithContext(ctx, updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateSMTPConfiguration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				updateSMTPConfigurationOptionsModel := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				updateSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateSMTPConfiguration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				updateSMTPConfigurationOptionsModel := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				updateSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateSMTPConfigurationOptions model with no property values
+				updateSMTPConfigurationOptionsModelNew := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				updateSMTPConfigurationOptionsModel := new(eventnotificationsv1.UpdateSMTPConfigurationOptions)
+				updateSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Name = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`DeleteSMTPConfiguration(deleteSMTPConfigurationOptions *DeleteSMTPConfigurationOptions)`, func() {
+		deleteSMTPConfigurationPath := "/v1/instances/testString/smtp/config/testString"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(deleteSMTPConfigurationPath))
+					Expect(req.Method).To(Equal("DELETE"))
+
+					res.WriteHeader(204)
+				}))
+			})
+			It(`Invoke DeleteSMTPConfiguration successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := eventNotificationsService.DeleteSMTPConfiguration(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the DeleteSMTPConfigurationOptions model
+				deleteSMTPConfigurationOptionsModel := new(eventnotificationsv1.DeleteSMTPConfigurationOptions)
+				deleteSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				deleteSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = eventNotificationsService.DeleteSMTPConfiguration(deleteSMTPConfigurationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke DeleteSMTPConfiguration with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteSMTPConfigurationOptions model
+				deleteSMTPConfigurationOptionsModel := new(eventnotificationsv1.DeleteSMTPConfigurationOptions)
+				deleteSMTPConfigurationOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteSMTPConfigurationOptionsModel.ID = core.StringPtr("testString")
+				deleteSMTPConfigurationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := eventNotificationsService.DeleteSMTPConfiguration(deleteSMTPConfigurationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				// Construct a second instance of the DeleteSMTPConfigurationOptions model with no property values
+				deleteSMTPConfigurationOptionsModelNew := new(eventnotificationsv1.DeleteSMTPConfigurationOptions)
+				// Invoke operation with invalid model (negative test)
+				response, operationErr = eventNotificationsService.DeleteSMTPConfiguration(deleteSMTPConfigurationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSMTPUser(getSMTPUserOptions *GetSMTPUserOptions) - Operation response error`, func() {
+		getSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPUserPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetSMTPUser with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPUserOptions model
+				getSMTPUserOptionsModel := new(eventnotificationsv1.GetSMTPUserOptions)
+				getSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSMTPUser(getSMTPUserOptions *GetSMTPUserOptions)`, func() {
+		getSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPUserPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPUser successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetSMTPUserOptions model
+				getSMTPUserOptionsModel := new(eventnotificationsv1.GetSMTPUserOptions)
+				getSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetSMTPUserWithContext(ctx, getSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetSMTPUserWithContext(ctx, getSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPUserPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetSMTPUser(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetSMTPUserOptions model
+				getSMTPUserOptionsModel := new(eventnotificationsv1.GetSMTPUserOptions)
+				getSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetSMTPUser with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPUserOptions model
+				getSMTPUserOptionsModel := new(eventnotificationsv1.GetSMTPUserOptions)
+				getSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetSMTPUserOptions model with no property values
+				getSMTPUserOptionsModelNew := new(eventnotificationsv1.GetSMTPUserOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPUserOptions model
+				getSMTPUserOptionsModel := new(eventnotificationsv1.GetSMTPUserOptions)
+				getSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				getSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetSMTPUser(getSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions) - Operation response error`, func() {
+		updateSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPUserPath))
+					Expect(req.Method).To(Equal("PATCH"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateSMTPUser with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPUserOptions model
+				updateSMTPUserOptionsModel := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				updateSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions)`, func() {
+		updateSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPUserPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPUser successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the UpdateSMTPUserOptions model
+				updateSMTPUserOptionsModel := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				updateSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateSMTPUserWithContext(ctx, updateSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateSMTPUserWithContext(ctx, updateSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPUserPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "smtp_config_id": "SMTPConfigID", "description": "Description", "domain": "Domain", "username": "Username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateSMTPUser(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the UpdateSMTPUserOptions model
+				updateSMTPUserOptionsModel := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				updateSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateSMTPUser with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPUserOptions model
+				updateSMTPUserOptionsModel := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				updateSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateSMTPUserOptions model with no property values
+				updateSMTPUserOptionsModelNew := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPUserOptions model
+				updateSMTPUserOptionsModel := new(eventnotificationsv1.UpdateSMTPUserOptions)
+				updateSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				updateSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`DeleteSMTPUser(deleteSMTPUserOptions *DeleteSMTPUserOptions)`, func() {
+		deleteSMTPUserPath := "/v1/instances/testString/smtp/config/testString/users/testString"
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(deleteSMTPUserPath))
+					Expect(req.Method).To(Equal("DELETE"))
+
+					res.WriteHeader(204)
+				}))
+			})
+			It(`Invoke DeleteSMTPUser successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				response, operationErr := eventNotificationsService.DeleteSMTPUser(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+
+				// Construct an instance of the DeleteSMTPUserOptions model
+				deleteSMTPUserOptionsModel := new(eventnotificationsv1.DeleteSMTPUserOptions)
+				deleteSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				response, operationErr = eventNotificationsService.DeleteSMTPUser(deleteSMTPUserOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+			})
+			It(`Invoke DeleteSMTPUser with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the DeleteSMTPUserOptions model
+				deleteSMTPUserOptionsModel := new(eventnotificationsv1.DeleteSMTPUserOptions)
+				deleteSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.ID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.UserID = core.StringPtr("testString")
+				deleteSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				response, operationErr := eventNotificationsService.DeleteSMTPUser(deleteSMTPUserOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				// Construct a second instance of the DeleteSMTPUserOptions model with no property values
+				deleteSMTPUserOptionsModelNew := new(eventnotificationsv1.DeleteSMTPUserOptions)
+				// Invoke operation with invalid model (negative test)
+				response, operationErr = eventNotificationsService.DeleteSMTPUser(deleteSMTPUserOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions) - Operation response error`, func() {
+		getSMTPAllowedIpsPath := "/v1/instances/testString/smtp/config/testString/allowed_ips"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetSMTPAllowedIps with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				getSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				getSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions)`, func() {
+		getSMTPAllowedIpsPath := "/v1/instances/testString/smtp/config/testString/allowed_ips"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"subnets": ["Subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPAllowedIps successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				getSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				getSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetSMTPAllowedIpsWithContext(ctx, getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetSMTPAllowedIpsWithContext(ctx, getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"subnets": ["Subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke GetSMTPAllowedIps successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetSMTPAllowedIps(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				getSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				getSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetSMTPAllowedIps with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				getSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				getSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetSMTPAllowedIpsOptions model with no property values
+				getSMTPAllowedIpsOptionsModelNew := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetSMTPAllowedIps successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				getSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.GetSMTPAllowedIpsOptions)
+				getSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				getSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) - Operation response error`, func() {
+		updateSMTPAllowedIpsPath := "/v1/instances/testString/smtp/config/testString/allowed_ips"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("PATCH"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateSMTPAllowedIps with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				updateSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				updateSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.Subnets = []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions)`, func() {
+		updateSMTPAllowedIpsPath := "/v1/instances/testString/smtp/config/testString/allowed_ips"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"subnets": ["Subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPAllowedIps successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				updateSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				updateSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.Subnets = []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateSMTPAllowedIpsWithContext(ctx, updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateSMTPAllowedIpsWithContext(ctx, updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSMTPAllowedIpsPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"subnets": ["Subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateSMTPAllowedIps successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateSMTPAllowedIps(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				updateSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				updateSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.Subnets = []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateSMTPAllowedIps with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				updateSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				updateSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.Subnets = []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateSMTPAllowedIpsOptions model with no property values
+				updateSMTPAllowedIpsOptionsModelNew := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateSMTPAllowedIps successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				updateSMTPAllowedIpsOptionsModel := new(eventnotificationsv1.UpdateSMTPAllowedIpsOptions)
+				updateSMTPAllowedIpsOptionsModel.InstanceID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.ID = core.StringPtr("testString")
+				updateSMTPAllowedIpsOptionsModel.Subnets = []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions) - Operation response error`, func() {
+		updateVerifySMTPPath := "/v1/instances/testString/smtp/config/testString/verify"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateVerifySMTPPath))
+					Expect(req.Method).To(Equal("PATCH"))
+					Expect(req.URL.Query()["type"]).To(Equal([]string{"testString"}))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateVerifySMTP with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				updateVerifySMTPOptionsModel := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				updateVerifySMTPOptionsModel.InstanceID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.ID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Type = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions)`, func() {
+		updateVerifySMTPPath := "/v1/instances/testString/smtp/config/testString/verify"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateVerifySMTPPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					Expect(req.URL.Query()["type"]).To(Equal([]string{"testString"}))
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"status": [{"type": "Type", "verification": "Verification"}]}`)
+				}))
+			})
+			It(`Invoke UpdateVerifySMTP successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				updateVerifySMTPOptionsModel := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				updateVerifySMTPOptionsModel.InstanceID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.ID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Type = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateVerifySMTPWithContext(ctx, updateVerifySMTPOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateVerifySMTPWithContext(ctx, updateVerifySMTPOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateVerifySMTPPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					Expect(req.URL.Query()["type"]).To(Equal([]string{"testString"}))
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"status": [{"type": "Type", "verification": "Verification"}]}`)
+				}))
+			})
+			It(`Invoke UpdateVerifySMTP successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateVerifySMTP(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				updateVerifySMTPOptionsModel := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				updateVerifySMTPOptionsModel.InstanceID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.ID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Type = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateVerifySMTP with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				updateVerifySMTPOptionsModel := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				updateVerifySMTPOptionsModel.InstanceID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.ID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Type = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateVerifySMTPOptions model with no property values
+				updateVerifySMTPOptionsModelNew := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateVerifySMTP successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				updateVerifySMTPOptionsModel := new(eventnotificationsv1.UpdateVerifySMTPOptions)
+				updateVerifySMTPOptionsModel.InstanceID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.ID = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Type = core.StringPtr("testString")
+				updateVerifySMTPOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			eventNotificationsService, _ := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
@@ -9629,6 +12647,39 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createIntegrationOptionsModel.Metadata).To(Equal(integrationCreateMetadataModel))
 				Expect(createIntegrationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewCreateSMTPConfigurationOptions successfully`, func() {
+				// Construct an instance of the CreateSMTPConfigurationOptions model
+				instanceID := "testString"
+				createSMTPConfigurationOptionsName := "testString"
+				createSMTPConfigurationOptionsDomain := "testString"
+				createSMTPConfigurationOptionsModel := eventNotificationsService.NewCreateSMTPConfigurationOptions(instanceID, createSMTPConfigurationOptionsName, createSMTPConfigurationOptionsDomain)
+				createSMTPConfigurationOptionsModel.SetInstanceID("testString")
+				createSMTPConfigurationOptionsModel.SetName("testString")
+				createSMTPConfigurationOptionsModel.SetDomain("testString")
+				createSMTPConfigurationOptionsModel.SetDescription("testString")
+				createSMTPConfigurationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(createSMTPConfigurationOptionsModel).ToNot(BeNil())
+				Expect(createSMTPConfigurationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPConfigurationOptionsModel.Name).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPConfigurationOptionsModel.Domain).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPConfigurationOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPConfigurationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewCreateSMTPUserOptions successfully`, func() {
+				// Construct an instance of the CreateSMTPUserOptions model
+				instanceID := "testString"
+				id := "testString"
+				createSMTPUserOptionsModel := eventNotificationsService.NewCreateSMTPUserOptions(instanceID, id)
+				createSMTPUserOptionsModel.SetInstanceID("testString")
+				createSMTPUserOptionsModel.SetID("testString")
+				createSMTPUserOptionsModel.SetDescription("testString")
+				createSMTPUserOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(createSMTPUserOptionsModel).ToNot(BeNil())
+				Expect(createSMTPUserOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPUserOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPUserOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPUserOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewCreateSourcesOptions successfully`, func() {
 				// Construct an instance of the CreateSourcesOptions model
 				instanceID := "testString"
@@ -9696,31 +12747,31 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createTagsSubscriptionOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateTemplateOptions successfully`, func() {
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				Expect(templateConfigModel).ToNot(BeNil())
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
-				Expect(templateConfigModel.Body).To(Equal(core.StringPtr("testString")))
-				Expect(templateConfigModel.Subject).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				Expect(templateConfigOneOfModel).ToNot(BeNil())
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
+				Expect(templateConfigOneOfModel.Body).To(Equal(core.StringPtr("testString")))
+				Expect(templateConfigOneOfModel.Subject).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the CreateTemplateOptions model
 				instanceID := "testString"
 				createTemplateOptionsName := "testString"
 				createTemplateOptionsType := "testString"
-				var createTemplateOptionsParams *eventnotificationsv1.TemplateConfig = nil
+				var createTemplateOptionsParams eventnotificationsv1.TemplateConfigOneOfIntf = nil
 				createTemplateOptionsModel := eventNotificationsService.NewCreateTemplateOptions(instanceID, createTemplateOptionsName, createTemplateOptionsType, createTemplateOptionsParams)
 				createTemplateOptionsModel.SetInstanceID("testString")
 				createTemplateOptionsModel.SetName("testString")
 				createTemplateOptionsModel.SetType("testString")
-				createTemplateOptionsModel.SetParams(templateConfigModel)
+				createTemplateOptionsModel.SetParams(templateConfigOneOfModel)
 				createTemplateOptionsModel.SetDescription("testString")
 				createTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createTemplateOptionsModel).ToNot(BeNil())
 				Expect(createTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(createTemplateOptionsModel.Params).To(Equal(templateConfigModel))
+				Expect(createTemplateOptionsModel.Params).To(Equal(templateConfigOneOfModel))
 				Expect(createTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(createTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
@@ -9771,6 +12822,35 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(deleteDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(deleteDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewDeleteSMTPConfigurationOptions successfully`, func() {
+				// Construct an instance of the DeleteSMTPConfigurationOptions model
+				instanceID := "testString"
+				id := "testString"
+				deleteSMTPConfigurationOptionsModel := eventNotificationsService.NewDeleteSMTPConfigurationOptions(instanceID, id)
+				deleteSMTPConfigurationOptionsModel.SetInstanceID("testString")
+				deleteSMTPConfigurationOptionsModel.SetID("testString")
+				deleteSMTPConfigurationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(deleteSMTPConfigurationOptionsModel).ToNot(BeNil())
+				Expect(deleteSMTPConfigurationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteSMTPConfigurationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteSMTPConfigurationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewDeleteSMTPUserOptions successfully`, func() {
+				// Construct an instance of the DeleteSMTPUserOptions model
+				instanceID := "testString"
+				id := "testString"
+				userID := "testString"
+				deleteSMTPUserOptionsModel := eventNotificationsService.NewDeleteSMTPUserOptions(instanceID, id, userID)
+				deleteSMTPUserOptionsModel.SetInstanceID("testString")
+				deleteSMTPUserOptionsModel.SetID("testString")
+				deleteSMTPUserOptionsModel.SetUserID("testString")
+				deleteSMTPUserOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(deleteSMTPUserOptionsModel).ToNot(BeNil())
+				Expect(deleteSMTPUserOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteSMTPUserOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteSMTPUserOptionsModel.UserID).To(Equal(core.StringPtr("testString")))
+				Expect(deleteSMTPUserOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDeleteSourceOptions successfully`, func() {
 				// Construct an instance of the DeleteSourceOptions model
@@ -9885,6 +12965,48 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getIntegrationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(getIntegrationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewGetSMTPAllowedIpsOptions successfully`, func() {
+				// Construct an instance of the GetSMTPAllowedIpsOptions model
+				instanceID := "testString"
+				id := "testString"
+				getSMTPAllowedIpsOptionsModel := eventNotificationsService.NewGetSMTPAllowedIpsOptions(instanceID, id)
+				getSMTPAllowedIpsOptionsModel.SetInstanceID("testString")
+				getSMTPAllowedIpsOptionsModel.SetID("testString")
+				getSMTPAllowedIpsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getSMTPAllowedIpsOptionsModel).ToNot(BeNil())
+				Expect(getSMTPAllowedIpsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPAllowedIpsOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPAllowedIpsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetSMTPConfigurationOptions successfully`, func() {
+				// Construct an instance of the GetSMTPConfigurationOptions model
+				instanceID := "testString"
+				id := "testString"
+				getSMTPConfigurationOptionsModel := eventNotificationsService.NewGetSMTPConfigurationOptions(instanceID, id)
+				getSMTPConfigurationOptionsModel.SetInstanceID("testString")
+				getSMTPConfigurationOptionsModel.SetID("testString")
+				getSMTPConfigurationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getSMTPConfigurationOptionsModel).ToNot(BeNil())
+				Expect(getSMTPConfigurationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPConfigurationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPConfigurationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetSMTPUserOptions successfully`, func() {
+				// Construct an instance of the GetSMTPUserOptions model
+				instanceID := "testString"
+				id := "testString"
+				userID := "testString"
+				getSMTPUserOptionsModel := eventNotificationsService.NewGetSMTPUserOptions(instanceID, id, userID)
+				getSMTPUserOptionsModel.SetInstanceID("testString")
+				getSMTPUserOptionsModel.SetID("testString")
+				getSMTPUserOptionsModel.SetUserID("testString")
+				getSMTPUserOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getSMTPUserOptionsModel).ToNot(BeNil())
+				Expect(getSMTPUserOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPUserOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPUserOptionsModel.UserID).To(Equal(core.StringPtr("testString")))
+				Expect(getSMTPUserOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewGetSourceOptions successfully`, func() {
 				// Construct an instance of the GetSourceOptions model
 				instanceID := "testString"
@@ -9985,6 +13107,41 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(listIntegrationsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
 				Expect(listIntegrationsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
 				Expect(listIntegrationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewListSMTPConfigurationsOptions successfully`, func() {
+				// Construct an instance of the ListSMTPConfigurationsOptions model
+				instanceID := "testString"
+				listSMTPConfigurationsOptionsModel := eventNotificationsService.NewListSMTPConfigurationsOptions(instanceID)
+				listSMTPConfigurationsOptionsModel.SetInstanceID("testString")
+				listSMTPConfigurationsOptionsModel.SetLimit(int64(10))
+				listSMTPConfigurationsOptionsModel.SetOffset(int64(0))
+				listSMTPConfigurationsOptionsModel.SetSearch("testString")
+				listSMTPConfigurationsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(listSMTPConfigurationsOptionsModel).ToNot(BeNil())
+				Expect(listSMTPConfigurationsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(listSMTPConfigurationsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
+				Expect(listSMTPConfigurationsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(listSMTPConfigurationsOptionsModel.Search).To(Equal(core.StringPtr("testString")))
+				Expect(listSMTPConfigurationsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewListSMTPUsersOptions successfully`, func() {
+				// Construct an instance of the ListSMTPUsersOptions model
+				instanceID := "testString"
+				id := "testString"
+				listSMTPUsersOptionsModel := eventNotificationsService.NewListSMTPUsersOptions(instanceID, id)
+				listSMTPUsersOptionsModel.SetInstanceID("testString")
+				listSMTPUsersOptionsModel.SetID("testString")
+				listSMTPUsersOptionsModel.SetLimit(int64(10))
+				listSMTPUsersOptionsModel.SetOffset(int64(0))
+				listSMTPUsersOptionsModel.SetSearch("testString")
+				listSMTPUsersOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(listSMTPUsersOptionsModel).ToNot(BeNil())
+				Expect(listSMTPUsersOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(listSMTPUsersOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(listSMTPUsersOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
+				Expect(listSMTPUsersOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(listSMTPUsersOptionsModel.Search).To(Equal(core.StringPtr("testString")))
+				Expect(listSMTPUsersOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewListSourcesOptions successfully`, func() {
 				// Construct an instance of the ListSourcesOptions model
@@ -10119,13 +13276,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(replaceIntegrationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceTemplateOptions successfully`, func() {
-				// Construct an instance of the TemplateConfig model
-				templateConfigModel := new(eventnotificationsv1.TemplateConfig)
-				Expect(templateConfigModel).ToNot(BeNil())
-				templateConfigModel.Body = core.StringPtr("testString")
-				templateConfigModel.Subject = core.StringPtr("testString")
-				Expect(templateConfigModel.Body).To(Equal(core.StringPtr("testString")))
-				Expect(templateConfigModel.Subject).To(Equal(core.StringPtr("testString")))
+				// Construct an instance of the TemplateConfigOneOfEmailTemplateConfig model
+				templateConfigOneOfModel := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				Expect(templateConfigOneOfModel).ToNot(BeNil())
+				templateConfigOneOfModel.Body = core.StringPtr("testString")
+				templateConfigOneOfModel.Subject = core.StringPtr("testString")
+				Expect(templateConfigOneOfModel.Body).To(Equal(core.StringPtr("testString")))
+				Expect(templateConfigOneOfModel.Subject).To(Equal(core.StringPtr("testString")))
 
 				// Construct an instance of the ReplaceTemplateOptions model
 				instanceID := "testString"
@@ -10136,7 +13293,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replaceTemplateOptionsModel.SetName("testString")
 				replaceTemplateOptionsModel.SetDescription("testString")
 				replaceTemplateOptionsModel.SetType("testString")
-				replaceTemplateOptionsModel.SetParams(templateConfigModel)
+				replaceTemplateOptionsModel.SetParams(templateConfigOneOfModel)
 				replaceTemplateOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(replaceTemplateOptionsModel).ToNot(BeNil())
 				Expect(replaceTemplateOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
@@ -10144,7 +13301,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(replaceTemplateOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(replaceTemplateOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(replaceTemplateOptionsModel.Type).To(Equal(core.StringPtr("testString")))
-				Expect(replaceTemplateOptionsModel.Params).To(Equal(templateConfigModel))
+				Expect(replaceTemplateOptionsModel.Params).To(Equal(templateConfigOneOfModel))
 				Expect(replaceTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceTopicOptions successfully`, func() {
@@ -10204,8 +13361,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmendefaultshort = core.StringPtr("testString")
 				notificationCreateModel.Ibmendefaultlong = core.StringPtr("testString")
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
-				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
+				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
@@ -10231,8 +13389,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmendefaultshort).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmendefaultlong).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensubject).To(Equal(core.StringPtr("testString")))
-				Expect(notificationCreateModel.Ibmensmsto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmentemplates).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenmailto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensmsto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
@@ -10274,13 +13433,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				id := "testString"
 				rules := []eventnotificationsv1.Rules{}
 				_model, err := eventNotificationsService.NewSourcesItems(id, rules)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
-			It(`Invoke NewTemplateConfig successfully`, func() {
-				body := "testString"
-				subject := "testString"
-				_model, err := eventNotificationsService.NewTemplateConfig(body, subject)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -10382,6 +13534,57 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateDestinationOptionsModel.Icon128x1282xContentType).To(Equal(core.StringPtr("testString")))
 				Expect(updateDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewUpdateSMTPAllowedIpsOptions successfully`, func() {
+				// Construct an instance of the UpdateSMTPAllowedIpsOptions model
+				instanceID := "testString"
+				id := "testString"
+				updateSMTPAllowedIpsOptionsSubnets := []string{"testString"}
+				updateSMTPAllowedIpsOptionsModel := eventNotificationsService.NewUpdateSMTPAllowedIpsOptions(instanceID, id, updateSMTPAllowedIpsOptionsSubnets)
+				updateSMTPAllowedIpsOptionsModel.SetInstanceID("testString")
+				updateSMTPAllowedIpsOptionsModel.SetID("testString")
+				updateSMTPAllowedIpsOptionsModel.SetSubnets([]string{"testString"})
+				updateSMTPAllowedIpsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateSMTPAllowedIpsOptionsModel).ToNot(BeNil())
+				Expect(updateSMTPAllowedIpsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPAllowedIpsOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPAllowedIpsOptionsModel.Subnets).To(Equal([]string{"testString"}))
+				Expect(updateSMTPAllowedIpsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateSMTPConfigurationOptions successfully`, func() {
+				// Construct an instance of the UpdateSMTPConfigurationOptions model
+				instanceID := "testString"
+				id := "testString"
+				updateSMTPConfigurationOptionsModel := eventNotificationsService.NewUpdateSMTPConfigurationOptions(instanceID, id)
+				updateSMTPConfigurationOptionsModel.SetInstanceID("testString")
+				updateSMTPConfigurationOptionsModel.SetID("testString")
+				updateSMTPConfigurationOptionsModel.SetName("testString")
+				updateSMTPConfigurationOptionsModel.SetDescription("testString")
+				updateSMTPConfigurationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateSMTPConfigurationOptionsModel).ToNot(BeNil())
+				Expect(updateSMTPConfigurationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPConfigurationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPConfigurationOptionsModel.Name).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPConfigurationOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPConfigurationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateSMTPUserOptions successfully`, func() {
+				// Construct an instance of the UpdateSMTPUserOptions model
+				instanceID := "testString"
+				id := "testString"
+				userID := "testString"
+				updateSMTPUserOptionsModel := eventNotificationsService.NewUpdateSMTPUserOptions(instanceID, id, userID)
+				updateSMTPUserOptionsModel.SetInstanceID("testString")
+				updateSMTPUserOptionsModel.SetID("testString")
+				updateSMTPUserOptionsModel.SetUserID("testString")
+				updateSMTPUserOptionsModel.SetDescription("testString")
+				updateSMTPUserOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateSMTPUserOptionsModel).ToNot(BeNil())
+				Expect(updateSMTPUserOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPUserOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPUserOptionsModel.UserID).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPUserOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(updateSMTPUserOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewUpdateSourceOptions successfully`, func() {
 				// Construct an instance of the UpdateSourceOptions model
 				instanceID := "testString"
@@ -10465,6 +13668,22 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateVerifyDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(updateVerifyDestinationOptionsModel.Type).To(Equal(core.StringPtr("testString")))
 				Expect(updateVerifyDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewUpdateVerifySMTPOptions successfully`, func() {
+				// Construct an instance of the UpdateVerifySMTPOptions model
+				instanceID := "testString"
+				id := "testString"
+				typeVar := "testString"
+				updateVerifySMTPOptionsModel := eventNotificationsService.NewUpdateVerifySMTPOptions(instanceID, id, typeVar)
+				updateVerifySMTPOptionsModel.SetInstanceID("testString")
+				updateVerifySMTPOptionsModel.SetID("testString")
+				updateVerifySMTPOptionsModel.SetType("testString")
+				updateVerifySMTPOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateVerifySMTPOptionsModel).ToNot(BeNil())
+				Expect(updateVerifySMTPOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateVerifySMTPOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateVerifySMTPOptionsModel.Type).To(Equal(core.StringPtr("testString")))
+				Expect(updateVerifySMTPOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewDestinationConfigOneOfChromeDestinationConfig successfully`, func() {
 				apiKey := "testString"
@@ -10627,6 +13846,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewSubscriptionUpdateAttributesWebhookAttributes successfully`, func() {
 				signingEnabled := true
 				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesWebhookAttributes(signingEnabled)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfEmailTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfEmailTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfSlackTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfSlackTemplateConfig(body)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
