@@ -117,13 +117,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		cosEndPoint               string
 		templateInvitationID      string
 		templateNotificationID    string
+		slackTemplateID           string
 		slackURL                  string
 		teamsURL                  string
 		pagerDutyApiKey           string
 		pagerDutyRoutingKey       string
 		templateBody              string
+		slackTemplateBody         string
 		cosInstanceCRN            string
 		cosIntegrationID          string
+		smtpConfigID              string
+		smtpUserID                string
 	)
 
 	var shouldSkipTest = func() {
@@ -286,6 +290,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load templateBody configuration property, skipping tests")
 			}
 			fmt.Printf("TemplateBody: %s\n", templateBody)
+
+			slackTemplateBody = config["SLACK_TEMPLATE_BODY"]
+			if slackTemplateBody == "" {
+				Skip("Unable to load slackTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("slackTemplateBody: %s\n", slackTemplateBody)
 
 			cosInstanceCRN = config["COS_INSTANCE_CRN"]
 			if cosInstanceCRN == "" {
@@ -1307,8 +1317,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			description := "template invitation description"
 			templateTypeInvitation := "smtp_custom.invitation"
 			templateTypeNotification := "smtp_custom.notification"
+			templateTypeSlack := "slack.notification"
 
-			templConfig := &eventnotificationsv1.TemplateConfig{
+			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is invitation for invitation message"),
 			}
@@ -1336,7 +1347,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			name = "template notification"
 			description = "template notification description"
 
-			templConfig = &eventnotificationsv1.TemplateConfig{
+			templConfig = &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is template for notification"),
 			}
@@ -1360,6 +1371,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
 			templateNotificationID = *templateResponse.ID
+
+			name = "slack template"
+			description = "slack template description"
+
+			slackTemplConfig := &eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig{
+				Body: core.StringPtr(slackTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeSlack),
+				Description: core.StringPtr(description),
+				Params:      slackTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			slackTemplateID = *templateResponse.ID
 		})
 	})
 
@@ -2024,8 +2062,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			description := "template invitation description"
 			templateTypeInvitation := "smtp_custom.invitation"
 			templateTypeNotification := "smtp_custom.notification"
+			templateTypeSlack := "slack.notification"
 
-			templateConfig := &eventnotificationsv1.TemplateConfig{
+			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is invitation for invitation message"),
 			}
@@ -2053,7 +2092,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			name = "template notification"
 			description = "template notification description"
 
-			templateConfig = &eventnotificationsv1.TemplateConfig{
+			templateConfig = &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
 				Subject: core.StringPtr("Hi this is template for notification"),
 			}
@@ -2075,6 +2114,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateResponse).ToNot(BeNil())
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(templateNotificationID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "slack template"
+			description = "slack template description"
+
+			slackTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig{
+				Body: core.StringPtr(slackTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(slackTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeSlack),
+				Description: core.StringPtr(description),
+				Params:      slackTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(slackTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 		})
@@ -2183,7 +2249,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionID3 = string(*subscription.ID)
 
 			subscriptionCreateSlackAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes{
-				AttachmentColor: core.StringPtr("#0000FF"),
+				AttachmentColor:        core.StringPtr("#0000FF"),
+				TemplateIDNotification: core.StringPtr(slackTemplateID),
 			}
 
 			createSlackSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
@@ -2706,7 +2773,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Description).To(Equal(fcmDescription))
 
 			subscriptionUpdateSlackAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes{
-				AttachmentColor: core.StringPtr("#0000FF"),
+				AttachmentColor:        core.StringPtr("#0000FF"),
+				TemplateIDNotification: core.StringPtr(slackTemplateID),
 			}
 
 			slackName := core.StringPtr("subscription_slack_update")
@@ -3082,6 +3150,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationAPNsBodyModel := "{\"aps\":{\"alert\":{\"title\":\"Hello!! GameRequest\",\"body\":\"Bob wants to play poker\",\"action-loc-key\":\"PLAY\"},\"badge\":5}}"
 			notificationSafariBodyModel := "{\"en_data\": {\"alert\": \"Alert message\"}}"
 			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
+			templates := fmt.Sprintf("[\"%s\"]", slackTemplateID)
 			smsTo := "[\"+911234567890\", \"+911224567890\"]"
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
@@ -3104,6 +3173,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationCreateModel.Ibmenhuaweibody = &notificationHuaweiBodyModel
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
 			notificationCreateModel.Ibmenmailto = &mailTo
+			notificationCreateModel.Ibmentemplates = &templates
 			notificationCreateModel.Ibmensmsto = &smsTo
 			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
@@ -3166,6 +3236,244 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
+	Describe(`CreateSMTPConfiguration - Create SMTP Configuration`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions)`, func() {
+
+			name := "SMTP configuration"
+			description := "SMTP configuration description"
+			domain := "mailx.event-notifications.test.cloud.ibm.com"
+
+			createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Domain:      core.StringPtr(domain),
+				Description: core.StringPtr(description),
+				Name:        core.StringPtr(name),
+			}
+
+			smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(smtpConfig).ToNot(BeNil())
+			Expect(smtpConfig.Name).To(Equal(core.StringPtr(name)))
+			Expect(smtpConfig.Description).To(Equal(core.StringPtr(description)))
+			Expect(smtpConfig.Domain).To(Equal(core.StringPtr(domain)))
+			smtpConfigID = *smtpConfig.ID
+		})
+	})
+
+	Describe(`VerifySMTP - Verify SMTP`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions)`, func() {
+
+			updateVerifySMTPOptions := &eventnotificationsv1.UpdateVerifySMTPOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+				Type:       core.StringPtr("dkim,spf,en_authorization"),
+			}
+
+			verifySMTP, response, err := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptions)
+			Expect(verifySMTP.Status).ToNot(BeNil())
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+		})
+	})
+
+	Describe(`UpdateSMTPAllowedIps - Update SMTP Allowed Ips`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions)`, func() {
+
+			updateSMTPAllowedOptions := &eventnotificationsv1.UpdateSMTPAllowedIpsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+				Subnets:    []string{"192.168.1.64"},
+			}
+
+			subnets, response, err := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subnets.Subnets[0]).ToNot(BeNil())
+		})
+	})
+
+	Describe(`CreateSMTPUser - Create SMTP User`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateSMTPUser(createSMTPUserOptions *CreateSMTPUserOptions)`, func() {
+
+			description := "smtp user description"
+			createSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(smtpConfigID),
+				Description: core.StringPtr(description),
+			}
+
+			user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(user.Domain).ToNot(BeNil())
+			Expect(user.Username).ToNot(BeNil())
+			Expect(user.Password).ToNot(BeNil())
+			Expect(user.SMTPConfigID).ToNot(BeNil())
+			Expect(user.Description).To(Equal(core.StringPtr(description)))
+			smtpUserID = *user.ID
+		})
+	})
+
+	Describe(`ListSMTPConfigurations - List SMTP Configurations`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListSMTPConfigurations(listSMTPConfigurationsOptions *ListSMTPConfigurationsOptions)`, func() {
+
+			listSMTPConfigurationsOptions := &eventnotificationsv1.ListSMTPConfigurationsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Limit:      core.Int64Ptr(int64(1)),
+				Offset:     core.Int64Ptr(int64(0)),
+				Search:     core.StringPtr(search),
+			}
+
+			smtpConfigurations, response, err := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(smtpConfigurations.TotalCount).To(Equal(core.Int64Ptr(int64(1))))
+		})
+	})
+
+	Describe(`ListSMTPUsers - List SMTP Users`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListSMTPUsers(listSMTPUsersOptions *ListSMTPUsersOptions)`, func() {
+
+			listSMTPUsersOptions := &eventnotificationsv1.ListSMTPUsersOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+				Limit:      core.Int64Ptr(int64(1)),
+				Offset:     core.Int64Ptr(int64(0)),
+				Search:     core.StringPtr(search),
+			}
+
+			smtpUsers, response, err := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(smtpUsers.TotalCount).To(Equal(core.Int64Ptr(int64(1))))
+		})
+	})
+
+	Describe(`GetSMTPConfiguration - Get SMTP Configuration`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetSMTPConfiguration(getSMTPConfigurationOptions *GetSMTPConfigurationOptions)`, func() {
+
+			getSMTPconfigurationOptions := &eventnotificationsv1.GetSMTPConfigurationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+			}
+
+			smtpConfiguration, response, err := eventNotificationsService.GetSMTPConfiguration(getSMTPconfigurationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(smtpConfiguration.Domain).ToNot(BeNil())
+			Expect(smtpConfiguration.Name).ToNot(BeNil())
+			Expect(smtpConfiguration.Description).ToNot(BeNil())
+		})
+	})
+
+	Describe(`GetSMTPAllowedIps - Get SMTP AllowedIps`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions)`, func() {
+
+			getSMTPAllowedIPsOptions := &eventnotificationsv1.GetSMTPAllowedIpsOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+			}
+
+			smtpAllowedIPs, response, err := eventNotificationsService.GetSMTPAllowedIps(getSMTPAllowedIPsOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(smtpAllowedIPs.Subnets[0]).ToNot(BeNil())
+		})
+	})
+
+	Describe(`GetSMTPUser - Get SMTP User`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`GetSMTPUser(getSMTPUserOptions *GetSMTPUserOptions)`, func() {
+
+			getSMTPUserOptions := &eventnotificationsv1.GetSMTPUserOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(smtpConfigID),
+				UserID:     core.StringPtr(smtpUserID),
+			}
+
+			SMTPUser, response, err := eventNotificationsService.GetSMTPUser(getSMTPUserOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(SMTPUser.Domain).ToNot(BeNil())
+			Expect(SMTPUser.Description).ToNot(BeNil())
+			Expect(SMTPUser.Username).ToNot(BeNil())
+		})
+	})
+
+	Describe(`UpdateSMTPConfiguration - Update SMTP Configuration`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions)`, func() {
+
+			name := "SMTP configuration name update"
+			description := "SMTP configuration description update"
+
+			updateSMTPConfigurationOptions := &eventnotificationsv1.UpdateSMTPConfigurationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(smtpConfigID),
+				Name:        core.StringPtr(name),
+				Description: core.StringPtr(description),
+			}
+
+			updateSMTPConfiguration, response, err := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(updateSMTPConfiguration.Name).To(Equal(core.StringPtr(name)))
+			Expect(updateSMTPConfiguration.Description).To(Equal(core.StringPtr(description)))
+		})
+	})
+
+	Describe(`UpdateSMTPUser - Update SMTP User`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions)`, func() {
+
+			description := "SMTP user description update"
+
+			updateSMTPUserOptions := &eventnotificationsv1.UpdateSMTPUserOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(smtpConfigID),
+				Description: core.StringPtr(description),
+				UserID:      core.StringPtr(smtpUserID),
+			}
+
+			updateSMTPUser, response, err := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(updateSMTPUser.Description).To(Equal(core.StringPtr(description)))
+		})
+	})
+
 	Describe(`DeleteSubscription - Delete a Subscription`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
@@ -3193,6 +3501,49 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			// 404
 			// 500
 			//
+		})
+	})
+
+	Describe(`DeleteSMTPUser - Delete SMTP User`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteSMTPUser(deleteSMTPUserOptions *DeleteSMTPUserOptions)`, func() {
+
+			for _, ID := range []string{smtpUserID} {
+
+				deleteSMTPUserOptions := &eventnotificationsv1.DeleteSMTPUserOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(smtpConfigID),
+					UserID:     core.StringPtr(ID),
+				}
+
+				response, err := eventNotificationsService.DeleteSMTPUser(deleteSMTPUserOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
+			}
+		})
+	})
+
+	Describe(`DeleteSMTPConfiguration - Delete SMTP Configuration`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`DeleteSMTPConfiguration(deleteSMTPConfigurationOptions *DeleteSMTPConfigurationOptions)`, func() {
+
+			for _, ID := range []string{smtpConfigID} {
+
+				deleteSMTPConfigurationOptions := &eventnotificationsv1.DeleteSMTPConfigurationOptions{
+					InstanceID: core.StringPtr(instanceID),
+					ID:         core.StringPtr(ID),
+				}
+
+				response, err := eventNotificationsService.DeleteSMTPConfiguration(deleteSMTPConfigurationOptions)
+
+				Expect(err).To(BeNil())
+				Expect(response.StatusCode).To(Equal(204))
+			}
 		})
 	})
 

@@ -2639,6 +2639,857 @@ func (eventNotifications *EventNotificationsV1) ReplaceIntegrationWithContext(ct
 	return
 }
 
+// CreateSMTPConfiguration : Create a new SMTP Configuration
+// Create a new SMTP Configuration.
+func (eventNotifications *EventNotificationsV1) CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions) (result *SMTPCreateResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.CreateSMTPConfigurationWithContext(context.Background(), createSMTPConfigurationOptions)
+}
+
+// CreateSMTPConfigurationWithContext is an alternate form of the CreateSMTPConfiguration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) CreateSMTPConfigurationWithContext(ctx context.Context, createSMTPConfigurationOptions *CreateSMTPConfigurationOptions) (result *SMTPCreateResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createSMTPConfigurationOptions, "createSMTPConfigurationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(createSMTPConfigurationOptions, "createSMTPConfigurationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *createSMTPConfigurationOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range createSMTPConfigurationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateSMTPConfiguration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if createSMTPConfigurationOptions.Name != nil {
+		body["name"] = createSMTPConfigurationOptions.Name
+	}
+	if createSMTPConfigurationOptions.Domain != nil {
+		body["domain"] = createSMTPConfigurationOptions.Domain
+	}
+	if createSMTPConfigurationOptions.Description != nil {
+		body["description"] = createSMTPConfigurationOptions.Description
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPCreateResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ListSMTPConfigurations : List all SMTP Configurations
+// List all SMTP Configurations.
+func (eventNotifications *EventNotificationsV1) ListSMTPConfigurations(listSMTPConfigurationsOptions *ListSMTPConfigurationsOptions) (result *SMTPConfigurationsList, response *core.DetailedResponse, err error) {
+	return eventNotifications.ListSMTPConfigurationsWithContext(context.Background(), listSMTPConfigurationsOptions)
+}
+
+// ListSMTPConfigurationsWithContext is an alternate form of the ListSMTPConfigurations method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ListSMTPConfigurationsWithContext(ctx context.Context, listSMTPConfigurationsOptions *ListSMTPConfigurationsOptions) (result *SMTPConfigurationsList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listSMTPConfigurationsOptions, "listSMTPConfigurationsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(listSMTPConfigurationsOptions, "listSMTPConfigurationsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *listSMTPConfigurationsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listSMTPConfigurationsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListSMTPConfigurations")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	if listSMTPConfigurationsOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listSMTPConfigurationsOptions.Limit))
+	}
+	if listSMTPConfigurationsOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listSMTPConfigurationsOptions.Offset))
+	}
+	if listSMTPConfigurationsOptions.Search != nil {
+		builder.AddQuery("search", fmt.Sprint(*listSMTPConfigurationsOptions.Search))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPConfigurationsList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// CreateSMTPUser : Create a new SMTP User
+// Create a new SMTP User.
+func (eventNotifications *EventNotificationsV1) CreateSMTPUser(createSMTPUserOptions *CreateSMTPUserOptions) (result *SMTPUserResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.CreateSMTPUserWithContext(context.Background(), createSMTPUserOptions)
+}
+
+// CreateSMTPUserWithContext is an alternate form of the CreateSMTPUser method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) CreateSMTPUserWithContext(ctx context.Context, createSMTPUserOptions *CreateSMTPUserOptions) (result *SMTPUserResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(createSMTPUserOptions, "createSMTPUserOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(createSMTPUserOptions, "createSMTPUserOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *createSMTPUserOptions.InstanceID,
+		"id":          *createSMTPUserOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.POST)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/users`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range createSMTPUserOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "CreateSMTPUser")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if createSMTPUserOptions.Description != nil {
+		body["description"] = createSMTPUserOptions.Description
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPUserResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// ListSMTPUsers : List all SMTP users
+// List all SMTP users.
+func (eventNotifications *EventNotificationsV1) ListSMTPUsers(listSMTPUsersOptions *ListSMTPUsersOptions) (result *SMTPUsersList, response *core.DetailedResponse, err error) {
+	return eventNotifications.ListSMTPUsersWithContext(context.Background(), listSMTPUsersOptions)
+}
+
+// ListSMTPUsersWithContext is an alternate form of the ListSMTPUsers method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ListSMTPUsersWithContext(ctx context.Context, listSMTPUsersOptions *ListSMTPUsersOptions) (result *SMTPUsersList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listSMTPUsersOptions, "listSMTPUsersOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(listSMTPUsersOptions, "listSMTPUsersOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *listSMTPUsersOptions.InstanceID,
+		"id":          *listSMTPUsersOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/users`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range listSMTPUsersOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListSMTPUsers")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	if listSMTPUsersOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listSMTPUsersOptions.Limit))
+	}
+	if listSMTPUsersOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listSMTPUsersOptions.Offset))
+	}
+	if listSMTPUsersOptions.Search != nil {
+		builder.AddQuery("search", fmt.Sprint(*listSMTPUsersOptions.Search))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPUsersList)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetSMTPConfiguration : Get details of a SMTP Configuration
+// Get details of a SMTP Configuration.
+func (eventNotifications *EventNotificationsV1) GetSMTPConfiguration(getSMTPConfigurationOptions *GetSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetSMTPConfigurationWithContext(context.Background(), getSMTPConfigurationOptions)
+}
+
+// GetSMTPConfigurationWithContext is an alternate form of the GetSMTPConfiguration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetSMTPConfigurationWithContext(ctx context.Context, getSMTPConfigurationOptions *GetSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getSMTPConfigurationOptions, "getSMTPConfigurationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getSMTPConfigurationOptions, "getSMTPConfigurationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getSMTPConfigurationOptions.InstanceID,
+		"id":          *getSMTPConfigurationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getSMTPConfigurationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetSMTPConfiguration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPConfiguration)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateSMTPConfiguration : Update details of SMTP
+// Update details of SMTP.
+func (eventNotifications *EventNotificationsV1) UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateSMTPConfigurationWithContext(context.Background(), updateSMTPConfigurationOptions)
+}
+
+// UpdateSMTPConfigurationWithContext is an alternate form of the UpdateSMTPConfiguration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateSMTPConfigurationWithContext(ctx context.Context, updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateSMTPConfigurationOptions, "updateSMTPConfigurationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateSMTPConfigurationOptions, "updateSMTPConfigurationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateSMTPConfigurationOptions.InstanceID,
+		"id":          *updateSMTPConfigurationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateSMTPConfigurationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateSMTPConfiguration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if updateSMTPConfigurationOptions.Name != nil {
+		body["name"] = updateSMTPConfigurationOptions.Name
+	}
+	if updateSMTPConfigurationOptions.Description != nil {
+		body["description"] = updateSMTPConfigurationOptions.Description
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPConfiguration)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// DeleteSMTPConfiguration : Delete a SMTP Configuration
+// Delete a SMTP Configuration.
+func (eventNotifications *EventNotificationsV1) DeleteSMTPConfiguration(deleteSMTPConfigurationOptions *DeleteSMTPConfigurationOptions) (response *core.DetailedResponse, err error) {
+	return eventNotifications.DeleteSMTPConfigurationWithContext(context.Background(), deleteSMTPConfigurationOptions)
+}
+
+// DeleteSMTPConfigurationWithContext is an alternate form of the DeleteSMTPConfiguration method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) DeleteSMTPConfigurationWithContext(ctx context.Context, deleteSMTPConfigurationOptions *DeleteSMTPConfigurationOptions) (response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(deleteSMTPConfigurationOptions, "deleteSMTPConfigurationOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(deleteSMTPConfigurationOptions, "deleteSMTPConfigurationOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *deleteSMTPConfigurationOptions.InstanceID,
+		"id":          *deleteSMTPConfigurationOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.DELETE)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range deleteSMTPConfigurationOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "DeleteSMTPConfiguration")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	response, err = eventNotifications.Service.Request(request, nil)
+
+	return
+}
+
+// GetSMTPUser : Get details of a SMTP User
+// Get details of a SMTP User.
+func (eventNotifications *EventNotificationsV1) GetSMTPUser(getSMTPUserOptions *GetSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetSMTPUserWithContext(context.Background(), getSMTPUserOptions)
+}
+
+// GetSMTPUserWithContext is an alternate form of the GetSMTPUser method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetSMTPUserWithContext(ctx context.Context, getSMTPUserOptions *GetSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getSMTPUserOptions, "getSMTPUserOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getSMTPUserOptions, "getSMTPUserOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getSMTPUserOptions.InstanceID,
+		"id":          *getSMTPUserOptions.ID,
+		"user_id":     *getSMTPUserOptions.UserID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/users/{user_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getSMTPUserOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetSMTPUser")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPUser)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateSMTPUser : Update details of SMTP User
+// Update details of SMTP User.
+func (eventNotifications *EventNotificationsV1) UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateSMTPUserWithContext(context.Background(), updateSMTPUserOptions)
+}
+
+// UpdateSMTPUserWithContext is an alternate form of the UpdateSMTPUser method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateSMTPUserWithContext(ctx context.Context, updateSMTPUserOptions *UpdateSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateSMTPUserOptions, "updateSMTPUserOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateSMTPUserOptions, "updateSMTPUserOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateSMTPUserOptions.InstanceID,
+		"id":          *updateSMTPUserOptions.ID,
+		"user_id":     *updateSMTPUserOptions.UserID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/users/{user_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateSMTPUserOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateSMTPUser")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if updateSMTPUserOptions.Description != nil {
+		body["description"] = updateSMTPUserOptions.Description
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPUser)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// DeleteSMTPUser : Delete a SMTP user
+// Delete a SMTP user.
+func (eventNotifications *EventNotificationsV1) DeleteSMTPUser(deleteSMTPUserOptions *DeleteSMTPUserOptions) (response *core.DetailedResponse, err error) {
+	return eventNotifications.DeleteSMTPUserWithContext(context.Background(), deleteSMTPUserOptions)
+}
+
+// DeleteSMTPUserWithContext is an alternate form of the DeleteSMTPUser method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) DeleteSMTPUserWithContext(ctx context.Context, deleteSMTPUserOptions *DeleteSMTPUserOptions) (response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(deleteSMTPUserOptions, "deleteSMTPUserOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(deleteSMTPUserOptions, "deleteSMTPUserOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *deleteSMTPUserOptions.InstanceID,
+		"id":          *deleteSMTPUserOptions.ID,
+		"user_id":     *deleteSMTPUserOptions.UserID,
+	}
+
+	builder := core.NewRequestBuilder(core.DELETE)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/users/{user_id}`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range deleteSMTPUserOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "DeleteSMTPUser")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	response, err = eventNotifications.Service.Request(request, nil)
+
+	return
+}
+
+// GetSMTPAllowedIps : Get details of a SMTP allowed IPs
+// Get details of a SMTP allowed IPs.
+func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetSMTPAllowedIpsWithContext(context.Background(), getSMTPAllowedIpsOptions)
+}
+
+// GetSMTPAllowedIpsWithContext is an alternate form of the GetSMTPAllowedIps method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIpsWithContext(ctx context.Context, getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getSMTPAllowedIpsOptions, "getSMTPAllowedIpsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getSMTPAllowedIpsOptions, "getSMTPAllowedIpsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getSMTPAllowedIpsOptions.InstanceID,
+		"id":          *getSMTPAllowedIpsOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/allowed_ips`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getSMTPAllowedIpsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetSMTPAllowedIps")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPAllowedIPs)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateSMTPAllowedIps : Update details of SMTP allowed IP
+// Update details of SMTP.
+func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateSMTPAllowedIpsWithContext(context.Background(), updateSMTPAllowedIpsOptions)
+}
+
+// UpdateSMTPAllowedIpsWithContext is an alternate form of the UpdateSMTPAllowedIps method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIpsWithContext(ctx context.Context, updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateSMTPAllowedIpsOptions, "updateSMTPAllowedIpsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateSMTPAllowedIpsOptions, "updateSMTPAllowedIpsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateSMTPAllowedIpsOptions.InstanceID,
+		"id":          *updateSMTPAllowedIpsOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/allowed_ips`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateSMTPAllowedIpsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateSMTPAllowedIps")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+	builder.AddHeader("Content-Type", "application/json")
+
+	body := make(map[string]interface{})
+	if updateSMTPAllowedIpsOptions.Subnets != nil {
+		body["subnets"] = updateSMTPAllowedIpsOptions.Subnets
+	}
+	_, err = builder.SetBodyContentJSON(body)
+	if err != nil {
+		return
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPAllowedIPs)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// UpdateVerifySMTP : Verify SPF and DKIM records of SMTP
+// Verify SPF and DKIM records of SMTP.
+func (eventNotifications *EventNotificationsV1) UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions) (result *SMTPVerificationUpdateResponse, response *core.DetailedResponse, err error) {
+	return eventNotifications.UpdateVerifySMTPWithContext(context.Background(), updateVerifySMTPOptions)
+}
+
+// UpdateVerifySMTPWithContext is an alternate form of the UpdateVerifySMTP method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) UpdateVerifySMTPWithContext(ctx context.Context, updateVerifySMTPOptions *UpdateVerifySMTPOptions) (result *SMTPVerificationUpdateResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(updateVerifySMTPOptions, "updateVerifySMTPOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(updateVerifySMTPOptions, "updateVerifySMTPOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *updateVerifySMTPOptions.InstanceID,
+		"id":          *updateVerifySMTPOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.PATCH)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/verify`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range updateVerifySMTPOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateVerifySMTP")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("type", fmt.Sprint(*updateVerifySMTPOptions.Type))
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPVerificationUpdateResponse)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // CreateDestinationOptions : The CreateDestination options.
 type CreateDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -2915,6 +3766,110 @@ func (options *CreateIntegrationOptions) SetHeaders(param map[string]string) *Cr
 	return options
 }
 
+// CreateSMTPConfigurationOptions : The CreateSMTPConfiguration options.
+type CreateSMTPConfigurationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// The name of SMTP configuration.
+	Name *string `json:"name" validate:"required"`
+
+	// Domain Name.
+	Domain *string `json:"domain" validate:"required"`
+
+	// The description of SMTP configuration.
+	Description *string `json:"description,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewCreateSMTPConfigurationOptions : Instantiate CreateSMTPConfigurationOptions
+func (*EventNotificationsV1) NewCreateSMTPConfigurationOptions(instanceID string, name string, domain string) *CreateSMTPConfigurationOptions {
+	return &CreateSMTPConfigurationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		Name:       core.StringPtr(name),
+		Domain:     core.StringPtr(domain),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateSMTPConfigurationOptions) SetInstanceID(instanceID string) *CreateSMTPConfigurationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *CreateSMTPConfigurationOptions) SetName(name string) *CreateSMTPConfigurationOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDomain : Allow user to set Domain
+func (_options *CreateSMTPConfigurationOptions) SetDomain(domain string) *CreateSMTPConfigurationOptions {
+	_options.Domain = core.StringPtr(domain)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *CreateSMTPConfigurationOptions) SetDescription(description string) *CreateSMTPConfigurationOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *CreateSMTPConfigurationOptions) SetHeaders(param map[string]string) *CreateSMTPConfigurationOptions {
+	options.Headers = param
+	return options
+}
+
+// CreateSMTPUserOptions : The CreateSMTPUser options.
+type CreateSMTPUserOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// The description of SMTP configuration.
+	Description *string `json:"description,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewCreateSMTPUserOptions : Instantiate CreateSMTPUserOptions
+func (*EventNotificationsV1) NewCreateSMTPUserOptions(instanceID string, id string) *CreateSMTPUserOptions {
+	return &CreateSMTPUserOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *CreateSMTPUserOptions) SetInstanceID(instanceID string) *CreateSMTPUserOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *CreateSMTPUserOptions) SetID(id string) *CreateSMTPUserOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *CreateSMTPUserOptions) SetDescription(description string) *CreateSMTPUserOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *CreateSMTPUserOptions) SetHeaders(param map[string]string) *CreateSMTPUserOptions {
+	options.Headers = param
+	return options
+}
+
 // CreateSourcesOptions : The CreateSources options.
 type CreateSourcesOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -3116,8 +4071,7 @@ type CreateTemplateOptions struct {
 	// The type of template.
 	Type *string `json:"type" validate:"required"`
 
-	// Payload describing a template configuration.
-	Params *TemplateConfig `json:"params" validate:"required"`
+	Params TemplateConfigOneOfIntf `json:"params" validate:"required"`
 
 	// The Template description.
 	Description *string `json:"description,omitempty"`
@@ -3127,7 +4081,7 @@ type CreateTemplateOptions struct {
 }
 
 // NewCreateTemplateOptions : Instantiate CreateTemplateOptions
-func (*EventNotificationsV1) NewCreateTemplateOptions(instanceID string, name string, typeVar string, params *TemplateConfig) *CreateTemplateOptions {
+func (*EventNotificationsV1) NewCreateTemplateOptions(instanceID string, name string, typeVar string, params TemplateConfigOneOfIntf) *CreateTemplateOptions {
 	return &CreateTemplateOptions{
 		InstanceID: core.StringPtr(instanceID),
 		Name:       core.StringPtr(name),
@@ -3155,7 +4109,7 @@ func (_options *CreateTemplateOptions) SetType(typeVar string) *CreateTemplateOp
 }
 
 // SetParams : Allow user to set Params
-func (_options *CreateTemplateOptions) SetParams(params *TemplateConfig) *CreateTemplateOptions {
+func (_options *CreateTemplateOptions) SetParams(params TemplateConfigOneOfIntf) *CreateTemplateOptions {
 	_options.Params = params
 	return _options
 }
@@ -3293,6 +4247,92 @@ func (_options *DeleteDestinationOptions) SetID(id string) *DeleteDestinationOpt
 
 // SetHeaders : Allow user to set Headers
 func (options *DeleteDestinationOptions) SetHeaders(param map[string]string) *DeleteDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// DeleteSMTPConfigurationOptions : The DeleteSMTPConfiguration options.
+type DeleteSMTPConfigurationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewDeleteSMTPConfigurationOptions : Instantiate DeleteSMTPConfigurationOptions
+func (*EventNotificationsV1) NewDeleteSMTPConfigurationOptions(instanceID string, id string) *DeleteSMTPConfigurationOptions {
+	return &DeleteSMTPConfigurationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteSMTPConfigurationOptions) SetInstanceID(instanceID string) *DeleteSMTPConfigurationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *DeleteSMTPConfigurationOptions) SetID(id string) *DeleteSMTPConfigurationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *DeleteSMTPConfigurationOptions) SetHeaders(param map[string]string) *DeleteSMTPConfigurationOptions {
+	options.Headers = param
+	return options
+}
+
+// DeleteSMTPUserOptions : The DeleteSMTPUser options.
+type DeleteSMTPUserOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// UserID.
+	UserID *string `json:"user_id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewDeleteSMTPUserOptions : Instantiate DeleteSMTPUserOptions
+func (*EventNotificationsV1) NewDeleteSMTPUserOptions(instanceID string, id string, userID string) *DeleteSMTPUserOptions {
+	return &DeleteSMTPUserOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *DeleteSMTPUserOptions) SetInstanceID(instanceID string) *DeleteSMTPUserOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *DeleteSMTPUserOptions) SetID(id string) *DeleteSMTPUserOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetUserID : Allow user to set UserID
+func (_options *DeleteSMTPUserOptions) SetUserID(userID string) *DeleteSMTPUserOptions {
+	_options.UserID = core.StringPtr(userID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *DeleteSMTPUserOptions) SetHeaders(param map[string]string) *DeleteSMTPUserOptions {
 	options.Headers = param
 	return options
 }
@@ -4216,6 +5256,23 @@ func UnmarshalDestinationTagsSubscriptionResponse(m map[string]json.RawMessage, 
 	return
 }
 
+// EnAuthAttributes : The en_authorization attributes.
+type EnAuthAttributes struct {
+	// en_authorization verification.
+	Verification *string `json:"verification,omitempty"`
+}
+
+// UnmarshalEnAuthAttributes unmarshals an instance of EnAuthAttributes from the specified map of raw messages.
+func UnmarshalEnAuthAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(EnAuthAttributes)
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // EmailAttributesResponseInvitedItems : EmailAttributesResponseInvitedItems struct
 type EmailAttributesResponseInvitedItems struct {
 	// email address.
@@ -4405,6 +5462,130 @@ func (_options *GetIntegrationOptions) SetID(id string) *GetIntegrationOptions {
 
 // SetHeaders : Allow user to set Headers
 func (options *GetIntegrationOptions) SetHeaders(param map[string]string) *GetIntegrationOptions {
+	options.Headers = param
+	return options
+}
+
+// GetSMTPAllowedIpsOptions : The GetSMTPAllowedIps options.
+type GetSMTPAllowedIpsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetSMTPAllowedIpsOptions : Instantiate GetSMTPAllowedIpsOptions
+func (*EventNotificationsV1) NewGetSMTPAllowedIpsOptions(instanceID string, id string) *GetSMTPAllowedIpsOptions {
+	return &GetSMTPAllowedIpsOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetSMTPAllowedIpsOptions) SetInstanceID(instanceID string) *GetSMTPAllowedIpsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetSMTPAllowedIpsOptions) SetID(id string) *GetSMTPAllowedIpsOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetSMTPAllowedIpsOptions) SetHeaders(param map[string]string) *GetSMTPAllowedIpsOptions {
+	options.Headers = param
+	return options
+}
+
+// GetSMTPConfigurationOptions : The GetSMTPConfiguration options.
+type GetSMTPConfigurationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetSMTPConfigurationOptions : Instantiate GetSMTPConfigurationOptions
+func (*EventNotificationsV1) NewGetSMTPConfigurationOptions(instanceID string, id string) *GetSMTPConfigurationOptions {
+	return &GetSMTPConfigurationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetSMTPConfigurationOptions) SetInstanceID(instanceID string) *GetSMTPConfigurationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetSMTPConfigurationOptions) SetID(id string) *GetSMTPConfigurationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetSMTPConfigurationOptions) SetHeaders(param map[string]string) *GetSMTPConfigurationOptions {
+	options.Headers = param
+	return options
+}
+
+// GetSMTPUserOptions : The GetSMTPUser options.
+type GetSMTPUserOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// UserID.
+	UserID *string `json:"user_id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetSMTPUserOptions : Instantiate GetSMTPUserOptions
+func (*EventNotificationsV1) NewGetSMTPUserOptions(instanceID string, id string, userID string) *GetSMTPUserOptions {
+	return &GetSMTPUserOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetSMTPUserOptions) SetInstanceID(instanceID string) *GetSMTPUserOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetSMTPUserOptions) SetID(id string) *GetSMTPUserOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetUserID : Allow user to set UserID
+func (_options *GetSMTPUserOptions) SetUserID(userID string) *GetSMTPUserOptions {
+	_options.UserID = core.StringPtr(userID)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetSMTPUserOptions) SetHeaders(param map[string]string) *GetSMTPUserOptions {
 	options.Headers = param
 	return options
 }
@@ -4974,6 +6155,126 @@ func (options *ListIntegrationsOptions) SetHeaders(param map[string]string) *Lis
 	return options
 }
 
+// ListSMTPConfigurationsOptions : The ListSMTPConfigurations options.
+type ListSMTPConfigurationsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Search string for filtering results.
+	Search *string `json:"search,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListSMTPConfigurationsOptions : Instantiate ListSMTPConfigurationsOptions
+func (*EventNotificationsV1) NewListSMTPConfigurationsOptions(instanceID string) *ListSMTPConfigurationsOptions {
+	return &ListSMTPConfigurationsOptions{
+		InstanceID: core.StringPtr(instanceID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListSMTPConfigurationsOptions) SetInstanceID(instanceID string) *ListSMTPConfigurationsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListSMTPConfigurationsOptions) SetLimit(limit int64) *ListSMTPConfigurationsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListSMTPConfigurationsOptions) SetOffset(offset int64) *ListSMTPConfigurationsOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetSearch : Allow user to set Search
+func (_options *ListSMTPConfigurationsOptions) SetSearch(search string) *ListSMTPConfigurationsOptions {
+	_options.Search = core.StringPtr(search)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListSMTPConfigurationsOptions) SetHeaders(param map[string]string) *ListSMTPConfigurationsOptions {
+	options.Headers = param
+	return options
+}
+
+// ListSMTPUsersOptions : The ListSMTPUsers options.
+type ListSMTPUsersOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Search string for filtering results.
+	Search *string `json:"search,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListSMTPUsersOptions : Instantiate ListSMTPUsersOptions
+func (*EventNotificationsV1) NewListSMTPUsersOptions(instanceID string, id string) *ListSMTPUsersOptions {
+	return &ListSMTPUsersOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListSMTPUsersOptions) SetInstanceID(instanceID string) *ListSMTPUsersOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *ListSMTPUsersOptions) SetID(id string) *ListSMTPUsersOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListSMTPUsersOptions) SetLimit(limit int64) *ListSMTPUsersOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListSMTPUsersOptions) SetOffset(offset int64) *ListSMTPUsersOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetSearch : Allow user to set Search
+func (_options *ListSMTPUsersOptions) SetSearch(search string) *ListSMTPUsersOptions {
+	_options.Search = core.StringPtr(search)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListSMTPUsersOptions) SetHeaders(param map[string]string) *ListSMTPUsersOptions {
+	options.Headers = param
+	return options
+}
+
 // ListSourcesOptions : The ListSources options.
 type ListSourcesOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -5318,11 +6619,14 @@ type NotificationCreate struct {
 	// The subject of the notification.
 	Ibmensubject *string `json:"ibmensubject,omitempty"`
 
-	// The SMS number string.
-	Ibmensmsto *string `json:"ibmensmsto,omitempty"`
+	// The template id Array of string.
+	Ibmentemplates *string `json:"ibmentemplates,omitempty"`
 
 	// The email id string.
 	Ibmenmailto *string `json:"ibmenmailto,omitempty"`
+
+	// The SMS number string.
+	Ibmensmsto *string `json:"ibmensmsto,omitempty"`
 
 	// The html body of notification.
 	Ibmenhtmlbody *string `json:"ibmenhtmlbody,omitempty"`
@@ -5450,11 +6754,14 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Ibmensubject != nil {
 		m["ibmensubject"] = o.Ibmensubject
 	}
-	if o.Ibmensmsto != nil {
-		m["ibmensmsto"] = o.Ibmensmsto
+	if o.Ibmentemplates != nil {
+		m["ibmentemplates"] = o.Ibmentemplates
 	}
 	if o.Ibmenmailto != nil {
 		m["ibmenmailto"] = o.Ibmenmailto
+	}
+	if o.Ibmensmsto != nil {
+		m["ibmensmsto"] = o.Ibmensmsto
 	}
 	if o.Ibmenhtmlbody != nil {
 		m["ibmenhtmlbody"] = o.Ibmenhtmlbody
@@ -5555,16 +6862,21 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "ibmensubject")
-	err = core.UnmarshalPrimitive(m, "ibmensmsto", &obj.Ibmensmsto)
+	err = core.UnmarshalPrimitive(m, "ibmentemplates", &obj.Ibmentemplates)
 	if err != nil {
 		return
 	}
-	delete(m, "ibmensmsto")
+	delete(m, "ibmentemplates")
 	err = core.UnmarshalPrimitive(m, "ibmenmailto", &obj.Ibmenmailto)
 	if err != nil {
 		return
 	}
 	delete(m, "ibmenmailto")
+	err = core.UnmarshalPrimitive(m, "ibmensmsto", &obj.Ibmensmsto)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmensmsto")
 	err = core.UnmarshalPrimitive(m, "ibmenhtmlbody", &obj.Ibmenhtmlbody)
 	if err != nil {
 		return
@@ -5757,8 +7069,7 @@ type ReplaceTemplateOptions struct {
 	// The type of template.
 	Type *string `json:"type,omitempty"`
 
-	// Payload describing a template configuration.
-	Params *TemplateConfig `json:"params,omitempty"`
+	Params TemplateConfigOneOfIntf `json:"params,omitempty"`
 
 	// Allows users to set headers on API requests
 	Headers map[string]string
@@ -5803,7 +7114,7 @@ func (_options *ReplaceTemplateOptions) SetType(typeVar string) *ReplaceTemplate
 }
 
 // SetParams : Allow user to set Params
-func (_options *ReplaceTemplateOptions) SetParams(params *TemplateConfig) *ReplaceTemplateOptions {
+func (_options *ReplaceTemplateOptions) SetParams(params TemplateConfigOneOfIntf) *ReplaceTemplateOptions {
 	_options.Params = params
 	return _options
 }
@@ -6036,6 +7347,476 @@ func UnmarshalSmsInviteAttributesItems(m map[string]json.RawMessage, result inte
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "expires_at", &obj.ExpiresAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPAllowedIPs : Payload describing a SMTP allowed Ips.
+type SMTPAllowedIPs struct {
+	// The SMTP allowed Ips.
+	Subnets []string `json:"subnets" validate:"required"`
+
+	// Updated at.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalSMTPAllowedIPs unmarshals an instance of SMTPAllowedIPs from the specified map of raw messages.
+func UnmarshalSMTPAllowedIPs(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPAllowedIPs)
+	err = core.UnmarshalPrimitive(m, "subnets", &obj.Subnets)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPConfig : Payload describing a SMTP configuration.
+type SMTPConfig struct {
+	// The DKIM attributes.
+	Dkim *DkimAttributes `json:"dkim,omitempty"`
+
+	// The en_authorization attributes.
+	EnAuthorization *EnAuthAttributes `json:"en_authorization,omitempty"`
+
+	// The SPF attributes.
+	Spf *SpfAttributes `json:"spf,omitempty"`
+}
+
+// UnmarshalSMTPConfig unmarshals an instance of SMTPConfig from the specified map of raw messages.
+func UnmarshalSMTPConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPConfig)
+	err = core.UnmarshalModel(m, "dkim", &obj.Dkim, UnmarshalDkimAttributes)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "en_authorization", &obj.EnAuthorization, UnmarshalEnAuthAttributes)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "spf", &obj.Spf, UnmarshalSpfAttributes)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPConfiguration : Payload describing a SMTP List response.
+type SMTPConfiguration struct {
+	// SMTP ID.
+	ID *string `json:"id" validate:"required"`
+
+	// SMTP name.
+	Name *string `json:"name" validate:"required"`
+
+	// SMTP description.
+	Description *string `json:"description,omitempty"`
+
+	// Domain Name.
+	Domain *string `json:"domain" validate:"required"`
+
+	// Payload describing a SMTP configuration.
+	Config *SMTPConfig `json:"config" validate:"required"`
+
+	// Created time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalSMTPConfiguration unmarshals an instance of SMTPConfiguration from the specified map of raw messages.
+func UnmarshalSMTPConfiguration(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPConfiguration)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "config", &obj.Config, UnmarshalSMTPConfig)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPConfigurationsList : Payload describing a SMTP Configurations list.
+type SMTPConfigurationsList struct {
+	// Total number of SMTP configurations.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// Current offset.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// limit to show configurations.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// List of SMTP Configurations.
+	SMTPConfigurations []SMTPConfiguration `json:"smtp_configurations" validate:"required"`
+
+	// Response having URL of the page.
+	First *PageHrefResponse `json:"first,omitempty"`
+
+	// Response having URL of the page.
+	Previous *PageHrefResponse `json:"previous,omitempty"`
+
+	// Response having URL of the page.
+	Next *PageHrefResponse `json:"next,omitempty"`
+}
+
+// UnmarshalSMTPConfigurationsList unmarshals an instance of SMTPConfigurationsList from the specified map of raw messages.
+func UnmarshalSMTPConfigurationsList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPConfigurationsList)
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "smtp_configurations", &obj.SMTPConfigurations, UnmarshalSMTPConfiguration)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "previous", &obj.Previous, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *SMTPConfigurationsList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
+// SMTPCreateResponse : Payload describing a SMTP create response.
+type SMTPCreateResponse struct {
+	// SMTP ID.
+	ID *string `json:"id" validate:"required"`
+
+	// SMTP name.
+	Name *string `json:"name" validate:"required"`
+
+	// SMTP description.
+	Description *string `json:"description,omitempty"`
+
+	// Domain Name.
+	Domain *string `json:"domain" validate:"required"`
+
+	// Payload describing a SMTP configuration.
+	Config *SMTPConfig `json:"config" validate:"required"`
+
+	// Created time.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+}
+
+// UnmarshalSMTPCreateResponse unmarshals an instance of SMTPCreateResponse from the specified map of raw messages.
+func UnmarshalSMTPCreateResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPCreateResponse)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "config", &obj.Config, UnmarshalSMTPConfig)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPUser : Payload describing a SMTP User.
+type SMTPUser struct {
+	// Id.
+	ID *string `json:"id" validate:"required"`
+
+	// SMTP confg Id.
+	SMTPConfigID *string `json:"smtp_config_id" validate:"required"`
+
+	// SMTP User description.
+	Description *string `json:"description" validate:"required"`
+
+	// Domain Name.
+	Domain *string `json:"domain" validate:"required"`
+
+	// SMTP user name.
+	Username *string `json:"username" validate:"required"`
+
+	// Updated time.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+
+	// Updated time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalSMTPUser unmarshals an instance of SMTPUser from the specified map of raw messages.
+func UnmarshalSMTPUser(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPUser)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "smtp_config_id", &obj.SMTPConfigID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "username", &obj.Username)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPUserResponse : Payload describing a SMTP User create response.
+type SMTPUserResponse struct {
+	// SMTP Id.
+	ID *string `json:"id" validate:"required"`
+
+	// SMTP User description.
+	Description *string `json:"description,omitempty"`
+
+	// Domain Name.
+	Domain *string `json:"domain,omitempty"`
+
+	// SMTP confg Id.
+	SMTPConfigID *string `json:"smtp_config_id" validate:"required"`
+
+	// SMTP user name.
+	Username *string `json:"username" validate:"required"`
+
+	// password.
+	Password *string `json:"password" validate:"required"`
+
+	// Created time.
+	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
+}
+
+// UnmarshalSMTPUserResponse unmarshals an instance of SMTPUserResponse from the specified map of raw messages.
+func UnmarshalSMTPUserResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPUserResponse)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "smtp_config_id", &obj.SMTPConfigID)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "username", &obj.Username)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "password", &obj.Password)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPUsersList : Payload describing a SMTP users list request.
+type SMTPUsersList struct {
+	// Total number of destinations.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// Current offset.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// limit to show destinations.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// List of users.
+	Users []SMTPUser `json:"users" validate:"required"`
+
+	// Response having URL of the page.
+	First *PageHrefResponse `json:"first,omitempty"`
+
+	// Response having URL of the page.
+	Previous *PageHrefResponse `json:"previous,omitempty"`
+
+	// Response having URL of the page.
+	Next *PageHrefResponse `json:"next,omitempty"`
+}
+
+// UnmarshalSMTPUsersList unmarshals an instance of SMTPUsersList from the specified map of raw messages.
+func UnmarshalSMTPUsersList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPUsersList)
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "users", &obj.Users, UnmarshalSMTPUser)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "previous", &obj.Previous, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHrefResponse)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *SMTPUsersList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil || offset == nil {
+		return nil, err
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
+}
+
+// SMTPVerificationResponse : verification object.
+type SMTPVerificationResponse struct {
+	// verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// verification status.
+	Verification *string `json:"verification" validate:"required"`
+}
+
+// UnmarshalSMTPVerificationResponse unmarshals an instance of SMTPVerificationResponse from the specified map of raw messages.
+func UnmarshalSMTPVerificationResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPVerificationResponse)
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SMTPVerificationUpdateResponse : Payload describing SMTP verification response.
+type SMTPVerificationUpdateResponse struct {
+	// SMTP verification status.
+	Status []SMTPVerificationResponse `json:"status" validate:"required"`
+}
+
+// UnmarshalSMTPVerificationUpdateResponse unmarshals an instance of SMTPVerificationUpdateResponse from the specified map of raw messages.
+func UnmarshalSMTPVerificationUpdateResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SMTPVerificationUpdateResponse)
+	err = core.UnmarshalModel(m, "status", &obj.Status, UnmarshalSMTPVerificationResponse)
 	if err != nil {
 		return
 	}
@@ -7446,28 +9227,29 @@ func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err er
 	return
 }
 
-// TemplateConfig : Payload describing a template configuration.
-type TemplateConfig struct {
+// TemplateConfigOneOf : TemplateConfigOneOf struct
+// Models which "extend" this model:
+// - TemplateConfigOneOfEmailTemplateConfig
+// - TemplateConfigOneOfSlackTemplateConfig
+type TemplateConfigOneOf struct {
 	// Template body.
-	Body *string `json:"body" validate:"required"`
+	Body *string `json:"body,omitempty"`
 
 	// The template subject.
-	Subject *string `json:"subject" validate:"required"`
+	Subject *string `json:"subject,omitempty"`
 }
 
-// NewTemplateConfig : Instantiate TemplateConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewTemplateConfig(body string, subject string) (_model *TemplateConfig, err error) {
-	_model = &TemplateConfig{
-		Body:    core.StringPtr(body),
-		Subject: core.StringPtr(subject),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
+func (*TemplateConfigOneOf) isaTemplateConfigOneOf() bool {
+	return true
 }
 
-// UnmarshalTemplateConfig unmarshals an instance of TemplateConfig from the specified map of raw messages.
-func UnmarshalTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(TemplateConfig)
+type TemplateConfigOneOfIntf interface {
+	isaTemplateConfigOneOf() bool
+}
+
+// UnmarshalTemplateConfigOneOf unmarshals an instance of TemplateConfigOneOf from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOf(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOf)
 	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
 	if err != nil {
 		return
@@ -7570,8 +9352,7 @@ type TemplateResponse struct {
 	// The type of template.
 	Type *string `json:"type" validate:"required"`
 
-	// Payload describing a template configuration.
-	Params *TemplateConfig `json:"params" validate:"required"`
+	Params TemplateConfigOneOfIntf `json:"params" validate:"required"`
 
 	// Created time.
 	CreatedAt *strfmt.DateTime `json:"created_at" validate:"required"`
@@ -7596,7 +9377,7 @@ func UnmarshalTemplateResponse(m map[string]json.RawMessage, result interface{})
 	if err != nil {
 		return
 	}
-	err = core.UnmarshalModel(m, "params", &obj.Params, UnmarshalTemplateConfig)
+	err = core.UnmarshalModel(m, "params", &obj.Params, UnmarshalTemplateConfigOneOf)
 	if err != nil {
 		return
 	}
@@ -8153,6 +9934,167 @@ func (options *UpdateDestinationOptions) SetHeaders(param map[string]string) *Up
 	return options
 }
 
+// UpdateSMTPAllowedIpsOptions : The UpdateSMTPAllowedIps options.
+type UpdateSMTPAllowedIpsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// The SMTP allowed Ips.
+	Subnets []string `json:"subnets" validate:"required"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateSMTPAllowedIpsOptions : Instantiate UpdateSMTPAllowedIpsOptions
+func (*EventNotificationsV1) NewUpdateSMTPAllowedIpsOptions(instanceID string, id string, subnets []string) *UpdateSMTPAllowedIpsOptions {
+	return &UpdateSMTPAllowedIpsOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		Subnets:    subnets,
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateSMTPAllowedIpsOptions) SetInstanceID(instanceID string) *UpdateSMTPAllowedIpsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateSMTPAllowedIpsOptions) SetID(id string) *UpdateSMTPAllowedIpsOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetSubnets : Allow user to set Subnets
+func (_options *UpdateSMTPAllowedIpsOptions) SetSubnets(subnets []string) *UpdateSMTPAllowedIpsOptions {
+	_options.Subnets = subnets
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateSMTPAllowedIpsOptions) SetHeaders(param map[string]string) *UpdateSMTPAllowedIpsOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateSMTPConfigurationOptions : The UpdateSMTPConfiguration options.
+type UpdateSMTPConfigurationOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// SMTP name.
+	Name *string `json:"name,omitempty"`
+
+	// SMTP description.
+	Description *string `json:"description,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateSMTPConfigurationOptions : Instantiate UpdateSMTPConfigurationOptions
+func (*EventNotificationsV1) NewUpdateSMTPConfigurationOptions(instanceID string, id string) *UpdateSMTPConfigurationOptions {
+	return &UpdateSMTPConfigurationOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateSMTPConfigurationOptions) SetInstanceID(instanceID string) *UpdateSMTPConfigurationOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateSMTPConfigurationOptions) SetID(id string) *UpdateSMTPConfigurationOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetName : Allow user to set Name
+func (_options *UpdateSMTPConfigurationOptions) SetName(name string) *UpdateSMTPConfigurationOptions {
+	_options.Name = core.StringPtr(name)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *UpdateSMTPConfigurationOptions) SetDescription(description string) *UpdateSMTPConfigurationOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateSMTPConfigurationOptions) SetHeaders(param map[string]string) *UpdateSMTPConfigurationOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateSMTPUserOptions : The UpdateSMTPUser options.
+type UpdateSMTPUserOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// UserID.
+	UserID *string `json:"user_id" validate:"required,ne="`
+
+	// SMTP user description.
+	Description *string `json:"description,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateSMTPUserOptions : Instantiate UpdateSMTPUserOptions
+func (*EventNotificationsV1) NewUpdateSMTPUserOptions(instanceID string, id string, userID string) *UpdateSMTPUserOptions {
+	return &UpdateSMTPUserOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateSMTPUserOptions) SetInstanceID(instanceID string) *UpdateSMTPUserOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateSMTPUserOptions) SetID(id string) *UpdateSMTPUserOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetUserID : Allow user to set UserID
+func (_options *UpdateSMTPUserOptions) SetUserID(userID string) *UpdateSMTPUserOptions {
+	_options.UserID = core.StringPtr(userID)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *UpdateSMTPUserOptions) SetDescription(description string) *UpdateSMTPUserOptions {
+	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateSMTPUserOptions) SetHeaders(param map[string]string) *UpdateSMTPUserOptions {
+	options.Headers = param
+	return options
+}
+
 // UpdateSourceOptions : The UpdateSource options.
 type UpdateSourceOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -8326,6 +10268,54 @@ func (_options *UpdateVerifyDestinationOptions) SetType(typeVar string) *UpdateV
 
 // SetHeaders : Allow user to set Headers
 func (options *UpdateVerifyDestinationOptions) SetHeaders(param map[string]string) *UpdateVerifyDestinationOptions {
+	options.Headers = param
+	return options
+}
+
+// UpdateVerifySMTPOptions : The UpdateVerifySMTP options.
+type UpdateVerifySMTPOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for SMTP.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// SMTP Verification type.
+	Type *string `json:"type" validate:"required"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewUpdateVerifySMTPOptions : Instantiate UpdateVerifySMTPOptions
+func (*EventNotificationsV1) NewUpdateVerifySMTPOptions(instanceID string, id string, typeVar string) *UpdateVerifySMTPOptions {
+	return &UpdateVerifySMTPOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *UpdateVerifySMTPOptions) SetInstanceID(instanceID string) *UpdateVerifySMTPOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *UpdateVerifySMTPOptions) SetID(id string) *UpdateVerifySMTPOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetType : Allow user to set Type
+func (_options *UpdateVerifySMTPOptions) SetType(typeVar string) *UpdateVerifySMTPOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *UpdateVerifySMTPOptions) SetHeaders(param map[string]string) *UpdateVerifySMTPOptions {
 	options.Headers = param
 	return options
 }
@@ -9756,6 +11746,9 @@ type SubscriptionAttributesSlackAttributesResponse struct {
 	// Attachment Color for Slack Notification.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
 
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
 }
@@ -9801,6 +11794,9 @@ func (o *SubscriptionAttributesSlackAttributesResponse) MarshalJSON() (buffer []
 	if o.AttachmentColor != nil {
 		m["attachment_color"] = o.AttachmentColor
 	}
+	if o.TemplateIDNotification != nil {
+		m["template_id_notification"] = o.TemplateIDNotification
+	}
 	buffer, err = json.Marshal(m)
 	return
 }
@@ -9813,6 +11809,11 @@ func UnmarshalSubscriptionAttributesSlackAttributesResponse(m map[string]json.Ra
 		return
 	}
 	delete(m, "attachment_color")
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		return
+	}
+	delete(m, "template_id_notification")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -10173,6 +12174,9 @@ func UnmarshalSubscriptionCreateAttributesServiceNowAttributes(m map[string]json
 type SubscriptionCreateAttributesSlackAttributes struct {
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
+
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
 }
 
 func (*SubscriptionCreateAttributesSlackAttributes) isaSubscriptionCreateAttributes() bool {
@@ -10183,6 +12187,10 @@ func (*SubscriptionCreateAttributesSlackAttributes) isaSubscriptionCreateAttribu
 func UnmarshalSubscriptionCreateAttributesSlackAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionCreateAttributesSlackAttributes)
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
 	if err != nil {
 		return
 	}
@@ -10501,6 +12509,9 @@ func UnmarshalSubscriptionUpdateAttributesServiceNowAttributes(m map[string]json
 type SubscriptionUpdateAttributesSlackAttributes struct {
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
+
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
 }
 
 func (*SubscriptionUpdateAttributesSlackAttributes) isaSubscriptionUpdateAttributes() bool {
@@ -10511,6 +12522,10 @@ func (*SubscriptionUpdateAttributesSlackAttributes) isaSubscriptionUpdateAttribu
 func UnmarshalSubscriptionUpdateAttributesSlackAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionUpdateAttributesSlackAttributes)
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
 	if err != nil {
 		return
 	}
@@ -10542,6 +12557,75 @@ func (*SubscriptionUpdateAttributesWebhookAttributes) isaSubscriptionUpdateAttri
 func UnmarshalSubscriptionUpdateAttributesWebhookAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionUpdateAttributesWebhookAttributes)
 	err = core.UnmarshalPrimitive(m, "signing_enabled", &obj.SigningEnabled)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfEmailTemplateConfig : Payload describing an email template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfEmailTemplateConfig struct {
+	// Template body.
+	Body *string `json:"body" validate:"required"`
+
+	// The template subject.
+	Subject *string `json:"subject,omitempty"`
+}
+
+// NewTemplateConfigOneOfEmailTemplateConfig : Instantiate TemplateConfigOneOfEmailTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfEmailTemplateConfig(body string) (_model *TemplateConfigOneOfEmailTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfEmailTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*TemplateConfigOneOfEmailTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfEmailTemplateConfig unmarshals an instance of TemplateConfigOneOfEmailTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfEmailTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfEmailTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfSlackTemplateConfig : Payload describing a slack template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfSlackTemplateConfig struct {
+	// Template body.
+	Body *string `json:"body" validate:"required"`
+}
+
+// NewTemplateConfigOneOfSlackTemplateConfig : Instantiate TemplateConfigOneOfSlackTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfSlackTemplateConfig(body string) (_model *TemplateConfigOneOfSlackTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfSlackTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	return
+}
+
+func (*TemplateConfigOneOfSlackTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfSlackTemplateConfig unmarshals an instance of TemplateConfigOneOfSlackTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfSlackTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfSlackTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
 	if err != nil {
 		return
 	}
@@ -11141,5 +13225,175 @@ func (pager *IntegrationsPager) GetNext() (page []IntegrationListItem, err error
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *IntegrationsPager) GetAll() (allItems []IntegrationListItem, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
+// SMTPConfigurationsPager can be used to simplify the use of the "ListSMTPConfigurations" method.
+type SMTPConfigurationsPager struct {
+	hasNext     bool
+	options     *ListSMTPConfigurationsOptions
+	client      *EventNotificationsV1
+	pageContext struct {
+		next *int64
+	}
+}
+
+// NewSMTPConfigurationsPager returns a new SMTPConfigurationsPager instance.
+func (eventNotifications *EventNotificationsV1) NewSMTPConfigurationsPager(options *ListSMTPConfigurationsOptions) (pager *SMTPConfigurationsPager, err error) {
+	if options.Offset != nil && *options.Offset != 0 {
+		err = fmt.Errorf("the 'options.Offset' field should not be set")
+		return
+	}
+
+	var optionsCopy ListSMTPConfigurationsOptions = *options
+	pager = &SMTPConfigurationsPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  eventNotifications,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *SMTPConfigurationsPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *SMTPConfigurationsPager) GetNextWithContext(ctx context.Context) (page []SMTPConfiguration, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Offset = pager.pageContext.next
+
+	result, _, err := pager.client.ListSMTPConfigurationsWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *int64
+	if result.Next != nil {
+		var offset *int64
+		offset, err = core.GetQueryParamAsInt(result.Next.Href, "offset")
+		if err != nil {
+			err = fmt.Errorf("error retrieving 'offset' query parameter from URL '%s': %s", *result.Next.Href, err.Error())
+			return
+		}
+		next = offset
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.SMTPConfigurations
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *SMTPConfigurationsPager) GetAllWithContext(ctx context.Context) (allItems []SMTPConfiguration, err error) {
+	for pager.HasNext() {
+		var nextPage []SMTPConfiguration
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *SMTPConfigurationsPager) GetNext() (page []SMTPConfiguration, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *SMTPConfigurationsPager) GetAll() (allItems []SMTPConfiguration, err error) {
+	return pager.GetAllWithContext(context.Background())
+}
+
+// SMTPUsersPager can be used to simplify the use of the "ListSMTPUsers" method.
+type SMTPUsersPager struct {
+	hasNext     bool
+	options     *ListSMTPUsersOptions
+	client      *EventNotificationsV1
+	pageContext struct {
+		next *int64
+	}
+}
+
+// NewSMTPUsersPager returns a new SMTPUsersPager instance.
+func (eventNotifications *EventNotificationsV1) NewSMTPUsersPager(options *ListSMTPUsersOptions) (pager *SMTPUsersPager, err error) {
+	if options.Offset != nil && *options.Offset != 0 {
+		err = fmt.Errorf("the 'options.Offset' field should not be set")
+		return
+	}
+
+	var optionsCopy ListSMTPUsersOptions = *options
+	pager = &SMTPUsersPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  eventNotifications,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *SMTPUsersPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *SMTPUsersPager) GetNextWithContext(ctx context.Context) (page []SMTPUser, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Offset = pager.pageContext.next
+
+	result, _, err := pager.client.ListSMTPUsersWithContext(ctx, pager.options)
+	if err != nil {
+		return
+	}
+
+	var next *int64
+	if result.Next != nil {
+		var offset *int64
+		offset, err = core.GetQueryParamAsInt(result.Next.Href, "offset")
+		if err != nil {
+			err = fmt.Errorf("error retrieving 'offset' query parameter from URL '%s': %s", *result.Next.Href, err.Error())
+			return
+		}
+		next = offset
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.Users
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *SMTPUsersPager) GetAllWithContext(ctx context.Context) (allItems []SMTPUser, err error) {
+	for pager.HasNext() {
+		var nextPage []SMTPUser
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *SMTPUsersPager) GetNext() (page []SMTPUser, err error) {
+	return pager.GetNextWithContext(context.Background())
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *SMTPUsersPager) GetAll() (allItems []SMTPUser, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
