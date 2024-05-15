@@ -1934,7 +1934,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		It(`UpdateTemplate request example`, func() {
 			fmt.Println("\nUpdateTemplate() result:")
-			// begin-update_template
+			// begin-replace_template
 			name := "template invitation"
 			description := "template invitation description"
 			templateTypeInvitation := "smtp_custom.invitation"
@@ -2021,7 +2021,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
-			// end-update_template
+			// end-replace_template
 		})
 
 		It(`CreateSubscription request example`, func() {

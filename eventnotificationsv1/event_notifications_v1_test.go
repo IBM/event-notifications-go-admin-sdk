@@ -9597,7 +9597,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateSMTPConfiguration successfully with retries`, func() {
@@ -9670,7 +9670,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateSMTPConfiguration successfully`, func() {
@@ -9846,7 +9846,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSMTPConfigurations successfully with retries`, func() {
@@ -9906,7 +9906,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 10, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSMTPConfigurations successfully`, func() {
@@ -10064,9 +10064,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 					requestNumber++
 					if requestNumber == 1 {
-						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"public_key":"PublicKey","selector":"Selector","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
 					} else if requestNumber == 2 {
-						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"public_key":"PublicKey","selector":"Selector","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
+						fmt.Fprintf(res, "%s", `{"total_count":2,"limit":1,"smtp_configurations":[{"id":"ID","name":"Name","description":"Description","domain":"Domain","config":{"dkim":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"},"en_authorization":{"verification":"Verification"},"spf":{"txt_name":"TxtName","txt_value":"TxtValue","verification":"Verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}`)
 					} else {
 						res.WriteHeader(400)
 					}
@@ -10797,7 +10797,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke GetSMTPConfiguration successfully with retries`, func() {
@@ -10852,7 +10852,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke GetSMTPConfiguration successfully`, func() {
@@ -11032,7 +11032,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke UpdateSMTPConfiguration successfully with retries`, func() {
@@ -11105,7 +11105,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "domain": "Domain", "config": {"dkim": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}, "en_authorization": {"verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke UpdateSMTPConfiguration successfully`, func() {
