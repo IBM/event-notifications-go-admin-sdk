@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.6.0...v0.6.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* smtp response fix ([#54](https://github.com/IBM/event-notifications-go-admin-sdk/issues/54)) ([4039c92](https://github.com/IBM/event-notifications-go-admin-sdk/commit/4039c924c568f7e47da9afae5f6867ca49034c8a))
+
 # [0.6.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.5.0...v0.6.0) (2024-04-26)
 
 
