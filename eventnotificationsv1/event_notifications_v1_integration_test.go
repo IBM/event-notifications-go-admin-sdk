@@ -3261,6 +3261,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(smtpConfig.Name).To(Equal(core.StringPtr(name)))
 			Expect(smtpConfig.Description).To(Equal(core.StringPtr(description)))
 			Expect(smtpConfig.Domain).To(Equal(core.StringPtr(domain)))
+			Expect(smtpConfig.Config.Dkim).ToNot(BeNil())
+			Expect(smtpConfig.Config.Spf).ToNot(BeNil())
+			Expect(smtpConfig.Config.EnAuthorization).ToNot(BeNil())
 			smtpConfigID = *smtpConfig.ID
 		})
 	})
@@ -3386,6 +3389,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(smtpConfiguration.Domain).ToNot(BeNil())
 			Expect(smtpConfiguration.Name).ToNot(BeNil())
 			Expect(smtpConfiguration.Description).ToNot(BeNil())
+			Expect(smtpConfiguration.Config.Dkim).ToNot(BeNil())
+			Expect(smtpConfiguration.Config.Spf).ToNot(BeNil())
+			Expect(smtpConfiguration.Config.EnAuthorization).ToNot(BeNil())
 		})
 	})
 

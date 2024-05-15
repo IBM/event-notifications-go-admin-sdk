@@ -7380,8 +7380,8 @@ func UnmarshalSMTPAllowedIPs(m map[string]json.RawMessage, result interface{}) (
 
 // SMTPConfig : Payload describing a SMTP configuration.
 type SMTPConfig struct {
-	// The DKIM attributes.
-	Dkim *DkimAttributes `json:"dkim,omitempty"`
+	// The SMTP DKIM attributes.
+	Dkim *SmtpdkimAttributes `json:"dkim,omitempty"`
 
 	// The en_authorization attributes.
 	EnAuthorization *EnAuthAttributes `json:"en_authorization,omitempty"`
@@ -7393,7 +7393,7 @@ type SMTPConfig struct {
 // UnmarshalSMTPConfig unmarshals an instance of SMTPConfig from the specified map of raw messages.
 func UnmarshalSMTPConfig(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SMTPConfig)
-	err = core.UnmarshalModel(m, "dkim", &obj.Dkim, UnmarshalDkimAttributes)
+	err = core.UnmarshalModel(m, "dkim", &obj.Dkim, UnmarshalSmtpdkimAttributes)
 	if err != nil {
 		return
 	}
@@ -7582,6 +7582,37 @@ func UnmarshalSMTPCreateResponse(m map[string]json.RawMessage, result interface{
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "created_at", &obj.CreatedAt)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SmtpdkimAttributes : The SMTP DKIM attributes.
+type SmtpdkimAttributes struct {
+	// DMIM text name.
+	TxtName *string `json:"txt_name,omitempty"`
+
+	// DMIM text value.
+	TxtValue *string `json:"txt_value,omitempty"`
+
+	// DKIM verification.
+	Verification *string `json:"verification,omitempty"`
+}
+
+// UnmarshalSmtpdkimAttributes unmarshals an instance of SmtpdkimAttributes from the specified map of raw messages.
+func UnmarshalSmtpdkimAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SmtpdkimAttributes)
+	err = core.UnmarshalPrimitive(m, "txt_name", &obj.TxtName)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "txt_value", &obj.TxtValue)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "verification", &obj.Verification)
 	if err != nil {
 		return
 	}
