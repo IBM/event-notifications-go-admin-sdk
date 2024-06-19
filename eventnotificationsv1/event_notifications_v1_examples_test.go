@@ -110,6 +110,7 @@ var (
 	codeEngineProjectCRN      string
 	smtpConfigID              string
 	smtpUserID                string
+	slackToken                string
 )
 
 func shouldSkipTest() {
@@ -265,6 +266,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load CODE_ENGINE_PROJECT_CRN configuration property, skipping tests")
 			}
 			fmt.Printf("CODE_ENGINE_PROJECT_CRN: %s\n", codeEngineProjectCRN)
+
+			slackToken = config["SLACK_TOKEN"]
+			if slackToken == "" {
+				Skip("Unable to load SLACK_TOKEN configuration property, skipping tests")
+			}
+			fmt.Printf("SLACK_TOKEN: %s\n", slackToken)
 
 			configLoaded = len(config) > 0
 		})
@@ -729,7 +736,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL:   core.StringPtr("https://api.slack.com/myslack"),
+				Token: core.StringPtr(slackToken),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1418,7 +1426,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			//slack
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL:   core.StringPtr("https://api.slack.com/myslack"),
+				Token: core.StringPtr(slackToken),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -2155,6 +2164,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			subscriptionCreateSlackAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes{
 				AttachmentColor:        core.StringPtr("#0000FF"),
 				TemplateIDNotification: core.StringPtr(slackTemplateID),
+				To:                     []string{""},
 			}
 
 			createSlackSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
@@ -2464,6 +2474,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			subscriptionUpdateSlackAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes{
 				AttachmentColor:        core.StringPtr("#0000FF"),
 				TemplateIDNotification: core.StringPtr(slackTemplateID),
+				To:                     []string{""},
 			}
 
 			slackName := core.StringPtr("subscription_slack_update")

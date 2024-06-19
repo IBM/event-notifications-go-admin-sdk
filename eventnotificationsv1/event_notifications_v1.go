@@ -2988,8 +2988,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPConfigurationWithContext(
 	return
 }
 
-// UpdateSMTPConfiguration : Update details of SMTP
-// Update details of SMTP.
+// UpdateSMTPConfiguration : Update details of SMTP Configuration
+// Update details of SMTP Configuration.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPConfigurationWithContext(context.Background(), updateSMTPConfigurationOptions)
 }
@@ -3173,8 +3173,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPUserWithContext(ctx conte
 	return
 }
 
-// UpdateSMTPUser : Update details of SMTP User
-// Update details of SMTP User.
+// UpdateSMTPUser : Update details of a SMTP User
+// Update details of a SMTP User.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPUserWithContext(context.Background(), updateSMTPUserOptions)
 }
@@ -3295,8 +3295,8 @@ func (eventNotifications *EventNotificationsV1) DeleteSMTPUserWithContext(ctx co
 	return
 }
 
-// GetSMTPAllowedIps : Get details of a SMTP allowed IPs
-// Get details of a SMTP allowed IPs.
+// GetSMTPAllowedIps : Get details of SMTP configuration allowed IPs
+// Get details of SMTP configuration allowed IPs.
 func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
 	return eventNotifications.GetSMTPAllowedIpsWithContext(context.Background(), getSMTPAllowedIpsOptions)
 }
@@ -3356,8 +3356,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIpsWithContext(ctx
 	return
 }
 
-// UpdateSMTPAllowedIps : Update details of SMTP allowed IP
-// Update details of SMTP.
+// UpdateSMTPAllowedIps : Update SMTP configuration allowed IPs
+// Update SMTP configuration allowed IPs.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPAllowedIpsWithContext(context.Background(), updateSMTPAllowedIpsOptions)
 }
@@ -3427,8 +3427,8 @@ func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIpsWithContext(
 	return
 }
 
-// UpdateVerifySMTP : Verify SPF and DKIM records of SMTP
-// Verify SPF and DKIM records of SMTP.
+// UpdateVerifySMTP : Verify SMTP configuration domain
+// Verify SMTP configuration domain.
 func (eventNotifications *EventNotificationsV1) UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions) (result *SMTPVerificationUpdateResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateVerifySMTPWithContext(context.Background(), updateVerifySMTPOptions)
 }
@@ -4761,6 +4761,9 @@ type DestinationConfigOneOf struct {
 	// Chrome VAPID public key.
 	PublicKey *string `json:"public_key,omitempty"`
 
+	// Token of slack application.
+	Token *string `json:"token,omitempty"`
+
 	// Website url.
 	WebsiteName *string `json:"website_name,omitempty"`
 
@@ -4917,6 +4920,10 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "public_key", &obj.PublicKey)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "token", &obj.Token)
 	if err != nil {
 		return
 	}
@@ -7591,10 +7598,10 @@ func UnmarshalSMTPCreateResponse(m map[string]json.RawMessage, result interface{
 
 // SmtpdkimAttributes : The SMTP DKIM attributes.
 type SmtpdkimAttributes struct {
-	// DMIM text name.
+	// DKIM text name.
 	TxtName *string `json:"txt_name,omitempty"`
 
-	// DMIM text value.
+	// DKIM text value.
 	TxtValue *string `json:"txt_value,omitempty"`
 
 	// DKIM verification.
@@ -8483,6 +8490,9 @@ type SubscriptionAttributes struct {
 	// Attachment Color for Slack Notification.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
 
+	// Slack Member ID and Channel ID.
+	To []string `json:"to,omitempty"`
+
 	// Assigned name from ServiceNow account.
 	AssignedTo *string `json:"assigned_to,omitempty"`
 
@@ -8575,6 +8585,9 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 	if o.AttachmentColor != nil {
 		m["attachment_color"] = o.AttachmentColor
 	}
+	if o.To != nil {
+		m["to"] = o.To
+	}
 	if o.AssignedTo != nil {
 		m["assigned_to"] = o.AssignedTo
 	}
@@ -8648,6 +8661,11 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 		return
 	}
 	delete(m, "attachment_color")
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+	if err != nil {
+		return
+	}
+	delete(m, "to")
 	err = core.UnmarshalPrimitive(m, "assigned_to", &obj.AssignedTo)
 	if err != nil {
 		return
@@ -8712,6 +8730,9 @@ type SubscriptionCreateAttributes struct {
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
 
+	// Array of Slack Member ID or Channel ID.
+	To []string `json:"to,omitempty"`
+
 	// Name of user ServiceNow incident will be assigned to.
 	AssignedTo *string `json:"assigned_to,omitempty"`
 
@@ -8767,6 +8788,10 @@ func UnmarshalSubscriptionCreateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
@@ -9000,6 +9025,9 @@ type SubscriptionUpdateAttributes struct {
 	// Attachment Color for the slack message.
 	AttachmentColor *string `json:"attachment_color,omitempty"`
 
+	// Array of Slack Member ID or Channel ID.
+	To []string `json:"to,omitempty"`
+
 	// Name of user ServiceNow incident will be assigned to.
 	AssignedTo *string `json:"assigned_to,omitempty"`
 
@@ -9063,6 +9091,10 @@ func UnmarshalSubscriptionUpdateAttributes(m map[string]json.RawMessage, result 
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "attachment_color", &obj.AttachmentColor)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
@@ -10311,7 +10343,7 @@ type UpdateVerifySMTPOptions struct {
 	// Unique identifier for SMTP.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// SMTP Verification type.
+	// SMTP verification type.
 	Type *string `json:"type" validate:"required"`
 
 	// Allows users to set headers on API requests
@@ -11085,6 +11117,9 @@ func UnmarshalDestinationConfigOneOfServiceNowDestinationConfig(m map[string]jso
 type DestinationConfigOneOfSlackDestinationConfig struct {
 	// URL of Slack Incoming Notifications.
 	URL *string `json:"url" validate:"required"`
+
+	// Token of slack application.
+	Token *string `json:"token,omitempty"`
 }
 
 // NewDestinationConfigOneOfSlackDestinationConfig : Instantiate DestinationConfigOneOfSlackDestinationConfig (Generic Model Constructor)
@@ -11104,6 +11139,10 @@ func (*DestinationConfigOneOfSlackDestinationConfig) isaDestinationConfigOneOf()
 func UnmarshalDestinationConfigOneOfSlackDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(DestinationConfigOneOfSlackDestinationConfig)
 	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "token", &obj.Token)
 	if err != nil {
 		return
 	}
@@ -11780,6 +11819,9 @@ type SubscriptionAttributesSlackAttributesResponse struct {
 	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
 	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
 
+	// Slack Member ID and Channel ID.
+	To []string `json:"to,omitempty"`
+
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
 }
@@ -11828,6 +11870,9 @@ func (o *SubscriptionAttributesSlackAttributesResponse) MarshalJSON() (buffer []
 	if o.TemplateIDNotification != nil {
 		m["template_id_notification"] = o.TemplateIDNotification
 	}
+	if o.To != nil {
+		m["to"] = o.To
+	}
 	buffer, err = json.Marshal(m)
 	return
 }
@@ -11845,6 +11890,11 @@ func UnmarshalSubscriptionAttributesSlackAttributesResponse(m map[string]json.Ra
 		return
 	}
 	delete(m, "template_id_notification")
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
+	if err != nil {
+		return
+	}
+	delete(m, "to")
 	for k := range m {
 		var v interface{}
 		e := core.UnmarshalPrimitive(m, k, &v)
@@ -12208,6 +12258,9 @@ type SubscriptionCreateAttributesSlackAttributes struct {
 
 	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
 	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
+	// Array of Slack Member ID or Channel ID.
+	To []string `json:"to,omitempty"`
 }
 
 func (*SubscriptionCreateAttributesSlackAttributes) isaSubscriptionCreateAttributes() bool {
@@ -12222,6 +12275,10 @@ func UnmarshalSubscriptionCreateAttributesSlackAttributes(m map[string]json.RawM
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
@@ -12543,6 +12600,9 @@ type SubscriptionUpdateAttributesSlackAttributes struct {
 
 	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
 	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
+	// Array of Slack Member ID or Channel ID.
+	To []string `json:"to,omitempty"`
 }
 
 func (*SubscriptionUpdateAttributesSlackAttributes) isaSubscriptionUpdateAttributes() bool {
@@ -12557,6 +12617,10 @@ func UnmarshalSubscriptionUpdateAttributesSlackAttributes(m map[string]json.RawM
 		return
 	}
 	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "to", &obj.To)
 	if err != nil {
 		return
 	}
