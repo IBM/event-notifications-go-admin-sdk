@@ -66,7 +66,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID4            string
 		destinationID5            string
 		destinationID6            string
-		destinationID7            string
 		destinationID8            string
 		destinationID9            string
 		destinationID10           string
@@ -85,7 +84,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID4           string
 		subscriptionID5           string
 		subscriptionID6           string
-		subscriptionID7           string
 		subscriptionID8           string
 		subscriptionID9           string
 		subscriptionID10          string
@@ -954,10 +952,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				panic(err)
 			}
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
+			Expect(response.StatusCode).To(Equal(410))
 			Expect(destinationResponse).ToNot(BeNil())
-
-			destinationID7 = *destinationResponse.ID
 
 			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
@@ -1685,35 +1681,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(teamsName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(teamsDescription)))
 
-			//cloud functins
-			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
-				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
-			}
-
-			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsCloudFunctionskModel,
-			}
-
-			cfName := "cf_dest"
-			cfDescription := "This destination is for cloud functions"
-			cfupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(destinationID7),
-				Name:        core.StringPtr(cfName),
-				Description: core.StringPtr(cfDescription),
-				Config:      cfdestinationConfigModel,
-			}
-
-			cfdestination, cfresponse, err := eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
-
-			Expect(err).To(BeNil())
-			Expect(cfresponse.StatusCode).To(Equal(200))
-			Expect(cfdestination).ToNot(BeNil())
-			Expect(cfdestination.ID).To(Equal(core.StringPtr(destinationID7)))
-			Expect(cfdestination.Name).To(Equal(core.StringPtr(cfName)))
-			Expect(cfdestination.Description).To(Equal(core.StringPtr(cfDescription)))
-
 			//Chrome
 			destinationConfigParamsChromeModel := &eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig{
 				APIKey:     core.StringPtr("sdslknsdlfnlsejifw900"),
@@ -2305,23 +2272,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID6 = string(*subscription.ID)
 
-			createCFSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
-				InstanceID:    core.StringPtr(instanceID),
-				Name:          core.StringPtr("cloud functions subscription"),
-				Description:   core.StringPtr("Subscription for cloud functions"),
-				DestinationID: core.StringPtr(destinationID7),
-				TopicID:       core.StringPtr(topicID),
-			}
-
-			subscription, response, err = eventNotificationsService.CreateSubscription(createCFSubscriptionOptions)
-			if err != nil {
-				panic(err)
-			}
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(subscription).ToNot(BeNil())
-			subscriptionID7 = string(*subscription.ID)
-
 			createChromeSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				Name:          core.StringPtr("chrome subscription"),
@@ -2832,24 +2782,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(teamsName))
 			Expect(subscription.Description).To(Equal(teamsDescription))
 
-			cfName := core.StringPtr("subscription_cloudfunctions")
-			cfDescription := core.StringPtr("Subscription for cloud functions")
-			updateCFSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				Name:        cfName,
-				Description: cfDescription,
-				ID:          core.StringPtr(subscriptionID7),
-			}
-
-			subscription, response, err = eventNotificationsService.UpdateSubscription(updateCFSubscriptionOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(subscription).ToNot(BeNil())
-			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID7)))
-			Expect(subscription.Name).To(Equal(cfName))
-			Expect(subscription.Description).To(Equal(cfDescription))
-
 			chromeName := core.StringPtr("subscription_Chrome")
 			chromeDescription := core.StringPtr("Subscription for Chrome")
 			updateChromeSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
@@ -3152,6 +3084,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 			templates := fmt.Sprintf("[\"%s\"]", slackTemplateID)
 			smsTo := "[\"+911234567890\", \"+911224567890\"]"
+			mms := "{\"url\": \"https://cloud.ibm.com/avatar/v1/avatar/migrationsegment/logo_ibm.png\"}"
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 			notificationSeverity := "MEDIUM"
@@ -3175,6 +3108,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationCreateModel.Ibmenmailto = &mailTo
 			notificationCreateModel.Ibmentemplates = &templates
 			notificationCreateModel.Ibmensmsto = &smsTo
+			notificationCreateModel.Ibmenmms = &mms
 			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
@@ -3486,7 +3420,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18} {
+			for _, ID := range []string{subscriptionID, subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3617,7 +3551,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

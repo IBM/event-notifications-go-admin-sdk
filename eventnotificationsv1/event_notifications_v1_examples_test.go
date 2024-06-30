@@ -63,7 +63,6 @@ var (
 	destinationID4            string
 	destinationID5            string
 	destinationID6            string
-	destinationID7            string
 	destinationID8            string
 	destinationID9            string
 	destinationID10           string
@@ -846,10 +845,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			fmt.Println(string(b))
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
+			Expect(response.StatusCode).To(Equal(410))
 			Expect(destinationResponse).ToNot(BeNil())
-
-			destinationID7 = *destinationResponse.ID
 
 			//Chrome
 			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
@@ -1540,38 +1537,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 
 			destination, response, err = eventNotificationsService.UpdateDestination(msTeamsupdateDestinationOptions)
-
-			if err != nil {
-				panic(err)
-			}
-			b, _ = json.MarshalIndent(destination, "", "  ")
-			fmt.Println(string(b))
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destination).ToNot(BeNil())
-
-			//cloud functions
-			destinationConfigParamsCloudFunctionskModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://www.ibmcfendpoint.com"),
-				APIKey: core.StringPtr("apikey"),
-			}
-
-			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsCloudFunctionskModel,
-			}
-
-			name = "cf_dest"
-			description = "This destination is for cloud functions"
-			cfupdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(destinationID7),
-				Name:        core.StringPtr(name),
-				Description: core.StringPtr(description),
-				Config:      cfdestinationConfigModel,
-			}
-
-			destination, response, err = eventNotificationsService.UpdateDestination(cfupdateDestinationOptions)
 
 			if err != nil {
 				panic(err)
@@ -2615,6 +2580,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 			templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 			smsTo := "[\"+911234567890\", \"+911224567890\"]"
+			mms := "{\"url\": \"https://cloud.ibm.com/avatar/v1/avatar/migrationsegment/logo_ibm.png\"}"
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
 			notificationCreateModel.Ibmenpushto = &notificationDevicesModel
@@ -2653,6 +2619,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmenmailto = &mailTo
 			notificationCreateModel.Ibmentemplates = &templates
 			notificationCreateModel.Ibmensmsto = &smsTo
+			notificationCreateModel.Ibmenmms = &mms
 			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("This is simple test alert from IBM Cloud Event Notifications service.")
@@ -3072,7 +3039,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID7, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

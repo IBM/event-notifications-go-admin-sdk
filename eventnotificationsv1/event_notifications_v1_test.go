@@ -203,6 +203,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -302,6 +303,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -409,6 +411,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -461,6 +464,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -534,6 +538,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -13366,6 +13371,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -13394,6 +13400,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmensmsto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenmms).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
 				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))
