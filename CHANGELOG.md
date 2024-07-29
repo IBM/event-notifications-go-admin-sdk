@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.6.1...v0.7.0) (2024-07-29)
+
+
+### Features
+
+* mms support and cf deprecation  ([#55](https://github.com/IBM/event-notifications-go-admin-sdk/issues/55)) ([45473c7](https://github.com/IBM/event-notifications-go-admin-sdk/commit/45473c771e4aa368569cfcb0fd28c8235593f21a))
+
 ## [0.6.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.6.0...v0.6.1) (2024-05-15)
 
 
