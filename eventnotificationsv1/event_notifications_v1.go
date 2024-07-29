@@ -2988,8 +2988,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPConfigurationWithContext(
 	return
 }
 
-// UpdateSMTPConfiguration : Update details of SMTP
-// Update details of SMTP.
+// UpdateSMTPConfiguration : Update details of SMTP Configuration
+// Update details of SMTP Configuration.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPConfiguration(updateSMTPConfigurationOptions *UpdateSMTPConfigurationOptions) (result *SMTPConfiguration, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPConfigurationWithContext(context.Background(), updateSMTPConfigurationOptions)
 }
@@ -3173,8 +3173,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPUserWithContext(ctx conte
 	return
 }
 
-// UpdateSMTPUser : Update details of SMTP User
-// Update details of SMTP User.
+// UpdateSMTPUser : Update details of a SMTP User
+// Update details of a SMTP User.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPUser(updateSMTPUserOptions *UpdateSMTPUserOptions) (result *SMTPUser, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPUserWithContext(context.Background(), updateSMTPUserOptions)
 }
@@ -3295,8 +3295,8 @@ func (eventNotifications *EventNotificationsV1) DeleteSMTPUserWithContext(ctx co
 	return
 }
 
-// GetSMTPAllowedIps : Get details of a SMTP allowed IPs
-// Get details of a SMTP allowed IPs.
+// GetSMTPAllowedIps : Get details of SMTP configuration allowed IPs
+// Get details of SMTP configuration allowed IPs.
 func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIps(getSMTPAllowedIpsOptions *GetSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
 	return eventNotifications.GetSMTPAllowedIpsWithContext(context.Background(), getSMTPAllowedIpsOptions)
 }
@@ -3356,8 +3356,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIpsWithContext(ctx
 	return
 }
 
-// UpdateSMTPAllowedIps : Update details of SMTP allowed IP
-// Update details of SMTP.
+// UpdateSMTPAllowedIps : Update SMTP configuration allowed IPs
+// Update SMTP configuration allowed IPs.
 func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateSMTPAllowedIpsWithContext(context.Background(), updateSMTPAllowedIpsOptions)
 }
@@ -3427,8 +3427,8 @@ func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIpsWithContext(
 	return
 }
 
-// UpdateVerifySMTP : Verify SPF and DKIM records of SMTP
-// Verify SPF and DKIM records of SMTP.
+// UpdateVerifySMTP : Verify SMTP configuration domain
+// Verify SMTP configuration domain.
 func (eventNotifications *EventNotificationsV1) UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions) (result *SMTPVerificationUpdateResponse, response *core.DetailedResponse, err error) {
 	return eventNotifications.UpdateVerifySMTPWithContext(context.Background(), updateVerifySMTPOptions)
 }
@@ -6634,6 +6634,9 @@ type NotificationCreate struct {
 	// The subject of the notification.
 	Subject *string `json:"subject,omitempty"`
 
+	// Stringified MMS Attachment JSON.
+	Ibmenmms *string `json:"ibmenmms,omitempty"`
+
 	// The payload for webhook notification.
 	Data map[string]interface{} `json:"data,omitempty"`
 
@@ -6769,6 +6772,9 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Subject != nil {
 		m["subject"] = o.Subject
 	}
+	if o.Ibmenmms != nil {
+		m["ibmenmms"] = o.Ibmenmms
+	}
 	if o.Data != nil {
 		m["data"] = o.Data
 	}
@@ -6887,6 +6893,11 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "subject")
+	err = core.UnmarshalPrimitive(m, "ibmenmms", &obj.Ibmenmms)
+	if err != nil {
+		return
+	}
+	delete(m, "ibmenmms")
 	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
 	if err != nil {
 		return
@@ -7591,10 +7602,10 @@ func UnmarshalSMTPCreateResponse(m map[string]json.RawMessage, result interface{
 
 // SmtpdkimAttributes : The SMTP DKIM attributes.
 type SmtpdkimAttributes struct {
-	// DMIM text name.
+	// DKIM text name.
 	TxtName *string `json:"txt_name,omitempty"`
 
-	// DMIM text value.
+	// DKIM text value.
 	TxtValue *string `json:"txt_value,omitempty"`
 
 	// DKIM verification.
@@ -10311,7 +10322,7 @@ type UpdateVerifySMTPOptions struct {
 	// Unique identifier for SMTP.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// SMTP Verification type.
+	// SMTP verification type.
 	Type *string `json:"type" validate:"required"`
 
 	// Allows users to set headers on API requests

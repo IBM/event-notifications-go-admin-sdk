@@ -1071,6 +1071,7 @@ mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 smsTo := "[\"+911234567890\", \"+911224567890\"]"
 templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
+mms := "{\"content\": \"mms content\", \"content_type\": \"image/png\"}"
 
 notificationSeverity := "MEDIUM"
 typeValue := "com.acme.offer:new"
