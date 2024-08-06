@@ -166,11 +166,11 @@ SDK Methods to consume
 	- [List SMTP Users](#list-smtp-users)
 	- [Update SMTP Configuration](#update-smtp-configuration)
 	- [Update SMTP User](#update-smtp-user)
-	- [Update SMTP Allowed Ips](#update-smtp-allowed-ips)
 	- [Delete SMTP User](#delete-smtp-user)
 	- [Delete SMTP Configuration](#delete-smtp-user)
 	- [Verify SMTP](#verify-smtp)
-
+- [Metrics](#Metrics) 
+    - [Get Metrics](#get-metrics)  
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -995,18 +995,6 @@ updateSMTPUserOptions := &eventnotificationsv1.UpdateSMTPUserOptions{
 updateSMTPUser, response, err := eventNotificationsService.UpdateSMTPUser(updateSMTPUserOptions)
 ```
 
-### Update SMTP Allowed IPs
-
-```go
-updateSMTPAllowedOptions := &eventnotificationsv1.UpdateSMTPAllowedIpsOptions{
-	InstanceID:  core.StringPtr(<instance-id>),
-	ID:          core.StringPtr(<smtp-Config-id)>,
-	Subnets:    []string{"<subnet-ip>"},
-}
-
-subnets, response, err := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedOptions)
-```
-
 ### Delete SMTP User
 
 ```go
@@ -1042,6 +1030,25 @@ updateVerifySMTPOptions := &eventnotificationsv1.UpdateVerifySMTPOptions{
 verifySMTP, response, err := eventNotificationsService.UpdateVerifySMTP(updateVerifySMTPOptions)
 ```
 supported verification types are dkim,spf and en_authorization.
+
+## Metrics
+
+### Get Metrics
+
+```go
+getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+	InstanceID:      core.StringPtr(<instance-id>),
+	DestinationType: core.StringPtr("smtp_custom"),
+	Gte:             core.StringPtr(<gte-timestamp>),
+	Lte:             core.StringPtr(<lte-timestamp>),
+	EmailTo:         core.StringPtr(<email-to>),
+	ID:              core.StringPtr(<destination-id>),
+	NotificationID:  core.StringPtr(<notification-id>),
+	Subject:         core.StringPtr(<subject>),
+}
+
+metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+```
 
 ## Send Notifications
 

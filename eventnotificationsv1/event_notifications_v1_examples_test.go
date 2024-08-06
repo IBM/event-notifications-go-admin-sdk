@@ -109,6 +109,7 @@ var (
 	codeEngineProjectCRN      string
 	smtpConfigID              string
 	smtpUserID                string
+	notificationID            string
 )
 
 func shouldSkipTest() {
@@ -819,34 +820,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID6 = *destinationResponse.ID
-
-			createDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
-				instanceID,
-				"Cloud_Functions_destination",
-				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
-			)
-
-			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
-				APIKey: core.StringPtr("apikey"),
-			}
-
-			destinationConfigModel = &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsCloudFunctionsModel,
-			}
-
-			createDestinationOptions.SetConfig(destinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createDestinationOptions)
-			if err != nil {
-				panic(err)
-			}
-
-			b, _ = json.MarshalIndent(destinationResponse, "", "  ")
-			fmt.Println(string(b))
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(410))
-			Expect(destinationResponse).ToNot(BeNil())
 
 			//Chrome
 			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
@@ -2630,6 +2603,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			sendNotificationsOptionsModel.Body = notificationCreateModel
 
 			notificationResponse, response, err := eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
+			notificationID = *notificationResponse.NotificationID
 
 			if err != nil {
 				panic(err)
@@ -2721,6 +2695,26 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		})
 
+		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
+			// begin-metrics
+			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+				InstanceID:      core.StringPtr(instanceID),
+				DestinationType: core.StringPtr("smtp_custom"),
+				Gte:             core.StringPtr("2024-08-01T17:18:43Z"),
+				Lte:             core.StringPtr("2024-08-02T11:55:22Z"),
+				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
+				ID:              core.StringPtr(destinationID16),
+				NotificationID:  core.StringPtr(notificationID),
+				Subject:         core.StringPtr("Test Metrics Subject"),
+			}
+
+			metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+			// end-metrics
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(metrics).ToNot(BeNil())
+		})
+
 		It(`CreateSMTPConfiguration request example`, func() {
 			// begin-create_smtp_configuration
 			name := "SMTP configuration"
@@ -2758,21 +2752,6 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(verifySMTP.Status).ToNot(BeNil())
-		})
-
-		It(`UpdateSMTPAllowedIps request example`, func() {
-			// begin-update_smtp_allowed_ips
-			updateSMTPAllowedOptions := &eventnotificationsv1.UpdateSMTPAllowedIpsOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(smtpConfigID),
-				Subnets:    []string{"192.168.1.64"},
-			}
-
-			subnets, response, err := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedOptions)
-			// end-update_smtp_allowed_ips
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(subnets.Subnets[0]).ToNot(BeNil())
 		})
 
 		It(`CreateSMTPUser request example`, func() {

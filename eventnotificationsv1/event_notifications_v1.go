@@ -163,6 +163,82 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 	eventNotifications.Service.DisableRetries()
 }
 
+// GetMetrics : Get metrics
+// Get metrics.
+func (eventNotifications *EventNotificationsV1) GetMetrics(getMetricsOptions *GetMetricsOptions) (result *Metrics, response *core.DetailedResponse, err error) {
+	return eventNotifications.GetMetricsWithContext(context.Background(), getMetricsOptions)
+}
+
+// GetMetricsWithContext is an alternate form of the GetMetrics method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetMetricsWithContext(ctx context.Context, getMetricsOptions *GetMetricsOptions) (result *Metrics, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getMetricsOptions, "getMetricsOptions cannot be nil")
+	if err != nil {
+		return
+	}
+	err = core.ValidateStruct(getMetricsOptions, "getMetricsOptions")
+	if err != nil {
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getMetricsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/metrics`, pathParamsMap)
+	if err != nil {
+		return
+	}
+
+	for headerName, headerValue := range getMetricsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetMetrics")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("destination_type", fmt.Sprint(*getMetricsOptions.DestinationType))
+	builder.AddQuery("gte", fmt.Sprint(*getMetricsOptions.Gte))
+	builder.AddQuery("lte", fmt.Sprint(*getMetricsOptions.Lte))
+	if getMetricsOptions.ID != nil {
+		builder.AddQuery("id", fmt.Sprint(*getMetricsOptions.ID))
+	}
+	if getMetricsOptions.EmailTo != nil {
+		builder.AddQuery("email_to", fmt.Sprint(*getMetricsOptions.EmailTo))
+	}
+	if getMetricsOptions.NotificationID != nil {
+		builder.AddQuery("notification_id", fmt.Sprint(*getMetricsOptions.NotificationID))
+	}
+	if getMetricsOptions.Subject != nil {
+		builder.AddQuery("subject", fmt.Sprint(*getMetricsOptions.Subject))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalMetrics)
+		if err != nil {
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // SendNotifications : Send a notification
 // Send Notifications body from the instance. For more information about Event Notifications payload, see
 // [here](https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-spec-payload).
@@ -3356,77 +3432,6 @@ func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIpsWithContext(ctx
 	return
 }
 
-// UpdateSMTPAllowedIps : Update SMTP configuration allowed IPs
-// Update SMTP configuration allowed IPs.
-func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
-	return eventNotifications.UpdateSMTPAllowedIpsWithContext(context.Background(), updateSMTPAllowedIpsOptions)
-}
-
-// UpdateSMTPAllowedIpsWithContext is an alternate form of the UpdateSMTPAllowedIps method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) UpdateSMTPAllowedIpsWithContext(ctx context.Context, updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions) (result *SMTPAllowedIPs, response *core.DetailedResponse, err error) {
-	err = core.ValidateNotNil(updateSMTPAllowedIpsOptions, "updateSMTPAllowedIpsOptions cannot be nil")
-	if err != nil {
-		return
-	}
-	err = core.ValidateStruct(updateSMTPAllowedIpsOptions, "updateSMTPAllowedIpsOptions")
-	if err != nil {
-		return
-	}
-
-	pathParamsMap := map[string]string{
-		"instance_id": *updateSMTPAllowedIpsOptions.InstanceID,
-		"id":          *updateSMTPAllowedIpsOptions.ID,
-	}
-
-	builder := core.NewRequestBuilder(core.PATCH)
-	builder = builder.WithContext(ctx)
-	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
-	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/smtp/config/{id}/allowed_ips`, pathParamsMap)
-	if err != nil {
-		return
-	}
-
-	for headerName, headerValue := range updateSMTPAllowedIpsOptions.Headers {
-		builder.AddHeader(headerName, headerValue)
-	}
-
-	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "UpdateSMTPAllowedIps")
-	for headerName, headerValue := range sdkHeaders {
-		builder.AddHeader(headerName, headerValue)
-	}
-	builder.AddHeader("Accept", "application/json")
-	builder.AddHeader("Content-Type", "application/json")
-
-	body := make(map[string]interface{})
-	if updateSMTPAllowedIpsOptions.Subnets != nil {
-		body["subnets"] = updateSMTPAllowedIpsOptions.Subnets
-	}
-	_, err = builder.SetBodyContentJSON(body)
-	if err != nil {
-		return
-	}
-
-	request, err := builder.Build()
-	if err != nil {
-		return
-	}
-
-	var rawResponse map[string]json.RawMessage
-	response, err = eventNotifications.Service.Request(request, &rawResponse)
-	if err != nil {
-		return
-	}
-	if rawResponse != nil {
-		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPAllowedIPs)
-		if err != nil {
-			return
-		}
-		response.Result = result
-	}
-
-	return
-}
-
 // UpdateVerifySMTP : Verify SMTP configuration domain
 // Verify SMTP configuration domain.
 func (eventNotifications *EventNotificationsV1) UpdateVerifySMTP(updateVerifySMTPOptions *UpdateVerifySMTPOptions) (result *SMTPVerificationUpdateResponse, response *core.DetailedResponse, err error) {
@@ -3487,6 +3492,30 @@ func (eventNotifications *EventNotificationsV1) UpdateVerifySMTPWithContext(ctx 
 		response.Result = result
 	}
 
+	return
+}
+
+// Buckets : Bucket object.
+type Buckets struct {
+	// Total count.
+	DocCount *int64 `json:"doc_count,omitempty"`
+
+	// Timestamp.
+	KeyAsString *strfmt.DateTime `json:"key_as_string,omitempty"`
+}
+
+// UnmarshalBuckets unmarshals an instance of Buckets from the specified map of raw messages.
+func UnmarshalBuckets(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Buckets)
+	err = core.UnmarshalPrimitive(m, "doc_count", &obj.DocCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "key_as_string", &obj.KeyAsString)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
 
@@ -5466,6 +5495,106 @@ func (options *GetIntegrationOptions) SetHeaders(param map[string]string) *GetIn
 	return options
 }
 
+// GetMetricsOptions : The GetMetrics options.
+type GetMetricsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Destination type. Allowed values are [smtp_custom].
+	DestinationType *string `json:"destination_type" validate:"required"`
+
+	// GTE (greater than equal), start timestamp in UTC.
+	Gte *string `json:"gte" validate:"required"`
+
+	// LTE (less than equal), end timestamp in UTC.
+	Lte *string `json:"lte" validate:"required"`
+
+	// Unique identifier for Source.
+	ID *string `json:"id,omitempty"`
+
+	// Receiver email id.
+	EmailTo *string `json:"email_to,omitempty"`
+
+	// Notification Id.
+	NotificationID *string `json:"notification_id,omitempty"`
+
+	// Email subject.
+	Subject *string `json:"subject,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// Constants associated with the GetMetricsOptions.DestinationType property.
+// Destination type. Allowed values are [smtp_custom].
+const (
+	GetMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
+)
+
+// NewGetMetricsOptions : Instantiate GetMetricsOptions
+func (*EventNotificationsV1) NewGetMetricsOptions(instanceID string, destinationType string, gte string, lte string) *GetMetricsOptions {
+	return &GetMetricsOptions{
+		InstanceID:      core.StringPtr(instanceID),
+		DestinationType: core.StringPtr(destinationType),
+		Gte:             core.StringPtr(gte),
+		Lte:             core.StringPtr(lte),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetMetricsOptions) SetInstanceID(instanceID string) *GetMetricsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetDestinationType : Allow user to set DestinationType
+func (_options *GetMetricsOptions) SetDestinationType(destinationType string) *GetMetricsOptions {
+	_options.DestinationType = core.StringPtr(destinationType)
+	return _options
+}
+
+// SetGte : Allow user to set Gte
+func (_options *GetMetricsOptions) SetGte(gte string) *GetMetricsOptions {
+	_options.Gte = core.StringPtr(gte)
+	return _options
+}
+
+// SetLte : Allow user to set Lte
+func (_options *GetMetricsOptions) SetLte(lte string) *GetMetricsOptions {
+	_options.Lte = core.StringPtr(lte)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetMetricsOptions) SetID(id string) *GetMetricsOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetEmailTo : Allow user to set EmailTo
+func (_options *GetMetricsOptions) SetEmailTo(emailTo string) *GetMetricsOptions {
+	_options.EmailTo = core.StringPtr(emailTo)
+	return _options
+}
+
+// SetNotificationID : Allow user to set NotificationID
+func (_options *GetMetricsOptions) SetNotificationID(notificationID string) *GetMetricsOptions {
+	_options.NotificationID = core.StringPtr(notificationID)
+	return _options
+}
+
+// SetSubject : Allow user to set Subject
+func (_options *GetMetricsOptions) SetSubject(subject string) *GetMetricsOptions {
+	_options.Subject = core.StringPtr(subject)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetMetricsOptions) SetHeaders(param map[string]string) *GetMetricsOptions {
+	options.Headers = param
+	return options
+}
+
 // GetSMTPAllowedIpsOptions : The GetSMTPAllowedIps options.
 type GetSMTPAllowedIpsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -5749,6 +5878,23 @@ func (_options *GetTopicOptions) SetInclude(include string) *GetTopicOptions {
 func (options *GetTopicOptions) SetHeaders(param map[string]string) *GetTopicOptions {
 	options.Headers = param
 	return options
+}
+
+// Histrogram : Payload describing histogram.
+type Histrogram struct {
+	// List of buckets.
+	Buckets []Buckets `json:"buckets,omitempty"`
+}
+
+// UnmarshalHistrogram unmarshals an instance of Histrogram from the specified map of raw messages.
+func UnmarshalHistrogram(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Histrogram)
+	err = core.UnmarshalModel(m, "buckets", &obj.Buckets, UnmarshalBuckets)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
 }
 
 // IntegrationCreateMetadata : Integration Metadata object.
@@ -6585,6 +6731,64 @@ func (_options *ListTopicsOptions) SetSearch(search string) *ListTopicsOptions {
 func (options *ListTopicsOptions) SetHeaders(param map[string]string) *ListTopicsOptions {
 	options.Headers = param
 	return options
+}
+
+// Metric : Payload describing metrics request.
+type Metric struct {
+	// key.
+	Key *string `json:"key,omitempty"`
+
+	// doc count.
+	DocCount *int64 `json:"doc_count,omitempty"`
+
+	// Payload describing histogram.
+	Histogram *Histrogram `json:"histogram,omitempty"`
+}
+
+// Constants associated with the Metric.Key property.
+// key.
+const (
+	MetricKeyBouncedConst   = "bounced"
+	MetricKeyDeferredConst  = "deferred"
+	MetricKeyOpenedConst    = "opened"
+	MetricKeySubmittedConst = "submitted"
+	MetricKeySuccessConst   = "success"
+)
+
+// UnmarshalMetric unmarshals an instance of Metric from the specified map of raw messages.
+func UnmarshalMetric(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Metric)
+	err = core.UnmarshalPrimitive(m, "key", &obj.Key)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "doc_count", &obj.DocCount)
+	if err != nil {
+		return
+	}
+	err = core.UnmarshalModel(m, "histogram", &obj.Histogram, UnmarshalHistrogram)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Metrics : Payload describing a metrics.
+type Metrics struct {
+	// array of metrics.
+	Metrics []Metric `json:"metrics" validate:"required"`
+}
+
+// UnmarshalMetrics unmarshals an instance of Metrics from the specified map of raw messages.
+func UnmarshalMetrics(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(Metrics)
+	err = core.UnmarshalModel(m, "metrics", &obj.Metrics, UnmarshalMetric)
+	if err != nil {
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
 }
 
 // NotificationCreate : Payload describing a notification create request.
@@ -9972,54 +10176,6 @@ func (_options *UpdateDestinationOptions) SetIcon128x1282xContentType(icon128x12
 
 // SetHeaders : Allow user to set Headers
 func (options *UpdateDestinationOptions) SetHeaders(param map[string]string) *UpdateDestinationOptions {
-	options.Headers = param
-	return options
-}
-
-// UpdateSMTPAllowedIpsOptions : The UpdateSMTPAllowedIps options.
-type UpdateSMTPAllowedIpsOptions struct {
-	// Unique identifier for IBM Cloud Event Notifications instance.
-	InstanceID *string `json:"instance_id" validate:"required,ne="`
-
-	// Unique identifier for SMTP.
-	ID *string `json:"id" validate:"required,ne="`
-
-	// The SMTP allowed Ips.
-	Subnets []string `json:"subnets" validate:"required"`
-
-	// Allows users to set headers on API requests
-	Headers map[string]string
-}
-
-// NewUpdateSMTPAllowedIpsOptions : Instantiate UpdateSMTPAllowedIpsOptions
-func (*EventNotificationsV1) NewUpdateSMTPAllowedIpsOptions(instanceID string, id string, subnets []string) *UpdateSMTPAllowedIpsOptions {
-	return &UpdateSMTPAllowedIpsOptions{
-		InstanceID: core.StringPtr(instanceID),
-		ID:         core.StringPtr(id),
-		Subnets:    subnets,
-	}
-}
-
-// SetInstanceID : Allow user to set InstanceID
-func (_options *UpdateSMTPAllowedIpsOptions) SetInstanceID(instanceID string) *UpdateSMTPAllowedIpsOptions {
-	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetID : Allow user to set ID
-func (_options *UpdateSMTPAllowedIpsOptions) SetID(id string) *UpdateSMTPAllowedIpsOptions {
-	_options.ID = core.StringPtr(id)
-	return _options
-}
-
-// SetSubnets : Allow user to set Subnets
-func (_options *UpdateSMTPAllowedIpsOptions) SetSubnets(subnets []string) *UpdateSMTPAllowedIpsOptions {
-	_options.Subnets = subnets
-	return _options
-}
-
-// SetHeaders : Allow user to set Headers
-func (options *UpdateSMTPAllowedIpsOptions) SetHeaders(param map[string]string) *UpdateSMTPAllowedIpsOptions {
 	options.Headers = param
 	return options
 }
