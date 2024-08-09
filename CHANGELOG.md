@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.7.0...v0.8.0) (2024-08-09)
+
+
+### Features
+
+* SMTP allowed IP Update unsupported, Metrics Feature enabled ([#56](https://github.com/IBM/event-notifications-go-admin-sdk/issues/56)) ([cd62de9](https://github.com/IBM/event-notifications-go-admin-sdk/commit/cd62de97c4aab375430cf0c583d86efcfb45852e))
+
 # [0.7.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.6.1...v0.7.0) (2024-07-29)
 
 
