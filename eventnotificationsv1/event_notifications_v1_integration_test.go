@@ -126,6 +126,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		cosIntegrationID          string
 		smtpConfigID              string
 		smtpUserID                string
+		notificationID            string
 	)
 
 	var shouldSkipTest = func() {
@@ -930,30 +931,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID6 = *destinationResponse.ID
-
-			cfCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
-				instanceID,
-				"Cloud_Functions_destination",
-				eventnotificationsv1.CreateDestinationOptionsTypeIbmcfConst,
-			)
-
-			destinationConfigParamsCloudFunctionsModel := &eventnotificationsv1.DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
-				URL:    core.StringPtr("https://www.ibmcfendpoint.com/"),
-				APIKey: core.StringPtr("sdslknsdlfnlsejifw900"),
-			}
-
-			cfdestinationConfigModel := &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsCloudFunctionsModel,
-			}
-
-			cfCreateDestinationOptions.SetConfig(cfdestinationConfigModel)
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(cfCreateDestinationOptions)
-			if err != nil {
-				panic(err)
-			}
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(410))
-			Expect(destinationResponse).ToNot(BeNil())
 
 			chromeCreateDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
@@ -2442,9 +2419,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionID18 = *ceJobSubscription.ID
 
 			subscriptionCreateAttributesCustomEmailModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes{
-				Invited:                []string{"abc@gmail.com", "tester3@ibm.com"},
+				Invited:                []string{"testuser@in.ibm.com"},
 				AddNotificationPayload: core.BoolPtr(true),
-				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
+				ReplyToMail:            core.StringPtr("testuser@in.ibm.com"),
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
 				FromEmail:              core.StringPtr("test@test.event-notifications.test.cloud.ibm.com"),
@@ -2495,7 +2472,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Description).To(Equal(customSMSDescription))
 			Expect(subscription.Name).To(Equal(customSMSName))
 			subscriptionID17 = *subscription.ID
-			//
+
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
 			//
@@ -2936,7 +2913,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Description).To(Equal(huaweiDescription))
 
 			UpdateAttributesCustomInvitedModel := new(eventnotificationsv1.UpdateAttributesInvited)
-			UpdateAttributesCustomInvitedModel.Add = []string{"abc@gmail.com", "tester3@ibm.com"}
+			UpdateAttributesCustomInvitedModel.Add = []string{"testuser@in.ibm.com", "tester3@ibm.com"}
 
 			UpdateAttributesCustomSubscribedModel := new(eventnotificationsv1.UpdateAttributesSubscribed)
 			UpdateAttributesCustomSubscribedModel.Remove = []string{"tester3@ibm.com"}
@@ -2947,7 +2924,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			subscriptionUpdateCustomEmailAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailUpdateAttributes{
 				Invited:                UpdateAttributesCustomInvitedModel,
 				AddNotificationPayload: core.BoolPtr(true),
-				ReplyToMail:            core.StringPtr("testerreply@gmail.com"),
+				ReplyToMail:            core.StringPtr("testuser@in.ibm.com"),
 				ReplyToName:            core.StringPtr("rester_reply"),
 				FromName:               core.StringPtr("Test IBM email"),
 				FromEmail:              core.StringPtr("test@test.event-notifications.test.cloud.ibm.com"),
@@ -3153,6 +3130,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationCreateModel.Ibmenapnsheaders = &ibmenapnsheaderstring
 
 			notificationResponse, response, err = eventNotificationsService.SendNotifications(sendNotificationsOptionsModel)
+			notificationID = *notificationResponse.NotificationID
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(202))
@@ -3167,6 +3145,32 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			// 415
 			// 500
 			//
+		})
+	})
+
+	Describe(`GetMetrics - GetMetrics`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+
+		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
+
+			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+				InstanceID:      core.StringPtr(instanceID),
+				DestinationType: core.StringPtr("smtp_custom"),
+				Gte:             core.StringPtr("2024-08-01T17:18:43Z"),
+				Lte:             core.StringPtr("2024-08-02T11:55:22Z"),
+				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
+				DestinationID:   core.StringPtr(destinationID16),
+				NotificationID:  core.StringPtr(notificationID),
+				Subject:         core.StringPtr("Test Metrics Subject"),
+			}
+
+			metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(metrics).ToNot(BeNil())
 		})
 	})
 
@@ -3218,25 +3222,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(verifySMTP.Status).ToNot(BeNil())
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-		})
-	})
-
-	Describe(`UpdateSMTPAllowedIps - Update SMTP Allowed Ips`, func() {
-		BeforeEach(func() {
-			shouldSkipTest()
-		})
-		It(`UpdateSMTPAllowedIps(updateSMTPAllowedIpsOptions *UpdateSMTPAllowedIpsOptions)`, func() {
-
-			updateSMTPAllowedOptions := &eventnotificationsv1.UpdateSMTPAllowedIpsOptions{
-				InstanceID: core.StringPtr(instanceID),
-				ID:         core.StringPtr(smtpConfigID),
-				Subnets:    []string{"192.168.1.64"},
-			}
-
-			subnets, response, err := eventNotificationsService.UpdateSMTPAllowedIps(updateSMTPAllowedOptions)
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(subnets.Subnets[0]).ToNot(BeNil())
 		})
 	})
 
