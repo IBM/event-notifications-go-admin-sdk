@@ -1375,27 +1375,27 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 			core.StringNilMapper(createDestinationOptions.CertificateContentType), createDestinationOptions.Certificate)
 	}
 	if createDestinationOptions.Icon16x16 != nil {
-		builder.AddFormData("icon_16x16", "filename",
+		builder.AddFormData("icon_16x16", "",
 			core.StringNilMapper(createDestinationOptions.Icon16x16ContentType), createDestinationOptions.Icon16x16)
 	}
 	if createDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16_2x", "filename",
+		builder.AddFormData("icon_16x16_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon16x162xContentType), createDestinationOptions.Icon16x162x)
 	}
 	if createDestinationOptions.Icon32x32 != nil {
-		builder.AddFormData("icon_32x32", "filename",
+		builder.AddFormData("icon_32x32", "",
 			core.StringNilMapper(createDestinationOptions.Icon32x32ContentType), createDestinationOptions.Icon32x32)
 	}
 	if createDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32_2x", "filename",
+		builder.AddFormData("icon_32x32_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon32x322xContentType), createDestinationOptions.Icon32x322x)
 	}
 	if createDestinationOptions.Icon128x128 != nil {
-		builder.AddFormData("icon_128x128", "filename",
+		builder.AddFormData("icon_128x128", "",
 			core.StringNilMapper(createDestinationOptions.Icon128x128ContentType), createDestinationOptions.Icon128x128)
 	}
 	if createDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128_2x", "filename",
+		builder.AddFormData("icon_128x128_2x", "",
 			core.StringNilMapper(createDestinationOptions.Icon128x1282xContentType), createDestinationOptions.Icon128x1282x)
 	}
 
@@ -1612,27 +1612,27 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 			core.StringNilMapper(updateDestinationOptions.CertificateContentType), updateDestinationOptions.Certificate)
 	}
 	if updateDestinationOptions.Icon16x16 != nil {
-		builder.AddFormData("icon_16x16", "filename",
+		builder.AddFormData("icon_16x16", "",
 			core.StringNilMapper(updateDestinationOptions.Icon16x16ContentType), updateDestinationOptions.Icon16x16)
 	}
 	if updateDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16_2x", "filename",
+		builder.AddFormData("icon_16x16_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon16x162xContentType), updateDestinationOptions.Icon16x162x)
 	}
 	if updateDestinationOptions.Icon32x32 != nil {
-		builder.AddFormData("icon_32x32", "filename",
+		builder.AddFormData("icon_32x32", "",
 			core.StringNilMapper(updateDestinationOptions.Icon32x32ContentType), updateDestinationOptions.Icon32x32)
 	}
 	if updateDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32_2x", "filename",
+		builder.AddFormData("icon_32x32_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon32x322xContentType), updateDestinationOptions.Icon32x322x)
 	}
 	if updateDestinationOptions.Icon128x128 != nil {
-		builder.AddFormData("icon_128x128", "filename",
+		builder.AddFormData("icon_128x128", "",
 			core.StringNilMapper(updateDestinationOptions.Icon128x128ContentType), updateDestinationOptions.Icon128x128)
 	}
 	if updateDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128_2x", "filename",
+		builder.AddFormData("icon_128x128_2x", "",
 			core.StringNilMapper(updateDestinationOptions.Icon128x1282xContentType), updateDestinationOptions.Icon128x1282x)
 	}
 
