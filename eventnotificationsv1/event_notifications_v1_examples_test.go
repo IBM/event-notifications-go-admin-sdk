@@ -2703,7 +2703,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Gte:             core.StringPtr("2024-08-01T17:18:43Z"),
 				Lte:             core.StringPtr("2024-08-02T11:55:22Z"),
 				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
-				ID:              core.StringPtr(destinationID16),
+				DestinationID:   core.StringPtr(destinationID16),
 				NotificationID:  core.StringPtr(notificationID),
 				Subject:         core.StringPtr("Test Metrics Subject"),
 			}

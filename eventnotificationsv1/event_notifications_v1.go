@@ -205,8 +205,11 @@ func (eventNotifications *EventNotificationsV1) GetMetricsWithContext(ctx contex
 	builder.AddQuery("destination_type", fmt.Sprint(*getMetricsOptions.DestinationType))
 	builder.AddQuery("gte", fmt.Sprint(*getMetricsOptions.Gte))
 	builder.AddQuery("lte", fmt.Sprint(*getMetricsOptions.Lte))
-	if getMetricsOptions.ID != nil {
-		builder.AddQuery("id", fmt.Sprint(*getMetricsOptions.ID))
+	if getMetricsOptions.DestinationID != nil {
+		builder.AddQuery("destination_id", fmt.Sprint(*getMetricsOptions.DestinationID))
+	}
+	if getMetricsOptions.SourceID != nil {
+		builder.AddQuery("source_id", fmt.Sprint(*getMetricsOptions.SourceID))
 	}
 	if getMetricsOptions.EmailTo != nil {
 		builder.AddQuery("email_to", fmt.Sprint(*getMetricsOptions.EmailTo))
@@ -1372,27 +1375,27 @@ func (eventNotifications *EventNotificationsV1) CreateDestinationWithContext(ctx
 			core.StringNilMapper(createDestinationOptions.CertificateContentType), createDestinationOptions.Certificate)
 	}
 	if createDestinationOptions.Icon16x16 != nil {
-		builder.AddFormData("icon_16x16", "",
+		builder.AddFormData("icon_16x16", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon16x16ContentType), createDestinationOptions.Icon16x16)
 	}
 	if createDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16_2x", "",
+		builder.AddFormData("icon_16x16_2x", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon16x162xContentType), createDestinationOptions.Icon16x162x)
 	}
 	if createDestinationOptions.Icon32x32 != nil {
-		builder.AddFormData("icon_32x32", "",
+		builder.AddFormData("icon_32x32", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon32x32ContentType), createDestinationOptions.Icon32x32)
 	}
 	if createDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32_2x", "",
+		builder.AddFormData("icon_32x32_2x", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon32x322xContentType), createDestinationOptions.Icon32x322x)
 	}
 	if createDestinationOptions.Icon128x128 != nil {
-		builder.AddFormData("icon_128x128", "",
+		builder.AddFormData("icon_128x128", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon128x128ContentType), createDestinationOptions.Icon128x128)
 	}
 	if createDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128_2x", "",
+		builder.AddFormData("icon_128x128_2x", "filename",
 			core.StringNilMapper(createDestinationOptions.Icon128x1282xContentType), createDestinationOptions.Icon128x1282x)
 	}
 
@@ -1609,27 +1612,27 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 			core.StringNilMapper(updateDestinationOptions.CertificateContentType), updateDestinationOptions.Certificate)
 	}
 	if updateDestinationOptions.Icon16x16 != nil {
-		builder.AddFormData("icon_16x16", "",
+		builder.AddFormData("icon_16x16", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon16x16ContentType), updateDestinationOptions.Icon16x16)
 	}
 	if updateDestinationOptions.Icon16x162x != nil {
-		builder.AddFormData("icon_16x16_2x", "",
+		builder.AddFormData("icon_16x16_2x", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon16x162xContentType), updateDestinationOptions.Icon16x162x)
 	}
 	if updateDestinationOptions.Icon32x32 != nil {
-		builder.AddFormData("icon_32x32", "",
+		builder.AddFormData("icon_32x32", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon32x32ContentType), updateDestinationOptions.Icon32x32)
 	}
 	if updateDestinationOptions.Icon32x322x != nil {
-		builder.AddFormData("icon_32x32_2x", "",
+		builder.AddFormData("icon_32x32_2x", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon32x322xContentType), updateDestinationOptions.Icon32x322x)
 	}
 	if updateDestinationOptions.Icon128x128 != nil {
-		builder.AddFormData("icon_128x128", "",
+		builder.AddFormData("icon_128x128", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon128x128ContentType), updateDestinationOptions.Icon128x128)
 	}
 	if updateDestinationOptions.Icon128x1282x != nil {
-		builder.AddFormData("icon_128x128_2x", "",
+		builder.AddFormData("icon_128x128_2x", "filename",
 			core.StringNilMapper(updateDestinationOptions.Icon128x1282xContentType), updateDestinationOptions.Icon128x1282x)
 	}
 
@@ -5509,8 +5512,11 @@ type GetMetricsOptions struct {
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
 
+	// Unique identifier for Destination.
+	DestinationID *string `json:"destination_id,omitempty"`
+
 	// Unique identifier for Source.
-	ID *string `json:"id,omitempty"`
+	SourceID *string `json:"source_id,omitempty"`
 
 	// Receiver email id.
 	EmailTo *string `json:"email_to,omitempty"`
@@ -5565,9 +5571,15 @@ func (_options *GetMetricsOptions) SetLte(lte string) *GetMetricsOptions {
 	return _options
 }
 
-// SetID : Allow user to set ID
-func (_options *GetMetricsOptions) SetID(id string) *GetMetricsOptions {
-	_options.ID = core.StringPtr(id)
+// SetDestinationID : Allow user to set DestinationID
+func (_options *GetMetricsOptions) SetDestinationID(destinationID string) *GetMetricsOptions {
+	_options.DestinationID = core.StringPtr(destinationID)
+	return _options
+}
+
+// SetSourceID : Allow user to set SourceID
+func (_options *GetMetricsOptions) SetSourceID(sourceID string) *GetMetricsOptions {
+	_options.SourceID = core.StringPtr(sourceID)
 	return _options
 }
 

@@ -1042,7 +1042,7 @@ getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 	Gte:             core.StringPtr(<gte-timestamp>),
 	Lte:             core.StringPtr(<lte-timestamp>),
 	EmailTo:         core.StringPtr(<email-to>),
-	ID:              core.StringPtr(<destination-id>),
+	DestinationID:              core.StringPtr(<destination-id>),
 	NotificationID:  core.StringPtr(<notification-id>),
 	Subject:         core.StringPtr(<subject>),
 }
