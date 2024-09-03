@@ -1076,6 +1076,7 @@ notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
 notificationSafariBodyModel := "{\"aps\":{\"alert\":{\"title\":\"FlightA998NowBoarding\",\"body\":\"BoardinghasbegunforFlightA998.\",\"action\":\"View\"},\"url-args\":[\"boarding\",\"A998\"]}}}"
 mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 smsTo := "[\"+911234567890\", \"+911224567890\"]"
+slackTo := "[\"C07FALXBH4G\",\"C07FALXBU4G\"]";
 templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 mms := "{\"content\": \"mms content\", \"content_type\": \"image/png\"}"
@@ -1099,6 +1100,7 @@ notificationCreateModel.Ibmensafaribody = &notificationSafariBodyModel
 notificationCreateModel.Ibmenpushto = &devicesbodyString
 notificationCreateModel.Ibmenmailto = &mailTo
 notificationCreateModel.Ibmensmsto = &smsTo
+notificationCreateModel.Ibmenslackto = &slackTo
 notificationCreateModel.Ibmentemplates = &templates
 notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
@@ -1158,6 +1160,7 @@ if err != nil {
   - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
   - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
   - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmenslackto*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
   - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
 Note: variable with * represents the mandatory attribute.
