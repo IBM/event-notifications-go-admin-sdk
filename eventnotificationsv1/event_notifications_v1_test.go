@@ -476,6 +476,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -576,6 +577,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -684,6 +686,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -737,6 +740,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -811,6 +815,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -12562,6 +12567,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				URL:           "http://eventnotificationsv1modelgenerator.com",
 				Authenticator: &core.NoAuthAuthenticator{},
 			})
+			It(`Invoke NewChannelCreateAttributes successfully`, func() {
+				id := "testString"
+				_model, err := eventNotificationsService.NewChannelCreateAttributes(id)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewChannelUpdateAttributes successfully`, func() {
+				id := "testString"
+				operation := "add"
+				_model, err := eventNotificationsService.NewChannelUpdateAttributes(id, operation)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewCreateDestinationOptions successfully`, func() {
 				// Construct an instance of the DkimAttributes model
 				dkimAttributesModel := new(eventnotificationsv1.DkimAttributes)
@@ -13419,6 +13437,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmensubject = core.StringPtr("testString")
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
+				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -13448,6 +13467,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmensubject).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmentemplates).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenmailto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenslackto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensmsto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
@@ -13816,7 +13836,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Invoke NewDestinationConfigOneOfSlackDestinationConfig successfully`, func() {
 				url := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigOneOfSlackDestinationConfig(url)
+				typeVar := "incoming_webhook"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfSlackDestinationConfig(url, typeVar)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewDestinationConfigOneOfSlackDirectMessageDestinationConfig successfully`, func() {
+				token := "testString"
+				typeVar := "direct_message"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfSlackDirectMessageDestinationConfig(token, typeVar)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

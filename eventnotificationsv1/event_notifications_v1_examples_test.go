@@ -74,6 +74,7 @@ var (
 	destinationID16           string
 	destinationID17           string
 	destinationID18           string
+	destinationID19           string
 	subscriptionID            string
 	subscriptionID1           string
 	subscriptionID2           string
@@ -82,6 +83,7 @@ var (
 	subscriptionID5           string
 	subscriptionID6           string
 	subscriptionID7           string
+	subscriptionID8           string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -110,6 +112,8 @@ var (
 	smtpConfigID              string
 	smtpUserID                string
 	notificationID            string
+	slackDMToken              string
+	slackChannelID            string
 )
 
 func shouldSkipTest() {
@@ -265,6 +269,18 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load CODE_ENGINE_PROJECT_CRN configuration property, skipping tests")
 			}
 			fmt.Printf("CODE_ENGINE_PROJECT_CRN: %s\n", codeEngineProjectCRN)
+
+			slackDMToken = config["SLACK_DM_TOKEN"]
+			if slackDMToken == "" {
+				Skip("Unable to load SLACK_DM_TOKEN configuration property, skipping tests")
+			}
+			fmt.Printf("SLACK_DM_TOKEN: %s\n", slackDMToken)
+
+			slackChannelID = config["SLACK_CHANNEL_ID"]
+			if slackChannelID == "" {
+				Skip("Unable to load SLACK_CHANNEL_ID configuration property, skipping tests")
+			}
+			fmt.Printf("SLACK_CHANNEL_ID: %s\n", slackChannelID)
 
 			configLoaded = len(config) > 0
 		})
@@ -729,7 +745,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			)
 
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL:  core.StringPtr("https://api.slack.com/myslack"),
+				Type: core.StringPtr("incoming_webhook"),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1162,6 +1179,32 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(destinationCEJobResponse).ToNot(BeNil())
 
 			destinationID18 = *destinationCEJobResponse.ID
+
+			createSlackDMDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Slack_DM_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeSlackConst,
+			)
+
+			destinationConfigParamsSlackDMModel := &eventnotificationsv1.DestinationConfigOneOfSlackDirectMessageDestinationConfig{
+				Token: core.StringPtr(slackDMToken),
+				Type:  core.StringPtr("direct_message"),
+			}
+
+			slackDMDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackDMModel,
+			}
+
+			createSlackDMDestinationOptions.SetConfig(slackDMDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createSlackDMDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID19 = *destinationResponse.ID
 			// end-create_destination
 
 		})
@@ -1388,7 +1431,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			//slack
 			destinationConfigParamsSlackModel := &eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig{
-				URL: core.StringPtr("https://api.slack.com/myslack"),
+				URL:  core.StringPtr("https://api.slack.com/myslack"),
+				Type: core.StringPtr("incoming_webhook"),
 			}
 
 			slackDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
@@ -1867,6 +1911,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(ceJobDestination).ToNot(BeNil())
 
+			destinationConfigParamsSlackDMModel := &eventnotificationsv1.DestinationConfigOneOfSlackDirectMessageDestinationConfig{
+				Token: core.StringPtr(slackDMToken),
+				Type:  core.StringPtr("direct_message"),
+			}
+
+			slackDMDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsSlackDMModel,
+			}
+
+			slackDMName := "slack_DM_destination_update"
+			slackDMDescription := "This destination is for slack DM"
+			slackDMUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID19),
+				Name:        core.StringPtr(slackDMName),
+				Description: core.StringPtr(slackDMDescription),
+				Config:      slackDMDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(slackDMUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID19)))
+			Expect(destination.Name).To(Equal(core.StringPtr(slackDMName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(slackDMDescription)))
+
 			// end-update_destination
 		})
 
@@ -2166,6 +2237,32 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Name).To(Equal(customSMSName))
 			subscriptionID7 = *subscription.ID
 
+			slackDirectMessageChannel := &eventnotificationsv1.ChannelCreateAttributes{
+				ID: core.StringPtr(slackChannelID),
+			}
+
+			subscriptionCreateSlackDMAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackDirectMessageAttributes{
+				Channels:               []eventnotificationsv1.ChannelCreateAttributes{*slackDirectMessageChannel},
+				TemplateIDNotification: core.StringPtr(slackTemplateID),
+			}
+
+			createSlackDMSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Slack DM subscription"),
+				Description:   core.StringPtr("Subscription for the Slack DM"),
+				DestinationID: core.StringPtr(destinationID19),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateSlackDMAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSlackDMSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID8 = string(*subscription.ID)
 			// end-create_subscription
 
 		})
@@ -2506,6 +2603,35 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Name).To(Equal(customSMSName))
 			Expect(subscription.Description).To(Equal(customSMSDescription))
 
+			slackDirectMessageChannel := &eventnotificationsv1.ChannelUpdateAttributes{
+				ID:        core.StringPtr(slackChannelID),
+				Operation: core.StringPtr("add"),
+			}
+
+			subscriptionUpdateSlackDMAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes{
+				Channels:               []eventnotificationsv1.ChannelUpdateAttributes{*slackDirectMessageChannel},
+				TemplateIDNotification: core.StringPtr(slackTemplateID),
+			}
+
+			slackDMName := core.StringPtr("subscription_slack_DM_update")
+			slackDMDescription := core.StringPtr("Subscription update for slack DM")
+			updateSlackDMSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        slackDMName,
+				Description: slackDMDescription,
+				ID:          core.StringPtr(subscriptionID8),
+				Attributes:  subscriptionUpdateSlackDMAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSlackDMSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID8)))
+			Expect(subscription.Name).To(Equal(slackDMName))
+			Expect(subscription.Description).To(Equal(slackDMDescription))
+
 			// end-update_subscription
 
 		})
@@ -2553,6 +2679,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			mailTo := "[\"abc@ibm.com\", \"def@us.ibm.com\"]"
 			templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 			smsTo := "[\"+911234567890\", \"+911224567890\"]"
+			slackTo := "[\"C07FALXBH4G\"]"
 			mms := "{\"url\": \"https://cloud.ibm.com/avatar/v1/avatar/migrationsegment/logo_ibm.png\"}"
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 
@@ -2592,6 +2719,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			notificationCreateModel.Ibmenmailto = &mailTo
 			notificationCreateModel.Ibmentemplates = &templates
 			notificationCreateModel.Ibmensmsto = &smsTo
+			notificationCreateModel.Ibmenslackto = &slackTo
 			notificationCreateModel.Ibmenmms = &mms
 			notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
@@ -2927,7 +3055,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				fmt.Printf("\nUnexpected response status code received from DeleteSubscription(): %d\n", response.StatusCode)
 			}
 
-			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7} {
+			for _, ID := range []string{subscriptionID1, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID7, subscriptionID8} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3018,7 +3146,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(204))
 
-			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18} {
+			for _, ID := range []string{destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
