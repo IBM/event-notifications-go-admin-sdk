@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.8.0...v0.9.0) (2024-09-04)
+
+
+### Features
+
+* support slack DM ([#57](https://github.com/IBM/event-notifications-go-admin-sdk/issues/57)) ([f52f4a1](https://github.com/IBM/event-notifications-go-admin-sdk/commit/f52f4a169be05129668b499c0f5279c8201c7a43))
+
 # [0.8.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.7.0...v0.8.0) (2024-08-09)
 
 
