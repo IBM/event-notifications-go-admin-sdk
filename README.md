@@ -569,6 +569,24 @@ templateResponse, response, err = eventNotificationsService.CreateTemplate(creat
 ```
 For slack template supported template type value: slack.notification
 
+#### Webhook Template
+```go
+webhookTemplConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+	Body: core.StringPtr(<json body encoded in to base 64 format>),
+}
+
+createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      webhookTemplConfig,
+}
+
+templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
+For webhook template supported template type value: webhook.notification
+
 ### List Templates
 ```go
 listTemplatesOptions := eventNotificationsService.NewListTemplatesOptions(
@@ -628,6 +646,25 @@ replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 ```
 For slack template supported template type value: slack.notification
+
+#### Update Webhook Template
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+For webhook template supported template type value: webhook.notification
 
 ### Delete Template
 ```go
@@ -698,6 +735,7 @@ if err != nil {
 
 subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
 	SigningEnabled: core.BoolPtr(false),
+	TemplateIDNotification: core.StringPtr(<webhook-template-id>),
 }
 
 createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
@@ -765,6 +803,7 @@ updateSubscriptionOptions := eventNotificationsService.NewUpdateSubscriptionOpti
 
 subscriptionUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
 	SigningEnabled: core.BoolPtr(true),
+	TemplateIDNotification: core.StringPtr(<webhook-template-id>),
 }
 
 updateSubscriptionOptions.SetAttributes(subscriptionUpdateAttributesModel)
@@ -1205,6 +1244,7 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_PD_API_KEY` - pagerduty api key
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 

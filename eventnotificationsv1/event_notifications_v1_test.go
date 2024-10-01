@@ -13888,12 +13888,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewSubscriptionCreateAttributesWebhookAttributes successfully`, func() {
-				signingEnabled := true
-				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesWebhookAttributes(signingEnabled)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes successfully`, func() {
 				addNotificationPayload := false
 				replyToMail := "testString"
@@ -13913,12 +13907,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewSubscriptionUpdateAttributesWebhookAttributes successfully`, func() {
-				signingEnabled := true
-				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesWebhookAttributes(signingEnabled)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewTemplateConfigOneOfEmailTemplateConfig successfully`, func() {
 				body := "testString"
 				_model, err := eventNotificationsService.NewTemplateConfigOneOfEmailTemplateConfig(body)
@@ -13928,6 +13916,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewTemplateConfigOneOfSlackTemplateConfig successfully`, func() {
 				body := "testString"
 				_model, err := eventNotificationsService.NewTemplateConfigOneOfSlackTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfWebhookTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfWebhookTemplateConfig(body)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})

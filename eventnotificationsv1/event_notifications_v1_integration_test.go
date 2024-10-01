@@ -131,6 +131,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		notificationID            string
 		slackDMToken              string
 		slackChannelID            string
+		webhookTemplateID         string
+		webhookTemplateBody       string
 	)
 
 	var shouldSkipTest = func() {
@@ -299,6 +301,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load slackTemplateBody configuration property, skipping tests")
 			}
 			fmt.Printf("slackTemplateBody: %s\n", slackTemplateBody)
+
+			webhookTemplateBody = config["WEBHOOK_TEMPLATE_BODY"]
+			if webhookTemplateBody == "" {
+				Skip("Unable to load webhookTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("webhookTemplateBody: %s\n", webhookTemplateBody)
 
 			cosInstanceCRN = config["COS_INSTANCE_CRN"]
 			if cosInstanceCRN == "" {
@@ -802,8 +810,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`CreateDestination(createDestinationOptions *CreateDestinationOptions)`, func() {
 
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
-				URL:  core.StringPtr("https://gcm.com"),
-				Verb: core.StringPtr("get"),
+				URL:  core.StringPtr(codeEngineURL),
+				Verb: core.StringPtr("post"),
 				CustomHeaders: map[string]string{
 					"gcm_apikey": "api_key_value",
 				},
@@ -1333,6 +1341,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeInvitation := "smtp_custom.invitation"
 			templateTypeNotification := "smtp_custom.notification"
 			templateTypeSlack := "slack.notification"
+			templateTypeWebhook := "webhook.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1413,6 +1422,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
 			slackTemplateID = *templateResponse.ID
+
+			name = "webhook template"
+			description = "webhook template description"
+
+			webhookTemplConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+				Body: core.StringPtr(webhookTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeWebhook),
+				Description: core.StringPtr(description),
+				Params:      webhookTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			webhookTemplateID = *templateResponse.ID
 		})
 	})
 
@@ -1546,7 +1582,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			//webhook
 			destinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig{
-				URL:  core.StringPtr("https://cloud.ibm.com/nhwebhook/sendwebhook"),
+				URL:  core.StringPtr(codeEngineURL),
 				Verb: core.StringPtr("post"),
 				CustomHeaders: map[string]string{
 					"authorization": "authorization key",
@@ -2077,6 +2113,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeInvitation := "smtp_custom.invitation"
 			templateTypeNotification := "smtp_custom.notification"
 			templateTypeSlack := "slack.notification"
+			templateTypeWebhook := "webhook.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -2157,6 +2194,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(slackTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "webhook template"
+			description = "webhook template description"
+
+			webhookTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+				Body: core.StringPtr(webhookTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(webhookTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeWebhook),
+				Description: core.StringPtr(description),
+				Params:      webhookTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(webhookTemplateID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 		})
 	})
 
@@ -2166,8 +2230,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`CreateSubscription(createSubscriptionOptions *CreateSubscriptionOptions)`, func() {
 
-			subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
-				SigningEnabled: core.BoolPtr(false),
+			subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesWebhookAttributes{
+				SigningEnabled:         core.BoolPtr(false),
+				TemplateIDNotification: core.StringPtr(webhookTemplateID),
 			}
 
 			name := core.StringPtr("subscription_web")
@@ -2686,7 +2751,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`UpdateSubscription(updateSubscriptionOptions *UpdateSubscriptionOptions)`, func() {
 
 			subscriptionUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
-				SigningEnabled: core.BoolPtr(true),
+				SigningEnabled:         core.BoolPtr(true),
+				TemplateIDNotification: core.StringPtr(webhookTemplateID),
 			}
 
 			name := core.StringPtr("Webhook_sub_updated")
@@ -3533,7 +3599,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID18, subscriptionID19} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3606,7 +3672,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions)`, func() {
 
-			for _, ID := range []string{templateInvitationID, templateNotificationID} {
+			for _, ID := range []string{templateInvitationID, templateNotificationID, slackTemplateID, webhookTemplateID} {
 
 				deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3664,7 +3730,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID18, destinationID19} {
+			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

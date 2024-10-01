@@ -114,6 +114,8 @@ var (
 	notificationID            string
 	slackDMToken              string
 	slackChannelID            string
+	webhookTemplateID         string
+	webhookTemplateBody       string
 )
 
 func shouldSkipTest() {
@@ -281,6 +283,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load SLACK_CHANNEL_ID configuration property, skipping tests")
 			}
 			fmt.Printf("SLACK_CHANNEL_ID: %s\n", slackChannelID)
+
+			webhookTemplateBody = config["WEBHOOK_TEMPLATE_BODY"]
+			if webhookTemplateBody == "" {
+				Skip("Unable to load webhookTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("webhookTemplateBody: %s\n", webhookTemplateBody)
 
 			configLoaded = len(config) > 0
 		})
@@ -1234,6 +1242,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			templateTypeInvitation := "smtp_custom.invitation"
 			templateTypeNotification := "smtp_custom.notification"
 			templateTypeSlack := "slack.notification"
+			templateTypeWebhook := "webhook.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1308,6 +1317,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(templateResponse).ToNot(BeNil())
 
 			slackTemplateID = *templateResponse.ID
+
+			name = "webhook template"
+			description = "webhook template description"
+
+			webhookTemplConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+				Body: core.StringPtr(webhookTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeWebhook),
+				Description: core.StringPtr(description),
+				Params:      webhookTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			webhookTemplateID = *templateResponse.ID
 			// end-create_template
 		})
 
@@ -2117,7 +2153,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 
 			webSubscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
-				SigningEnabled: core.BoolPtr(false),
+				SigningEnabled:         core.BoolPtr(false),
+				TemplateIDNotification: core.StringPtr(webhookTemplateID),
 			}
 
 			webName := core.StringPtr("subscription_web")
@@ -2439,7 +2476,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Description).To(Equal(description))
 
 			webSubscriptionUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
-				SigningEnabled: core.BoolPtr(true),
+				SigningEnabled:         core.BoolPtr(true),
+				TemplateIDNotification: core.StringPtr(webhookTemplateID),
 			}
 
 			webName := core.StringPtr("Webhook_sub_updated")
