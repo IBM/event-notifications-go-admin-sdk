@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.9.0...v0.10.0) (2024-10-04)
+
+
+### Features
+
+* webhook template support ([#58](https://github.com/IBM/event-notifications-go-admin-sdk/issues/58)) ([b56a673](https://github.com/IBM/event-notifications-go-admin-sdk/commit/b56a6731da7bb60eb113ec714c81f57354b6cdca))
+
 # [0.9.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.8.0...v0.9.0) (2024-09-04)
 
 
