@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.10.0...v0.11.0) (2024-10-30)
+
+
+### Features
+
+* removed cloud functions support ([#59](https://github.com/IBM/event-notifications-go-admin-sdk/issues/59)) ([3f0784c](https://github.com/IBM/event-notifications-go-admin-sdk/commit/3f0784c3e1c0f56a7f90e7094433074e2faee266))
+
 # [0.10.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.9.0...v0.10.0) (2024-10-04)
 
 
