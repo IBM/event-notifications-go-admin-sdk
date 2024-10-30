@@ -13779,12 +13779,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
-			It(`Invoke NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig successfully`, func() {
-				url := "testString"
-				_model, err := eventNotificationsService.NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(url)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig successfully`, func() {
 				bucketName := "testString"
 				instanceID := "testString"

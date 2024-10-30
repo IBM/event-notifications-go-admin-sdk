@@ -476,7 +476,7 @@ func (eventNotifications *EventNotificationsV1) GetSourceWithContext(ctx context
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getSourceOptions.InstanceID,
-		"id": *getSourceOptions.ID,
+		"id":          *getSourceOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -537,7 +537,7 @@ func (eventNotifications *EventNotificationsV1) DeleteSourceWithContext(ctx cont
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteSourceOptions.InstanceID,
-		"id": *deleteSourceOptions.ID,
+		"id":          *deleteSourceOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -586,7 +586,7 @@ func (eventNotifications *EventNotificationsV1) UpdateSourceWithContext(ctx cont
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateSourceOptions.InstanceID,
-		"id": *updateSourceOptions.ID,
+		"id":          *updateSourceOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -809,7 +809,7 @@ func (eventNotifications *EventNotificationsV1) GetTopicWithContext(ctx context.
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getTopicOptions.InstanceID,
-		"id": *getTopicOptions.ID,
+		"id":          *getTopicOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -874,7 +874,7 @@ func (eventNotifications *EventNotificationsV1) ReplaceTopicWithContext(ctx cont
 
 	pathParamsMap := map[string]string{
 		"instance_id": *replaceTopicOptions.InstanceID,
-		"id": *replaceTopicOptions.ID,
+		"id":          *replaceTopicOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
@@ -951,7 +951,7 @@ func (eventNotifications *EventNotificationsV1) DeleteTopicWithContext(ctx conte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteTopicOptions.InstanceID,
-		"id": *deleteTopicOptions.ID,
+		"id":          *deleteTopicOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -1149,7 +1149,7 @@ func (eventNotifications *EventNotificationsV1) GetTemplateWithContext(ctx conte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getTemplateOptions.InstanceID,
-		"id": *getTemplateOptions.ID,
+		"id":          *getTemplateOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1210,7 +1210,7 @@ func (eventNotifications *EventNotificationsV1) ReplaceTemplateWithContext(ctx c
 
 	pathParamsMap := map[string]string{
 		"instance_id": *replaceTemplateOptions.InstanceID,
-		"id": *replaceTemplateOptions.ID,
+		"id":          *replaceTemplateOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
@@ -1290,7 +1290,7 @@ func (eventNotifications *EventNotificationsV1) DeleteTemplateWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteTemplateOptions.InstanceID,
-		"id": *deleteTemplateOptions.ID,
+		"id":          *deleteTemplateOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -1509,7 +1509,7 @@ func (eventNotifications *EventNotificationsV1) GetDestinationWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getDestinationOptions.InstanceID,
-		"id": *getDestinationOptions.ID,
+		"id":          *getDestinationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1574,7 +1574,7 @@ func (eventNotifications *EventNotificationsV1) UpdateDestinationWithContext(ctx
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateDestinationOptions.InstanceID,
-		"id": *updateDestinationOptions.ID,
+		"id":          *updateDestinationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -1676,7 +1676,7 @@ func (eventNotifications *EventNotificationsV1) DeleteDestinationWithContext(ctx
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteDestinationOptions.InstanceID,
-		"id": *deleteDestinationOptions.ID,
+		"id":          *deleteDestinationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -1725,7 +1725,7 @@ func (eventNotifications *EventNotificationsV1) GetEnabledCountriesWithContext(c
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getEnabledCountriesOptions.InstanceID,
-		"id": *getEnabledCountriesOptions.ID,
+		"id":          *getEnabledCountriesOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -1786,7 +1786,7 @@ func (eventNotifications *EventNotificationsV1) TestDestinationWithContext(ctx c
 
 	pathParamsMap := map[string]string{
 		"instance_id": *testDestinationOptions.InstanceID,
-		"id": *testDestinationOptions.ID,
+		"id":          *testDestinationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
@@ -1847,7 +1847,7 @@ func (eventNotifications *EventNotificationsV1) UpdateVerifyDestinationWithConte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateVerifyDestinationOptions.InstanceID,
-		"id": *updateVerifyDestinationOptions.ID,
+		"id":          *updateVerifyDestinationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -1910,7 +1910,7 @@ func (eventNotifications *EventNotificationsV1) CreateTagsSubscriptionWithContex
 
 	pathParamsMap := map[string]string{
 		"instance_id": *createTagsSubscriptionOptions.InstanceID,
-		"id": *createTagsSubscriptionOptions.ID,
+		"id":          *createTagsSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
@@ -1984,7 +1984,7 @@ func (eventNotifications *EventNotificationsV1) ListTagsSubscriptionWithContext(
 
 	pathParamsMap := map[string]string{
 		"instance_id": *listTagsSubscriptionOptions.InstanceID,
-		"id": *listTagsSubscriptionOptions.ID,
+		"id":          *listTagsSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -2064,7 +2064,7 @@ func (eventNotifications *EventNotificationsV1) DeleteTagsSubscriptionWithContex
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteTagsSubscriptionOptions.InstanceID,
-		"id": *deleteTagsSubscriptionOptions.ID,
+		"id":          *deleteTagsSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -2272,7 +2272,7 @@ func (eventNotifications *EventNotificationsV1) GetSubscriptionWithContext(ctx c
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getSubscriptionOptions.InstanceID,
-		"id": *getSubscriptionOptions.ID,
+		"id":          *getSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -2333,7 +2333,7 @@ func (eventNotifications *EventNotificationsV1) DeleteSubscriptionWithContext(ct
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteSubscriptionOptions.InstanceID,
-		"id": *deleteSubscriptionOptions.ID,
+		"id":          *deleteSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -2382,7 +2382,7 @@ func (eventNotifications *EventNotificationsV1) UpdateSubscriptionWithContext(ct
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateSubscriptionOptions.InstanceID,
-		"id": *updateSubscriptionOptions.ID,
+		"id":          *updateSubscriptionOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -2602,7 +2602,7 @@ func (eventNotifications *EventNotificationsV1) GetIntegrationWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getIntegrationOptions.InstanceID,
-		"id": *getIntegrationOptions.ID,
+		"id":          *getIntegrationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -2663,7 +2663,7 @@ func (eventNotifications *EventNotificationsV1) ReplaceIntegrationWithContext(ct
 
 	pathParamsMap := map[string]string{
 		"instance_id": *replaceIntegrationOptions.InstanceID,
-		"id": *replaceIntegrationOptions.ID,
+		"id":          *replaceIntegrationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PUT)
@@ -2883,7 +2883,7 @@ func (eventNotifications *EventNotificationsV1) CreateSMTPUserWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *createSMTPUserOptions.InstanceID,
-		"id": *createSMTPUserOptions.ID,
+		"id":          *createSMTPUserOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.POST)
@@ -2954,7 +2954,7 @@ func (eventNotifications *EventNotificationsV1) ListSMTPUsersWithContext(ctx con
 
 	pathParamsMap := map[string]string{
 		"instance_id": *listSMTPUsersOptions.InstanceID,
-		"id": *listSMTPUsersOptions.ID,
+		"id":          *listSMTPUsersOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -3025,7 +3025,7 @@ func (eventNotifications *EventNotificationsV1) GetSMTPConfigurationWithContext(
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getSMTPConfigurationOptions.InstanceID,
-		"id": *getSMTPConfigurationOptions.ID,
+		"id":          *getSMTPConfigurationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -3086,7 +3086,7 @@ func (eventNotifications *EventNotificationsV1) UpdateSMTPConfigurationWithConte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateSMTPConfigurationOptions.InstanceID,
-		"id": *updateSMTPConfigurationOptions.ID,
+		"id":          *updateSMTPConfigurationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -3160,7 +3160,7 @@ func (eventNotifications *EventNotificationsV1) DeleteSMTPConfigurationWithConte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteSMTPConfigurationOptions.InstanceID,
-		"id": *deleteSMTPConfigurationOptions.ID,
+		"id":          *deleteSMTPConfigurationOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -3209,8 +3209,8 @@ func (eventNotifications *EventNotificationsV1) GetSMTPUserWithContext(ctx conte
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getSMTPUserOptions.InstanceID,
-		"id": *getSMTPUserOptions.ID,
-		"user_id": *getSMTPUserOptions.UserID,
+		"id":          *getSMTPUserOptions.ID,
+		"user_id":     *getSMTPUserOptions.UserID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -3271,8 +3271,8 @@ func (eventNotifications *EventNotificationsV1) UpdateSMTPUserWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateSMTPUserOptions.InstanceID,
-		"id": *updateSMTPUserOptions.ID,
-		"user_id": *updateSMTPUserOptions.UserID,
+		"id":          *updateSMTPUserOptions.ID,
+		"user_id":     *updateSMTPUserOptions.UserID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -3343,8 +3343,8 @@ func (eventNotifications *EventNotificationsV1) DeleteSMTPUserWithContext(ctx co
 
 	pathParamsMap := map[string]string{
 		"instance_id": *deleteSMTPUserOptions.InstanceID,
-		"id": *deleteSMTPUserOptions.ID,
-		"user_id": *deleteSMTPUserOptions.UserID,
+		"id":          *deleteSMTPUserOptions.ID,
+		"user_id":     *deleteSMTPUserOptions.UserID,
 	}
 
 	builder := core.NewRequestBuilder(core.DELETE)
@@ -3393,7 +3393,7 @@ func (eventNotifications *EventNotificationsV1) GetSMTPAllowedIpsWithContext(ctx
 
 	pathParamsMap := map[string]string{
 		"instance_id": *getSMTPAllowedIpsOptions.InstanceID,
-		"id": *getSMTPAllowedIpsOptions.ID,
+		"id":          *getSMTPAllowedIpsOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.GET)
@@ -3454,7 +3454,7 @@ func (eventNotifications *EventNotificationsV1) UpdateVerifySMTPWithContext(ctx 
 
 	pathParamsMap := map[string]string{
 		"instance_id": *updateVerifySMTPOptions.InstanceID,
-		"id": *updateVerifySMTPOptions.ID,
+		"id":          *updateVerifySMTPOptions.ID,
 	}
 
 	builder := core.NewRequestBuilder(core.PATCH)
@@ -3560,14 +3560,14 @@ type ChannelUpdateAttributes struct {
 // Constants associated with the ChannelUpdateAttributes.Operation property.
 // The channel operation type.
 const (
-	ChannelUpdateAttributesOperationAddConst = "add"
+	ChannelUpdateAttributesOperationAddConst    = "add"
 	ChannelUpdateAttributesOperationRemoveConst = "remove"
 )
 
 // NewChannelUpdateAttributes : Instantiate ChannelUpdateAttributes (Generic Model Constructor)
 func (*EventNotificationsV1) NewChannelUpdateAttributes(id string, operation string) (_model *ChannelUpdateAttributes, err error) {
 	_model = &ChannelUpdateAttributes{
-		ID: core.StringPtr(id),
+		ID:        core.StringPtr(id),
 		Operation: core.StringPtr(operation),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -3658,30 +3658,29 @@ type CreateDestinationOptions struct {
 // Constants associated with the CreateDestinationOptions.Type property.
 // The type of Destination Webhook.
 const (
-	CreateDestinationOptionsTypeIbmceConst = "ibmce"
-	CreateDestinationOptionsTypeIbmcfConst = "ibmcf"
-	CreateDestinationOptionsTypeIbmcosConst = "ibmcos"
-	CreateDestinationOptionsTypeMsteamsConst = "msteams"
-	CreateDestinationOptionsTypePagerdutyConst = "pagerduty"
+	CreateDestinationOptionsTypeIbmceConst       = "ibmce"
+	CreateDestinationOptionsTypeIbmcosConst      = "ibmcos"
+	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
+	CreateDestinationOptionsTypePagerdutyConst   = "pagerduty"
 	CreateDestinationOptionsTypePushAndroidConst = "push_android"
-	CreateDestinationOptionsTypePushChromeConst = "push_chrome"
+	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
 	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
-	CreateDestinationOptionsTypePushHuaweiConst = "push_huawei"
-	CreateDestinationOptionsTypePushIosConst = "push_ios"
-	CreateDestinationOptionsTypePushSafariConst = "push_safari"
-	CreateDestinationOptionsTypeSMTPCustomConst = "smtp_custom"
-	CreateDestinationOptionsTypeServicenowConst = "servicenow"
-	CreateDestinationOptionsTypeSlackConst = "slack"
-	CreateDestinationOptionsTypeSmsCustomConst = "sms_custom"
-	CreateDestinationOptionsTypeWebhookConst = "webhook"
+	CreateDestinationOptionsTypePushHuaweiConst  = "push_huawei"
+	CreateDestinationOptionsTypePushIosConst     = "push_ios"
+	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
+	CreateDestinationOptionsTypeSMTPCustomConst  = "smtp_custom"
+	CreateDestinationOptionsTypeServicenowConst  = "servicenow"
+	CreateDestinationOptionsTypeSlackConst       = "slack"
+	CreateDestinationOptionsTypeSmsCustomConst   = "sms_custom"
+	CreateDestinationOptionsTypeWebhookConst     = "webhook"
 )
 
 // NewCreateDestinationOptions : Instantiate CreateDestinationOptions
 func (*EventNotificationsV1) NewCreateDestinationOptions(instanceID string, name string, typeVar string) *CreateDestinationOptions {
 	return &CreateDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
+		Name:       core.StringPtr(name),
+		Type:       core.StringPtr(typeVar),
 	}
 }
 
@@ -3836,8 +3835,8 @@ const (
 func (*EventNotificationsV1) NewCreateIntegrationOptions(instanceID string, typeVar string, metadata *IntegrationCreateMetadata) *CreateIntegrationOptions {
 	return &CreateIntegrationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Type: core.StringPtr(typeVar),
-		Metadata: metadata,
+		Type:       core.StringPtr(typeVar),
+		Metadata:   metadata,
 	}
 }
 
@@ -3887,8 +3886,8 @@ type CreateSMTPConfigurationOptions struct {
 func (*EventNotificationsV1) NewCreateSMTPConfigurationOptions(instanceID string, name string, domain string) *CreateSMTPConfigurationOptions {
 	return &CreateSMTPConfigurationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
-		Domain: core.StringPtr(domain),
+		Name:       core.StringPtr(name),
+		Domain:     core.StringPtr(domain),
 	}
 }
 
@@ -3941,7 +3940,7 @@ type CreateSMTPUserOptions struct {
 func (*EventNotificationsV1) NewCreateSMTPUserOptions(instanceID string, id string) *CreateSMTPUserOptions {
 	return &CreateSMTPUserOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -3990,8 +3989,8 @@ type CreateSourcesOptions struct {
 // NewCreateSourcesOptions : Instantiate CreateSourcesOptions
 func (*EventNotificationsV1) NewCreateSourcesOptions(instanceID string, name string, description string) *CreateSourcesOptions {
 	return &CreateSourcesOptions{
-		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
+		InstanceID:  core.StringPtr(instanceID),
+		Name:        core.StringPtr(name),
 		Description: core.StringPtr(description),
 	}
 }
@@ -4052,10 +4051,10 @@ type CreateSubscriptionOptions struct {
 // NewCreateSubscriptionOptions : Instantiate CreateSubscriptionOptions
 func (*EventNotificationsV1) NewCreateSubscriptionOptions(instanceID string, name string, destinationID string, topicID string) *CreateSubscriptionOptions {
 	return &CreateSubscriptionOptions{
-		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
+		InstanceID:    core.StringPtr(instanceID),
+		Name:          core.StringPtr(name),
 		DestinationID: core.StringPtr(destinationID),
-		TopicID: core.StringPtr(topicID),
+		TopicID:       core.StringPtr(topicID),
 	}
 }
 
@@ -4123,9 +4122,9 @@ type CreateTagsSubscriptionOptions struct {
 func (*EventNotificationsV1) NewCreateTagsSubscriptionOptions(instanceID string, id string, deviceID string, tagName string) *CreateTagsSubscriptionOptions {
 	return &CreateTagsSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		DeviceID: core.StringPtr(deviceID),
-		TagName: core.StringPtr(tagName),
+		ID:         core.StringPtr(id),
+		DeviceID:   core.StringPtr(deviceID),
+		TagName:    core.StringPtr(tagName),
 	}
 }
 
@@ -4183,9 +4182,9 @@ type CreateTemplateOptions struct {
 func (*EventNotificationsV1) NewCreateTemplateOptions(instanceID string, name string, typeVar string, params TemplateConfigOneOfIntf) *CreateTemplateOptions {
 	return &CreateTemplateOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
-		Type: core.StringPtr(typeVar),
-		Params: params,
+		Name:       core.StringPtr(name),
+		Type:       core.StringPtr(typeVar),
+		Params:     params,
 	}
 }
 
@@ -4247,7 +4246,7 @@ type CreateTopicOptions struct {
 func (*EventNotificationsV1) NewCreateTopicOptions(instanceID string, name string) *CreateTopicOptions {
 	return &CreateTopicOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Name: core.StringPtr(name),
+		Name:       core.StringPtr(name),
 	}
 }
 
@@ -4328,7 +4327,7 @@ type DeleteDestinationOptions struct {
 func (*EventNotificationsV1) NewDeleteDestinationOptions(instanceID string, id string) *DeleteDestinationOptions {
 	return &DeleteDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4366,7 +4365,7 @@ type DeleteSMTPConfigurationOptions struct {
 func (*EventNotificationsV1) NewDeleteSMTPConfigurationOptions(instanceID string, id string) *DeleteSMTPConfigurationOptions {
 	return &DeleteSMTPConfigurationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4407,8 +4406,8 @@ type DeleteSMTPUserOptions struct {
 func (*EventNotificationsV1) NewDeleteSMTPUserOptions(instanceID string, id string, userID string) *DeleteSMTPUserOptions {
 	return &DeleteSMTPUserOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		UserID: core.StringPtr(userID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
 	}
 }
 
@@ -4452,7 +4451,7 @@ type DeleteSourceOptions struct {
 func (*EventNotificationsV1) NewDeleteSourceOptions(instanceID string, id string) *DeleteSourceOptions {
 	return &DeleteSourceOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4490,7 +4489,7 @@ type DeleteSubscriptionOptions struct {
 func (*EventNotificationsV1) NewDeleteSubscriptionOptions(instanceID string, id string) *DeleteSubscriptionOptions {
 	return &DeleteSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4534,7 +4533,7 @@ type DeleteTagsSubscriptionOptions struct {
 func (*EventNotificationsV1) NewDeleteTagsSubscriptionOptions(instanceID string, id string) *DeleteTagsSubscriptionOptions {
 	return &DeleteTagsSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4584,7 +4583,7 @@ type DeleteTemplateOptions struct {
 func (*EventNotificationsV1) NewDeleteTemplateOptions(instanceID string, id string) *DeleteTemplateOptions {
 	return &DeleteTemplateOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4622,7 +4621,7 @@ type DeleteTopicOptions struct {
 func (*EventNotificationsV1) NewDeleteTopicOptions(instanceID string, id string) *DeleteTopicOptions {
 	return &DeleteTopicOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -4656,7 +4655,7 @@ type Destination struct {
 	Description *string `json:"description" validate:"required"`
 
 	// Destination type
-	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
 	Type *string `json:"type" validate:"required"`
 
 	// Whether to collect the failed event in Cloud Object Storage bucket.
@@ -4676,25 +4675,23 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type
-// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
 const (
-	DestinationTypeIbmceConst = "ibmce"
-	DestinationTypeIbmcfConst = "ibmcf"
-	DestinationTypeIbmcosConst = "ibmcos"
-	DestinationTypeMsteamsConst = "msteams"
-	DestinationTypePagerdutyConst = "pagerduty"
+	DestinationTypeIbmceConst       = "ibmce"
+	DestinationTypeIbmcosConst      = "ibmcos"
+	DestinationTypeMsteamsConst     = "msteams"
+	DestinationTypePagerdutyConst   = "pagerduty"
 	DestinationTypePushAndroidConst = "push_android"
-	DestinationTypePushHuaweiConst = "push_huawei"
-	DestinationTypePushIosConst = "push_ios"
-	DestinationTypePushSafariConst = "push_safari"
-	DestinationTypeSMTPCustomConst = "smtp_custom"
-	DestinationTypeSMTPIBMConst = "smtp_ibm"
-	DestinationTypeServicenowConst = "servicenow"
-	DestinationTypeSlackConst = "slack"
-	DestinationTypeSmsCustomConst = "sms_custom"
-	DestinationTypeSmsIBMConst = "sms_ibm"
-	DestinationTypeWebhookConst = "webhook"
+	DestinationTypePushHuaweiConst  = "push_huawei"
+	DestinationTypePushIosConst     = "push_ios"
+	DestinationTypePushSafariConst  = "push_safari"
+	DestinationTypeSMTPCustomConst  = "smtp_custom"
+	DestinationTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationTypeServicenowConst  = "servicenow"
+	DestinationTypeSlackConst       = "slack"
+	DestinationTypeSmsCustomConst   = "sms_custom"
+	DestinationTypeSmsIBMConst      = "sms_ibm"
+	DestinationTypeWebhookConst     = "webhook"
 )
 
 // UnmarshalDestination unmarshals an instance of Destination from the specified map of raw messages.
@@ -4778,7 +4775,6 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfSlackDirectMessageDestinationConfig
 // - DestinationConfigOneOfSafariDestinationConfig
 // - DestinationConfigOneOfMsTeamsDestinationConfig
-// - DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
 // - DestinationConfigOneOfPagerDutyDestinationConfig
 // - DestinationConfigOneOfServiceNowDestinationConfig
 // - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
@@ -4901,7 +4897,7 @@ type DestinationConfigOneOf struct {
 // Constants associated with the DestinationConfigOneOf.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfVerbGetConst = "get"
+	DestinationConfigOneOfVerbGetConst  = "get"
 	DestinationConfigOneOfVerbPostConst = "post"
 )
 
@@ -4909,8 +4905,9 @@ const (
 // The code engine destination type.
 const (
 	DestinationConfigOneOfTypeApplicationConst = "application"
-	DestinationConfigOneOfTypeJobConst = "job"
+	DestinationConfigOneOfTypeJobConst         = "job"
 )
+
 func (*DestinationConfigOneOf) isaDestinationConfigOneOf() bool {
 	return true
 }
@@ -5180,22 +5177,21 @@ type DestinationListItem struct {
 // Constants associated with the DestinationListItem.Type property.
 // Destination type.
 const (
-	DestinationListItemTypeIbmceConst = "ibmce"
-	DestinationListItemTypeIbmcfConst = "ibmcf"
-	DestinationListItemTypeIbmcosConst = "ibmcos"
-	DestinationListItemTypeMsteamsConst = "msteams"
-	DestinationListItemTypePagerdutyConst = "pagerduty"
+	DestinationListItemTypeIbmceConst       = "ibmce"
+	DestinationListItemTypeIbmcosConst      = "ibmcos"
+	DestinationListItemTypeMsteamsConst     = "msteams"
+	DestinationListItemTypePagerdutyConst   = "pagerduty"
 	DestinationListItemTypePushAndroidConst = "push_android"
-	DestinationListItemTypePushHuaweiConst = "push_huawei"
-	DestinationListItemTypePushIosConst = "push_ios"
-	DestinationListItemTypePushSafariConst = "push_safari"
-	DestinationListItemTypeSMTPCustomConst = "smtp_custom"
-	DestinationListItemTypeSMTPIBMConst = "smtp_ibm"
-	DestinationListItemTypeServicenowConst = "servicenow"
-	DestinationListItemTypeSlackConst = "slack"
-	DestinationListItemTypeSmsCustomConst = "sms_custom"
-	DestinationListItemTypeSmsIBMConst = "sms_ibm"
-	DestinationListItemTypeWebhookConst = "webhook"
+	DestinationListItemTypePushHuaweiConst  = "push_huawei"
+	DestinationListItemTypePushIosConst     = "push_ios"
+	DestinationListItemTypePushSafariConst  = "push_safari"
+	DestinationListItemTypeSMTPCustomConst  = "smtp_custom"
+	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
+	DestinationListItemTypeServicenowConst  = "servicenow"
+	DestinationListItemTypeSlackConst       = "slack"
+	DestinationListItemTypeSmsCustomConst   = "sms_custom"
+	DestinationListItemTypeSmsIBMConst      = "sms_ibm"
+	DestinationListItemTypeWebhookConst     = "webhook"
 )
 
 // UnmarshalDestinationListItem unmarshals an instance of DestinationListItem from the specified map of raw messages.
@@ -5264,22 +5260,21 @@ type DestinationResponse struct {
 // Constants associated with the DestinationResponse.Type property.
 // Destination type.
 const (
-	DestinationResponseTypeIbmceConst = "ibmce"
-	DestinationResponseTypeIbmcfConst = "ibmcf"
-	DestinationResponseTypeIbmcosConst = "ibmcos"
-	DestinationResponseTypeMsteamsConst = "msteams"
-	DestinationResponseTypePagerdutyConst = "pagerduty"
+	DestinationResponseTypeIbmceConst       = "ibmce"
+	DestinationResponseTypeIbmcosConst      = "ibmcos"
+	DestinationResponseTypeMsteamsConst     = "msteams"
+	DestinationResponseTypePagerdutyConst   = "pagerduty"
 	DestinationResponseTypePushAndroidConst = "push_android"
-	DestinationResponseTypePushChromeConst = "push_chrome"
+	DestinationResponseTypePushChromeConst  = "push_chrome"
 	DestinationResponseTypePushFirefoxConst = "push_firefox"
-	DestinationResponseTypePushHuaweiConst = "push_huawei"
-	DestinationResponseTypePushIosConst = "push_ios"
-	DestinationResponseTypePushSafariConst = "push_safari"
-	DestinationResponseTypeSMTPCustomConst = "smtp_custom"
-	DestinationResponseTypeServicenowConst = "servicenow"
-	DestinationResponseTypeSlackConst = "slack"
-	DestinationResponseTypeSmsCustomConst = "sms_custom"
-	DestinationResponseTypeWebhookConst = "webhook"
+	DestinationResponseTypePushHuaweiConst  = "push_huawei"
+	DestinationResponseTypePushIosConst     = "push_ios"
+	DestinationResponseTypePushSafariConst  = "push_safari"
+	DestinationResponseTypeSMTPCustomConst  = "smtp_custom"
+	DestinationResponseTypeServicenowConst  = "servicenow"
+	DestinationResponseTypeSlackConst       = "slack"
+	DestinationResponseTypeSmsCustomConst   = "sms_custom"
+	DestinationResponseTypeWebhookConst     = "webhook"
 )
 
 // UnmarshalDestinationResponse unmarshals an instance of DestinationResponse from the specified map of raw messages.
@@ -5474,7 +5469,7 @@ type GetDestinationOptions struct {
 func (*EventNotificationsV1) NewGetDestinationOptions(instanceID string, id string) *GetDestinationOptions {
 	return &GetDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5512,7 +5507,7 @@ type GetEnabledCountriesOptions struct {
 func (*EventNotificationsV1) NewGetEnabledCountriesOptions(instanceID string, id string) *GetEnabledCountriesOptions {
 	return &GetEnabledCountriesOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5550,7 +5545,7 @@ type GetIntegrationOptions struct {
 func (*EventNotificationsV1) NewGetIntegrationOptions(instanceID string, id string) *GetIntegrationOptions {
 	return &GetIntegrationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5614,10 +5609,10 @@ const (
 // NewGetMetricsOptions : Instantiate GetMetricsOptions
 func (*EventNotificationsV1) NewGetMetricsOptions(instanceID string, destinationType string, gte string, lte string) *GetMetricsOptions {
 	return &GetMetricsOptions{
-		InstanceID: core.StringPtr(instanceID),
+		InstanceID:      core.StringPtr(instanceID),
 		DestinationType: core.StringPtr(destinationType),
-		Gte: core.StringPtr(gte),
-		Lte: core.StringPtr(lte),
+		Gte:             core.StringPtr(gte),
+		Lte:             core.StringPtr(lte),
 	}
 }
 
@@ -5697,7 +5692,7 @@ type GetSMTPAllowedIpsOptions struct {
 func (*EventNotificationsV1) NewGetSMTPAllowedIpsOptions(instanceID string, id string) *GetSMTPAllowedIpsOptions {
 	return &GetSMTPAllowedIpsOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5735,7 +5730,7 @@ type GetSMTPConfigurationOptions struct {
 func (*EventNotificationsV1) NewGetSMTPConfigurationOptions(instanceID string, id string) *GetSMTPConfigurationOptions {
 	return &GetSMTPConfigurationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5776,8 +5771,8 @@ type GetSMTPUserOptions struct {
 func (*EventNotificationsV1) NewGetSMTPUserOptions(instanceID string, id string, userID string) *GetSMTPUserOptions {
 	return &GetSMTPUserOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		UserID: core.StringPtr(userID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
 	}
 }
 
@@ -5821,7 +5816,7 @@ type GetSourceOptions struct {
 func (*EventNotificationsV1) NewGetSourceOptions(instanceID string, id string) *GetSourceOptions {
 	return &GetSourceOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5859,7 +5854,7 @@ type GetSubscriptionOptions struct {
 func (*EventNotificationsV1) NewGetSubscriptionOptions(instanceID string, id string) *GetSubscriptionOptions {
 	return &GetSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5897,7 +5892,7 @@ type GetTemplateOptions struct {
 func (*EventNotificationsV1) NewGetTemplateOptions(instanceID string, id string) *GetTemplateOptions {
 	return &GetTemplateOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5938,7 +5933,7 @@ type GetTopicOptions struct {
 func (*EventNotificationsV1) NewGetTopicOptions(instanceID string, id string) *GetTopicOptions {
 	return &GetTopicOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -5998,8 +5993,8 @@ type IntegrationCreateMetadata struct {
 // NewIntegrationCreateMetadata : Instantiate IntegrationCreateMetadata (Generic Model Constructor)
 func (*EventNotificationsV1) NewIntegrationCreateMetadata(endpoint string, crn string, bucketName string) (_model *IntegrationCreateMetadata, err error) {
 	_model = &IntegrationCreateMetadata{
-		Endpoint: core.StringPtr(endpoint),
-		CRN: core.StringPtr(crn),
+		Endpoint:   core.StringPtr(endpoint),
+		CRN:        core.StringPtr(crn),
 		BucketName: core.StringPtr(bucketName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -6248,7 +6243,7 @@ type IntegrationMetadata struct {
 func (*EventNotificationsV1) NewIntegrationMetadata(endpoint string, crn string) (_model *IntegrationMetadata, err error) {
 	_model = &IntegrationMetadata{
 		Endpoint: core.StringPtr(endpoint),
-		CRN: core.StringPtr(crn),
+		CRN:      core.StringPtr(crn),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -6467,7 +6462,7 @@ type ListSMTPUsersOptions struct {
 func (*EventNotificationsV1) NewListSMTPUsersOptions(instanceID string, id string) *ListSMTPUsersOptions {
 	return &ListSMTPUsersOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -6651,7 +6646,7 @@ type ListTagsSubscriptionOptions struct {
 func (*EventNotificationsV1) NewListTagsSubscriptionOptions(instanceID string, id string) *ListTagsSubscriptionOptions {
 	return &ListTagsSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -6834,11 +6829,11 @@ type Metric struct {
 // Constants associated with the Metric.Key property.
 // key.
 const (
-	MetricKeyBouncedConst = "bounced"
-	MetricKeyDeferredConst = "deferred"
-	MetricKeyOpenedConst = "opened"
+	MetricKeyBouncedConst   = "bounced"
+	MetricKeyDeferredConst  = "deferred"
+	MetricKeyOpenedConst    = "opened"
 	MetricKeySubmittedConst = "submitted"
-	MetricKeySuccessConst = "success"
+	MetricKeySuccessConst   = "success"
 )
 
 // UnmarshalMetric unmarshals an instance of Metric from the specified map of raw messages.
@@ -6974,13 +6969,13 @@ type NotificationCreate struct {
 // NewNotificationCreate : Instantiate NotificationCreate (Generic Model Constructor)
 func (*EventNotificationsV1) NewNotificationCreate(specversion string, id string, source string, typeVar string, ibmensourceid string, ibmendefaultshort string, ibmendefaultlong string) (_model *NotificationCreate, err error) {
 	_model = &NotificationCreate{
-		Specversion: core.StringPtr(specversion),
-		ID: core.StringPtr(id),
-		Source: core.StringPtr(source),
-		Type: core.StringPtr(typeVar),
-		Ibmensourceid: core.StringPtr(ibmensourceid),
+		Specversion:       core.StringPtr(specversion),
+		ID:                core.StringPtr(id),
+		Source:            core.StringPtr(source),
+		Type:              core.StringPtr(typeVar),
+		Ibmensourceid:     core.StringPtr(ibmensourceid),
 		Ibmendefaultshort: core.StringPtr(ibmendefaultshort),
-		Ibmendefaultlong: core.StringPtr(ibmendefaultlong),
+		Ibmendefaultlong:  core.StringPtr(ibmendefaultlong),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -7328,9 +7323,9 @@ type ReplaceIntegrationOptions struct {
 func (*EventNotificationsV1) NewReplaceIntegrationOptions(instanceID string, id string, typeVar string, metadata *IntegrationMetadata) *ReplaceIntegrationOptions {
 	return &ReplaceIntegrationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		Type: core.StringPtr(typeVar),
-		Metadata: metadata,
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
+		Metadata:   metadata,
 	}
 }
 
@@ -7391,7 +7386,7 @@ type ReplaceTemplateOptions struct {
 func (*EventNotificationsV1) NewReplaceTemplateOptions(instanceID string, id string) *ReplaceTemplateOptions {
 	return &ReplaceTemplateOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -7462,7 +7457,7 @@ type ReplaceTopicOptions struct {
 func (*EventNotificationsV1) NewReplaceTopicOptions(instanceID string, id string) *ReplaceTopicOptions {
 	return &ReplaceTopicOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -8493,7 +8488,7 @@ type SourcesItems struct {
 // NewSourcesItems : Instantiate SourcesItems (Generic Model Constructor)
 func (*EventNotificationsV1) NewSourcesItems(id string, rules []Rules) (_model *SourcesItems, err error) {
 	_model = &SourcesItems{
-		ID: core.StringPtr(id),
+		ID:    core.StringPtr(id),
 		Rules: rules,
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -8587,24 +8582,23 @@ type Subscription struct {
 // Constants associated with the Subscription.DestinationType property.
 // The type of destination.
 const (
-	SubscriptionDestinationTypeIbmceConst = "ibmce"
-	SubscriptionDestinationTypeIbmcfConst = "ibmcf"
-	SubscriptionDestinationTypeIbmcosConst = "ibmcos"
-	SubscriptionDestinationTypeMsteamsConst = "msteams"
-	SubscriptionDestinationTypePagerdutyConst = "pagerduty"
+	SubscriptionDestinationTypeIbmceConst       = "ibmce"
+	SubscriptionDestinationTypeIbmcosConst      = "ibmcos"
+	SubscriptionDestinationTypeMsteamsConst     = "msteams"
+	SubscriptionDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionDestinationTypePushAndroidConst = "push_android"
-	SubscriptionDestinationTypePushChromeConst = "push_chrome"
+	SubscriptionDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionDestinationTypePushFirefoxConst = "push_firefox"
-	SubscriptionDestinationTypePushHuaweiConst = "push_huawei"
-	SubscriptionDestinationTypePushIosConst = "push_ios"
-	SubscriptionDestinationTypePushSafariConst = "push_safari"
-	SubscriptionDestinationTypeSMTPCustomConst = "smtp_custom"
-	SubscriptionDestinationTypeSMTPIBMConst = "smtp_ibm"
-	SubscriptionDestinationTypeServicenowConst = "servicenow"
-	SubscriptionDestinationTypeSlackConst = "slack"
-	SubscriptionDestinationTypeSmsCustomConst = "sms_custom"
-	SubscriptionDestinationTypeSmsIBMConst = "sms_ibm"
-	SubscriptionDestinationTypeWebhookConst = "webhook"
+	SubscriptionDestinationTypePushHuaweiConst  = "push_huawei"
+	SubscriptionDestinationTypePushIosConst     = "push_ios"
+	SubscriptionDestinationTypePushSafariConst  = "push_safari"
+	SubscriptionDestinationTypeSMTPCustomConst  = "smtp_custom"
+	SubscriptionDestinationTypeSMTPIBMConst     = "smtp_ibm"
+	SubscriptionDestinationTypeServicenowConst  = "servicenow"
+	SubscriptionDestinationTypeSlackConst       = "slack"
+	SubscriptionDestinationTypeSmsCustomConst   = "sms_custom"
+	SubscriptionDestinationTypeSmsIBMConst      = "sms_ibm"
+	SubscriptionDestinationTypeWebhookConst     = "webhook"
 )
 
 // SetProperty allows the user to set an arbitrary property on an instance of Subscription
@@ -8808,6 +8802,7 @@ type SubscriptionAttributes struct {
 	// Allows users to set arbitrary properties
 	additionalProperties map[string]interface{}
 }
+
 func (*SubscriptionAttributes) isaSubscriptionAttributes() bool {
 	return true
 }
@@ -9045,6 +9040,7 @@ type SubscriptionCreateAttributes struct {
 	// Group Name to which incident will be assigned to.
 	AssignmentGroup *string `json:"assignment_group,omitempty"`
 }
+
 func (*SubscriptionCreateAttributes) isaSubscriptionCreateAttributes() bool {
 	return true
 }
@@ -9221,24 +9217,23 @@ type SubscriptionListItem struct {
 // Constants associated with the SubscriptionListItem.DestinationType property.
 // The type of destination.
 const (
-	SubscriptionListItemDestinationTypeIbmceConst = "ibmce"
-	SubscriptionListItemDestinationTypeIbmcfConst = "ibmcf"
-	SubscriptionListItemDestinationTypeIbmcosConst = "ibmcos"
-	SubscriptionListItemDestinationTypeMsteamsConst = "msteams"
-	SubscriptionListItemDestinationTypePagerdutyConst = "pagerduty"
+	SubscriptionListItemDestinationTypeIbmceConst       = "ibmce"
+	SubscriptionListItemDestinationTypeIbmcosConst      = "ibmcos"
+	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
+	SubscriptionListItemDestinationTypePagerdutyConst   = "pagerduty"
 	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
-	SubscriptionListItemDestinationTypePushChromeConst = "push_chrome"
+	SubscriptionListItemDestinationTypePushChromeConst  = "push_chrome"
 	SubscriptionListItemDestinationTypePushFirefoxConst = "push_firefox"
-	SubscriptionListItemDestinationTypePushHuaweiConst = "push_huawei"
-	SubscriptionListItemDestinationTypePushIosConst = "push_ios"
-	SubscriptionListItemDestinationTypePushSafariConst = "push_safari"
-	SubscriptionListItemDestinationTypeSMTPCustomConst = "smtp_custom"
-	SubscriptionListItemDestinationTypeSMTPIBMConst = "smtp_ibm"
-	SubscriptionListItemDestinationTypeServicenowConst = "servicenow"
-	SubscriptionListItemDestinationTypeSlackConst = "slack"
-	SubscriptionListItemDestinationTypeSmsCustomConst = "sms_custom"
-	SubscriptionListItemDestinationTypeSmsIBMConst = "sms_ibm"
-	SubscriptionListItemDestinationTypeWebhookConst = "webhook"
+	SubscriptionListItemDestinationTypePushHuaweiConst  = "push_huawei"
+	SubscriptionListItemDestinationTypePushIosConst     = "push_ios"
+	SubscriptionListItemDestinationTypePushSafariConst  = "push_safari"
+	SubscriptionListItemDestinationTypeSMTPCustomConst  = "smtp_custom"
+	SubscriptionListItemDestinationTypeSMTPIBMConst     = "smtp_ibm"
+	SubscriptionListItemDestinationTypeServicenowConst  = "servicenow"
+	SubscriptionListItemDestinationTypeSlackConst       = "slack"
+	SubscriptionListItemDestinationTypeSmsCustomConst   = "sms_custom"
+	SubscriptionListItemDestinationTypeSmsIBMConst      = "sms_ibm"
+	SubscriptionListItemDestinationTypeWebhookConst     = "webhook"
 )
 
 // UnmarshalSubscriptionListItem unmarshals an instance of SubscriptionListItem from the specified map of raw messages.
@@ -9340,6 +9335,7 @@ type SubscriptionUpdateAttributes struct {
 	// Group Name to which incident will be assigned to.
 	AssignmentGroup *string `json:"assignment_group,omitempty"`
 }
+
 func (*SubscriptionUpdateAttributes) isaSubscriptionUpdateAttributes() bool {
 	return true
 }
@@ -9607,6 +9603,7 @@ type TemplateConfigOneOf struct {
 	// The template subject.
 	Subject *string `json:"subject,omitempty"`
 }
+
 func (*TemplateConfigOneOf) isaTemplateConfigOneOf() bool {
 	return true
 }
@@ -9773,7 +9770,7 @@ type TestDestinationOptions struct {
 func (*EventNotificationsV1) NewTestDestinationOptions(instanceID string, id string) *TestDestinationOptions {
 	return &TestDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -10172,7 +10169,7 @@ type UpdateDestinationOptions struct {
 func (*EventNotificationsV1) NewUpdateDestinationOptions(instanceID string, id string) *UpdateDestinationOptions {
 	return &UpdateDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -10324,7 +10321,7 @@ type UpdateSMTPConfigurationOptions struct {
 func (*EventNotificationsV1) NewUpdateSMTPConfigurationOptions(instanceID string, id string) *UpdateSMTPConfigurationOptions {
 	return &UpdateSMTPConfigurationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -10380,8 +10377,8 @@ type UpdateSMTPUserOptions struct {
 func (*EventNotificationsV1) NewUpdateSMTPUserOptions(instanceID string, id string, userID string) *UpdateSMTPUserOptions {
 	return &UpdateSMTPUserOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		UserID: core.StringPtr(userID),
+		ID:         core.StringPtr(id),
+		UserID:     core.StringPtr(userID),
 	}
 }
 
@@ -10440,7 +10437,7 @@ type UpdateSourceOptions struct {
 func (*EventNotificationsV1) NewUpdateSourceOptions(instanceID string, id string) *UpdateSourceOptions {
 	return &UpdateSourceOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -10504,7 +10501,7 @@ type UpdateSubscriptionOptions struct {
 func (*EventNotificationsV1) NewUpdateSubscriptionOptions(instanceID string, id string) *UpdateSubscriptionOptions {
 	return &UpdateSubscriptionOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
+		ID:         core.StringPtr(id),
 	}
 }
 
@@ -10563,8 +10560,8 @@ type UpdateVerifyDestinationOptions struct {
 func (*EventNotificationsV1) NewUpdateVerifyDestinationOptions(instanceID string, id string, typeVar string) *UpdateVerifyDestinationOptions {
 	return &UpdateVerifyDestinationOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		Type: core.StringPtr(typeVar),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
 	}
 }
 
@@ -10611,8 +10608,8 @@ type UpdateVerifySMTPOptions struct {
 func (*EventNotificationsV1) NewUpdateVerifySMTPOptions(instanceID string, id string, typeVar string) *UpdateVerifySMTPOptions {
 	return &UpdateVerifySMTPOptions{
 		InstanceID: core.StringPtr(instanceID),
-		ID: core.StringPtr(id),
-		Type: core.StringPtr(typeVar),
+		ID:         core.StringPtr(id),
+		Type:       core.StringPtr(typeVar),
 	}
 }
 
@@ -10683,7 +10680,7 @@ type DestinationConfigOneOfChromeDestinationConfig struct {
 // NewDestinationConfigOneOfChromeDestinationConfig : Instantiate DestinationConfigOneOfChromeDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfChromeDestinationConfig(apiKey string, websiteURL string) (_model *DestinationConfigOneOfChromeDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfChromeDestinationConfig{
-		APIKey: core.StringPtr(apiKey),
+		APIKey:     core.StringPtr(apiKey),
 		WebsiteURL: core.StringPtr(websiteURL),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -10745,7 +10742,7 @@ type DestinationConfigOneOfCodeEngineDestinationConfig struct {
 // Constants associated with the DestinationConfigOneOfCodeEngineDestinationConfig.Verb property.
 // HTTP method of code engine.
 const (
-	DestinationConfigOneOfCodeEngineDestinationConfigVerbGetConst = "get"
+	DestinationConfigOneOfCodeEngineDestinationConfigVerbGetConst  = "get"
 	DestinationConfigOneOfCodeEngineDestinationConfigVerbPostConst = "post"
 )
 
@@ -10753,7 +10750,7 @@ const (
 // The code engine destination type.
 const (
 	DestinationConfigOneOfCodeEngineDestinationConfigTypeApplicationConst = "application"
-	DestinationConfigOneOfCodeEngineDestinationConfigTypeJobConst = "job"
+	DestinationConfigOneOfCodeEngineDestinationConfigTypeJobConst         = "job"
 )
 
 // NewDestinationConfigOneOfCodeEngineDestinationConfig : Instantiate DestinationConfigOneOfCodeEngineDestinationConfig (Generic Model Constructor)
@@ -10969,7 +10966,7 @@ type DestinationConfigOneOfHuaweiDestinationConfig struct {
 // NewDestinationConfigOneOfHuaweiDestinationConfig : Instantiate DestinationConfigOneOfHuaweiDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfHuaweiDestinationConfig(clientID string, clientSecret string) (_model *DestinationConfigOneOfHuaweiDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfHuaweiDestinationConfig{
-		ClientID: core.StringPtr(clientID),
+		ClientID:     core.StringPtr(clientID),
 		ClientSecret: core.StringPtr(clientSecret),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -10999,44 +10996,6 @@ func UnmarshalDestinationConfigOneOfHuaweiDestinationConfig(m map[string]json.Ra
 	return
 }
 
-// DestinationConfigOneOfIBMCloudFunctionsDestinationConfig : Payload describing an IBM Cloud Functions destination configuration.
-// This model "extends" DestinationConfigOneOf
-type DestinationConfigOneOfIBMCloudFunctionsDestinationConfig struct {
-	// URL of IBM Cloud Functions Trigger EndPoint.
-	URL *string `json:"url" validate:"required"`
-
-	// API Key with access of IBM Cloud Functions IAM Namespace.
-	APIKey *string `json:"api_key,omitempty"`
-}
-
-// NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig : Instantiate DestinationConfigOneOfIBMCloudFunctionsDestinationConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(url string) (_model *DestinationConfigOneOfIBMCloudFunctionsDestinationConfig, err error) {
-	_model = &DestinationConfigOneOfIBMCloudFunctionsDestinationConfig{
-		URL: core.StringPtr(url),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	return
-}
-
-func (*DestinationConfigOneOfIBMCloudFunctionsDestinationConfig) isaDestinationConfigOneOf() bool {
-	return true
-}
-
-// UnmarshalDestinationConfigOneOfIBMCloudFunctionsDestinationConfig unmarshals an instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig from the specified map of raw messages.
-func UnmarshalDestinationConfigOneOfIBMCloudFunctionsDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
-	obj := new(DestinationConfigOneOfIBMCloudFunctionsDestinationConfig)
-	err = core.UnmarshalPrimitive(m, "url", &obj.URL)
-	if err != nil {
-		return
-	}
-	err = core.UnmarshalPrimitive(m, "api_key", &obj.APIKey)
-	if err != nil {
-		return
-	}
-	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
-	return
-}
-
 // DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig : Payload describing a Cloud Object Storage destination configuration.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig struct {
@@ -11055,7 +11014,7 @@ func (*EventNotificationsV1) NewDestinationConfigOneOfIBMCloudObjectStorageDesti
 	_model = &DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig{
 		BucketName: core.StringPtr(bucketName),
 		InstanceID: core.StringPtr(instanceID),
-		Endpoint: core.StringPtr(endpoint),
+		Endpoint:   core.StringPtr(endpoint),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -11112,7 +11071,7 @@ type DestinationConfigOneOfIosDestinationConfig struct {
 // NewDestinationConfigOneOfIosDestinationConfig : Instantiate DestinationConfigOneOfIosDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfIosDestinationConfig(certType string, isSandbox bool) (_model *DestinationConfigOneOfIosDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfIosDestinationConfig{
-		CertType: core.StringPtr(certType),
+		CertType:  core.StringPtr(certType),
 		IsSandbox: core.BoolPtr(isSandbox),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -11202,7 +11161,7 @@ type DestinationConfigOneOfPagerDutyDestinationConfig struct {
 // NewDestinationConfigOneOfPagerDutyDestinationConfig : Instantiate DestinationConfigOneOfPagerDutyDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfPagerDutyDestinationConfig(apiKey string, routingKey string) (_model *DestinationConfigOneOfPagerDutyDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfPagerDutyDestinationConfig{
-		APIKey: core.StringPtr(apiKey),
+		APIKey:     core.StringPtr(apiKey),
 		RoutingKey: core.StringPtr(routingKey),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -11256,12 +11215,12 @@ type DestinationConfigOneOfSafariDestinationConfig struct {
 // NewDestinationConfigOneOfSafariDestinationConfig : Instantiate DestinationConfigOneOfSafariDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfSafariDestinationConfig(certType string, password string, websiteURL string, websiteName string, urlFormatString string, websitePushID string) (_model *DestinationConfigOneOfSafariDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfSafariDestinationConfig{
-		CertType: core.StringPtr(certType),
-		Password: core.StringPtr(password),
-		WebsiteURL: core.StringPtr(websiteURL),
-		WebsiteName: core.StringPtr(websiteName),
+		CertType:        core.StringPtr(certType),
+		Password:        core.StringPtr(password),
+		WebsiteURL:      core.StringPtr(websiteURL),
+		WebsiteName:     core.StringPtr(websiteName),
 		URLFormatString: core.StringPtr(urlFormatString),
-		WebsitePushID: core.StringPtr(websitePushID),
+		WebsitePushID:   core.StringPtr(websitePushID),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -11328,10 +11287,10 @@ type DestinationConfigOneOfServiceNowDestinationConfig struct {
 // NewDestinationConfigOneOfServiceNowDestinationConfig : Instantiate DestinationConfigOneOfServiceNowDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfServiceNowDestinationConfig(clientID string, clientSecret string, username string, password string, instanceName string) (_model *DestinationConfigOneOfServiceNowDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfServiceNowDestinationConfig{
-		ClientID: core.StringPtr(clientID),
+		ClientID:     core.StringPtr(clientID),
 		ClientSecret: core.StringPtr(clientSecret),
-		Username: core.StringPtr(username),
-		Password: core.StringPtr(password),
+		Username:     core.StringPtr(username),
+		Password:     core.StringPtr(password),
 		InstanceName: core.StringPtr(instanceName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -11388,7 +11347,7 @@ const (
 // NewDestinationConfigOneOfSlackDestinationConfig : Instantiate DestinationConfigOneOfSlackDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfSlackDestinationConfig(url string, typeVar string) (_model *DestinationConfigOneOfSlackDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfSlackDestinationConfig{
-		URL: core.StringPtr(url),
+		URL:  core.StringPtr(url),
 		Type: core.StringPtr(typeVar),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -11434,7 +11393,7 @@ const (
 func (*EventNotificationsV1) NewDestinationConfigOneOfSlackDirectMessageDestinationConfig(token string, typeVar string) (_model *DestinationConfigOneOfSlackDirectMessageDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfSlackDirectMessageDestinationConfig{
 		Token: core.StringPtr(token),
-		Type: core.StringPtr(typeVar),
+		Type:  core.StringPtr(typeVar),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -11478,14 +11437,14 @@ type DestinationConfigOneOfWebhookDestinationConfig struct {
 // Constants associated with the DestinationConfigOneOfWebhookDestinationConfig.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst = "get"
+	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst  = "get"
 	DestinationConfigOneOfWebhookDestinationConfigVerbPostConst = "post"
 )
 
 // NewDestinationConfigOneOfWebhookDestinationConfig : Instantiate DestinationConfigOneOfWebhookDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfWebhookDestinationConfig(url string, verb string) (_model *DestinationConfigOneOfWebhookDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfWebhookDestinationConfig{
-		URL: core.StringPtr(url),
+		URL:  core.StringPtr(url),
 		Verb: core.StringPtr(verb),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
@@ -12411,12 +12370,12 @@ type SubscriptionCreateAttributesCustomEmailAttributes struct {
 // NewSubscriptionCreateAttributesCustomEmailAttributes : Instantiate SubscriptionCreateAttributesCustomEmailAttributes (Generic Model Constructor)
 func (*EventNotificationsV1) NewSubscriptionCreateAttributesCustomEmailAttributes(invited []string, addNotificationPayload bool, replyToMail string, replyToName string, fromName string, fromEmail string) (_model *SubscriptionCreateAttributesCustomEmailAttributes, err error) {
 	_model = &SubscriptionCreateAttributesCustomEmailAttributes{
-		Invited: invited,
+		Invited:                invited,
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
-		ReplyToMail: core.StringPtr(replyToMail),
-		ReplyToName: core.StringPtr(replyToName),
-		FromName: core.StringPtr(fromName),
-		FromEmail: core.StringPtr(fromEmail),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
+		FromEmail:              core.StringPtr(fromEmail),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -12518,11 +12477,11 @@ type SubscriptionCreateAttributesEmailAttributes struct {
 // NewSubscriptionCreateAttributesEmailAttributes : Instantiate SubscriptionCreateAttributesEmailAttributes (Generic Model Constructor)
 func (*EventNotificationsV1) NewSubscriptionCreateAttributesEmailAttributes(invited []string, addNotificationPayload bool, replyToMail string, replyToName string, fromName string) (_model *SubscriptionCreateAttributesEmailAttributes, err error) {
 	_model = &SubscriptionCreateAttributesEmailAttributes{
-		Invited: invited,
+		Invited:                invited,
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
-		ReplyToMail: core.StringPtr(replyToMail),
-		ReplyToName: core.StringPtr(replyToName),
-		FromName: core.StringPtr(fromName),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -12760,10 +12719,10 @@ type SubscriptionUpdateAttributesCustomEmailUpdateAttributes struct {
 func (*EventNotificationsV1) NewSubscriptionUpdateAttributesCustomEmailUpdateAttributes(addNotificationPayload bool, replyToMail string, replyToName string, fromName string, fromEmail string) (_model *SubscriptionUpdateAttributesCustomEmailUpdateAttributes, err error) {
 	_model = &SubscriptionUpdateAttributesCustomEmailUpdateAttributes{
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
-		ReplyToMail: core.StringPtr(replyToMail),
-		ReplyToName: core.StringPtr(replyToName),
-		FromName: core.StringPtr(fromName),
-		FromEmail: core.StringPtr(fromEmail),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
+		FromEmail:              core.StringPtr(fromEmail),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -12885,9 +12844,9 @@ type SubscriptionUpdateAttributesEmailUpdateAttributes struct {
 func (*EventNotificationsV1) NewSubscriptionUpdateAttributesEmailUpdateAttributes(addNotificationPayload bool, replyToMail string, replyToName string, fromName string) (_model *SubscriptionUpdateAttributesEmailUpdateAttributes, err error) {
 	_model = &SubscriptionUpdateAttributesEmailUpdateAttributes{
 		AddNotificationPayload: core.BoolPtr(addNotificationPayload),
-		ReplyToMail: core.StringPtr(replyToMail),
-		ReplyToName: core.StringPtr(replyToName),
-		FromName: core.StringPtr(fromName),
+		ReplyToMail:            core.StringPtr(replyToMail),
+		ReplyToName:            core.StringPtr(replyToName),
+		FromName:               core.StringPtr(fromName),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
 	return
@@ -13184,13 +13143,11 @@ func UnmarshalTemplateConfigOneOfWebhookTemplateConfig(m map[string]json.RawMess
 	return
 }
 
-//
 // SourcesPager can be used to simplify the use of the "ListSources" method.
-//
 type SourcesPager struct {
-	hasNext bool
-	options *ListSourcesOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListSourcesOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13271,13 +13228,11 @@ func (pager *SourcesPager) GetAll() (allItems []SourceListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TopicsPager can be used to simplify the use of the "ListTopics" method.
-//
 type TopicsPager struct {
-	hasNext bool
-	options *ListTopicsOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListTopicsOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13358,13 +13313,11 @@ func (pager *TopicsPager) GetAll() (allItems []TopicsListItem, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TemplatesPager can be used to simplify the use of the "ListTemplates" method.
-//
 type TemplatesPager struct {
-	hasNext bool
-	options *ListTemplatesOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListTemplatesOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13445,13 +13398,11 @@ func (pager *TemplatesPager) GetAll() (allItems []Template, err error) {
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // DestinationsPager can be used to simplify the use of the "ListDestinations" method.
-//
 type DestinationsPager struct {
-	hasNext bool
-	options *ListDestinationsOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListDestinationsOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13532,13 +13483,11 @@ func (pager *DestinationsPager) GetAll() (allItems []DestinationListItem, err er
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // TagsSubscriptionPager can be used to simplify the use of the "ListTagsSubscription" method.
-//
 type TagsSubscriptionPager struct {
-	hasNext bool
-	options *ListTagsSubscriptionOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListTagsSubscriptionOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13619,13 +13568,11 @@ func (pager *TagsSubscriptionPager) GetAll() (allItems []TagsSubscriptionListIte
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // SubscriptionsPager can be used to simplify the use of the "ListSubscriptions" method.
-//
 type SubscriptionsPager struct {
-	hasNext bool
-	options *ListSubscriptionsOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListSubscriptionsOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13706,13 +13653,11 @@ func (pager *SubscriptionsPager) GetAll() (allItems []SubscriptionListItem, err 
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // IntegrationsPager can be used to simplify the use of the "ListIntegrations" method.
-//
 type IntegrationsPager struct {
-	hasNext bool
-	options *ListIntegrationsOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListIntegrationsOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13793,13 +13738,11 @@ func (pager *IntegrationsPager) GetAll() (allItems []IntegrationListItem, err er
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // SMTPConfigurationsPager can be used to simplify the use of the "ListSMTPConfigurations" method.
-//
 type SMTPConfigurationsPager struct {
-	hasNext bool
-	options *ListSMTPConfigurationsOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListSMTPConfigurationsOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
@@ -13880,13 +13823,11 @@ func (pager *SMTPConfigurationsPager) GetAll() (allItems []SMTPConfiguration, er
 	return pager.GetAllWithContext(context.Background())
 }
 
-//
 // SMTPUsersPager can be used to simplify the use of the "ListSMTPUsers" method.
-//
 type SMTPUsersPager struct {
-	hasNext bool
-	options *ListSMTPUsersOptions
-	client  *EventNotificationsV1
+	hasNext     bool
+	options     *ListSMTPUsersOptions
+	client      *EventNotificationsV1
 	pageContext struct {
 		next *int64
 	}
