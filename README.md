@@ -484,8 +484,7 @@ Currently, this functionality supports following destinations:
 3. ServiceNow
 4. Microsoft&reg; Teams
 5. IBM Cloud Code Engine
-6. IBM Cloud Functions
-7. IBM Cloud Object Storage
+6. IBM Cloud Object Storage
 
 ```go
 testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
