@@ -66,14 +66,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "noauth",
 			}
 
 			It(`Create service client using external config successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				Expect(eventNotificationsService).ToNot(BeNil())
 				Expect(serviceErr).To(BeNil())
 				ClearTestEnvironment(testEnvironment)
@@ -102,8 +101,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Create service client using external config and set url programatically successfully`, func() {
 				SetTestEnvironment(testEnvironment)
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-				})
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 				err := eventNotificationsService.SetServiceURL("https://testService/api")
 				Expect(err).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
@@ -121,13 +119,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid Auth`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_URL": "https://eventnotificationsv1/api",
+				"EVENT_NOTIFICATIONS_URL":       "https://eventnotificationsv1/api",
 				"EVENT_NOTIFICATIONS_AUTH_TYPE": "someOtherAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
-			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{
-			})
+			eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1UsingExternalConfig(&eventnotificationsv1.EventNotificationsV1Options{})
 
 			It(`Instantiate service client with error`, func() {
 				Expect(eventNotificationsService).To(BeNil())
@@ -138,7 +135,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 		Context(`Using external config, construct service client instances with error: Invalid URL`, func() {
 			// Map containing environment variables used in testing.
 			var testEnvironment = map[string]string{
-				"EVENT_NOTIFICATIONS_AUTH_TYPE":   "NOAuth",
+				"EVENT_NOTIFICATIONS_AUTH_TYPE": "NOAuth",
 			}
 
 			SetTestEnvironment(testEnvironment)
@@ -687,6 +684,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -741,6 +739,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -1353,14 +1352,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SourceList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -1370,7 +1369,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -1380,7 +1379,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -1419,8 +1418,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
@@ -1446,8 +1445,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSourcesOptionsModel := &eventnotificationsv1.ListSourcesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSourcesPager(listSourcesOptionsModel)
@@ -2116,11 +2115,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -2205,11 +2211,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -2239,11 +2252,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -2294,11 +2314,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -2567,14 +2594,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.TopicList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -2584,7 +2611,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -2594,7 +2621,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -2633,8 +2660,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
@@ -2660,8 +2687,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTopicsOptionsModel := &eventnotificationsv1.ListTopicsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTopicsPager(listTopicsOptionsModel)
@@ -2923,11 +2950,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -3005,11 +3039,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -3095,11 +3136,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -3130,11 +3178,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -3186,11 +3241,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -3819,14 +3881,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.TemplateList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -3836,7 +3898,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -3846,7 +3908,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -3885,8 +3947,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTemplatesOptionsModel := &eventnotificationsv1.ListTemplatesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTemplatesPager(listTemplatesOptionsModel)
@@ -3912,8 +3974,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTemplatesOptionsModel := &eventnotificationsv1.ListTemplatesOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTemplatesPager(listTemplatesOptionsModel)
@@ -5166,14 +5228,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.DestinationList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5183,7 +5245,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -5193,7 +5255,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -5232,8 +5294,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
@@ -5259,8 +5321,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listDestinationsOptionsModel := &eventnotificationsv1.ListDestinationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewDestinationsPager(listDestinationsOptionsModel)
@@ -5761,7 +5823,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 			It(`Invoke UpdateDestination with error: Param validation error`, func() {
 				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:  testServer.URL,
+					URL:           testServer.URL,
 					Authenticator: &core.NoAuthAuthenticator{},
 				})
 				Expect(serviceErr).To(BeNil())
@@ -7182,14 +7244,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.TagsSubscriptionList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -7199,7 +7261,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -7209,7 +7271,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -7248,12 +7310,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					DeviceID: core.StringPtr("testString"),
-					UserID: core.StringPtr("testString"),
-					TagName: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					DeviceID:   core.StringPtr("testString"),
+					UserID:     core.StringPtr("testString"),
+					TagName:    core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
@@ -7279,12 +7341,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listTagsSubscriptionOptionsModel := &eventnotificationsv1.ListTagsSubscriptionOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					DeviceID: core.StringPtr("testString"),
-					UserID: core.StringPtr("testString"),
-					TagName: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					DeviceID:   core.StringPtr("testString"),
+					UserID:     core.StringPtr("testString"),
+					TagName:    core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewTagsSubscriptionPager(listTagsSubscriptionOptionsModel)
@@ -7904,14 +7966,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SubscriptionList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -7921,7 +7983,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -7931,7 +7993,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -7970,8 +8032,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
@@ -7997,8 +8059,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSubscriptionsOptionsModel := &eventnotificationsv1.ListSubscriptionsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSubscriptionsPager(listSubscriptionsOptionsModel)
@@ -9183,14 +9245,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.IntegrationList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -9200,7 +9262,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -9210,7 +9272,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -9249,8 +9311,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
@@ -9276,8 +9338,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listIntegrationsOptionsModel := &eventnotificationsv1.ListIntegrationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewIntegrationsPager(listIntegrationsOptionsModel)
@@ -10302,14 +10364,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SMTPConfigurationsList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10319,7 +10381,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10329,7 +10391,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -10368,8 +10430,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSMTPConfigurationsOptionsModel := &eventnotificationsv1.ListSMTPConfigurationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSMTPConfigurationsPager(listSMTPConfigurationsOptionsModel)
@@ -10395,8 +10457,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSMTPConfigurationsOptionsModel := &eventnotificationsv1.ListSMTPConfigurationsOptions{
 					InstanceID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSMTPConfigurationsPager(listSMTPConfigurationsOptionsModel)
@@ -10910,14 +10972,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=135")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(Equal(core.Int64Ptr(int64(135))))
 			})
 			It(`Invoke GetNextOffset without a "Next" property in the response`, func() {
 				responseObject := new(eventnotificationsv1.SMTPUsersList)
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10927,7 +10989,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).To(BeNil())
 				Expect(value).To(BeNil())
@@ -10937,7 +10999,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				nextObject := new(eventnotificationsv1.PageHrefResponse)
 				nextObject.Href = core.StringPtr("ibm.com?offset=tiger")
 				responseObject.Next = nextObject
-	
+
 				value, err := responseObject.GetNextOffset()
 				Expect(err).NotTo(BeNil())
 				Expect(value).To(BeNil())
@@ -10976,9 +11038,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSMTPUsersOptionsModel := &eventnotificationsv1.ListSMTPUsersOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSMTPUsersPager(listSMTPUsersOptionsModel)
@@ -11004,9 +11066,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				listSMTPUsersOptionsModel := &eventnotificationsv1.ListSMTPUsersOptions{
 					InstanceID: core.StringPtr("testString"),
-					ID: core.StringPtr("testString"),
-					Limit: core.Int64Ptr(int64(10)),
-					Search: core.StringPtr("testString"),
+					ID:         core.StringPtr("testString"),
+					Limit:      core.Int64Ptr(int64(10)),
+					Search:     core.StringPtr("testString"),
 				}
 
 				pager, err := eventNotificationsService.NewSMTPUsersPager(listSMTPUsersOptionsModel)
@@ -13379,15 +13441,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(replaceTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewReplaceTopicOptions successfully`, func() {
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				Expect(eventScheduleFilterAttributesModel).ToNot(BeNil())
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+				Expect(eventScheduleFilterAttributesModel.StartsAt).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(eventScheduleFilterAttributesModel.EndsAt).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(eventScheduleFilterAttributesModel.Expression).To(Equal(core.StringPtr("testString")))
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				Expect(rulesModel).ToNot(BeNil())
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 				Expect(rulesModel.Enabled).To(Equal(core.BoolPtr(true)))
 				Expect(rulesModel.EventTypeFilter).To(Equal(core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")))
 				Expect(rulesModel.NotificationFilter).To(Equal(core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")))
+				Expect(rulesModel.EventScheduleFilter).To(Equal(eventScheduleFilterAttributesModel))
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -13438,6 +13512,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
@@ -13468,6 +13543,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmentemplates).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenmailto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenslackto).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmensmstext).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensmsto).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
