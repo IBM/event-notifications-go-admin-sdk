@@ -44,7 +44,7 @@ import (
 
 var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
-	const externalConfigFile = "/Users/divyasingh/Documents/Consummable-Messages-TF/Event-Notifications/cron/event-notifications-go-admin-sdk/event_notifications_v1.env"
+	const externalConfigFile = "../event_notifications_v1.env"
 
 	var (
 		err                       error
