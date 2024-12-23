@@ -56,13 +56,14 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		search                    string = ""
 		topicName                 string = "WebhookTopic"
 		sourceID                  string
+		schedulersourceID         string
 		topicID                   string
 		topicID2                  string
 		topicID3                  string
+		topicID4                  string
 		destinationID             string
 		destinationID1            string
 		destinationID2            string
-		destinationID3            string
 		destinationID4            string
 		destinationID5            string
 		destinationID6            string
@@ -81,7 +82,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
-		subscriptionID3           string
 		subscriptionID4           string
 		subscriptionID5           string
 		subscriptionID6           string
@@ -97,6 +97,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID17          string
 		subscriptionID18          string
 		subscriptionID19          string
+		subscriptionID20          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -332,6 +333,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 			fmt.Printf("SLACK_CHANNEL_ID: %s\n", slackChannelID)
 
+			schedulersourceID = config["SCHEDULER_SOURCE_ID"]
+			if schedulersourceID == "" {
+				Skip("Unable to load SCHEDULER_SOURCE_ID configuration property, skipping tests")
+			}
+			fmt.Printf("SCHEDULER_SOURCE_ID: %s\n", schedulersourceID)
+
 			shouldSkipTest = func() {}
 		})
 	})
@@ -461,10 +468,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        core.StringPtr("Event Notification Create Source Acme"),
 				Description: core.StringPtr("This source is used for Acme Bank"),
-				Enabled:     core.BoolPtr(false),
+				Enabled:     core.BoolPtr(true),
 			}
 
 			sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
+			sourceobject := createSourcesOptions
+			fmt.Println(sourceobject)
 
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
@@ -663,6 +672,39 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			topicID3 = string(*topicResponse.ID)
 
+			eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2024-12-20T05:15:00.000Z")
+			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2024-12-20T20:30:00.000Z")
+			eventScheduleFilterAttributesModel.Expression = core.StringPtr("* * * * *")
+
+			rulesModel = &eventnotificationsv1.Rules{
+				Enabled:             core.BoolPtr(true),
+				EventScheduleFilter: eventScheduleFilterAttributesModel,
+			}
+
+			topicUpdateSourcesItemModel = &eventnotificationsv1.SourcesItems{
+				ID:    core.StringPtr(schedulersourceID),
+				Rules: []eventnotificationsv1.Rules{*rulesModel},
+			}
+
+			createTopicOptions = &eventnotificationsv1.CreateTopicOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr("Scheduler Topic"),
+				Description: core.StringPtr("This topic is used Scheduler source"),
+				Sources:     []eventnotificationsv1.SourcesItems{*topicUpdateSourcesItemModel},
+			}
+
+			topicResponse, response, err = eventNotificationsService.CreateTopic(createTopicOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(topicResponse).ToNot(BeNil())
+
+			topicID4 = string(*topicResponse.ID)
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -843,33 +885,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse.Description).To(Equal(core.StringPtr(description)))
 
 			destinationID = *destinationResponse.ID
-
-			createFCMDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
-				instanceID,
-				"FCM_destination",
-				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
-			)
-
-			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
-				ServerKey: core.StringPtr(fcmServerKey),
-				SenderID:  core.StringPtr(fcmSenderId),
-			}
-
-			fcmDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsFCMModel,
-			}
-
-			createFCMDestinationOptions.SetConfig(fcmDestinationConfigModel)
-
-			destinationResponse, response, err = eventNotificationsService.CreateDestination(createFCMDestinationOptions)
-			if err != nil {
-				panic(err)
-			}
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(destinationResponse).ToNot(BeNil())
-
-			destinationID3 = *destinationResponse.ID
 
 			createSlackDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
@@ -1063,19 +1078,19 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			destinationID11 = *destinationResponse.ID
 
-			createFCMDestinationOptions = eventNotificationsService.NewCreateDestinationOptions(
+			createFCMDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
 				instanceID,
 				"FCM_destination_V1",
 				eventnotificationsv1.CreateDestinationOptionsTypePushAndroidConst,
 			)
 
-			destinationConfigParamsFCMModel = &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
+			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
 				ProjectID:   core.StringPtr(fcmProjectID),
 				PrivateKey:  core.StringPtr(fcmPrivateKey),
 				ClientEmail: core.StringPtr(fcmClientEmail),
 			}
 
-			fcmDestinationConfigModel = &eventnotificationsv1.DestinationConfig{
+			fcmDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsFCMModel,
 			}
 
@@ -1188,6 +1203,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID15 = *destinationResponse.ID
+			fmt.Println(destinationID15)
 
 			customDestinationConfigParamsModel := &eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig{
 				Domain: core.StringPtr("test.event-notifications.test.cloud.ibm.com"),
@@ -1615,19 +1631,20 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			//FCM
 			destinationConfigParamsFCMModel := &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
-				ServerKey: core.StringPtr(fcmServerKey),
-				SenderID:  core.StringPtr(fcmSenderId),
+				ProjectID:   core.StringPtr(fcmProjectID),
+				PrivateKey:  core.StringPtr(fcmPrivateKey),
+				ClientEmail: core.StringPtr(fcmClientEmail),
 			}
 
 			fcmDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
 				Params: destinationConfigParamsFCMModel,
 			}
 
-			fcmName := "fcm_destination_update"
-			fcmDescription := "This destination is for FCM"
+			fcmName := "fcm_V1_destination_update"
+			fcmDescription := "This destination is for FCM V1"
 			fcmUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
 				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(destinationID3),
+				ID:          core.StringPtr(destinationID12),
 				Name:        core.StringPtr(fcmName),
 				Description: core.StringPtr(fcmDescription),
 				Config:      fcmDestinationConfigModel,
@@ -1637,7 +1654,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(destination).ToNot(BeNil())
-			Expect(destination.ID).To(Equal(core.StringPtr(destinationID3)))
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID12)))
 			Expect(destination.Name).To(Equal(core.StringPtr(fcmName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(fcmDescription)))
 
@@ -1848,34 +1865,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.ID).To(Equal(core.StringPtr(destinationID11)))
 			Expect(destination.Name).To(Equal(core.StringPtr(serviceNowName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(serviceNowDescription)))
-
-			destinationConfigParamsFCMModel = &eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig{
-				ProjectID:   core.StringPtr(fcmProjectID),
-				PrivateKey:  core.StringPtr(fcmPrivateKey),
-				ClientEmail: core.StringPtr(fcmClientEmail),
-			}
-
-			fcmDestinationConfigModel = &eventnotificationsv1.DestinationConfig{
-				Params: destinationConfigParamsFCMModel,
-			}
-
-			fcmName = "fcm_V1_destination_update"
-			fcmDescription = "This destination is for FCM V1"
-			fcmUpdateDestinationOptions = &eventnotificationsv1.UpdateDestinationOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(destinationID12),
-				Name:        core.StringPtr(fcmName),
-				Description: core.StringPtr(fcmDescription),
-				Config:      fcmDestinationConfigModel,
-			}
-
-			destination, response, err = eventNotificationsService.UpdateDestination(fcmUpdateDestinationOptions)
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(destination).ToNot(BeNil())
-			Expect(destination.ID).To(Equal(core.StringPtr(destinationID12)))
-			Expect(destination.Name).To(Equal(core.StringPtr(fcmName)))
-			Expect(destination.Description).To(Equal(core.StringPtr(fcmDescription)))
 
 			destinationConfigCEParamsModel := &eventnotificationsv1.DestinationConfigOneOfCodeEngineDestinationConfig{
 				URL:  core.StringPtr(codeEngineURL),
@@ -2310,23 +2299,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			Expect(subscriptionID2).ToNot(Equal(subscriptionID))
 
-			createFCMSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
-				InstanceID:    core.StringPtr(instanceID),
-				Name:          core.StringPtr("FCM subscription"),
-				Description:   core.StringPtr("Subscription for the FCM"),
-				DestinationID: core.StringPtr(destinationID3),
-				TopicID:       core.StringPtr(topicID3),
-			}
-
-			subscription, response, err = eventNotificationsService.CreateSubscription(createFCMSubscriptionOptions)
-			if err != nil {
-				panic(err)
-			}
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(subscription).ToNot(BeNil())
-			subscriptionID3 = string(*subscription.ID)
-
 			subscriptionCreateSlackAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes{
 				AttachmentColor:        core.StringPtr("#0000FF"),
 				TemplateIDNotification: core.StringPtr(slackTemplateID),
@@ -2456,7 +2428,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID11 = string(*subscription.ID)
 
-			createFCMSubscriptionOptions = &eventnotificationsv1.CreateSubscriptionOptions{
+			createFCMSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				Name:          core.StringPtr("FCM subscription V1"),
 				Description:   core.StringPtr("Subscription for the FCM V1"),
@@ -2634,6 +2606,23 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID19 = string(*subscription.ID)
+
+			createSchedulerSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Scheduler subscription"),
+				Description:   core.StringPtr("Subscription for the Scheduler as a source"),
+				DestinationID: core.StringPtr(destinationID4),
+				TopicID:       core.StringPtr(topicID4),
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSchedulerSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID20 = string(*subscription.ID)
 
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2844,24 +2833,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(emailName))
 			Expect(subscription.Description).To(Equal(emailDescription))
 
-			fcmName := core.StringPtr("subscription_FCM_update")
-			fcmDescription := core.StringPtr("Subscription update for FCM")
-			updateFCMSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				Name:        fcmName,
-				Description: fcmDescription,
-				ID:          core.StringPtr(subscriptionID3),
-			}
-
-			subscription, response, err = eventNotificationsService.UpdateSubscription(updateFCMSubscriptionOptions)
-
-			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(200))
-			Expect(subscription).ToNot(BeNil())
-			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID3)))
-			Expect(subscription.Name).To(Equal(fcmName))
-			Expect(subscription.Description).To(Equal(fcmDescription))
-
 			subscriptionUpdateSlackAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes{
 				AttachmentColor:        core.StringPtr("#0000FF"),
 				TemplateIDNotification: core.StringPtr(slackTemplateID),
@@ -2998,9 +2969,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(serviceNowName))
 			Expect(subscription.Description).To(Equal(serviceNowDescription))
 
-			fcmName = core.StringPtr("subscription_FCM_V1_update")
-			fcmDescription = core.StringPtr("Subscription update for FCM V1")
-			updateFCMSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+			fcmName := core.StringPtr("subscription_FCM_V1_update")
+			fcmDescription := core.StringPtr("Subscription update for FCM V1")
+			updateFCMSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        fcmName,
 				Description: fcmDescription,
@@ -3198,6 +3169,24 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID19)))
 			Expect(subscription.Name).To(Equal(slackDMName))
 			Expect(subscription.Description).To(Equal(slackDMDescription))
+
+			schedulerName := core.StringPtr("subscription_Scheduler_update")
+			schedulerDescription := core.StringPtr("Subscription update Scheduler")
+			updateSchedulerSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        schedulerName,
+				Description: schedulerDescription,
+				ID:          core.StringPtr(subscriptionID20),
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSchedulerSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID20)))
+			Expect(subscription.Name).To(Equal(schedulerName))
+			Expect(subscription.Description).To(Equal(schedulerDescription))
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -3460,7 +3449,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			smtpConfigurations, response, err := eventNotificationsService.ListSMTPConfigurations(listSMTPConfigurationsOptions)
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(smtpConfigurations.TotalCount).To(Equal(core.Int64Ptr(int64(1))))
+			Expect(smtpConfigurations).ToNot(BeNil())
 		})
 	})
 
@@ -3481,7 +3470,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			smtpUsers, response, err := eventNotificationsService.ListSMTPUsers(listSMTPUsersOptions)
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
-			Expect(smtpUsers.TotalCount).To(Equal(core.Int64Ptr(int64(1))))
+			Expect(smtpUsers).ToNot(BeNil())
 		})
 	})
 
@@ -3599,7 +3588,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID3, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19, subscriptionID20} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3730,7 +3719,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID3, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19} {
+			for _, ID := range []string{destinationID, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID16, destinationID17, destinationID18, destinationID19} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

@@ -253,6 +253,19 @@ response, err := eventNotificationsService.DeleteSource(deleteSourceOptions)
 ### Create Topic
 
 ```go
+
+// Filters applied in case of periodic-timer as source. EventTypeFilter, NotificationFilter are mutually exclusive with EventScheduleFilter
+
+eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2024-12-20T05:15:00.000Z")
+eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2024-12-20T20:30:00.000Z")
+eventScheduleFilterAttributesModel.Expression = core.StringPtr("* * * * *")
+
+rulesModel = &eventnotificationsv1.Rules{
+	Enabled:             core.BoolPtr(true),
+	EventScheduleFilter: eventScheduleFilterAttributesModel,
+}
+
 rulesModel := &eventnotificationsv1.Rules{
 	Enabled:            core.BoolPtr(false),
 	EventTypeFilter:    core.StringPtr("$.notification_event_info.event_type == 'cert_manager'"), // Add your event type filter here.
