@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.11.0...v0.12.0) (2024-12-23)
+
+
+### Features
+
+* cron scheduler support ([#60](https://github.com/IBM/event-notifications-go-admin-sdk/issues/60)) ([bda976a](https://github.com/IBM/event-notifications-go-admin-sdk/commit/bda976aa2c3c03f1666af211849e4a3431153434))
+
 # [0.11.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.10.0...v0.11.0) (2024-10-30)
 
 
