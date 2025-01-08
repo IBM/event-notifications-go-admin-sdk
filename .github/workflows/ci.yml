@@ -1,0 +1,67 @@
+name: Go CI/CD
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    environment: ci
+    strategy:
+      matrix:
+        go-version: ['1.20', '1.21', '1.22']
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go-version }}
+        cache: true
+
+    - name: Test
+      run: make test
+
+    - name: Build and Release
+      if: github.ref == 'refs/heads/main' && matrix.go-version == '1.20'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        # Run semantic-release
+        npx semantic-release
+        
+        # Store the exit status
+        RELEASE_STATUS=$?
+        echo "Semantic release exit status: $RELEASE_STATUS"
+        
+        # Only build and publish if semantic-release was successful
+        if [ $RELEASE_STATUS -eq 0 ]; then
+          echo "Semantic release successful, building binaries..."
+          
+          # Build for multiple platforms
+          GOOS=linux GOARCH=amd64 make build
+          mv bin/app bin/app-linux-amd64
+          
+          GOOS=darwin GOARCH=amd64 make build
+          mv bin/app bin/app-darwin-amd64
+          
+          # Generate checksums
+          cd bin
+          sha256sum app-* > checksums.txt
+          
+          # Create GitHub release with assets
+          gh release create $(git describe --tags) \
+            bin/app-linux-amd64 \
+            bin/app-darwin-amd64 \
+            bin/checksums.txt \
+            --generate-notes
+        else
+          echo "Semantic release did not create a new version"
+        fi
