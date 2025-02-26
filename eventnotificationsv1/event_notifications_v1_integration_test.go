@@ -343,7 +343,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			fmt.Printf("PD_TEMPLATE_BODY: %s\n", config["PD_TEMPLATE_BODY"])
 
-			if pdTemplateBody == "" {
+			if pdTemplateBody == config["PAGERDUTY_TEMPLATE_BODY"] {
 				Skip("Unable to load pdTemplateBody configuration property, skipping tests")
 			}
 			fmt.Printf("pdTemplateBody: %s\n", pdTemplateBody)
