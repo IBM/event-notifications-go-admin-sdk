@@ -73,7 +73,7 @@ Initialize the sdk to connect with your Event Notifications service instance.
 ```go
 func initInstance() *eventnotificationsv1.EventNotificationsV1 {
 
-	// IAM API key based authentication
+    // IAM API key based authentication
 	authenticator := &core.IamAuthenticator{
 		ApiKey: <apikey>, // Event notifications service instance APIKey
 	}
@@ -186,7 +186,7 @@ SDK Methods to consume
 
 ```go
 createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
-		<instance-id>, // Event notifications service instance GUID
+	    <instance-id>, // Event notifications service instance GUID
 		<source-name>,
 		<source-description>,
 	)
@@ -235,7 +235,7 @@ fmt.Println(string(b))
 ```go
 updateSourceOptions := eventNotificationsService.NewUpdateSourceOptions(
 		<instance-id>, // Event notifications service instance GUID
-		<source-id>,   // Event notifications service instance Source ID
+	    <source-id>,   // Event notifications service instance Source ID
 	)
 updateSourceOptions.SetName(*core.StringPtr(<source-updated-name>))
 updateSourceOptions.SetDescription(*core.StringPtr(<source-updated-description>))
@@ -623,22 +623,23 @@ templateResponse, response, err = eventNotificationsService.CreateTemplate(creat
 
 For webhook template supported template type value: webhook.notification
 
-#### PagerDuty Template
+#### Update Pagerduty Template
 
 ```go
-pagerdutyTemplConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
-	Body: core.StringPtr(<json body encoded in to base 64 format>),
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
 }
 
-createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
 	Type:        core.StringPtr(<template-type>),
 	Description: core.StringPtr(<description>),
-	Params:      pagerdutyTemplConfig,
+	Params:      templateConfig,
 }
 
-templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 ```
 
 For pagerduty template supported template type value: pagerduty.notification
@@ -729,27 +730,6 @@ templateResponse, response, err := eventNotificationsService.ReplaceTemplate(rep
 ```
 
 For webhook template supported template type value: webhook.notification
-
-#### Update Pagerduty Template
-
-```go
-templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
-	Body:    core.StringPtr(<base 64 encoded json body>),
-}
-
-replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
-	InstanceID:  core.StringPtr(<instance-id>),
-	ID:          core.StringPtr(<template-id>),
-	Name:        core.StringPtr(<name>),
-	Type:        core.StringPtr(<template-type>),
-	Description: core.StringPtr(<description>),
-	Params:      templateConfig,
-}
-
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
-```
-
-For pagerduty template supported template type value: pagerduty.notification
 
 ### Delete Template
 
@@ -1262,10 +1242,10 @@ if err != nil {
   - **firefox_devices** (_Array of string_) - Send notification to the list of specified Firefox devices.
   - **tags** (_Array of string_) - Send notification to the devices that have subscribed to any of these tags.
   - **platforms** (_Array of string_) - Send notification to the devices of the specified platforms.
-  - Pass 'G' for google (Android) devices.
-  - Pass 'A' for iOS devices.
-  - Pass 'WEB_FIREFOX' for Firefox browser.
-  - Pass 'WEB_CHROME' for Chrome browser.
+    - Pass 'G' for google (Android) devices.
+    - Pass 'A' for iOS devices.
+    - Pass 'WEB_FIREFOX' for Firefox browser.
+    - Pass 'WEB_CHROME' for Chrome browser.
 - **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method.
   - **instance_id** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
   - **ibmenseverity** (_string_) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event. example: LOW, HIGH, MEDIUM
@@ -1340,7 +1320,6 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
-- `EVENT_NOTIFICATIONS_PAGERDUTY_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 

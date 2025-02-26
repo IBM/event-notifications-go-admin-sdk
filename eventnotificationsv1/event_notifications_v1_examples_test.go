@@ -84,6 +84,7 @@ var (
 	subscriptionID6           string
 	subscriptionID7           string
 	subscriptionID8           string
+	subscriptionID9           string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -2136,7 +2137,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			name = "PagerDuty template update"
 			description = "pagerduty template description"
 
-			pdTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+			pdTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
 				Body: core.StringPtr(pdTemplateBody),
 			}
 
@@ -2394,6 +2395,32 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID8 = string(*subscription.ID)
+
+			subscriptionCreatePDAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
+				TemplateIDNotification: core.StringPtr(pdTemplateID),
+			}
+
+			pdName := core.StringPtr("subscription_pd")
+			pdDescription := core.StringPtr("Subscription for pagerduty")
+			createPDSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          pdName,
+				Description:   pdDescription,
+				DestinationID: core.StringPtr(destinationID10),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreatePDAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createPDSubscriptionOptions)
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID9 = *subscription.ID
+
 			// end-create_subscription
 
 		})
@@ -2763,6 +2790,36 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID8)))
 			Expect(subscription.Name).To(Equal(slackDMName))
 			Expect(subscription.Description).To(Equal(slackDMDescription))
+
+			subscriptionUpdatePagerDutyAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesPagerDutyAttributes{
+				TemplateIDNotification: core.StringPtr(webhookTemplateID),
+			}
+
+			pdName := core.StringPtr("subscription_Pager_Duty_update")
+			pdDescription := core.StringPtr("Subscription update for Pager Duty")
+			updatePDSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionID9),
+				Name:        pdName,
+				Description: pdDescription,
+				Attributes:  subscriptionUpdatePagerDutyAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updatePDSubscriptionOptions)
+
+			if err != nil {
+				panic(err)
+			}
+
+			b, _ = json.MarshalIndent(subscription, "", "  ")
+			fmt.Println(string(b))
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID9)))
+			Expect(subscription.Name).To(Equal(pdName))
+			Expect(subscription.Description).To(Equal(pdDescription))
 
 			// end-update_subscription
 
