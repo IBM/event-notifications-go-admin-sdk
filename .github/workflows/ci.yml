@@ -35,6 +35,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         # Run semantic-release
+        npm install @semantic-release/changelog
         npx semantic-release
         
         # Store the exit status
