@@ -134,6 +134,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		slackChannelID            string
 		webhookTemplateID         string
 		webhookTemplateBody       string
+		pdTemplateID              string
+		pdTemplateBody            string
 	)
 
 	var shouldSkipTest = func() {
@@ -338,6 +340,13 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load SCHEDULER_SOURCE_ID configuration property, skipping tests")
 			}
 			fmt.Printf("SCHEDULER_SOURCE_ID: %s\n", schedulersourceID)
+
+			fmt.Printf("PD_TEMPLATE_BODY: %s\n", config["PD_TEMPLATE_BODY"])
+
+			if pdTemplateBody == config["PAGERDUTY_TEMPLATE_BODY"] {
+				Skip("Unable to load pdTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("pdTemplateBody: %s\n", pdTemplateBody)
 
 			shouldSkipTest = func() {}
 		})
@@ -673,8 +682,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			topicID3 = string(*topicResponse.ID)
 
 			eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
-			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2024-12-20T05:15:00.000Z")
-			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2024-12-20T20:30:00.000Z")
+			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2025-02-18T15:50:00.000Z")
+			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2025-02-18T16:30:00.000Z")
 			eventScheduleFilterAttributesModel.Expression = core.StringPtr("* * * * *")
 
 			rulesModel = &eventnotificationsv1.Rules{
@@ -1358,6 +1367,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeNotification := "smtp_custom.notification"
 			templateTypeSlack := "slack.notification"
 			templateTypeWebhook := "webhook.notification"
+			templateTypePD := "pagerduty.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1465,6 +1475,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
 			webhookTemplateID = *templateResponse.ID
+
+			name = "Pagerduty template"
+			description = "pagerduty template description"
+
+			pdTemplConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
+				Body: core.StringPtr(pdTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypePD),
+				Description: core.StringPtr(description),
+				Params:      pdTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			pdTemplateID = *templateResponse.ID
 		})
 	})
 
@@ -2103,6 +2140,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeNotification := "smtp_custom.notification"
 			templateTypeSlack := "slack.notification"
 			templateTypeWebhook := "webhook.notification"
+			templateTypePD := "pagerduty.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -2208,6 +2246,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateResponse).ToNot(BeNil())
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(webhookTemplateID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "PagerDuty template update"
+			description = "pagerduty template description"
+
+			pdTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig{
+				Body: core.StringPtr(pdTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(pdTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypePD),
+				Description: core.StringPtr(description),
+				Params:      pdTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(pdTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 		})
@@ -2390,12 +2455,17 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID9 = string(*subscription.ID)
 
+			subscriptionCreatePDAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesPagerDutyAttributes{
+				TemplateIDNotification: core.StringPtr(pdTemplateID),
+			}
+
 			createPDSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
 				InstanceID:    core.StringPtr(instanceID),
 				Name:          core.StringPtr("Pager Duty subscription"),
 				Description:   core.StringPtr("Subscription for Pager Duty"),
 				DestinationID: core.StringPtr(destinationID10),
 				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreatePDAttributesModel,
 			}
 
 			subscription, response, err = eventNotificationsService.CreateSubscription(createPDSubscriptionOptions)
@@ -2929,6 +2999,10 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(fireName))
 			Expect(subscription.Description).To(Equal(fireDescription))
 
+			subscriptionUpdatePagerDutyAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesPagerDutyAttributes{
+				TemplateIDNotification: core.StringPtr(pdTemplateID),
+			}
+
 			pdName := core.StringPtr("subscription_Pager_Duty_update")
 			pdDescription := core.StringPtr("Subscription update for Pager Duty")
 			updatePDSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
@@ -2936,6 +3010,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Name:        pdName,
 				Description: pdDescription,
 				ID:          core.StringPtr(subscriptionID10),
+				Attributes:  subscriptionUpdatePagerDutyAttributesModel,
 			}
 
 			subscription, response, err = eventNotificationsService.UpdateSubscription(updatePDSubscriptionOptions)
@@ -3719,7 +3794,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID16, destinationID17, destinationID18, destinationID19} {
+			for _, ID := range []string{destinationID, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

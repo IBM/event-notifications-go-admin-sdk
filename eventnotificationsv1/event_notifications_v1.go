@@ -9615,6 +9615,7 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesCustomEmailAttributesResponse
 // - SubscriptionAttributesWebhookAttributesResponse
 // - SubscriptionAttributesSlackAttributesResponse
+// - SubscriptionAttributesPagerDutyAttributesResponse
 // - SubscriptionAttributesSlackDirectMessageAttributesResponse
 // - SubscriptionAttributesServiceNowAttributesResponse
 type SubscriptionAttributes struct {
@@ -9880,6 +9881,7 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesWebhookAttributes
 // - SubscriptionCreateAttributesFcmAttributes
 // - SubscriptionCreateAttributesSlackAttributes
+// - SubscriptionUpdateAttributesPagerDutyAttributes
 // - SubscriptionCreateAttributesSlackDirectMessageAttributes
 // - SubscriptionCreateAttributesServiceNowAttributes
 type SubscriptionCreateAttributes struct {
@@ -10202,6 +10204,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // - SubscriptionUpdateAttributesCustomEmailUpdateAttributes
 // - SubscriptionUpdateAttributesWebhookAttributes
 // - SubscriptionUpdateAttributesSlackAttributes
+// - SubscriptionUpdateAttributesPagerDutyAttributes
 // - SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
 // - SubscriptionUpdateAttributesServiceNowAttributes
 type SubscriptionUpdateAttributes struct {
@@ -10549,6 +10552,7 @@ func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err er
 // - TemplateConfigOneOfEmailTemplateConfig
 // - TemplateConfigOneOfSlackTemplateConfig
 // - TemplateConfigOneOfWebhookTemplateConfig
+// - TemplateConfigOneOfPagerdutyTemplateConfig
 type TemplateConfigOneOf struct {
 	// Template body(Base64 encoded).
 	Body *string `json:"body,omitempty"`
@@ -13031,6 +13035,86 @@ func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.Ra
 	return
 }
 
+// SubscriptionAttributesPagerDutyAttributesResponse : The attributes for a PagerDuty notification.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesPagerDutyAttributesResponse struct {
+	// ID of Base64 converted JSON Pagerduty Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesPagerDutyAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesPagerDutyAttributesResponse
+func (o *SubscriptionAttributesPagerDutyAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesPagerDutyAttributesResponse
+func (o *SubscriptionAttributesPagerDutyAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesPagerDutyAttributesResponse
+func (o *SubscriptionAttributesPagerDutyAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesPagerDutyAttributesResponse
+func (o *SubscriptionAttributesPagerDutyAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesPagerDutyAttributesResponse
+func (o *SubscriptionAttributesPagerDutyAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.TemplateIDNotification != nil {
+		m["template_id_notification"] = o.TemplateIDNotification
+	}
+	buffer, err = json.Marshal(m)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-marshal", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalSubscriptionAttributesPagerDutyAttributesResponse unmarshals an instance of SubscriptionAttributesPagerDutyAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesPagerDutyAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesPagerDutyAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	delete(m, "template_id_notification")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = core.SDKErrorf(e, "", "additional-properties-error", common.GetComponentInfo())
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionAttributesSmsAttributesResponse : SMS attributes object.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesSmsAttributesResponse struct {
@@ -13721,6 +13805,29 @@ func UnmarshalSubscriptionCreateAttributesFcmAttributes(m map[string]json.RawMes
 	return
 }
 
+// SubscriptionCreateAttributesPagerDutyAttributes : The attributes for a pagerduty notification.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesPagerDutyAttributes struct {
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionCreateAttributesPagerDutyAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesPagerDutyAttributes unmarshals an instance of SubscriptionCreateAttributesPagerDutyAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesPagerDutyAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesPagerDutyAttributes)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionCreateAttributesSmsAttributes : The attributes for an sms notification.
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesSmsAttributes struct {
@@ -14116,6 +14223,29 @@ func UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes(m map[string]jso
 	return
 }
 
+// SubscriptionUpdateAttributesPagerDutyAttributes : The attributes for a pagerduty notification.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesPagerDutyAttributes struct {
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionUpdateAttributesPagerDutyAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesPagerDutyAttributes unmarshals an instance of SubscriptionUpdateAttributesPagerDutyAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesPagerDutyAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesPagerDutyAttributes)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionUpdateAttributesSmsUpdateAttributes : SMS attributes object.
 // This model "extends" SubscriptionUpdateAttributes
 type SubscriptionUpdateAttributesSmsUpdateAttributes struct {
@@ -14316,6 +14446,41 @@ func UnmarshalTemplateConfigOneOfEmailTemplateConfig(m map[string]json.RawMessag
 	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "subject-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfPagerdutyTemplateConfig : Payload describing a pagerduty template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfPagerdutyTemplateConfig struct {
+	// Template body(Base64 encoded).
+	Body *string `json:"body" validate:"required"`
+}
+
+// NewTemplateConfigOneOfPagerdutyTemplateConfig : Instantiate TemplateConfigOneOfPagerdutyTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfPagerdutyTemplateConfig(body string) (_model *TemplateConfigOneOfPagerdutyTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfPagerdutyTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*TemplateConfigOneOfPagerdutyTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfPagerdutyTemplateConfig unmarshals an instance of TemplateConfigOneOfPagerdutyTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfPagerdutyTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfPagerdutyTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
