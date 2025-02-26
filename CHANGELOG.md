@@ -1,3 +1,17 @@
+# [0.13.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.12.0...v0.13.0) (2025-02-26)
+
+
+### Bug Fixes
+
+* Github actions migration and vulnerbility fix ([#61](https://github.com/IBM/event-notifications-go-admin-sdk/issues/61)) ([5d915b2](https://github.com/IBM/event-notifications-go-admin-sdk/commit/5d915b2cf904d08995583bcebc632d002c6a01f1))
+
+
+### Features
+
+* pagerduty template support ([90df5c7](https://github.com/IBM/event-notifications-go-admin-sdk/commit/90df5c708cb94627be73a7267387df16bc5d76f4))
+* pagerduty template support ([#62](https://github.com/IBM/event-notifications-go-admin-sdk/issues/62)) ([0f0e98a](https://github.com/IBM/event-notifications-go-admin-sdk/commit/0f0e98a6d0193857c6b03f34f2c8be025cab34ed))
+* pagerduty template support ([#63](https://github.com/IBM/event-notifications-go-admin-sdk/issues/63)) ([9681a1f](https://github.com/IBM/event-notifications-go-admin-sdk/commit/9681a1f65f2fb9e86f9844f967f630824d77692d))
+
 # [0.12.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.11.0...v0.12.0) (2024-12-23)
 
 
