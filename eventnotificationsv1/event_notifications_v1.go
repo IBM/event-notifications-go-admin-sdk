@@ -4155,21 +4155,22 @@ type CreateDestinationOptions struct {
 // Constants associated with the CreateDestinationOptions.Type property.
 // The type of Destination Webhook.
 const (
-	CreateDestinationOptionsTypeIbmceConst       = "ibmce"
-	CreateDestinationOptionsTypeIbmcosConst      = "ibmcos"
-	CreateDestinationOptionsTypeMsteamsConst     = "msteams"
-	CreateDestinationOptionsTypePagerdutyConst   = "pagerduty"
-	CreateDestinationOptionsTypePushAndroidConst = "push_android"
-	CreateDestinationOptionsTypePushChromeConst  = "push_chrome"
-	CreateDestinationOptionsTypePushFirefoxConst = "push_firefox"
-	CreateDestinationOptionsTypePushHuaweiConst  = "push_huawei"
-	CreateDestinationOptionsTypePushIosConst     = "push_ios"
-	CreateDestinationOptionsTypePushSafariConst  = "push_safari"
-	CreateDestinationOptionsTypeSMTPCustomConst  = "smtp_custom"
-	CreateDestinationOptionsTypeServicenowConst  = "servicenow"
-	CreateDestinationOptionsTypeSlackConst       = "slack"
-	CreateDestinationOptionsTypeSmsCustomConst   = "sms_custom"
-	CreateDestinationOptionsTypeWebhookConst     = "webhook"
+	CreateDestinationOptionsTypeEventStreamsConst = "event_streams"
+	CreateDestinationOptionsTypeIbmceConst        = "ibmce"
+	CreateDestinationOptionsTypeIbmcosConst       = "ibmcos"
+	CreateDestinationOptionsTypeMsteamsConst      = "msteams"
+	CreateDestinationOptionsTypePagerdutyConst    = "pagerduty"
+	CreateDestinationOptionsTypePushAndroidConst  = "push_android"
+	CreateDestinationOptionsTypePushChromeConst   = "push_chrome"
+	CreateDestinationOptionsTypePushFirefoxConst  = "push_firefox"
+	CreateDestinationOptionsTypePushHuaweiConst   = "push_huawei"
+	CreateDestinationOptionsTypePushIosConst      = "push_ios"
+	CreateDestinationOptionsTypePushSafariConst   = "push_safari"
+	CreateDestinationOptionsTypeSMTPCustomConst   = "smtp_custom"
+	CreateDestinationOptionsTypeServicenowConst   = "servicenow"
+	CreateDestinationOptionsTypeSlackConst        = "slack"
+	CreateDestinationOptionsTypeSmsCustomConst    = "sms_custom"
+	CreateDestinationOptionsTypeWebhookConst      = "webhook"
 )
 
 // NewCreateDestinationOptions : Instantiate CreateDestinationOptions
@@ -5155,7 +5156,7 @@ type Destination struct {
 	Description *string `json:"description" validate:"required"`
 
 	// Destination type
-	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+	// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei/CustomEmail/CustomSMS/EventStreams.
 	Type *string `json:"type" validate:"required"`
 
 	// Whether to collect the failed event in Cloud Object Storage bucket.
@@ -5175,23 +5176,25 @@ type Destination struct {
 }
 
 // Constants associated with the Destination.Type property.
-// Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+// Destination type
+// Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei/CustomEmail/CustomSMS/EventStreams.
 const (
-	DestinationTypeIbmceConst       = "ibmce"
-	DestinationTypeIbmcosConst      = "ibmcos"
-	DestinationTypeMsteamsConst     = "msteams"
-	DestinationTypePagerdutyConst   = "pagerduty"
-	DestinationTypePushAndroidConst = "push_android"
-	DestinationTypePushHuaweiConst  = "push_huawei"
-	DestinationTypePushIosConst     = "push_ios"
-	DestinationTypePushSafariConst  = "push_safari"
-	DestinationTypeSMTPCustomConst  = "smtp_custom"
-	DestinationTypeSMTPIBMConst     = "smtp_ibm"
-	DestinationTypeServicenowConst  = "servicenow"
-	DestinationTypeSlackConst       = "slack"
-	DestinationTypeSmsCustomConst   = "sms_custom"
-	DestinationTypeSmsIBMConst      = "sms_ibm"
-	DestinationTypeWebhookConst     = "webhook"
+	DestinationTypeEventStreamsConst = "event_streams"
+	DestinationTypeIbmceConst        = "ibmce"
+	DestinationTypeIbmcosConst       = "ibmcos"
+	DestinationTypeMsteamsConst      = "msteams"
+	DestinationTypePagerdutyConst    = "pagerduty"
+	DestinationTypePushAndroidConst  = "push_android"
+	DestinationTypePushHuaweiConst   = "push_huawei"
+	DestinationTypePushIosConst      = "push_ios"
+	DestinationTypePushSafariConst   = "push_safari"
+	DestinationTypeSMTPCustomConst   = "smtp_custom"
+	DestinationTypeSMTPIBMConst      = "smtp_ibm"
+	DestinationTypeServicenowConst   = "servicenow"
+	DestinationTypeSlackConst        = "slack"
+	DestinationTypeSmsCustomConst    = "sms_custom"
+	DestinationTypeSmsIBMConst       = "sms_ibm"
+	DestinationTypeWebhookConst      = "webhook"
 )
 
 // UnmarshalDestination unmarshals an instance of Destination from the specified map of raw messages.
@@ -5292,6 +5295,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfServiceNowDestinationConfig
 // - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
 // - DestinationConfigOneOfHuaweiDestinationConfig
+// - DestinationConfigOneOfEventStreamsDestinationConfig
 type DestinationConfigOneOf struct {
 	// Email Domain.
 	Domain *string `json:"domain,omitempty"`
@@ -5405,6 +5409,12 @@ type DestinationConfigOneOf struct {
 
 	// End Point of Cloud Object Storage.
 	Endpoint *string `json:"endpoint,omitempty"`
+
+	// CRN of the Event Streans instance.
+	CRN *string `json:"crn,omitempty"`
+
+	// Topic of Event Streams.
+	Topic *string `json:"topic,omitempty"`
 }
 
 // Constants associated with the DestinationConfigOneOf.Verb property.
@@ -5617,6 +5627,16 @@ func UnmarshalDestinationConfigOneOf(m map[string]json.RawMessage, result interf
 		err = core.SDKErrorf(err, "", "endpoint-error", common.GetComponentInfo())
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "crn", &obj.CRN)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "crn-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "topic", &obj.Topic)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "topic-error", common.GetComponentInfo())
+		return
+	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
 }
@@ -5738,21 +5758,22 @@ type DestinationListItem struct {
 // Constants associated with the DestinationListItem.Type property.
 // Destination type.
 const (
-	DestinationListItemTypeIbmceConst       = "ibmce"
-	DestinationListItemTypeIbmcosConst      = "ibmcos"
-	DestinationListItemTypeMsteamsConst     = "msteams"
-	DestinationListItemTypePagerdutyConst   = "pagerduty"
-	DestinationListItemTypePushAndroidConst = "push_android"
-	DestinationListItemTypePushHuaweiConst  = "push_huawei"
-	DestinationListItemTypePushIosConst     = "push_ios"
-	DestinationListItemTypePushSafariConst  = "push_safari"
-	DestinationListItemTypeSMTPCustomConst  = "smtp_custom"
-	DestinationListItemTypeSMTPIBMConst     = "smtp_ibm"
-	DestinationListItemTypeServicenowConst  = "servicenow"
-	DestinationListItemTypeSlackConst       = "slack"
-	DestinationListItemTypeSmsCustomConst   = "sms_custom"
-	DestinationListItemTypeSmsIBMConst      = "sms_ibm"
-	DestinationListItemTypeWebhookConst     = "webhook"
+	DestinationListItemTypeEventStreamsConst = "event_streams"
+	DestinationListItemTypeIbmceConst        = "ibmce"
+	DestinationListItemTypeIbmcosConst       = "ibmcos"
+	DestinationListItemTypeMsteamsConst      = "msteams"
+	DestinationListItemTypePagerdutyConst    = "pagerduty"
+	DestinationListItemTypePushAndroidConst  = "push_android"
+	DestinationListItemTypePushHuaweiConst   = "push_huawei"
+	DestinationListItemTypePushIosConst      = "push_ios"
+	DestinationListItemTypePushSafariConst   = "push_safari"
+	DestinationListItemTypeSMTPCustomConst   = "smtp_custom"
+	DestinationListItemTypeSMTPIBMConst      = "smtp_ibm"
+	DestinationListItemTypeServicenowConst   = "servicenow"
+	DestinationListItemTypeSlackConst        = "slack"
+	DestinationListItemTypeSmsCustomConst    = "sms_custom"
+	DestinationListItemTypeSmsIBMConst       = "sms_ibm"
+	DestinationListItemTypeWebhookConst      = "webhook"
 )
 
 // UnmarshalDestinationListItem unmarshals an instance of DestinationListItem from the specified map of raw messages.
@@ -5829,21 +5850,22 @@ type DestinationResponse struct {
 // Constants associated with the DestinationResponse.Type property.
 // Destination type.
 const (
-	DestinationResponseTypeIbmceConst       = "ibmce"
-	DestinationResponseTypeIbmcosConst      = "ibmcos"
-	DestinationResponseTypeMsteamsConst     = "msteams"
-	DestinationResponseTypePagerdutyConst   = "pagerduty"
-	DestinationResponseTypePushAndroidConst = "push_android"
-	DestinationResponseTypePushChromeConst  = "push_chrome"
-	DestinationResponseTypePushFirefoxConst = "push_firefox"
-	DestinationResponseTypePushHuaweiConst  = "push_huawei"
-	DestinationResponseTypePushIosConst     = "push_ios"
-	DestinationResponseTypePushSafariConst  = "push_safari"
-	DestinationResponseTypeSMTPCustomConst  = "smtp_custom"
-	DestinationResponseTypeServicenowConst  = "servicenow"
-	DestinationResponseTypeSlackConst       = "slack"
-	DestinationResponseTypeSmsCustomConst   = "sms_custom"
-	DestinationResponseTypeWebhookConst     = "webhook"
+	DestinationResponseTypeEventStreamsConst = "event_streams"
+	DestinationResponseTypeIbmceConst        = "ibmce"
+	DestinationResponseTypeIbmcosConst       = "ibmcos"
+	DestinationResponseTypeMsteamsConst      = "msteams"
+	DestinationResponseTypePagerdutyConst    = "pagerduty"
+	DestinationResponseTypePushAndroidConst  = "push_android"
+	DestinationResponseTypePushChromeConst   = "push_chrome"
+	DestinationResponseTypePushFirefoxConst  = "push_firefox"
+	DestinationResponseTypePushHuaweiConst   = "push_huawei"
+	DestinationResponseTypePushIosConst      = "push_ios"
+	DestinationResponseTypePushSafariConst   = "push_safari"
+	DestinationResponseTypeSMTPCustomConst   = "smtp_custom"
+	DestinationResponseTypeServicenowConst   = "servicenow"
+	DestinationResponseTypeSlackConst        = "slack"
+	DestinationResponseTypeSmsCustomConst    = "sms_custom"
+	DestinationResponseTypeWebhookConst      = "webhook"
 )
 
 // UnmarshalDestinationResponse unmarshals an instance of DestinationResponse from the specified map of raw messages.
@@ -7907,18 +7929,6 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "datacontenttype")
-	err = core.UnmarshalPrimitive(m, "ibmenpushto", &obj.Ibmenpushto)
-	if err != nil {
-		err = core.SDKErrorf(err, "", "ibmenpushto-error", common.GetComponentInfo())
-		return
-	}
-	delete(m, "ibmenpushto")
-	err = core.UnmarshalPrimitive(m, "ibmenfcmbody", &obj.Ibmenfcmbody)
-	if err != nil {
-		err = core.SDKErrorf(err, "", "ibmenfcmbody-error", common.GetComponentInfo())
-		return
-	}
-	delete(m, "ibmenfcmbody")
 	err = core.UnmarshalPrimitive(m, "ibmenapnsbody", &obj.Ibmenapnsbody)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "ibmenapnsbody-error", common.GetComponentInfo())
@@ -8024,7 +8034,7 @@ type ReplaceIntegrationOptions struct {
 	// Unique identifier for integration.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// Integration type. Allowed values are kms and hs-crypto.
+	// Integration type. Allowed values are kms, hs-crypto and collect_failed_events.
 	Type *string `json:"type" validate:"required"`
 
 	// Integration Metadata object.
@@ -8225,18 +8235,6 @@ type Rules struct {
 
 	// Event schedule filter attributes.
 	EventScheduleFilter *EventScheduleFilterAttributes `json:"event_schedule_filter,omitempty"`
-}
-
-// NewRules : Instantiate Rules (Generic Model Constructor)
-func (*EventNotificationsV1) NewRules(eventTypeFilter string) (_model *Rules, err error) {
-	_model = &Rules{
-		EventTypeFilter: core.StringPtr(eventTypeFilter),
-	}
-	err = core.ValidateStruct(_model, "required parameters")
-	if err != nil {
-		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
-	}
-	return
 }
 
 // UnmarshalRules unmarshals an instance of Rules from the specified map of raw messages.
@@ -9432,23 +9430,24 @@ type Subscription struct {
 // Constants associated with the Subscription.DestinationType property.
 // The type of destination.
 const (
-	SubscriptionDestinationTypeIbmceConst       = "ibmce"
-	SubscriptionDestinationTypeIbmcosConst      = "ibmcos"
-	SubscriptionDestinationTypeMsteamsConst     = "msteams"
-	SubscriptionDestinationTypePagerdutyConst   = "pagerduty"
-	SubscriptionDestinationTypePushAndroidConst = "push_android"
-	SubscriptionDestinationTypePushChromeConst  = "push_chrome"
-	SubscriptionDestinationTypePushFirefoxConst = "push_firefox"
-	SubscriptionDestinationTypePushHuaweiConst  = "push_huawei"
-	SubscriptionDestinationTypePushIosConst     = "push_ios"
-	SubscriptionDestinationTypePushSafariConst  = "push_safari"
-	SubscriptionDestinationTypeSMTPCustomConst  = "smtp_custom"
-	SubscriptionDestinationTypeSMTPIBMConst     = "smtp_ibm"
-	SubscriptionDestinationTypeServicenowConst  = "servicenow"
-	SubscriptionDestinationTypeSlackConst       = "slack"
-	SubscriptionDestinationTypeSmsCustomConst   = "sms_custom"
-	SubscriptionDestinationTypeSmsIBMConst      = "sms_ibm"
-	SubscriptionDestinationTypeWebhookConst     = "webhook"
+	SubscriptionDestinationTypeEventStreamsConst = "event_streams"
+	SubscriptionDestinationTypeIbmceConst        = "ibmce"
+	SubscriptionDestinationTypeIbmcosConst       = "ibmcos"
+	SubscriptionDestinationTypeMsteamsConst      = "msteams"
+	SubscriptionDestinationTypePagerdutyConst    = "pagerduty"
+	SubscriptionDestinationTypePushAndroidConst  = "push_android"
+	SubscriptionDestinationTypePushChromeConst   = "push_chrome"
+	SubscriptionDestinationTypePushFirefoxConst  = "push_firefox"
+	SubscriptionDestinationTypePushHuaweiConst   = "push_huawei"
+	SubscriptionDestinationTypePushIosConst      = "push_ios"
+	SubscriptionDestinationTypePushSafariConst   = "push_safari"
+	SubscriptionDestinationTypeSMTPCustomConst   = "smtp_custom"
+	SubscriptionDestinationTypeSMTPIBMConst      = "smtp_ibm"
+	SubscriptionDestinationTypeServicenowConst   = "servicenow"
+	SubscriptionDestinationTypeSlackConst        = "slack"
+	SubscriptionDestinationTypeSmsCustomConst    = "sms_custom"
+	SubscriptionDestinationTypeSmsIBMConst       = "sms_ibm"
+	SubscriptionDestinationTypeWebhookConst      = "webhook"
 )
 
 // SetProperty allows the user to set an arbitrary property on an instance of Subscription
@@ -9618,6 +9617,7 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesPagerDutyAttributesResponse
 // - SubscriptionAttributesSlackDirectMessageAttributesResponse
 // - SubscriptionAttributesServiceNowAttributesResponse
+// - SubscriptionAttributesEventStreamsAttributesResponse
 type SubscriptionAttributes struct {
 	// The subscribed list.
 	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
@@ -9881,9 +9881,10 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesWebhookAttributes
 // - SubscriptionCreateAttributesFcmAttributes
 // - SubscriptionCreateAttributesSlackAttributes
-// - SubscriptionUpdateAttributesPagerDutyAttributes
+// - SubscriptionCreateAttributesPagerDutyAttributes
 // - SubscriptionCreateAttributesSlackDirectMessageAttributes
 // - SubscriptionCreateAttributesServiceNowAttributes
+// - SubscriptionCreateAttributesEventstreamsAttributes
 type SubscriptionCreateAttributes struct {
 	// The sms id string.
 	Invited []string `json:"invited,omitempty"`
@@ -10125,23 +10126,24 @@ type SubscriptionListItem struct {
 // Constants associated with the SubscriptionListItem.DestinationType property.
 // The type of destination.
 const (
-	SubscriptionListItemDestinationTypeIbmceConst       = "ibmce"
-	SubscriptionListItemDestinationTypeIbmcosConst      = "ibmcos"
-	SubscriptionListItemDestinationTypeMsteamsConst     = "msteams"
-	SubscriptionListItemDestinationTypePagerdutyConst   = "pagerduty"
-	SubscriptionListItemDestinationTypePushAndroidConst = "push_android"
-	SubscriptionListItemDestinationTypePushChromeConst  = "push_chrome"
-	SubscriptionListItemDestinationTypePushFirefoxConst = "push_firefox"
-	SubscriptionListItemDestinationTypePushHuaweiConst  = "push_huawei"
-	SubscriptionListItemDestinationTypePushIosConst     = "push_ios"
-	SubscriptionListItemDestinationTypePushSafariConst  = "push_safari"
-	SubscriptionListItemDestinationTypeSMTPCustomConst  = "smtp_custom"
-	SubscriptionListItemDestinationTypeSMTPIBMConst     = "smtp_ibm"
-	SubscriptionListItemDestinationTypeServicenowConst  = "servicenow"
-	SubscriptionListItemDestinationTypeSlackConst       = "slack"
-	SubscriptionListItemDestinationTypeSmsCustomConst   = "sms_custom"
-	SubscriptionListItemDestinationTypeSmsIBMConst      = "sms_ibm"
-	SubscriptionListItemDestinationTypeWebhookConst     = "webhook"
+	SubscriptionListItemDestinationTypeEventStreamsConst = "event_streams"
+	SubscriptionListItemDestinationTypeIbmceConst        = "ibmce"
+	SubscriptionListItemDestinationTypeIbmcosConst       = "ibmcos"
+	SubscriptionListItemDestinationTypeMsteamsConst      = "msteams"
+	SubscriptionListItemDestinationTypePagerdutyConst    = "pagerduty"
+	SubscriptionListItemDestinationTypePushAndroidConst  = "push_android"
+	SubscriptionListItemDestinationTypePushChromeConst   = "push_chrome"
+	SubscriptionListItemDestinationTypePushFirefoxConst  = "push_firefox"
+	SubscriptionListItemDestinationTypePushHuaweiConst   = "push_huawei"
+	SubscriptionListItemDestinationTypePushIosConst      = "push_ios"
+	SubscriptionListItemDestinationTypePushSafariConst   = "push_safari"
+	SubscriptionListItemDestinationTypeSMTPCustomConst   = "smtp_custom"
+	SubscriptionListItemDestinationTypeSMTPIBMConst      = "smtp_ibm"
+	SubscriptionListItemDestinationTypeServicenowConst   = "servicenow"
+	SubscriptionListItemDestinationTypeSlackConst        = "slack"
+	SubscriptionListItemDestinationTypeSmsCustomConst    = "sms_custom"
+	SubscriptionListItemDestinationTypeSmsIBMConst       = "sms_ibm"
+	SubscriptionListItemDestinationTypeWebhookConst      = "webhook"
 )
 
 // UnmarshalSubscriptionListItem unmarshals an instance of SubscriptionListItem from the specified map of raw messages.
@@ -10207,6 +10209,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // - SubscriptionUpdateAttributesPagerDutyAttributes
 // - SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
 // - SubscriptionUpdateAttributesServiceNowAttributes
+// - SubscriptionUpdateAttributesEventstreamsAttributes
 type SubscriptionUpdateAttributes struct {
 	// The email ids or phone numbers.
 	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
@@ -10553,6 +10556,7 @@ func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err er
 // - TemplateConfigOneOfSlackTemplateConfig
 // - TemplateConfigOneOfWebhookTemplateConfig
 // - TemplateConfigOneOfPagerdutyTemplateConfig
+// - TemplateConfigOneOfEventStreamsTemplateConfig
 type TemplateConfigOneOf struct {
 	// Template body(Base64 encoded).
 	Body *string `json:"body,omitempty"`
@@ -11881,6 +11885,59 @@ func UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig(m map[str
 	return
 }
 
+// DestinationConfigOneOfEventStreamsDestinationConfig : Payload describing a Event Streams destination configuration.
+// This model "extends" DestinationConfigOneOf
+type DestinationConfigOneOfEventStreamsDestinationConfig struct {
+	// CRN of the Event Streans instance.
+	CRN *string `json:"crn" validate:"required"`
+
+	// End Point of Event Streams.
+	Endpoint *string `json:"endpoint" validate:"required"`
+
+	// Topic of Event Streams.
+	Topic *string `json:"topic" validate:"required"`
+}
+
+// NewDestinationConfigOneOfEventStreamsDestinationConfig : Instantiate DestinationConfigOneOfEventStreamsDestinationConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewDestinationConfigOneOfEventStreamsDestinationConfig(crn string, endpoint string, topic string) (_model *DestinationConfigOneOfEventStreamsDestinationConfig, err error) {
+	_model = &DestinationConfigOneOfEventStreamsDestinationConfig{
+		CRN:      core.StringPtr(crn),
+		Endpoint: core.StringPtr(endpoint),
+		Topic:    core.StringPtr(topic),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*DestinationConfigOneOfEventStreamsDestinationConfig) isaDestinationConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalDestinationConfigOneOfEventStreamsDestinationConfig unmarshals an instance of DestinationConfigOneOfEventStreamsDestinationConfig from the specified map of raw messages.
+func UnmarshalDestinationConfigOneOfEventStreamsDestinationConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(DestinationConfigOneOfEventStreamsDestinationConfig)
+	err = core.UnmarshalPrimitive(m, "crn", &obj.CRN)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "crn-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "endpoint", &obj.Endpoint)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "endpoint-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "topic", &obj.Topic)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "topic-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // DestinationConfigOneOfFcmDestinationConfig : Payload describing an FCM destination configuration. project_id, private_key and client_email for FCM HTTP v1 APIs.
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfFcmDestinationConfig struct {
@@ -13035,6 +13092,86 @@ func UnmarshalSubscriptionAttributesEmailAttributesResponse(m map[string]json.Ra
 	return
 }
 
+// SubscriptionAttributesEventStreamsAttributesResponse : The attributes for a Event Streams response.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesEventStreamsAttributesResponse struct {
+	// ID of Base64 converted JSON Pagerduty Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesEventStreamsAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesEventStreamsAttributesResponse
+func (o *SubscriptionAttributesEventStreamsAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesEventStreamsAttributesResponse
+func (o *SubscriptionAttributesEventStreamsAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesEventStreamsAttributesResponse
+func (o *SubscriptionAttributesEventStreamsAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesEventStreamsAttributesResponse
+func (o *SubscriptionAttributesEventStreamsAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesEventStreamsAttributesResponse
+func (o *SubscriptionAttributesEventStreamsAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.TemplateIDNotification != nil {
+		m["template_id_notification"] = o.TemplateIDNotification
+	}
+	buffer, err = json.Marshal(m)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-marshal", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalSubscriptionAttributesEventStreamsAttributesResponse unmarshals an instance of SubscriptionAttributesEventStreamsAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesEventStreamsAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesEventStreamsAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	delete(m, "template_id_notification")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = core.SDKErrorf(e, "", "additional-properties-error", common.GetComponentInfo())
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionAttributesPagerDutyAttributesResponse : The attributes for a PagerDuty notification.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesPagerDutyAttributesResponse struct {
@@ -13789,6 +13926,29 @@ func UnmarshalSubscriptionCreateAttributesEmailAttributes(m map[string]json.RawM
 	return
 }
 
+// SubscriptionCreateAttributesEventstreamsAttributes : The attributes for a Event Streams subscription.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesEventstreamsAttributes struct {
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionCreateAttributesEventstreamsAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesEventstreamsAttributes unmarshals an instance of SubscriptionCreateAttributesEventstreamsAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesEventstreamsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesEventstreamsAttributes)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionCreateAttributesFcmAttributes : The attributes for an FCM notification.
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesFcmAttributes struct {
@@ -14223,6 +14383,29 @@ func UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes(m map[string]jso
 	return
 }
 
+// SubscriptionUpdateAttributesEventstreamsAttributes : The attributes for a Event Streams subscription.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesEventstreamsAttributes struct {
+	// ID of Base64 converted JSON Slack Blocks w/o Handlebars.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionUpdateAttributesEventstreamsAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesEventstreamsAttributes unmarshals an instance of SubscriptionUpdateAttributesEventstreamsAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesEventstreamsAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesEventstreamsAttributes)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionUpdateAttributesPagerDutyAttributes : The attributes for a pagerduty notification.
 // This model "extends" SubscriptionUpdateAttributes
 type SubscriptionUpdateAttributesPagerDutyAttributes struct {
@@ -14446,6 +14629,41 @@ func UnmarshalTemplateConfigOneOfEmailTemplateConfig(m map[string]json.RawMessag
 	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "subject-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfEventStreamsTemplateConfig : Payload describing a event streams template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfEventStreamsTemplateConfig struct {
+	// Template body(Base64 encoded).
+	Body *string `json:"body" validate:"required"`
+}
+
+// NewTemplateConfigOneOfEventStreamsTemplateConfig : Instantiate TemplateConfigOneOfEventStreamsTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfEventStreamsTemplateConfig(body string) (_model *TemplateConfigOneOfEventStreamsTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfEventStreamsTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*TemplateConfigOneOfEventStreamsTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfEventStreamsTemplateConfig unmarshals an instance of TemplateConfigOneOfEventStreamsTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfEventStreamsTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfEventStreamsTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))

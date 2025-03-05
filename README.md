@@ -623,14 +623,14 @@ templateResponse, response, err = eventNotificationsService.CreateTemplate(creat
 
 For webhook template supported template type value: webhook.notification
 
-#### Update Pagerduty Template
+#### Pagerduty Template
 
 ```go
 templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
 	Body:    core.StringPtr(<base 64 encoded json body>),
 }
 
-replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
@@ -643,6 +643,27 @@ templateResponse, response, err := eventNotificationsService.ReplaceTemplate(rep
 ```
 
 For pagerduty template supported template type value: pagerduty.notification
+
+#### Event Streams Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For event streams template supported template type value: event_streams.notification
 
 ### List Templates
 
@@ -730,6 +751,48 @@ templateResponse, response, err := eventNotificationsService.ReplaceTemplate(rep
 ```
 
 For webhook template supported template type value: webhook.notification
+
+#### Update Pagerduty Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For pagerduty template supported template type value: pagerduty.notification
+
+#### Update Event Streams Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For event streams template supported template type value: event_streams.notification
 
 ### Delete Template
 

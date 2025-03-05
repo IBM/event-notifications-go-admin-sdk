@@ -19,6 +19,7 @@ package eventnotificationsv1_test
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -12883,6 +12884,16 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(createTemplateOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateTopicOptions successfully`, func() {
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				Expect(eventScheduleFilterAttributesModel).ToNot(BeNil())
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+				Expect(eventScheduleFilterAttributesModel.StartsAt).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(eventScheduleFilterAttributesModel.EndsAt).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
+				Expect(eventScheduleFilterAttributesModel.Expression).To(Equal(core.StringPtr("testString")))
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				Expect(rulesModel).ToNot(BeNil())
@@ -13489,12 +13500,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(replaceTopicOptionsModel.Sources).To(Equal([]eventnotificationsv1.SourcesItems{*sourcesItemsModel}))
 				Expect(replaceTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
-			It(`Invoke NewRules successfully`, func() {
-				eventTypeFilter := "$.*"
-				_model, err := eventNotificationsService.NewRules(eventTypeFilter)
-				Expect(_model).ToNot(BeNil())
-				Expect(err).To(BeNil())
-			})
 			It(`Invoke NewSendNotificationsOptions successfully`, func() {
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
@@ -13842,6 +13847,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewDestinationConfigOneOfEventStreamsDestinationConfig successfully`, func() {
+				crn := "testString"
+				endpoint := "testString"
+				topic := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfEventStreamsDestinationConfig(crn, endpoint, topic)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
 				websiteURL := "testString"
 				_model, err := eventNotificationsService.NewDestinationConfigOneOfFirefoxDestinationConfig(websiteURL)
@@ -13983,6 +13996,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewTemplateConfigOneOfEventStreamsTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfEventStreamsTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfPagerdutyTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfPagerdutyTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewTemplateConfigOneOfSlackTemplateConfig successfully`, func() {
 				body := "testString"
 				_model, err := eventNotificationsService.NewTemplateConfigOneOfSlackTemplateConfig(body)
@@ -13994,6 +14019,1001 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_model, err := eventNotificationsService.NewTemplateConfigOneOfWebhookTemplateConfig(body)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
+			})
+			It(`Invoke UnmarshalSourcesItems successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SourcesItems)
+				model.ID = core.StringPtr("testString")
+				model.Rules = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SourcesItems
+				err = eventnotificationsv1.UnmarshalSourcesItems(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributes)
+				model.Invited = []string{"testString"}
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+				model.FromEmail = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+				model.SigningEnabled = core.BoolPtr(true)
+				model.AttachmentColor = core.StringPtr("testString")
+				model.Channels = nil
+				model.AssignedTo = core.StringPtr("testString")
+				model.AssignmentGroup = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributes)
+				model.Invited = nil
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+				model.FromEmail = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+				model.SigningEnabled = core.BoolPtr(true)
+				model.AttachmentColor = core.StringPtr("testString")
+				model.Channels = nil
+				model.AssignedTo = core.StringPtr("testString")
+				model.AssignmentGroup = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOf successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOf)
+				model.Body = core.StringPtr("testString")
+				model.Subject = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOf
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOf(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalUpdateAttributesInvited successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.UpdateAttributesInvited)
+				model.Add = []string{"testString"}
+				model.Remove = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.UpdateAttributesInvited
+				err = eventnotificationsv1.UnmarshalUpdateAttributesInvited(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalUpdateAttributesSubscribed successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.UpdateAttributesSubscribed)
+				model.Remove = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.UpdateAttributesSubscribed
+				err = eventnotificationsv1.UnmarshalUpdateAttributesSubscribed(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalUpdateAttributesUnsubscribed successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.UpdateAttributesUnsubscribed)
+				model.Remove = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.UpdateAttributesUnsubscribed
+				err = eventnotificationsv1.UnmarshalUpdateAttributesUnsubscribed(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfChromeDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig)
+				model.APIKey = core.StringPtr("testString")
+				model.WebsiteURL = core.StringPtr("testString")
+				model.PublicKey = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfChromeDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfChromeDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfCodeEngineDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfCodeEngineDestinationConfig)
+				model.URL = core.StringPtr("testString")
+				model.Verb = core.StringPtr("get")
+				model.Type = core.StringPtr("job")
+				model.ProjectCRN = core.StringPtr("testString")
+				model.JobName = core.StringPtr("testString")
+				model.CustomHeaders = map[string]string{"key1": "testString"}
+				model.SensitiveHeaders = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfCodeEngineDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfCodeEngineDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig)
+				model.Domain = core.StringPtr("testString")
+				model.Dkim = nil
+				model.Spf = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfEventStreamsDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfEventStreamsDestinationConfig)
+				model.CRN = core.StringPtr("testString")
+				model.Endpoint = core.StringPtr("testString")
+				model.Topic = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfEventStreamsDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfEventStreamsDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfFcmDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig)
+				model.ServerKey = core.StringPtr("testString")
+				model.SenderID = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+				model.ProjectID = core.StringPtr("testString")
+				model.PrivateKey = core.StringPtr("testString")
+				model.ClientEmail = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfFcmDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfFcmDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfFirefoxDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig)
+				model.WebsiteURL = core.StringPtr("testString")
+				model.PublicKey = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfFirefoxDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfFirefoxDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfHuaweiDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig)
+				model.ClientID = core.StringPtr("testString")
+				model.ClientSecret = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfHuaweiDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfHuaweiDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig)
+				model.BucketName = core.StringPtr("testString")
+				model.InstanceID = core.StringPtr("testString")
+				model.Endpoint = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfIosDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfIosDestinationConfig)
+				model.CertType = core.StringPtr("p8")
+				model.IsSandbox = core.BoolPtr(false)
+				model.Password = core.StringPtr("testString")
+				model.KeyID = core.StringPtr("testString")
+				model.TeamID = core.StringPtr("testString")
+				model.BundleID = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfIosDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfIosDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfMsTeamsDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig)
+				model.URL = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfMsTeamsDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfMsTeamsDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfPagerDutyDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig)
+				model.APIKey = core.StringPtr("testString")
+				model.RoutingKey = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfPagerDutyDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfSafariDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig)
+				model.CertType = core.StringPtr("p12")
+				model.Password = core.StringPtr("testString")
+				model.WebsiteURL = core.StringPtr("testString")
+				model.WebsiteName = core.StringPtr("testString")
+				model.URLFormatString = core.StringPtr("testString")
+				model.WebsitePushID = core.StringPtr("testString")
+				model.PreProd = core.BoolPtr(false)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfSafariDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfSafariDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfServiceNowDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfServiceNowDestinationConfig)
+				model.ClientID = core.StringPtr("testString")
+				model.ClientSecret = core.StringPtr("testString")
+				model.Username = core.StringPtr("testString")
+				model.Password = core.StringPtr("testString")
+				model.InstanceName = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfServiceNowDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfServiceNowDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfSlackDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig)
+				model.URL = core.StringPtr("testString")
+				model.Type = core.StringPtr("incoming_webhook")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfSlackDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfSlackDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfSlackDirectMessageDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfSlackDirectMessageDestinationConfig)
+				model.Token = core.StringPtr("testString")
+				model.Type = core.StringPtr("direct_message")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfSlackDirectMessageDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfSlackDirectMessageDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfWebhookDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig)
+				model.URL = core.StringPtr("testString")
+				model.Verb = core.StringPtr("get")
+				model.CustomHeaders = map[string]string{"key1": "testString"}
+				model.SensitiveHeaders = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfWebhookDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfWebhookDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesCustomEmailAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes)
+				model.Invited = []string{"testString"}
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+				model.FromEmail = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesCustomEmailAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesCustomSmsAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesCustomSmsAttributes)
+				model.Invited = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesCustomSmsAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesCustomSmsAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesEmailAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes)
+				model.Invited = []string{"testString"}
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesEmailAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesEmailAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesEventstreamsAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesEventstreamsAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesEventstreamsAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesEventstreamsAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesFcmAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesFcmAttributes)
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesFcmAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesFcmAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesPagerDutyAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesPagerDutyAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesPagerDutyAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesPagerDutyAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesSmsAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesSmsAttributes)
+				model.Invited = []string{"testString"}
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesSmsAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesSmsAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesServiceNowAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesServiceNowAttributes)
+				model.AssignedTo = core.StringPtr("testString")
+				model.AssignmentGroup = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesServiceNowAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesServiceNowAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesSlackAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes)
+				model.AttachmentColor = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesSlackAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesSlackAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesSlackDirectMessageAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesSlackDirectMessageAttributes)
+				model.Channels = nil
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesSlackDirectMessageAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesSlackDirectMessageAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesWebhookAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesWebhookAttributes)
+				model.SigningEnabled = core.BoolPtr(true)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesWebhookAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesWebhookAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesCustomEmailUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailUpdateAttributes)
+				model.Invited = nil
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+				model.FromEmail = core.StringPtr("testString")
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesCustomEmailUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesCustomSmsUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCustomSmsUpdateAttributes)
+				model.Invited = nil
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesCustomSmsUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesCustomSmsUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesEmailUpdateAttributes)
+				model.Invited = nil
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.FromName = core.StringPtr("testString")
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesEmailUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesEmailUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesEventstreamsAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesEventstreamsAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesEventstreamsAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesEventstreamsAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesPagerDutyAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesPagerDutyAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesPagerDutyAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesPagerDutyAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesSmsUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes)
+				model.Invited = nil
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesSmsUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesSmsUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesServiceNowAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesServiceNowAttributes)
+				model.AssignedTo = core.StringPtr("testString")
+				model.AssignmentGroup = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesServiceNowAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesServiceNowAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesSlackAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes)
+				model.AttachmentColor = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesSlackAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesSlackAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes)
+				model.Channels = nil
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesWebhookAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes)
+				model.SigningEnabled = core.BoolPtr(true)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesWebhookAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfEmailTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig)
+				model.Body = core.StringPtr("testString")
+				model.Subject = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfEmailTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfEventStreamsTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfEventStreamsTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfPagerdutyTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfPagerdutyTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfSlackTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfSlackTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfSlackTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfWebhookTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfWebhookTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfWebhookTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
 			})
 		})
 	})
