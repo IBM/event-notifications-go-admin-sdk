@@ -639,7 +639,7 @@ replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(createTemplateOptions)
 ```
 
 For pagerduty template supported template type value: pagerduty.notification
@@ -660,7 +660,7 @@ replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(createTemplateOptions)
 ```
 
 For event streams template supported template type value: event_streams.notification
@@ -1383,6 +1383,11 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_PAGERDUTY_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_CRN` - Event Streams Instance CRN
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event Streams instance endpoint
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event streams instance topic
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 
