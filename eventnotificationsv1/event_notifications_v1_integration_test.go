@@ -79,6 +79,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID17           string
 		destinationID18           string
 		destinationID19           string
+		destinationID20           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -98,6 +99,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID18          string
 		subscriptionID19          string
 		subscriptionID20          string
+		subscriptionID21          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -136,6 +138,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		webhookTemplateBody       string
 		pdTemplateID              string
 		pdTemplateBody            string
+		eventstreamscrn           string
+		eventstreamsendpoint      string
+		estopicName               string
+		esTemplateID              string
+		esTemplateBody            string
 	)
 
 	var shouldSkipTest = func() {
@@ -341,12 +348,35 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 			fmt.Printf("SCHEDULER_SOURCE_ID: %s\n", schedulersourceID)
 
-			fmt.Printf("PD_TEMPLATE_BODY: %s\n", config["PD_TEMPLATE_BODY"])
-
-			if pdTemplateBody == config["PAGERDUTY_TEMPLATE_BODY"] {
+			pdTemplateBody = config["PAGERDUTY_TEMPLATE_BODY"]
+			if pdTemplateBody == "" {
 				Skip("Unable to load pdTemplateBody configuration property, skipping tests")
 			}
-			fmt.Printf("pdTemplateBody: %s\n", pdTemplateBody)
+			fmt.Printf("PAGERDUTY_TEMPLATE_BODY: %s\n", pdTemplateBody)
+
+			eventstreamscrn = config["EVENT_STREAMS_CRN"]
+			if eventstreamscrn == "" {
+				Skip("Unable to load eventstreamscrn configuration property, skipping tests")
+			}
+			fmt.Printf("EVENT_STREAMS_CRN: %s\n", eventstreamscrn)
+
+			eventstreamsendpoint = config["EVENT_STREAMS_ENDPOINT"]
+			if eventstreamsendpoint == "" {
+				Skip("Unable to load eventstreamsendpoint configuration property, skipping tests")
+			}
+			fmt.Printf("EVENT_STREAMS_ENDPOINT: %s\n", eventstreamsendpoint)
+
+			estopicName = config["EVENT_STREAMS_TOPIC"]
+			if estopicName == "" {
+				Skip("Unable to load estopicName configuration property, skipping tests")
+			}
+			fmt.Printf("EVENT_STREAMS_TOPIC: %s\n", estopicName)
+
+			esTemplateBody = config["EVENT_STREAMS_TEMPLATE_BODY"]
+			if esTemplateBody == "" {
+				Skip("Unable to load esTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("EVENT_STREAMS_TEMPLATE_BODY: %s\n", esTemplateBody)
 
 			shouldSkipTest = func() {}
 		})
@@ -1320,6 +1350,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID19 = *destinationResponse.ID
+
+			createEventStreamsDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"Event_Streams_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeEventStreamsConst,
+			)
+
+			destinationConfigParamsEventStreamsModel := &eventnotificationsv1.DestinationConfigOneOfEventStreamsDestinationConfig{
+				CRN:      core.StringPtr(eventstreamscrn),
+				Endpoint: core.StringPtr(eventstreamsendpoint),
+				Topic:    core.StringPtr(estopicName),
+			}
+
+			eventstreamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsEventStreamsModel,
+			}
+
+			createEventStreamsDestinationOptions.SetConfig(eventstreamsDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createEventStreamsDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID20 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1368,6 +1425,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeSlack := "slack.notification"
 			templateTypeWebhook := "webhook.notification"
 			templateTypePD := "pagerduty.notification"
+			templateTypeES := "event_streams.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1479,6 +1537,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			name = "Pagerduty template"
 			description = "pagerduty template description"
 
+			fmt.Println(pdTemplateBody)
 			pdTemplConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
 				Body: core.StringPtr(pdTemplateBody),
 			}
@@ -1502,6 +1561,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
 			pdTemplateID = *templateResponse.ID
+
+			name = "Event Streams template"
+			description = "Event Streams template description"
+
+			eventstreamsTemplConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+				Body: core.StringPtr(esTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeES),
+				Description: core.StringPtr(description),
+				Params:      eventstreamsTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			esTemplateID = *templateResponse.ID
 		})
 	})
 
@@ -2114,6 +2200,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(slackDMName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(slackDMDescription)))
 
+			destinationConfigParamsEventStreamsModel := &eventnotificationsv1.DestinationConfigOneOfEventStreamsDestinationConfig{
+				CRN:      core.StringPtr(eventstreamscrn),
+				Endpoint: core.StringPtr(eventstreamsendpoint),
+				Topic:    core.StringPtr(estopicName),
+			}
+
+			eventstreamsDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsEventStreamsModel,
+			}
+
+			eventStreamsName := "Event_Streams_destination_update"
+			eventStreamsDescription := "This destination is for Event Streams Destination Update"
+			eventStreamsUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID20),
+				Name:        core.StringPtr(eventStreamsName),
+				Description: core.StringPtr(eventStreamsDescription),
+				Config:      eventstreamsDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(eventStreamsUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID20)))
+			Expect(destination.Name).To(Equal(core.StringPtr(eventStreamsName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(eventStreamsDescription)))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2141,6 +2255,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeSlack := "slack.notification"
 			templateTypeWebhook := "webhook.notification"
 			templateTypePD := "pagerduty.notification"
+			templateTypeES := "event_streams.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -2273,6 +2388,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateResponse).ToNot(BeNil())
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(pdTemplateID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "Event Streams template update"
+			description = "Event Streams template description update"
+
+			eventstreamsTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+				Body: core.StringPtr(esTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(esTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeES),
+				Description: core.StringPtr(description),
+				Params:      eventstreamsTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(esTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 		})
@@ -2693,6 +2835,28 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID20 = string(*subscription.ID)
+
+			subscriptionCreateEventStreamsAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesEventstreamsAttributes{
+				TemplateIDNotification: core.StringPtr(esTemplateID),
+			}
+
+			createEventSTreamsSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("Event Streams subscription"),
+				Description:   core.StringPtr("Subscription for the Event Streams Destination"),
+				DestinationID: core.StringPtr(destinationID20),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateEventStreamsAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createEventSTreamsSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID21 = string(*subscription.ID)
 
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -3262,6 +3426,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID20)))
 			Expect(subscription.Name).To(Equal(schedulerName))
 			Expect(subscription.Description).To(Equal(schedulerDescription))
+
+			subscriptionUpdateEventStreamsAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesEventstreamsAttributes{
+				TemplateIDNotification: core.StringPtr(esTemplateID),
+			}
+
+			eventstreamsName := core.StringPtr("subscription_Event_Streams_update")
+			eventstreamsDescription := core.StringPtr("Subscription update for Event Streams")
+			updateEventStreamsSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        eventstreamsName,
+				Description: eventstreamsDescription,
+				ID:          core.StringPtr(subscriptionID21),
+				Attributes:  subscriptionUpdateEventStreamsAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateEventStreamsSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID21)))
+			Expect(subscription.Name).To(Equal(eventstreamsName))
+			Expect(subscription.Description).To(Equal(eventstreamsDescription))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -3663,7 +3851,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19, subscriptionID20} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19, subscriptionID20, subscriptionID21} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3736,7 +3924,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions)`, func() {
 
-			for _, ID := range []string{templateInvitationID, templateNotificationID, slackTemplateID, webhookTemplateID} {
+			for _, ID := range []string{templateInvitationID, templateNotificationID, slackTemplateID, webhookTemplateID, pdTemplateID, esTemplateID} {
 
 				deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -3765,7 +3953,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			shouldSkipTest()
 		})
 		It(`DeleteTopic(deleteTopicOptions *DeleteTopicOptions)`, func() {
-			for _, ID := range []string{topicID, topicID2, topicID3} {
+			for _, ID := range []string{topicID, topicID2, topicID3, topicID4} {
 				deleteTopicOptions := &eventnotificationsv1.DeleteTopicOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),
@@ -3794,7 +3982,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19} {
+			for _, ID := range []string{destinationID, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19, destinationID20} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

@@ -623,14 +623,14 @@ templateResponse, response, err = eventNotificationsService.CreateTemplate(creat
 
 For webhook template supported template type value: webhook.notification
 
-#### Update Pagerduty Template
+#### Pagerduty Template
 
 ```go
 templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
 	Body:    core.StringPtr(<base 64 encoded json body>),
 }
 
-replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
@@ -639,10 +639,31 @@ replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
 
 For pagerduty template supported template type value: pagerduty.notification
+
+#### Event Streams Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
+
+For event streams template supported template type value: event_streams.notification
 
 ### List Templates
 
@@ -730,6 +751,48 @@ templateResponse, response, err := eventNotificationsService.ReplaceTemplate(rep
 ```
 
 For webhook template supported template type value: webhook.notification
+
+#### Update Pagerduty Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For pagerduty template supported template type value: pagerduty.notification
+
+#### Update Event Streams Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For event streams template supported template type value: event_streams.notification
 
 ### Delete Template
 
@@ -1320,6 +1383,11 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_PAGERDUTY_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_CRN` - Event Streams Instance CRN
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event Streams instance endpoint
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event streams instance topic
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 
