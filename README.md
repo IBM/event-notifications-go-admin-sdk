@@ -630,7 +630,7 @@ templateConfig := &eventnotificationsv1.TemplateConfigOneOfPagerdutyTemplateConf
 	Body:    core.StringPtr(<base 64 encoded json body>),
 }
 
-replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
@@ -639,7 +639,7 @@ replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(createTemplateOptions)
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
 
 For pagerduty template supported template type value: pagerduty.notification
@@ -651,7 +651,7 @@ templateConfig := &eventnotificationsv1.TemplateConfigOneOfEventStreamsTemplateC
 	Body:    core.StringPtr(<base 64 encoded json body>),
 }
 
-replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<template-id>),
 	Name:        core.StringPtr(<name>),
@@ -660,7 +660,7 @@ replaceTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 	Params:      templateConfig,
 }
 
-templateResponse, response, err := eventNotificationsService.ReplaceTemplate(createTemplateOptions)
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
 
 For event streams template supported template type value: event_streams.notification
