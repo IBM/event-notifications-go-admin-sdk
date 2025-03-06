@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.13.0...v0.14.0) (2025-03-06)
+
+
+### Features
+
+* Events streams Destination and Template feature support ([#65](https://github.com/IBM/event-notifications-go-admin-sdk/issues/65)) ([c2b489b](https://github.com/IBM/event-notifications-go-admin-sdk/commit/c2b489b04fc0ae3fd7b645844fee7f22407ce2be))
+
 # [0.13.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.12.0...v0.13.0) (2025-02-26)
 
 
