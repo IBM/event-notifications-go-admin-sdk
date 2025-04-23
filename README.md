@@ -1395,6 +1395,17 @@ If you are having difficulties using this SDK or have a question about the IBM C
 please ask a question at
 [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-cloud).
 
+## ⚠️ Deprecation Notice (Attributes)
+
+### Pagerduty Destination Configuration
+
+> The following attribute from DestinationConfigOneOfPagerDutyDestinationConfig.java
+is **deprecated** and will be removed in a future release:
+
+- `apikey`
+
+This attribute no longer recommended for use and may not be supported in upcoming versions of the SDK. Only `routingKey` is expected to be passed.
+
 ## Open source @ IBM
 
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)

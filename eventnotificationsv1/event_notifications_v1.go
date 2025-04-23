@@ -12282,7 +12282,8 @@ func UnmarshalDestinationConfigOneOfMsTeamsDestinationConfig(m map[string]json.R
 // This model "extends" DestinationConfigOneOf
 type DestinationConfigOneOfPagerDutyDestinationConfig struct {
 	// API Key for the PagerDuty account.
-	APIKey *string `json:"api_key" validate:"required"`
+	// Deprecated: this field is deprecated and may be removed in a future release.
+	APIKey *string `json:"api_key,omitempty"`
 
 	// Routing Key (Integration Key) for the team in PagerDuty account.
 	RoutingKey *string `json:"routing_key" validate:"required"`
@@ -12291,7 +12292,6 @@ type DestinationConfigOneOfPagerDutyDestinationConfig struct {
 // NewDestinationConfigOneOfPagerDutyDestinationConfig : Instantiate DestinationConfigOneOfPagerDutyDestinationConfig (Generic Model Constructor)
 func (*EventNotificationsV1) NewDestinationConfigOneOfPagerDutyDestinationConfig(apiKey string, routingKey string) (_model *DestinationConfigOneOfPagerDutyDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfPagerDutyDestinationConfig{
-		APIKey:     core.StringPtr(apiKey),
 		RoutingKey: core.StringPtr(routingKey),
 	}
 	err = core.ValidateStruct(_model, "required parameters")
