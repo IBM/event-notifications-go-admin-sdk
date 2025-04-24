@@ -1,6 +1,6 @@
 module github.com/IBM/event-notifications-go-admin-sdk
 
-go 1.23
+go 1.23.7
 
 require (
 	github.com/IBM/go-sdk-core/v5 v5.17.5
