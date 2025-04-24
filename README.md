@@ -1399,12 +1399,12 @@ please ask a question at
 
 ### Pagerduty Destination Configuration
 
-> The following attribute from DestinationConfigOneOfPagerDutyDestinationConfig.java
+> The following attribute from DestinationConfigOneOfPagerDutyDestinationConfig
 is **deprecated** and will be removed in a future release:
 
-- `apikey`
+- `APIKey`
 
-This attribute no longer recommended for use and may not be supported in upcoming versions of the SDK. Only `routingKey` is expected to be passed.
+This attribute no longer recommended for use and may not be supported in upcoming versions of the SDK. Only `RoutingKey` is expected to be passed.
 
 ## Open source @ IBM
 
