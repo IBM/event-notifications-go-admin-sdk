@@ -20,7 +20,7 @@ Go client library to interact with the various [IBM Cloud Event Notifications AP
 - [Contributing](#contributing)
 - [License](#license)
 
-<!-- tocstop -->
+<!-- tocstop -->`
 
 ## Overview
 
