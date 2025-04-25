@@ -1,3 +1,12 @@
+# [0.15.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.14.0...v0.15.0) (2025-04-25)
+
+
+### Features
+
+* making api_key as deprecated for pagerduty destination ([#66](https://github.com/IBM/event-notifications-go-admin-sdk/issues/66)) ([cedfee3](https://github.com/IBM/event-notifications-go-admin-sdk/commit/cedfee3f6afd56360d7b2d2e62dce653359f8c8c))
+* making api_key as deprecated for pagerduty destination and vulnerability fixes ([#66](https://github.com/IBM/event-notifications-go-admin-sdk/issues/66))([#68](https://github.com/IBM/event-notifications-go-admin-sdk/issues/68)) ([4437fa2](https://github.com/IBM/event-notifications-go-admin-sdk/commit/4437fa26c498a53adaf5a59ca4083d0bc53bded3))
+* making api_key as deprecated for pagerduty destination and vulnerability fixes ([#66](https://github.com/IBM/event-notifications-go-admin-sdk/issues/66))([#68](https://github.com/IBM/event-notifications-go-admin-sdk/issues/68)) ([5ac7fc0](https://github.com/IBM/event-notifications-go-admin-sdk/commit/5ac7fc0d2526f245a813294634044955e8b23fa1))
+
 # [0.14.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.13.0...v0.14.0) (2025-03-06)
 
 
