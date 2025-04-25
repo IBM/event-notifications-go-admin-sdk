@@ -1,4 +1,4 @@
-# IBM Cloud Event Notifications Go Admin SDK 0.14.0
+# IBM Cloud Event Notifications Go Admin SDK 0.15.0
 
 Go client library to interact with the various [IBM Cloud Event Notifications APIs](https://cloud.ibm.com/apidocs?category=event-notifications).
 
