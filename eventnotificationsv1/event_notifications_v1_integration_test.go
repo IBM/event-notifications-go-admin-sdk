@@ -123,7 +123,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		slackTemplateID           string
 		slackURL                  string
 		teamsURL                  string
-		pagerDutyApiKey           string
 		pagerDutyRoutingKey       string
 		templateBody              string
 		slackTemplateBody         string
@@ -287,12 +286,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load msteams end point configuration property, skipping tests")
 			}
 			fmt.Printf("msteams url: %s\n", teamsURL)
-
-			pagerDutyApiKey = config["PD_API_KEY"]
-			if pagerDutyApiKey == "" {
-				Skip("Unable to load  pagerDutyApiKey configuration property, skipping tests")
-			}
-			fmt.Printf(" pagerDutyApiKey: %s\n", pagerDutyApiKey)
 
 			pagerDutyRoutingKey = config["PD_ROUTING_KEY"]
 			if pagerDutyRoutingKey == "" {
@@ -1069,7 +1062,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			)
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr(pagerDutyApiKey),
 				RoutingKey: core.StringPtr(pagerDutyRoutingKey),
 			}
 
@@ -1933,7 +1925,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Description).To(Equal(core.StringPtr(fireDescription)))
 
 			destinationConfigParamsPDModel := &eventnotificationsv1.DestinationConfigOneOfPagerDutyDestinationConfig{
-				APIKey:     core.StringPtr(pagerDutyApiKey),
 				RoutingKey: core.StringPtr(pagerDutyRoutingKey),
 			}
 
