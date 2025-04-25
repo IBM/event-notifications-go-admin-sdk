@@ -30,7 +30,7 @@ jobs:
       run: make test
 
     - name: Build and Release
-      if: github.ref == 'refs/heads/main' && matrix.go-version == '1.20'
+      if: github.ref == 'refs/heads/main' && matrix.go-version == '1.21'
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
