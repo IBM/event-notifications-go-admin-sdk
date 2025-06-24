@@ -5420,10 +5420,8 @@ type DestinationConfigOneOf struct {
 // Constants associated with the DestinationConfigOneOf.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfVerbGetConst   = "get"
-	DestinationConfigOneOfVerbPatchConst = "patch"
-	DestinationConfigOneOfVerbPostConst  = "post"
-	DestinationConfigOneOfVerbPutConst   = "put"
+	DestinationConfigOneOfVerbGetConst  = "get"
+	DestinationConfigOneOfVerbPostConst = "post"
 )
 
 // Constants associated with the DestinationConfigOneOf.Type property.
@@ -12614,10 +12612,8 @@ type DestinationConfigOneOfWebhookDestinationConfig struct {
 // Constants associated with the DestinationConfigOneOfWebhookDestinationConfig.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst   = "get"
-	DestinationConfigOneOfWebhookDestinationConfigVerbPatchConst = "patch"
-	DestinationConfigOneOfWebhookDestinationConfigVerbPostConst  = "post"
-	DestinationConfigOneOfWebhookDestinationConfigVerbPutConst   = "put"
+	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst  = "get"
+	DestinationConfigOneOfWebhookDestinationConfigVerbPostConst = "post"
 )
 
 // NewDestinationConfigOneOfWebhookDestinationConfig : Instantiate DestinationConfigOneOfWebhookDestinationConfig (Generic Model Constructor)
