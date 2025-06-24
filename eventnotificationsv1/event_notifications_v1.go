@@ -5420,8 +5420,10 @@ type DestinationConfigOneOf struct {
 // Constants associated with the DestinationConfigOneOf.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfVerbGetConst  = "get"
-	DestinationConfigOneOfVerbPostConst = "post"
+	DestinationConfigOneOfVerbGetConst   = "get"
+	DestinationConfigOneOfVerbPatchConst = "patch"
+	DestinationConfigOneOfVerbPostConst  = "post"
+	DestinationConfigOneOfVerbPutConst   = "put"
 )
 
 // Constants associated with the DestinationConfigOneOf.Type property.
@@ -7616,6 +7618,9 @@ type NotificationCreate struct {
 	// Stringified MMS Attachment JSON.
 	Ibmenmms *string `json:"ibmenmms,omitempty"`
 
+	// The markdown content for notification.
+	Ibmenmarkdown *string `json:"ibmenmarkdown,omitempty"`
+
 	// The payload for webhook notification.
 	Data map[string]interface{} `json:"data,omitempty"`
 
@@ -7762,6 +7767,9 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	}
 	if o.Ibmenmms != nil {
 		m["ibmenmms"] = o.Ibmenmms
+	}
+	if o.Ibmenmarkdown != nil {
+		m["ibmenmarkdown"] = o.Ibmenmarkdown
 	}
 	if o.Data != nil {
 		m["data"] = o.Data
@@ -7917,6 +7925,12 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "ibmenmms")
+	err = core.UnmarshalPrimitive(m, "ibmenmarkdown", &obj.Ibmenmarkdown)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "ibmenmarkdown-error", common.GetComponentInfo())
+		return
+	}
+	delete(m, "ibmenmarkdown")
 	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "data-error", common.GetComponentInfo())
@@ -12600,8 +12614,10 @@ type DestinationConfigOneOfWebhookDestinationConfig struct {
 // Constants associated with the DestinationConfigOneOfWebhookDestinationConfig.Verb property.
 // HTTP method of webhook.
 const (
-	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst  = "get"
-	DestinationConfigOneOfWebhookDestinationConfigVerbPostConst = "post"
+	DestinationConfigOneOfWebhookDestinationConfigVerbGetConst   = "get"
+	DestinationConfigOneOfWebhookDestinationConfigVerbPatchConst = "patch"
+	DestinationConfigOneOfWebhookDestinationConfigVerbPostConst  = "post"
+	DestinationConfigOneOfWebhookDestinationConfigVerbPutConst   = "put"
 )
 
 // NewDestinationConfigOneOfWebhookDestinationConfig : Instantiate DestinationConfigOneOfWebhookDestinationConfig (Generic Model Constructor)
