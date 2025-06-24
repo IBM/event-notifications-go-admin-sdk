@@ -1255,6 +1255,8 @@ slackTo := "[\"C07FALXBH4G\",\"C07FALXBU4G\"]";
 templates := "[\"149b0e11-8a7c-4fda-a847-5d79e01b71dc\"]"
 htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 mms := "{\"content\": \"mms content\", \"content_type\": \"image/png\"}"
+markdown := "This is a *italic* message.\n- Item 1\n- Item 2\n**bold text** with more text data\n~~strike through~~\n1. order 1\n2. order 2\n```fenced code block```\n> block code\n`code`\n[Click here](https://example.com) for more info."
+
 
 notificationSeverity := "MEDIUM"
 typeValue := "com.acme.offer:new"
@@ -1281,6 +1283,7 @@ notificationCreateModel.Ibmensubject = core.StringPtr("Notification subject")
 notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
 notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
+notificationCreateModel.Ibmenmarkdown = &markdown
 
 sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 sendNotificationsOptionsModel.InstanceID = &instanceID
