@@ -7616,6 +7616,9 @@ type NotificationCreate struct {
 	// Stringified MMS Attachment JSON.
 	Ibmenmms *string `json:"ibmenmms,omitempty"`
 
+	// The markdown content for notification.
+	Ibmenmarkdown *string `json:"ibmenmarkdown,omitempty"`
+
 	// The payload for webhook notification.
 	Data map[string]interface{} `json:"data,omitempty"`
 
@@ -7762,6 +7765,9 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	}
 	if o.Ibmenmms != nil {
 		m["ibmenmms"] = o.Ibmenmms
+	}
+	if o.Ibmenmarkdown != nil {
+		m["ibmenmarkdown"] = o.Ibmenmarkdown
 	}
 	if o.Data != nil {
 		m["data"] = o.Data
@@ -7917,6 +7923,12 @@ func UnmarshalNotificationCreate(m map[string]json.RawMessage, result interface{
 		return
 	}
 	delete(m, "ibmenmms")
+	err = core.UnmarshalPrimitive(m, "ibmenmarkdown", &obj.Ibmenmarkdown)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "ibmenmarkdown-error", common.GetComponentInfo())
+		return
+	}
+	delete(m, "ibmenmarkdown")
 	err = core.UnmarshalPrimitive(m, "data", &obj.Data)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "data-error", common.GetComponentInfo())
