@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.15.0...v0.16.0) (2025-06-25)
+
+
+### Features
+
+* adds markdown support from notification payload ([#71](https://github.com/IBM/event-notifications-go-admin-sdk/issues/71)) ([e9b43d1](https://github.com/IBM/event-notifications-go-admin-sdk/commit/e9b43d1d09914a9495231b11ba491a6a64400b78))
+
 # [0.15.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.14.0...v0.15.0) (2025-04-25)
 
 
