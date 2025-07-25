@@ -1276,6 +1276,87 @@ func (eventNotifications *EventNotificationsV1) ListTemplatesWithContext(ctx con
 	return
 }
 
+// ListPreDefinedTemplates : List all predefined templates
+// List all predefined templates.
+func (eventNotifications *EventNotificationsV1) ListPreDefinedTemplates(listPreDefinedTemplatesOptions *ListPreDefinedTemplatesOptions) (result *PredefinedTemplatesList, response *core.DetailedResponse, err error) {
+	result, response, err = eventNotifications.ListPreDefinedTemplatesWithContext(context.Background(), listPreDefinedTemplatesOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// ListPreDefinedTemplatesWithContext is an alternate form of the ListPreDefinedTemplates method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) ListPreDefinedTemplatesWithContext(ctx context.Context, listPreDefinedTemplatesOptions *ListPreDefinedTemplatesOptions) (result *PredefinedTemplatesList, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(listPreDefinedTemplatesOptions, "listPreDefinedTemplatesOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(listPreDefinedTemplatesOptions, "listPreDefinedTemplatesOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *listPreDefinedTemplatesOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/pre_defined_templates`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range listPreDefinedTemplatesOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "ListPreDefinedTemplates")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("source", fmt.Sprint(*listPreDefinedTemplatesOptions.Source))
+	builder.AddQuery("type", fmt.Sprint(*listPreDefinedTemplatesOptions.Type))
+	if listPreDefinedTemplatesOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*listPreDefinedTemplatesOptions.Limit))
+	}
+	if listPreDefinedTemplatesOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*listPreDefinedTemplatesOptions.Offset))
+	}
+	if listPreDefinedTemplatesOptions.Search != nil {
+		builder.AddQuery("search", fmt.Sprint(*listPreDefinedTemplatesOptions.Search))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "list_pre_defined_templates", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalPredefinedTemplatesList)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // GetTemplate : Get details of a Template
 // Get details of a Template.
 func (eventNotifications *EventNotificationsV1) GetTemplate(getTemplateOptions *GetTemplateOptions) (result *Template, response *core.DetailedResponse, err error) {
@@ -1491,6 +1572,76 @@ func (eventNotifications *EventNotificationsV1) DeleteTemplateWithContext(ctx co
 		core.EnrichHTTPProblem(err, "delete_template", getServiceComponentInfo())
 		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
 		return
+	}
+
+	return
+}
+
+// GetPreDefinedTemplate : Get details of a Predefined Template
+// Get details of a Predefined Template.
+func (eventNotifications *EventNotificationsV1) GetPreDefinedTemplate(getPreDefinedTemplateOptions *GetPreDefinedTemplateOptions) (result *GetPredefinedTemplate, response *core.DetailedResponse, err error) {
+	result, response, err = eventNotifications.GetPreDefinedTemplateWithContext(context.Background(), getPreDefinedTemplateOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetPreDefinedTemplateWithContext is an alternate form of the GetPreDefinedTemplate method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetPreDefinedTemplateWithContext(ctx context.Context, getPreDefinedTemplateOptions *GetPreDefinedTemplateOptions) (result *GetPredefinedTemplate, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getPreDefinedTemplateOptions, "getPreDefinedTemplateOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(getPreDefinedTemplateOptions, "getPreDefinedTemplateOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getPreDefinedTemplateOptions.InstanceID,
+		"id":          *getPreDefinedTemplateOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/pre_defined_templates/{id}`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range getPreDefinedTemplateOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetPreDefinedTemplate")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "get_pre_defined_template", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalGetPredefinedTemplate)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
 	}
 
 	return
@@ -6321,6 +6472,110 @@ func (options *GetMetricsOptions) SetHeaders(param map[string]string) *GetMetric
 	return options
 }
 
+// GetPreDefinedTemplateOptions : The GetPreDefinedTemplate options.
+type GetPreDefinedTemplateOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Unique identifier for Template.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetPreDefinedTemplateOptions : Instantiate GetPreDefinedTemplateOptions
+func (*EventNotificationsV1) NewGetPreDefinedTemplateOptions(instanceID string, id string) *GetPreDefinedTemplateOptions {
+	return &GetPreDefinedTemplateOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetPreDefinedTemplateOptions) SetInstanceID(instanceID string) *GetPreDefinedTemplateOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetPreDefinedTemplateOptions) SetID(id string) *GetPreDefinedTemplateOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetPreDefinedTemplateOptions) SetHeaders(param map[string]string) *GetPreDefinedTemplateOptions {
+	options.Headers = param
+	return options
+}
+
+// GetPredefinedTemplate : Template object.
+type GetPredefinedTemplate struct {
+	// Template ID.
+	ID *string `json:"id" validate:"required"`
+
+	// Template name.
+	Name *string `json:"name" validate:"required"`
+
+	// Template description.
+	Description *string `json:"description" validate:"required"`
+
+	// The type of template.
+	Type *string `json:"type" validate:"required"`
+
+	// The type of source.
+	Source *string `json:"source,omitempty"`
+
+	// Updated at.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+
+	// Payload describing a Predefined template configuration.
+	Params *PredefinedTemplateConfig `json:"params" validate:"required"`
+}
+
+// UnmarshalGetPredefinedTemplate unmarshals an instance of GetPredefinedTemplate from the specified map of raw messages.
+func UnmarshalGetPredefinedTemplate(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(GetPredefinedTemplate)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "source", &obj.Source)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "source-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "params", &obj.Params, UnmarshalPredefinedTemplateConfig)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "params-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // GetSMTPAllowedIpsOptions : The GetSMTPAllowedIps options.
 type GetSMTPAllowedIpsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -7062,6 +7317,81 @@ func (_options *ListIntegrationsOptions) SetSearch(search string) *ListIntegrati
 
 // SetHeaders : Allow user to set Headers
 func (options *ListIntegrationsOptions) SetHeaders(param map[string]string) *ListIntegrationsOptions {
+	options.Headers = param
+	return options
+}
+
+// ListPreDefinedTemplatesOptions : The ListPreDefinedTemplates options.
+type ListPreDefinedTemplatesOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Source type.
+	Source *string `json:"source" validate:"required"`
+
+	// Destination type.
+	Type *string `json:"type" validate:"required"`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Search string for filtering results.
+	Search *string `json:"search,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewListPreDefinedTemplatesOptions : Instantiate ListPreDefinedTemplatesOptions
+func (*EventNotificationsV1) NewListPreDefinedTemplatesOptions(instanceID string, source string, typeVar string) *ListPreDefinedTemplatesOptions {
+	return &ListPreDefinedTemplatesOptions{
+		InstanceID: core.StringPtr(instanceID),
+		Source:     core.StringPtr(source),
+		Type:       core.StringPtr(typeVar),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *ListPreDefinedTemplatesOptions) SetInstanceID(instanceID string) *ListPreDefinedTemplatesOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetSource : Allow user to set Source
+func (_options *ListPreDefinedTemplatesOptions) SetSource(source string) *ListPreDefinedTemplatesOptions {
+	_options.Source = core.StringPtr(source)
+	return _options
+}
+
+// SetType : Allow user to set Type
+func (_options *ListPreDefinedTemplatesOptions) SetType(typeVar string) *ListPreDefinedTemplatesOptions {
+	_options.Type = core.StringPtr(typeVar)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *ListPreDefinedTemplatesOptions) SetLimit(limit int64) *ListPreDefinedTemplatesOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *ListPreDefinedTemplatesOptions) SetOffset(offset int64) *ListPreDefinedTemplatesOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetSearch : Allow user to set Search
+func (_options *ListPreDefinedTemplatesOptions) SetSearch(search string) *ListPreDefinedTemplatesOptions {
+	_options.Search = core.StringPtr(search)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *ListPreDefinedTemplatesOptions) SetHeaders(param map[string]string) *ListPreDefinedTemplatesOptions {
 	options.Headers = param
 	return options
 }
@@ -8036,6 +8366,169 @@ func UnmarshalPageHrefResponse(m map[string]json.RawMessage, result interface{})
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
+}
+
+// PredefinedTemplate : Predefined Template object.
+type PredefinedTemplate struct {
+	// Template ID.
+	ID *string `json:"id" validate:"required"`
+
+	// Template name.
+	Name *string `json:"name" validate:"required"`
+
+	// Template description.
+	Description *string `json:"description" validate:"required"`
+
+	// The type of source.
+	Source *string `json:"source" validate:"required"`
+
+	// The type of template.
+	Type *string `json:"type" validate:"required"`
+
+	// Updated at.
+	UpdatedAt *strfmt.DateTime `json:"updated_at" validate:"required"`
+}
+
+// UnmarshalPredefinedTemplate unmarshals an instance of PredefinedTemplate from the specified map of raw messages.
+func UnmarshalPredefinedTemplate(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(PredefinedTemplate)
+	err = core.UnmarshalPrimitive(m, "id", &obj.ID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "name", &obj.Name)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "name-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "description", &obj.Description)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "description-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "source", &obj.Source)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "source-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "type", &obj.Type)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "type-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// PredefinedTemplateConfig : Payload describing a Predefined template configuration.
+type PredefinedTemplateConfig struct {
+	// Template body(Base64 encoded).
+	Body *string `json:"body" validate:"required"`
+}
+
+// UnmarshalPredefinedTemplateConfig unmarshals an instance of PredefinedTemplateConfig from the specified map of raw messages.
+func UnmarshalPredefinedTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(PredefinedTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// PredefinedTemplatesList : Payload describing a pre-defined templates list request.
+type PredefinedTemplatesList struct {
+	// Total number of pre-defined templates.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+
+	// Current offset.
+	Offset *int64 `json:"offset" validate:"required"`
+
+	// limit to show templates.
+	Limit *int64 `json:"limit" validate:"required"`
+
+	// List of pre-defined templates.
+	Templates []PredefinedTemplate `json:"templates" validate:"required"`
+
+	// Response having URL of the page.
+	First *PageHrefResponse `json:"first,omitempty"`
+
+	// Response having URL of the page.
+	Previous *PageHrefResponse `json:"previous,omitempty"`
+
+	// Response having URL of the page.
+	Next *PageHrefResponse `json:"next,omitempty"`
+}
+
+// UnmarshalPredefinedTemplatesList unmarshals an instance of PredefinedTemplatesList from the specified map of raw messages.
+func UnmarshalPredefinedTemplatesList(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(PredefinedTemplatesList)
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "offset", &obj.Offset)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "offset-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "limit", &obj.Limit)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "limit-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "templates", &obj.Templates, UnmarshalPredefinedTemplate)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "templates-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "first", &obj.First, UnmarshalPageHrefResponse)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "first-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "previous", &obj.Previous, UnmarshalPageHrefResponse)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "previous-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "next", &obj.Next, UnmarshalPageHrefResponse)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "next-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// Retrieve the value to be passed to a request to access the next page of results
+func (resp *PredefinedTemplatesList) GetNextOffset() (*int64, error) {
+	if core.IsNil(resp.Next) {
+		return nil, nil
+	}
+	offset, err := core.GetQueryParam(resp.Next.Href, "offset")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "read-query-param-error", common.GetComponentInfo())
+		return nil, err
+	} else if offset == nil {
+		return nil, nil
+	}
+	var offsetValue int64
+	offsetValue, err = strconv.ParseInt(*offset, 10, 64)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "parse-int-query-error", common.GetComponentInfo())
+		return nil, err
+	}
+	return core.Int64Ptr(offsetValue), nil
 }
 
 // ReplaceIntegrationOptions : The ReplaceIntegration options.
@@ -15058,6 +15551,98 @@ func (pager *TemplatesPager) GetNext() (page []Template, err error) {
 
 // GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
 func (pager *TemplatesPager) GetAll() (allItems []Template, err error) {
+	allItems, err = pager.GetAllWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// PreDefinedTemplatesPager can be used to simplify the use of the "ListPreDefinedTemplates" method.
+type PreDefinedTemplatesPager struct {
+	hasNext     bool
+	options     *ListPreDefinedTemplatesOptions
+	client      *EventNotificationsV1
+	pageContext struct {
+		next *int64
+	}
+}
+
+// NewPreDefinedTemplatesPager returns a new PreDefinedTemplatesPager instance.
+func (eventNotifications *EventNotificationsV1) NewPreDefinedTemplatesPager(options *ListPreDefinedTemplatesOptions) (pager *PreDefinedTemplatesPager, err error) {
+	if options.Offset != nil && *options.Offset != 0 {
+		err = core.SDKErrorf(nil, "the 'options.Offset' field should not be set", "no-query-setting", common.GetComponentInfo())
+		return
+	}
+
+	var optionsCopy ListPreDefinedTemplatesOptions = *options
+	pager = &PreDefinedTemplatesPager{
+		hasNext: true,
+		options: &optionsCopy,
+		client:  eventNotifications,
+	}
+	return
+}
+
+// HasNext returns true if there are potentially more results to be retrieved.
+func (pager *PreDefinedTemplatesPager) HasNext() bool {
+	return pager.hasNext
+}
+
+// GetNextWithContext returns the next page of results using the specified Context.
+func (pager *PreDefinedTemplatesPager) GetNextWithContext(ctx context.Context) (page []PredefinedTemplate, err error) {
+	if !pager.HasNext() {
+		return nil, fmt.Errorf("no more results available")
+	}
+
+	pager.options.Offset = pager.pageContext.next
+
+	result, _, err := pager.client.ListPreDefinedTemplatesWithContext(ctx, pager.options)
+	if err != nil {
+		err = core.RepurposeSDKProblem(err, "error-getting-next-page")
+		return
+	}
+
+	var next *int64
+	if result.Next != nil {
+		var offset *int64
+		offset, err = core.GetQueryParamAsInt(result.Next.Href, "offset")
+		if err != nil {
+			errMsg := fmt.Sprintf("error retrieving 'offset' query parameter from URL '%s': %s", *result.Next.Href, err.Error())
+			err = core.SDKErrorf(err, errMsg, "get-query-error", common.GetComponentInfo())
+			return
+		}
+		next = offset
+	}
+	pager.pageContext.next = next
+	pager.hasNext = (pager.pageContext.next != nil)
+	page = result.Templates
+
+	return
+}
+
+// GetAllWithContext returns all results by invoking GetNextWithContext() repeatedly
+// until all pages of results have been retrieved.
+func (pager *PreDefinedTemplatesPager) GetAllWithContext(ctx context.Context) (allItems []PredefinedTemplate, err error) {
+	for pager.HasNext() {
+		var nextPage []PredefinedTemplate
+		nextPage, err = pager.GetNextWithContext(ctx)
+		if err != nil {
+			err = core.RepurposeSDKProblem(err, "error-getting-next-page")
+			return
+		}
+		allItems = append(allItems, nextPage...)
+	}
+	return
+}
+
+// GetNext invokes GetNextWithContext() using context.Background() as the Context parameter.
+func (pager *PreDefinedTemplatesPager) GetNext() (page []PredefinedTemplate, err error) {
+	page, err = pager.GetNextWithContext(context.Background())
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetAll invokes GetAllWithContext() using context.Background() as the Context parameter.
+func (pager *PreDefinedTemplatesPager) GetAll() (allItems []PredefinedTemplate, err error) {
 	allItems, err = pager.GetAllWithContext(context.Background())
 	err = core.RepurposeSDKProblem(err, "")
 	return

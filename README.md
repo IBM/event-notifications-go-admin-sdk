@@ -148,6 +148,8 @@ SDK Methods to consume
   - [Get Template](#get-template)
   - [Update Template](#update-template)
   - [Delete Template](#delete-template)
+  - [List Predefined Templates](#list-predefined-templates)
+  - [Get Predefined Template](#get-predefined-template)
 - [Push Destination APIs](#push-destination-apis)
   - [Create Destination tag subscription](#create-destination-tag-subscription)
   - [List Destination tag subscription](#list-destination-tag-subscription)
@@ -803,6 +805,28 @@ deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
 }
 
 response, err := eventNotificationsService.DeleteTemplate(deleteTemplateOptions)
+```
+
+### List Predefined Templates
+
+```go
+listpredefinedtemplatesOptions := &eventnotificationsv1.ListPreDefinedTemplatesOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Source:     core.StringPtr(<source-type>),
+				Type:       core.StringPtr(<destination-template-type>),
+				Offset:     core.Int64Ptr(int64(0)),
+				Limit:      core.Int64Ptr(int64(1)),
+				Search:     core.StringPtr(search),
+			}
+
+```
+
+### Get Predefined Template
+```go
+getPredefinedTemplateOptions := &eventnotificationsv1.GetPreDefinedTemplateOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(<pre-defined-template-id>),
+			}
 ```
 
 ## Push Destination APIs

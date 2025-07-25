@@ -705,8 +705,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			topicID3 = string(*topicResponse.ID)
 
 			eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
-			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2025-02-18T15:50:00.000Z")
-			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2025-02-18T16:30:00.000Z")
+			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2025-07-25T15:50:00.000Z")
+			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2025-07-25T16:30:00.000Z")
 			eventScheduleFilterAttributesModel.Expression = core.StringPtr("* * * * *")
 
 			rulesModel = &eventnotificationsv1.Rules{
@@ -1702,6 +1702,27 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(template).ToNot(BeNil())
+		})
+	})
+
+	Describe(`GetPreDefinedTemplate - Get details of a Predefined Template`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+
+		predefinedtemplateID := "0cacb9a0-d43a-4042-920d-d4a3f7d4cbd5"
+		It(`GetPreDefinedTemplate(getPredefinedTemplateOptions *GetPreDefinedTemplateOptions)`, func() {
+
+			getPredefinedTemplateOptions := &eventnotificationsv1.GetPreDefinedTemplateOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(predefinedtemplateID),
+			}
+
+			predefinedtemplate, response, err := eventNotificationsService.GetPreDefinedTemplate(getPredefinedTemplateOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(predefinedtemplate).ToNot(BeNil())
 		})
 	})
 
@@ -2928,6 +2949,29 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templatesList).ToNot(BeNil())
+		})
+	})
+
+	Describe(`ListPreDefinedTemplates - List all templates`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`ListPredefinedTemplates(listpredefinedtemplatesOptions *ListPreDefinedTemplatesOptions)`, func() {
+
+			listpredefinedtemplatesOptions := &eventnotificationsv1.ListPreDefinedTemplatesOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Source:     core.StringPtr("logs"),
+				Type:       core.StringPtr("slack.notification"),
+				Offset:     core.Int64Ptr(int64(0)),
+				Limit:      core.Int64Ptr(int64(1)),
+				Search:     core.StringPtr(search),
+			}
+
+			predefinedtemplatesList, response, err := eventNotificationsService.ListPreDefinedTemplates(listpredefinedtemplatesOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(predefinedtemplatesList).ToNot(BeNil())
 		})
 	})
 
