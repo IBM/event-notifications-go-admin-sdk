@@ -1549,6 +1549,25 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		})
 
+		It(`GetPreDefinedTemplate request example`, func() {
+			fmt.Println("\nGetTemplate() result:")
+			// begin-get_pre_defined_template
+
+			predefinedtemplateID := "0cacb9a0-d43a-4042-920d-d4a3f7d4cbd5"
+			getPredefinedTemplateOptions := &eventnotificationsv1.GetPreDefinedTemplateOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(predefinedtemplateID),
+			}
+
+			predefinedtemplate, response, err := eventNotificationsService.GetPreDefinedTemplate(getPredefinedTemplateOptions)
+			// end-get_pre_defined_template
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(predefinedtemplate).ToNot(BeNil())
+
+		})
+
 		It(`UpdateDestination request example`, func() {
 			fmt.Println("\nUpdateDestination() result:")
 			// begin-update_destination
@@ -2632,6 +2651,33 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templatesList).ToNot(BeNil())
 
+		})
+		It(`ListPreDefinedTemplates request example`, func() {
+			fmt.Println("\nListPreDefinedTemplates() result:")
+			// begin-list_pre_defined_templates
+
+			listpredefinedtemplatesOptions := &eventnotificationsv1.ListPreDefinedTemplatesOptions{
+				InstanceID: core.StringPtr(instanceID),
+				Source:     core.StringPtr("logs"),
+				Type:       core.StringPtr("slack.notification"),
+				Offset:     core.Int64Ptr(int64(0)),
+				Limit:      core.Int64Ptr(int64(1)),
+				Search:     core.StringPtr(search),
+			}
+
+			predefinedtemplatesList, response, err := eventNotificationsService.ListPreDefinedTemplates(listpredefinedtemplatesOptions)
+
+			if err != nil {
+				panic(err)
+			}
+			b, _ := json.MarshalIndent(predefinedtemplatesList, "", "  ")
+			fmt.Println(string(b))
+
+			// end-list_pre_defined_templates
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(predefinedtemplatesList).ToNot(BeNil())
 		})
 		It(`GetSubscription request example`, func() {
 			fmt.Println("\nGetSubscription() result:")
