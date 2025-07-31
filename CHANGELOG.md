@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.17.0...v0.18.0) (2025-07-31)
+
+
+### Features
+
+* support for code engine templates ([#73](https://github.com/IBM/event-notifications-go-admin-sdk/issues/73)) ([9b94521](https://github.com/IBM/event-notifications-go-admin-sdk/commit/9b94521d3554919c1195f5bfc50f6340c7197b50))
+
 # [0.17.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.16.0...v0.17.0) (2025-07-25)
 
 
