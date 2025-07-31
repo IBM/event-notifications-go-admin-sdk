@@ -15132,6 +15132,24 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
 			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesCodeEngineAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesCodeEngineAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesCodeEngineAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesCodeEngineAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
 			It(`Invoke UnmarshalSubscriptionCreateAttributesCustomEmailAttributes successfully`, func() {
 				// Construct an instance of the model.
 				model := new(eventnotificationsv1.SubscriptionCreateAttributesCustomEmailAttributes)
@@ -15344,6 +15362,24 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
 			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
 			It(`Invoke UnmarshalSubscriptionUpdateAttributesCustomEmailUpdateAttributes successfully`, func() {
 				// Construct an instance of the model.
 				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailUpdateAttributes)
@@ -15543,6 +15579,42 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				var result *eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes
 				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesWebhookAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfCodeEngineApplicationTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfCodeEngineApplicationTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfCodeEngineApplicationTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfCodeEngineApplicationTemplateConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfCodeEngineJobTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfCodeEngineJobTemplateConfig(raw, &result)
 				Expect(err).To(BeNil())
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
