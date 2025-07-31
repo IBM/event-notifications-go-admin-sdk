@@ -10123,6 +10123,7 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesSlackDirectMessageAttributesResponse
 // - SubscriptionAttributesServiceNowAttributesResponse
 // - SubscriptionAttributesEventStreamsAttributesResponse
+// - SubscriptionAttributesCodeEngineAttributesResponse
 type SubscriptionAttributes struct {
 	// The subscribed list.
 	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
@@ -10390,6 +10391,7 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 // - SubscriptionCreateAttributesSlackDirectMessageAttributes
 // - SubscriptionCreateAttributesServiceNowAttributes
 // - SubscriptionCreateAttributesEventstreamsAttributes
+// - SubscriptionCreateAttributesCodeEngineAttributes
 type SubscriptionCreateAttributes struct {
 	// The sms id string.
 	Invited []string `json:"invited,omitempty"`
@@ -10715,6 +10717,7 @@ func UnmarshalSubscriptionListItem(m map[string]json.RawMessage, result interfac
 // - SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
 // - SubscriptionUpdateAttributesServiceNowAttributes
 // - SubscriptionUpdateAttributesEventstreamsAttributes
+// - SubscriptionUpdateAttributesCodeEngineAttributes
 type SubscriptionUpdateAttributes struct {
 	// The email ids or phone numbers.
 	Invited *UpdateAttributesInvited `json:"invited,omitempty"`
@@ -11062,6 +11065,8 @@ func UnmarshalTemplate(m map[string]json.RawMessage, result interface{}) (err er
 // - TemplateConfigOneOfWebhookTemplateConfig
 // - TemplateConfigOneOfPagerdutyTemplateConfig
 // - TemplateConfigOneOfEventStreamsTemplateConfig
+// - TemplateConfigOneOfCodeEngineApplicationTemplateConfig
+// - TemplateConfigOneOfCodeEngineJobTemplateConfig
 type TemplateConfigOneOf struct {
 	// Template body(Base64 encoded).
 	Body *string `json:"body,omitempty"`
@@ -13153,6 +13158,86 @@ func UnmarshalDestinationConfigOneOfWebhookDestinationConfig(m map[string]json.R
 	return
 }
 
+// SubscriptionAttributesCodeEngineAttributesResponse : The attributes for a Code Engine response.
+// This model "extends" SubscriptionAttributes
+type SubscriptionAttributesCodeEngineAttributesResponse struct {
+	// Code Engine template id.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+
+	// Allows users to set arbitrary properties
+	additionalProperties map[string]interface{}
+}
+
+func (*SubscriptionAttributesCodeEngineAttributesResponse) isaSubscriptionAttributes() bool {
+	return true
+}
+
+// SetProperty allows the user to set an arbitrary property on an instance of SubscriptionAttributesCodeEngineAttributesResponse
+func (o *SubscriptionAttributesCodeEngineAttributesResponse) SetProperty(key string, value interface{}) {
+	if o.additionalProperties == nil {
+		o.additionalProperties = make(map[string]interface{})
+	}
+	o.additionalProperties[key] = value
+}
+
+// SetProperties allows the user to set a map of arbitrary properties on an instance of SubscriptionAttributesCodeEngineAttributesResponse
+func (o *SubscriptionAttributesCodeEngineAttributesResponse) SetProperties(m map[string]interface{}) {
+	o.additionalProperties = make(map[string]interface{})
+	for k, v := range m {
+		o.additionalProperties[k] = v
+	}
+}
+
+// GetProperty allows the user to retrieve an arbitrary property from an instance of SubscriptionAttributesCodeEngineAttributesResponse
+func (o *SubscriptionAttributesCodeEngineAttributesResponse) GetProperty(key string) interface{} {
+	return o.additionalProperties[key]
+}
+
+// GetProperties allows the user to retrieve the map of arbitrary properties from an instance of SubscriptionAttributesCodeEngineAttributesResponse
+func (o *SubscriptionAttributesCodeEngineAttributesResponse) GetProperties() map[string]interface{} {
+	return o.additionalProperties
+}
+
+// MarshalJSON performs custom serialization for instances of SubscriptionAttributesCodeEngineAttributesResponse
+func (o *SubscriptionAttributesCodeEngineAttributesResponse) MarshalJSON() (buffer []byte, err error) {
+	m := make(map[string]interface{})
+	if len(o.additionalProperties) > 0 {
+		for k, v := range o.additionalProperties {
+			m[k] = v
+		}
+	}
+	if o.TemplateIDNotification != nil {
+		m["template_id_notification"] = o.TemplateIDNotification
+	}
+	buffer, err = json.Marshal(m)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-marshal", common.GetComponentInfo())
+	}
+	return
+}
+
+// UnmarshalSubscriptionAttributesCodeEngineAttributesResponse unmarshals an instance of SubscriptionAttributesCodeEngineAttributesResponse from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesCodeEngineAttributesResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesCodeEngineAttributesResponse)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	delete(m, "template_id_notification")
+	for k := range m {
+		var v interface{}
+		e := core.UnmarshalPrimitive(m, k, &v)
+		if e != nil {
+			err = core.SDKErrorf(e, "", "additional-properties-error", common.GetComponentInfo())
+			return
+		}
+		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionAttributesCustomEmailAttributesResponse : The attributes reponse for an email destination.
 // This model "extends" SubscriptionAttributes
 type SubscriptionAttributesCustomEmailAttributesResponse struct {
@@ -14229,6 +14314,29 @@ func UnmarshalSubscriptionAttributesWebhookAttributesResponse(m map[string]json.
 	return
 }
 
+// SubscriptionCreateAttributesCodeEngineAttributes : The attributes for a Code Engine subscription.
+// This model "extends" SubscriptionCreateAttributes
+type SubscriptionCreateAttributesCodeEngineAttributes struct {
+	// code engine template id.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionCreateAttributesCodeEngineAttributes) isaSubscriptionCreateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionCreateAttributesCodeEngineAttributes unmarshals an instance of SubscriptionCreateAttributesCodeEngineAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionCreateAttributesCodeEngineAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionCreateAttributesCodeEngineAttributes)
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // SubscriptionCreateAttributesCustomEmailAttributes : The attributes for an email notification.
 // This model "extends" SubscriptionCreateAttributes
 type SubscriptionCreateAttributesCustomEmailAttributes struct {
@@ -14643,6 +14751,29 @@ func UnmarshalSubscriptionCreateAttributesWebhookAttributes(m map[string]json.Ra
 		err = core.SDKErrorf(err, "", "signing_enabled-error", common.GetComponentInfo())
 		return
 	}
+	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionUpdateAttributesCodeEngineAttributes : The attributes for a Code Engine subscription.
+// This model "extends" SubscriptionUpdateAttributes
+type SubscriptionUpdateAttributesCodeEngineAttributes struct {
+	// code engine template id.
+	TemplateIDNotification *string `json:"template_id_notification,omitempty"`
+}
+
+func (*SubscriptionUpdateAttributesCodeEngineAttributes) isaSubscriptionUpdateAttributes() bool {
+	return true
+}
+
+// UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes unmarshals an instance of SubscriptionUpdateAttributesCodeEngineAttributes from the specified map of raw messages.
+func UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionUpdateAttributesCodeEngineAttributes)
 	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
@@ -15091,6 +15222,76 @@ func UnmarshalSubscriptionUpdateAttributesWebhookAttributes(m map[string]json.Ra
 	err = core.UnmarshalPrimitive(m, "template_id_notification", &obj.TemplateIDNotification)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "template_id_notification-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfCodeEngineApplicationTemplateConfig : Payload describing a code engine application template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfCodeEngineApplicationTemplateConfig struct {
+	// Template body(Base64 encoded).
+	Body *string `json:"body" validate:"required"`
+}
+
+// NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig : Instantiate TemplateConfigOneOfCodeEngineApplicationTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig(body string) (_model *TemplateConfigOneOfCodeEngineApplicationTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfCodeEngineApplicationTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*TemplateConfigOneOfCodeEngineApplicationTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfCodeEngineApplicationTemplateConfig unmarshals an instance of TemplateConfigOneOfCodeEngineApplicationTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfCodeEngineApplicationTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfCodeEngineApplicationTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TemplateConfigOneOfCodeEngineJobTemplateConfig : Payload describing a code engine Job template configuration.
+// This model "extends" TemplateConfigOneOf
+type TemplateConfigOneOfCodeEngineJobTemplateConfig struct {
+	// Template body(Base64 encoded).
+	Body *string `json:"body" validate:"required"`
+}
+
+// NewTemplateConfigOneOfCodeEngineJobTemplateConfig : Instantiate TemplateConfigOneOfCodeEngineJobTemplateConfig (Generic Model Constructor)
+func (*EventNotificationsV1) NewTemplateConfigOneOfCodeEngineJobTemplateConfig(body string) (_model *TemplateConfigOneOfCodeEngineJobTemplateConfig, err error) {
+	_model = &TemplateConfigOneOfCodeEngineJobTemplateConfig{
+		Body: core.StringPtr(body),
+	}
+	err = core.ValidateStruct(_model, "required parameters")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "model-missing-required", common.GetComponentInfo())
+	}
+	return
+}
+
+func (*TemplateConfigOneOfCodeEngineJobTemplateConfig) isaTemplateConfigOneOf() bool {
+	return true
+}
+
+// UnmarshalTemplateConfigOneOfCodeEngineJobTemplateConfig unmarshals an instance of TemplateConfigOneOfCodeEngineJobTemplateConfig from the specified map of raw messages.
+func UnmarshalTemplateConfigOneOfCodeEngineJobTemplateConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TemplateConfigOneOfCodeEngineJobTemplateConfig)
+	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))

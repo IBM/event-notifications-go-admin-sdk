@@ -664,6 +664,24 @@ createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 
 templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
+#### Code Engine Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
 
 For event streams template supported template type value: event_streams.notification
 
@@ -793,8 +811,28 @@ replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
 
 templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
 ```
-
 For event streams template supported template type value: event_streams.notification
+
+#### Update Code Engine Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For code engine template supported template type value: ibmcejob.notification and ibmceapp.notification
 
 ### Delete Template
 
@@ -888,7 +926,7 @@ if err != nil {
 
 subscriptionCreateAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
 	SigningEnabled: core.BoolPtr(false),
-	TemplateIDNotification: core.StringPtr(<webhook-template-id>),
+	TemplateIDNotification: core.StringPtr(<template-id>),
 }
 
 createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
@@ -1416,6 +1454,7 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event Streams instance endpoint
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event streams instance topic
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 
