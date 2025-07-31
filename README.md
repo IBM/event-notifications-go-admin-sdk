@@ -1454,7 +1454,8 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event Streams instance endpoint
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event streams instance topic
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body
-- `EVENT_NOTIFICATIONS_CODE_ENGINE_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_JOB_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_APP_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 

@@ -88,6 +88,7 @@ var (
 	subscriptionID9           string
 	subscriptionID10          string
 	subscriptionID11          string
+	subscriptionID12          string
 	fcmServerKey              string
 	fcmSenderId               string
 	integrationId             string
@@ -127,8 +128,10 @@ var (
 	estopicName               string
 	esTemplateID              string
 	esTemplateBody            string
-	ceTemplateID              string
-	ceTemplateBody            string
+	cejobTemplateID           string
+	cejobTemplateBody         string
+	ceappTemplateID           string
+	ceappTemplateBody         string
 )
 
 func shouldSkipTest() {
@@ -333,11 +336,17 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			fmt.Printf("EVENT_STREAMS_TEMPLATE_BODY: %s\n", esTemplateBody)
 
-			ceTemplateBody = config["CODE_ENGINE_TEMPLATE_BODY"]
-			if ceTemplateBody == "" {
-				Skip("Unable to load ceTemplateBody configuration property, skipping tests")
+			cejobTemplateBody = config["CODE_ENGINE_JOB_TEMPLATE_BODY"]
+			if cejobTemplateBody == "" {
+				Skip("Unable to load cejobTemplateBody configuration property, skipping tests")
 			}
-			fmt.Printf("CODE_ENGINE_TEMPLATE_BODY: %s\n", ceTemplateBody)
+			fmt.Printf("CODE_ENGINE_JOB_TEMPLATE_BODY: %s\n", cejobTemplateBody)
+
+			ceappTemplateBody = config["CODE_ENGINE_APP_TEMPLATE_BODY"]
+			if ceappTemplateBody == "" {
+				Skip("Unable to load ceappTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("CODE_ENGINE_APP_TEMPLATE_BODY: %s\n", ceappTemplateBody)
 
 			configLoaded = len(config) > 0
 		})
@@ -1321,7 +1330,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			templateTypeWebhook := "webhook.notification"
 			templateTypePD := "pagerduty.notification"
 			templateTypeES := "event_streams.notification"
-			templateTypeCE := "ibmcejob.notification"
+			templateTypeCEJOB := "ibmcejob.notification"
+			templateTypeCEAPP := "ibmceapp.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1478,19 +1488,19 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			esTemplateID = *templateResponse.ID
 
-			name = "Code Engine template"
+			name = "Code Engine Job template"
 			description = "Code Engine Job template description"
 
-			codeengineTemplConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
-				Body: core.StringPtr(ceTemplateBody),
+			codeenginejobTemplConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
+				Body: core.StringPtr(cejobTemplateBody),
 			}
 
 			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(templateTypeCE),
+				Type:        core.StringPtr(templateTypeCEJOB),
 				Description: core.StringPtr(description),
-				Params:      codeengineTemplConfig,
+				Params:      codeenginejobTemplConfig,
 			}
 
 			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
@@ -1503,7 +1513,34 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
-			ceTemplateID = *templateResponse.ID
+			cejobTemplateID = *templateResponse.ID
+
+			name = "Code Engine Job template"
+			description = "Code Engine Job template description"
+
+			codeengineappTemplConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineApplicationTemplateConfig{
+				Body: core.StringPtr(ceappTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeCEAPP),
+				Description: core.StringPtr(description),
+				Params:      codeengineappTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			ceappTemplateID = *templateResponse.ID
 			// end-create_template
 		})
 
@@ -2195,7 +2232,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			templateTypeWebhook := "webhook.notification"
 			templateTypePD := "pagerduty.notification"
 			templateTypeES := "event_streams.notification"
-			templateTypeCE := "ibmcejob.notification"
+			templateTypeCEJOB := "ibmcejob.notification"
+			templateTypeCEAPP := "ibmceapp.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -2364,17 +2402,17 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			name = "Code Engine Job template update"
 			description = "Code Engine Job description update"
 
-			codeengineTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
-				Body: core.StringPtr(ceTemplateBody),
+			codeenginejobTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineJobTemplateConfig{
+				Body: core.StringPtr(cejobTemplateBody),
 			}
 
 			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
 				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(ceTemplateID),
+				ID:          core.StringPtr(cejobTemplateID),
 				Name:        core.StringPtr(name),
-				Type:        core.StringPtr(templateTypeCE),
+				Type:        core.StringPtr(templateTypeCEJOB),
 				Description: core.StringPtr(description),
-				Params:      codeengineTemplateConfig,
+				Params:      codeenginejobTemplateConfig,
 			}
 
 			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
@@ -2384,7 +2422,34 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateResponse).ToNot(BeNil())
-			Expect(templateResponse.ID).To(Equal(core.StringPtr(ceTemplateID)))
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(cejobTemplateID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "Code Engine APP template update"
+			description = "Code Engine APP description update"
+
+			codeengineappTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfCodeEngineApplicationTemplateConfig{
+				Body: core.StringPtr(ceappTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(ceappTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeCEAPP),
+				Description: core.StringPtr(description),
+				Params:      codeengineappTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(ceappTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
@@ -2671,7 +2736,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			subscriptionID10 = string(*subscription.ID)
 
 			subscriptionCreateCEAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributes{
-				TemplateIDNotification: core.StringPtr(ceTemplateID),
+				TemplateIDNotification: core.StringPtr(cejobTemplateID),
 			}
 
 			ceName := core.StringPtr("subscription_code_engine_job")
@@ -2694,6 +2759,31 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(ceJobSubscription.Description).To(Equal(ceDescription))
 			Expect(ceJobSubscription.Name).To(Equal(ceName))
 			subscriptionID11 = *ceJobSubscription.ID
+
+			subscriptionCreateCEAttributesModel = &eventnotificationsv1.SubscriptionCreateAttributes{
+				TemplateIDNotification: core.StringPtr(ceappTemplateID),
+			}
+
+			ceName = core.StringPtr("subscription_code_engine_app")
+			ceDescription = core.StringPtr("Subscription for code engine application")
+			createCESubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          ceName,
+				Description:   ceDescription,
+				DestinationID: core.StringPtr(destinationID13),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateCEAttributesModel,
+			}
+
+			ceSubscription, response, err := eventNotificationsService.CreateSubscription(createCESubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(ceSubscription).ToNot(BeNil())
+			Expect(ceSubscription.Attributes).ToNot(BeNil())
+			Expect(ceSubscription.Description).To(Equal(ceDescription))
+			Expect(ceSubscription.Name).To(Equal(ceName))
+			subscriptionID12 = *ceSubscription.ID
 
 			// end-create_subscription
 
@@ -3145,8 +3235,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(subscription.Name).To(Equal(eventstreamsName))
 			Expect(subscription.Description).To(Equal(eventstreamsDescription))
 
-			subscriptionCEJobUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes{
-				TemplateIDNotification: core.StringPtr(ceTemplateID),
+			subscriptionCEJobUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes{
+				TemplateIDNotification: core.StringPtr(cejobTemplateID),
 			}
 
 			ceName := core.StringPtr("code_engine_job_sub_updated")
@@ -3166,6 +3256,29 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(ceJobSubscription.ID).To(Equal(core.StringPtr(subscriptionID11)))
 			Expect(ceJobSubscription.Name).To(Equal(ceName))
 			Expect(ceJobSubscription.Description).To(Equal(ceDescription))
+
+			subscriptionCEUpdateAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes{
+				TemplateIDNotification: core.StringPtr(ceappTemplateID),
+			}
+
+			ceName = core.StringPtr("code_engine_sub_updated")
+			ceDescription = core.StringPtr("Update code engine subscription")
+			updateCESubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(subscriptionID12),
+				Name:        ceName,
+				Description: ceDescription,
+				Attributes:  subscriptionCEUpdateAttributesModel,
+			}
+
+			ceSubscription, response, err := eventNotificationsService.UpdateSubscription(updateCESubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(ceSubscription).ToNot(BeNil())
+			Expect(ceSubscription.ID).To(Equal(core.StringPtr(subscriptionID12)))
+			Expect(ceSubscription.Name).To(Equal(ceName))
+			Expect(ceSubscription.Description).To(Equal(ceDescription))
 
 			// end-update_subscription
 
