@@ -664,6 +664,9 @@ createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 
 templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
+
+For event streams template supported template type value: event_streams.notification
+
 #### Code Engine Template
 
 ```go
@@ -683,7 +686,7 @@ createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
 
-For event streams template supported template type value: event_streams.notification
+For code engine template supported template type value: ibmcejob.notification and ibmceapp.notificationF
 
 ### List Templates
 
