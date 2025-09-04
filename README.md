@@ -517,6 +517,7 @@ Currently, this functionality supports following destinations:
 4. Microsoft&reg; Teams
 5. IBM Cloud Code Engine
 6. IBM Cloud Object Storage
+7. Webhook
 
 ```go
 testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
@@ -532,6 +533,24 @@ Once the test is completed, you will be presented with the results. These result
 - **Status**: Whether the test is successful or failed
 - **Response Code**: If test fails, then the response code sent from the end destination client is returned
 - **Response Message**: If test fails, then the response message sent from the end destination client is returned
+
+In case of `webhook` destination test response also returns notification_id, the status of notification_id will represent the webhook test result. Follow below additional steps to get status result of webhook destination test
+
+```go
+if testResponse, ok := result.(*eventnotificationsv1.TestDestinationResponse); ok {
+				if testResponse.NotificationID != nil {
+					testNotificationID = *testResponse.NotificationID
+				}
+			}
+
+			getNoticationOptions := &eventnotificationsv1.GetNotificationsStatusOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(testNotificationID),
+			}
+
+			getNotificationResponse, response, err := eventNotificationsService.GetNotificationsStatus(getNoticationOptions)
+```			
+The response of `GetNotificationsStatus` will have success, failed or inprogress status. The Notification ID will be valid only for 1 minute to fetch the status of test. The status response as **success** will conclude successful test of webhook destination
 
 ### Custom Domain Name Verification
 

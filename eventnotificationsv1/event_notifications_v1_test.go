@@ -15978,7 +15978,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 	})
 })
 
-// // Utility functions used by the generated test code
+// Utility functions used by the generated test code
 
 func CreateMockByteArray(mockData string) *[]byte {
 	ba := make([]byte, 0)
