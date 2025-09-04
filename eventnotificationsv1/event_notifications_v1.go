@@ -15,7 +15,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.70.0-7df966bf-20230419-195904
+ * IBM OpenAPI SDK Code Generator Version: 3.89.0-f33c767b-20240410-144451
  */
 
 // Package eventnotificationsv1 : Operations and models for the EventNotificationsV1 service
@@ -2152,14 +2152,14 @@ func (eventNotifications *EventNotificationsV1) GetEnabledCountriesWithContext(c
 
 // TestDestination : Test a Destination
 // Test a Destination.
-func (eventNotifications *EventNotificationsV1) TestDestination(testDestinationOptions *TestDestinationOptions) (result *TestDestinationResponse, response *core.DetailedResponse, err error) {
+func (eventNotifications *EventNotificationsV1) TestDestination(testDestinationOptions *TestDestinationOptions) (result TestDestinationResponseIntf, response *core.DetailedResponse, err error) {
 	result, response, err = eventNotifications.TestDestinationWithContext(context.Background(), testDestinationOptions)
 	err = core.RepurposeSDKProblem(err, "")
 	return
 }
 
 // TestDestinationWithContext is an alternate form of the TestDestination method which supports a Context parameter
-func (eventNotifications *EventNotificationsV1) TestDestinationWithContext(ctx context.Context, testDestinationOptions *TestDestinationOptions) (result *TestDestinationResponse, response *core.DetailedResponse, err error) {
+func (eventNotifications *EventNotificationsV1) TestDestinationWithContext(ctx context.Context, testDestinationOptions *TestDestinationOptions) (result TestDestinationResponseIntf, response *core.DetailedResponse, err error) {
 	err = core.ValidateNotNil(testDestinationOptions, "testDestinationOptions cannot be nil")
 	if err != nil {
 		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
@@ -4122,6 +4122,76 @@ func (eventNotifications *EventNotificationsV1) UpdateVerifySMTPWithContext(ctx 
 	}
 	if rawResponse != nil {
 		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalSMTPVerificationUpdateResponse)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
+// GetNotificationsStatus : Get notification status
+// Get notification status.
+func (eventNotifications *EventNotificationsV1) GetNotificationsStatus(getNotificationsStatusOptions *GetNotificationsStatusOptions) (result *GetNotificationStatusResponse, response *core.DetailedResponse, err error) {
+	result, response, err = eventNotifications.GetNotificationsStatusWithContext(context.Background(), getNotificationsStatusOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetNotificationsStatusWithContext is an alternate form of the GetNotificationsStatus method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetNotificationsStatusWithContext(ctx context.Context, getNotificationsStatusOptions *GetNotificationsStatusOptions) (result *GetNotificationStatusResponse, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getNotificationsStatusOptions, "getNotificationsStatusOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(getNotificationsStatusOptions, "getNotificationsStatusOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getNotificationsStatusOptions.InstanceID,
+		"id":          *getNotificationsStatusOptions.ID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/notifications/{id}`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range getNotificationsStatusOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetNotificationsStatus")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "get_notifications_status", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalGetNotificationStatusResponse)
 		if err != nil {
 			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
 			return
@@ -6468,6 +6538,104 @@ func (_options *GetMetricsOptions) SetSubject(subject string) *GetMetricsOptions
 
 // SetHeaders : Allow user to set Headers
 func (options *GetMetricsOptions) SetHeaders(param map[string]string) *GetMetricsOptions {
+	options.Headers = param
+	return options
+}
+
+// GetNotificationStatusResponse : Payload describing a notifications response.
+type GetNotificationStatusResponse struct {
+	// status of the notification.
+	Status *string `json:"status" validate:"required"`
+
+	// Payload describing a Status Details.
+	Details *GetNotificationStatusResponseDetails `json:"details" validate:"required"`
+}
+
+// Constants associated with the GetNotificationStatusResponse.Status property.
+// status of the notification.
+const (
+	GetNotificationStatusResponseStatusFailureConst    = "failure"
+	GetNotificationStatusResponseStatusInprogressConst = "inprogress"
+	GetNotificationStatusResponseStatusSuccessConst    = "success"
+)
+
+// UnmarshalGetNotificationStatusResponse unmarshals an instance of GetNotificationStatusResponse from the specified map of raw messages.
+func UnmarshalGetNotificationStatusResponse(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(GetNotificationStatusResponse)
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalModel(m, "details", &obj.Details, UnmarshalGetNotificationStatusResponseDetails)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "details-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// GetNotificationStatusResponseDetails : Payload describing a Status Details.
+type GetNotificationStatusResponseDetails struct {
+	// HTTP status code.
+	StatusCode *int64 `json:"status_code" validate:"required"`
+
+	// status message of the notification.
+	StatusMessage *string `json:"status_message" validate:"required"`
+}
+
+// UnmarshalGetNotificationStatusResponseDetails unmarshals an instance of GetNotificationStatusResponseDetails from the specified map of raw messages.
+func UnmarshalGetNotificationStatusResponseDetails(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(GetNotificationStatusResponseDetails)
+	err = core.UnmarshalPrimitive(m, "status_code", &obj.StatusCode)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status_code-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "status_message", &obj.StatusMessage)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status_message-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// GetNotificationsStatusOptions : The GetNotificationsStatus options.
+type GetNotificationsStatusOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Get Notification Id.
+	ID *string `json:"id" validate:"required,ne="`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// NewGetNotificationsStatusOptions : Instantiate GetNotificationsStatusOptions
+func (*EventNotificationsV1) NewGetNotificationsStatusOptions(instanceID string, id string) *GetNotificationsStatusOptions {
+	return &GetNotificationsStatusOptions{
+		InstanceID: core.StringPtr(instanceID),
+		ID:         core.StringPtr(id),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetNotificationsStatusOptions) SetInstanceID(instanceID string) *GetNotificationsStatusOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetID : Allow user to set ID
+func (_options *GetNotificationsStatusOptions) SetID(id string) *GetNotificationsStatusOptions {
+	_options.ID = core.StringPtr(id)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetNotificationsStatusOptions) SetHeaders(param map[string]string) *GetNotificationsStatusOptions {
 	options.Headers = param
 	return options
 }
@@ -11282,10 +11450,39 @@ func (options *TestDestinationOptions) SetHeaders(param map[string]string) *Test
 	return options
 }
 
-// TestDestinationResponse : Destination test object.
+// TestDestinationResponse : TestDestinationResponse struct
+// Models which "extend" this model:
+// - TestDestinationResponseWebhookDestinationTestResponseConfig
+// - TestDestinationResponseDestinationTestResponseConfig
 type TestDestinationResponse struct {
-	// test destiantion status.
-	Status *string `json:"status" validate:"required"`
+	// Test destination status.
+	Status *string `json:"status,omitempty"`
+
+	// Test notification ID.
+	NotificationID *string `json:"notification_id,omitempty"`
+
+	// Type of destination.
+	DestinationType *string `json:"destination_type,omitempty"`
+}
+
+// Constants associated with the TestDestinationResponse.Status property.
+// Test destination status.
+const (
+	TestDestinationResponseStatusAcceptedConst = "accepted"
+)
+
+// Constants associated with the TestDestinationResponse.DestinationType property.
+// Type of destination.
+const (
+	TestDestinationResponseDestinationTypeWebhookConst = "webhook"
+)
+
+func (*TestDestinationResponse) isaTestDestinationResponse() bool {
+	return true
+}
+
+type TestDestinationResponseIntf interface {
+	isaTestDestinationResponse() bool
 }
 
 // UnmarshalTestDestinationResponse unmarshals an instance of TestDestinationResponse from the specified map of raw messages.
@@ -11294,6 +11491,16 @@ func UnmarshalTestDestinationResponse(m map[string]json.RawMessage, result inter
 	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "notification_id", &obj.NotificationID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "notification_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "destination_type", &obj.DestinationType)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "destination_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
@@ -15475,6 +15682,80 @@ func UnmarshalTemplateConfigOneOfWebhookTemplateConfig(m map[string]json.RawMess
 	err = core.UnmarshalPrimitive(m, "body", &obj.Body)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "body-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TestDestinationResponseDestinationTestResponseConfig : Test Destination response object for other http destination.
+// This model "extends" TestDestinationResponse
+type TestDestinationResponseDestinationTestResponseConfig struct {
+	// Test destination status.
+	Status *string `json:"status" validate:"required"`
+}
+
+func (*TestDestinationResponseDestinationTestResponseConfig) isaTestDestinationResponse() bool {
+	return true
+}
+
+// UnmarshalTestDestinationResponseDestinationTestResponseConfig unmarshals an instance of TestDestinationResponseDestinationTestResponseConfig from the specified map of raw messages.
+func UnmarshalTestDestinationResponseDestinationTestResponseConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TestDestinationResponseDestinationTestResponseConfig)
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// TestDestinationResponseWebhookDestinationTestResponseConfig : Response from /test endpoint.
+// This model "extends" TestDestinationResponse
+type TestDestinationResponseWebhookDestinationTestResponseConfig struct {
+	// Test destination status.
+	Status *string `json:"status" validate:"required"`
+
+	// Test notification ID.
+	NotificationID *string `json:"notification_id" validate:"required"`
+
+	// Type of destination.
+	DestinationType *string `json:"destination_type" validate:"required"`
+}
+
+// Constants associated with the TestDestinationResponseWebhookDestinationTestResponseConfig.Status property.
+// Test destination status.
+const (
+	TestDestinationResponseWebhookDestinationTestResponseConfigStatusAcceptedConst = "accepted"
+)
+
+// Constants associated with the TestDestinationResponseWebhookDestinationTestResponseConfig.DestinationType property.
+// Type of destination.
+const (
+	TestDestinationResponseWebhookDestinationTestResponseConfigDestinationTypeWebhookConst = "webhook"
+)
+
+func (*TestDestinationResponseWebhookDestinationTestResponseConfig) isaTestDestinationResponse() bool {
+	return true
+}
+
+// UnmarshalTestDestinationResponseWebhookDestinationTestResponseConfig unmarshals an instance of TestDestinationResponseWebhookDestinationTestResponseConfig from the specified map of raw messages.
+func UnmarshalTestDestinationResponseWebhookDestinationTestResponseConfig(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(TestDestinationResponseWebhookDestinationTestResponseConfig)
+	err = core.UnmarshalPrimitive(m, "status", &obj.Status)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "status-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "notification_id", &obj.NotificationID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "notification_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "destination_type", &obj.DestinationType)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "destination_type-error", common.GetComponentInfo())
 		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))

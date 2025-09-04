@@ -6923,7 +6923,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"status": "Status"}`)
+					fmt.Fprintf(res, "%s", `{"status": "accepted", "notification_id": "NotificationID", "destination_type": "webhook"}`)
 				}))
 			})
 			It(`Invoke TestDestination successfully with retries`, func() {
@@ -6978,7 +6978,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"status": "Status"}`)
+					fmt.Fprintf(res, "%s", `{"status": "accepted", "notification_id": "NotificationID", "destination_type": "webhook"}`)
 				}))
 			})
 			It(`Invoke TestDestination successfully`, func() {
@@ -13210,6 +13210,223 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			})
 		})
 	})
+	Describe(`GetNotificationsStatus(getNotificationsStatusOptions *GetNotificationsStatusOptions) - Operation response error`, func() {
+		getNotificationsStatusPath := "/v1/instances/testString/notifications/testString"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNotificationsStatusPath))
+					Expect(req.Method).To(Equal("GET"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetNotificationsStatus with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetNotificationsStatusOptions model
+				getNotificationsStatusOptionsModel := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				getNotificationsStatusOptionsModel.InstanceID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.ID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetNotificationsStatus(getNotificationsStatusOptions *GetNotificationsStatusOptions)`, func() {
+		getNotificationsStatusPath := "/v1/instances/testString/notifications/testString"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNotificationsStatusPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"status": "success", "details": {"status_code": 10, "status_message": "StatusMessage"}}`)
+				}))
+			})
+			It(`Invoke GetNotificationsStatus successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetNotificationsStatusOptions model
+				getNotificationsStatusOptionsModel := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				getNotificationsStatusOptionsModel.InstanceID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.ID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetNotificationsStatusWithContext(ctx, getNotificationsStatusOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetNotificationsStatusWithContext(ctx, getNotificationsStatusOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getNotificationsStatusPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"status": "success", "details": {"status_code": 10, "status_message": "StatusMessage"}}`)
+				}))
+			})
+			It(`Invoke GetNotificationsStatus successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetNotificationsStatus(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetNotificationsStatusOptions model
+				getNotificationsStatusOptionsModel := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				getNotificationsStatusOptionsModel.InstanceID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.ID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetNotificationsStatus with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetNotificationsStatusOptions model
+				getNotificationsStatusOptionsModel := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				getNotificationsStatusOptionsModel.InstanceID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.ID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetNotificationsStatusOptions model with no property values
+				getNotificationsStatusOptionsModelNew := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetNotificationsStatus successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetNotificationsStatusOptions model
+				getNotificationsStatusOptionsModel := new(eventnotificationsv1.GetNotificationsStatusOptions)
+				getNotificationsStatusOptionsModel.InstanceID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.ID = core.StringPtr("testString")
+				getNotificationsStatusOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetNotificationsStatus(getNotificationsStatusOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
 	Describe(`Model constructor tests`, func() {
 		Context(`Using a service client instance`, func() {
 			eventNotificationsService, _ := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
@@ -13699,6 +13916,19 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getMetricsOptionsModel.NotificationID).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.Subject).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
+			It(`Invoke NewGetNotificationsStatusOptions successfully`, func() {
+				// Construct an instance of the GetNotificationsStatusOptions model
+				instanceID := "testString"
+				id := "testString"
+				getNotificationsStatusOptionsModel := eventNotificationsService.NewGetNotificationsStatusOptions(instanceID, id)
+				getNotificationsStatusOptionsModel.SetInstanceID("testString")
+				getNotificationsStatusOptionsModel.SetID("testString")
+				getNotificationsStatusOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getNotificationsStatusOptionsModel).ToNot(BeNil())
+				Expect(getNotificationsStatusOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getNotificationsStatusOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(getNotificationsStatusOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewGetPreDefinedTemplateOptions successfully`, func() {
 				// Construct an instance of the GetPreDefinedTemplateOptions model
@@ -14610,6 +14840,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				replyToName := "testString"
 				fromName := "testString"
 				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesEmailUpdateAttributes(addNotificationPayload, replyToMail, replyToName, fromName)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewTemplateConfigOneOfCodeEngineJobTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfCodeEngineJobTemplateConfig(body)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -15736,7 +15978,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 	})
 })
 
-// Utility functions used by the generated test code
+// // Utility functions used by the generated test code
 
 func CreateMockByteArray(mockData string) *[]byte {
 	ba := make([]byte, 0)

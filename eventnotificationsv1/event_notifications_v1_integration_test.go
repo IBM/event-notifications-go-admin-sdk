@@ -146,6 +146,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		cejobTemplateBody         string
 		ceappTemplateID           string
 		ceappTemplateBody         string
+		testNotificationID        string
 	)
 
 	var shouldSkipTest = func() {
@@ -720,9 +721,15 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			topicID3 = string(*topicResponse.ID)
 
+			currentTime := time.Now().UTC()
+			formattedStartTime := currentTime.Format("2006-01-02T15:04:05.000Z")
+
+			endTime := currentTime.Add(time.Hour)
+			formattedEndTime := endTime.Format("2006-01-02T15:04:05.000Z")
+
 			eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
-			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2025-07-31T14:50:00.000Z")
-			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2025-08-01T16:30:00.000Z")
+			eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime(formattedStartTime)
+			eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime(formattedEndTime)
 			eventScheduleFilterAttributesModel.Expression = core.StringPtr("* * * * *")
 
 			rulesModel = &eventnotificationsv1.Rules{
@@ -1417,6 +1424,49 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Expect(err).To(BeNil())
 				Expect(response.StatusCode).To(Equal(200))
 			}
+		})
+	})
+
+	Describe(`TestWebhookDestination - Test Webhook Destination`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`TestWebhookDestination(TestDestinationOptions *testDestinationOptions)`, func() {
+
+			testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID),
+			}
+
+			testWebhookResponse, response, err := eventNotificationsService.TestDestination(testDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(testWebhookResponse).ToNot(BeNil())
+
+			if testResponse, ok := testWebhookResponse.(*eventnotificationsv1.TestDestinationResponse); ok {
+				if testResponse.NotificationID != nil {
+					testNotificationID = *testResponse.NotificationID
+				}
+			}
+
+			getNoticationOptions := &eventnotificationsv1.GetNotificationsStatusOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(testNotificationID),
+			}
+
+			getNotificationResponse, response, err := eventNotificationsService.GetNotificationsStatus(getNoticationOptions)
+			if err != nil {
+				panic(err)
+			}
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(getNotificationResponse).ToNot(BeNil())
+			Expect(getNotificationResponse.Status).To(Equal(core.StringPtr("success")))
+
 		})
 	})
 
@@ -3770,11 +3820,19 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
 
+			currentTime := time.Now().UTC()
+
+			ltime := currentTime.AddDate(0, 0, -1)
+			lteTime := ltime.Format("2006-01-02T15:04:05.000Z")
+
+			gTime := currentTime.AddDate(0, 0, -2)
+			gteTime := gTime.Format("2006-01-02T15:04:05.000Z")
+
 			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 				InstanceID:      core.StringPtr(instanceID),
 				DestinationType: core.StringPtr("smtp_custom"),
-				Gte:             core.StringPtr("2025-07-30T17:18:43Z"),
-				Lte:             core.StringPtr("2025-07-31T11:55:22Z"),
+				Gte:             core.StringPtr(gteTime),
+				Lte:             core.StringPtr(lteTime),
 				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
 				DestinationID:   core.StringPtr(destinationID16),
 				NotificationID:  core.StringPtr(notificationID),
