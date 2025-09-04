@@ -132,6 +132,7 @@ var (
 	cejobTemplateBody         string
 	ceappTemplateID           string
 	ceappTemplateBody         string
+	testNotificationID        string
 )
 
 func shouldSkipTest() {
@@ -1317,6 +1318,46 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
+		})
+
+		It(`TestWebhookDestination(TestDestinationOptions *testDestinationOptions)`, func() {
+
+			// begin-test_destination
+			testDestinationOptions := &eventnotificationsv1.TestDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID),
+			}
+
+			testWebhookResponse, response, err := eventNotificationsService.TestDestination(testDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(202))
+			Expect(testWebhookResponse).ToNot(BeNil())
+
+			if testResponse, ok := testWebhookResponse.(*eventnotificationsv1.TestDestinationResponse); ok {
+				if testResponse.NotificationID != nil {
+					testNotificationID = *testResponse.NotificationID
+				}
+			}
+
+			getNoticationOptions := &eventnotificationsv1.GetNotificationsStatusOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(testNotificationID),
+			}
+
+			getNotificationResponse, response, err := eventNotificationsService.GetNotificationsStatus(getNoticationOptions)
+			// end-test_destination
+			if err != nil {
+				panic(err)
+			}
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(getNotificationResponse).ToNot(BeNil())
+			Expect(getNotificationResponse.Status).To(Equal(core.StringPtr("success")))
+
 		})
 
 		It(`CreateTemplate request example`, func() {
