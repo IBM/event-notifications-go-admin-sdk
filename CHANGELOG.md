@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.18.0...v0.19.0) (2025-09-04)
+
+
+### Features
+
+* support webhook destination test ([#74](https://github.com/IBM/event-notifications-go-admin-sdk/issues/74)) ([0fe624b](https://github.com/IBM/event-notifications-go-admin-sdk/commit/0fe624b90abd25b93a5facc7512aca16b34676c1))
+
 # [0.18.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.17.0...v0.18.0) (2025-07-31)
 
 
