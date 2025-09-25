@@ -80,6 +80,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID18           string
 		destinationID19           string
 		destinationID20           string
+		destinationID21           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -100,6 +101,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID19          string
 		subscriptionID20          string
 		subscriptionID21          string
+		subscriptionID22          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -147,6 +149,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		ceappTemplateID           string
 		ceappTemplateBody         string
 		testNotificationID        string
+		appConfigCRN              string
+		appConfigEnvID            string
+		appConfigFeatureID        string
+		appConfigTemplateBody     string
+		acTemplateID              string
 	)
 
 	var shouldSkipTest = func() {
@@ -387,6 +394,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Skip("Unable to load ceappTemplateBody configuration property, skipping tests")
 			}
 			fmt.Printf("CODE_ENGINE_APP_TEMPLATE_BODY: %s\n", ceappTemplateBody)
+
+			appConfigCRN = config["APP_CONFIGURATION_INSTANCE_CRN"]
+			if appConfigCRN == "" {
+				Skip("Unable to load appConfigCRN  configuration property, skipping tests")
+			}
+			fmt.Printf("APP_CONFIGURATION_INSTANCE_CRN: %s\n", appConfigCRN)
+
+			appConfigEnvID = config["APP_CONFIGURATION_ENVIRONMENT_ID"]
+			if appConfigCRN == "" {
+				Skip("Unable to load appConfigEnvID  configuration property, skipping tests")
+			}
+			fmt.Printf("APP_CONFIGURATION_ENVIRONMENT_ID: %s\n", appConfigEnvID)
+
+			appConfigFeatureID = config["APP_CONFIGURATION_FEATURE_ID"]
+			if appConfigCRN == "" {
+				Skip("Unable to load appConfigFeatureID  configuration property, skipping tests")
+			}
+			fmt.Printf("APP_CONFIGURATION_FEATURE_ID: %s\n", appConfigFeatureID)
+
+			appConfigTemplateBody = config["APP_CONFIGURATION_TEMPLATE_BODY"]
+			if appConfigCRN == "" {
+				Skip("Unable to load appConfigTemplateBody configuration property, skipping tests")
+			}
+			fmt.Printf("APP_CONFIGURATION_TEMPLATE_BODY: %s\n", appConfigTemplateBody)
 
 			shouldSkipTest = func() {}
 		})
@@ -1392,6 +1423,34 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID20 = *destinationResponse.ID
+
+			createAppConfigurationsDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+				instanceID,
+				"App_Configuration_destination",
+				eventnotificationsv1.CreateDestinationOptionsTypeAppConfigurationConst,
+			)
+
+			destinationConfigParamsAppConfigurationModel := &eventnotificationsv1.DestinationConfigOneOfAppConfigurationDestinationConfig{
+				Type:          core.StringPtr("features"),
+				CRN:           core.StringPtr(appConfigCRN),
+				EnvironmentID: core.StringPtr(appConfigEnvID),
+				FeatureID:     core.StringPtr(appConfigFeatureID),
+			}
+
+			appconfigurationDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsAppConfigurationModel,
+			}
+
+			createAppConfigurationsDestinationOptions.SetConfig(appconfigurationDestinationConfigModel)
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(createAppConfigurationsDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID21 = *destinationResponse.ID
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -1486,6 +1545,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeES := "event_streams.notification"
 			templateTypeCEJOB := "ibmcejob.notification"
 			templateTypeCEAPP := "ibmceapp.notification"
+			templateTypeAC := "app_configuration.notification"
 
 			templConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -1702,6 +1762,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 
 			ceappTemplateID = *templateResponse.ID
+
+			name = "App Configuration template"
+			description = "App Configuration template description"
+
+			appconfigTemplConfig := &eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig{
+				Body: core.StringPtr(appConfigTemplateBody),
+			}
+
+			createTemplateOptions = &eventnotificationsv1.CreateTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeAC),
+				Description: core.StringPtr(description),
+				Params:      appconfigTemplConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.CreateTemplate(createTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			acTemplateID = *templateResponse.ID
 		})
 	})
 
@@ -2362,6 +2449,35 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(eventStreamsName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(eventStreamsDescription)))
 
+			destinationConfigParamsAppConfigModel := &eventnotificationsv1.DestinationConfigOneOfAppConfigurationDestinationConfig{
+				Type:          core.StringPtr("features"),
+				CRN:           core.StringPtr(appConfigCRN),
+				EnvironmentID: core.StringPtr(appConfigEnvID),
+				FeatureID:     core.StringPtr(appConfigFeatureID),
+			}
+
+			appconfigDestinationConfigModel := &eventnotificationsv1.DestinationConfig{
+				Params: destinationConfigParamsAppConfigModel,
+			}
+
+			appConfigName := "App_Configuration_destination_update"
+			appConfigDescription := "This destination is for AppConfiguration Destination Update"
+			appConfigUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(destinationID21),
+				Name:        core.StringPtr(appConfigName),
+				Description: core.StringPtr(appConfigDescription),
+				Config:      appconfigDestinationConfigModel,
+			}
+
+			destination, response, err = eventNotificationsService.UpdateDestination(appConfigUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(destination).ToNot(BeNil())
+			Expect(destination.ID).To(Equal(core.StringPtr(destinationID21)))
+			Expect(destination.Name).To(Equal(core.StringPtr(appConfigName)))
+			Expect(destination.Description).To(Equal(core.StringPtr(appConfigDescription)))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -2392,6 +2508,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			templateTypeES := "event_streams.notification"
 			templateTypeCEJOB := "ibmcejob.notification"
 			templateTypeCEAPP := "ibmceapp.notification"
+			templateTypeAC := "app_configuration.notification"
 
 			templateConfig := &eventnotificationsv1.TemplateConfigOneOfEmailTemplateConfig{
 				Body:    core.StringPtr(templateBody),
@@ -2605,6 +2722,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(templateResponse).ToNot(BeNil())
 			Expect(templateResponse.ID).To(Equal(core.StringPtr(ceappTemplateID)))
+			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
+			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
+
+			name = "App Configuration template update"
+			description = "App Configuration description update"
+
+			appconfigTemplateConfig := &eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig{
+				Body: core.StringPtr(ceappTemplateBody),
+			}
+
+			replaceTemplateOptions = &eventnotificationsv1.ReplaceTemplateOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				ID:          core.StringPtr(acTemplateID),
+				Name:        core.StringPtr(name),
+				Type:        core.StringPtr(templateTypeAC),
+				Description: core.StringPtr(description),
+				Params:      appconfigTemplateConfig,
+			}
+
+			templateResponse, response, err = eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(templateResponse).ToNot(BeNil())
+			Expect(templateResponse.ID).To(Equal(core.StringPtr(acTemplateID)))
 			Expect(templateResponse.Name).To(Equal(core.StringPtr(name)))
 			Expect(templateResponse.Description).To(Equal(core.StringPtr(description)))
 		})
@@ -3051,6 +3195,28 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID21 = string(*subscription.ID)
+
+			subscriptionCreateAppConfigAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes{
+				TemplateIDNotification: core.StringPtr(acTemplateID),
+			}
+
+			createAppConfigSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          core.StringPtr("App Config subscription"),
+				Description:   core.StringPtr("Subscription for the App Config Destination"),
+				DestinationID: core.StringPtr(destinationID21),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAppConfigAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createAppConfigSubscriptionOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			subscriptionID22 = string(*subscription.ID)
 
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -3667,6 +3833,29 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(eventstreamsName))
 			Expect(subscription.Description).To(Equal(eventstreamsDescription))
 
+			subscriptionUpdateAppConfigAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesAppConfigurationAttributes{
+				TemplateIDNotification: core.StringPtr(esTemplateID),
+			}
+
+			appConfigName := core.StringPtr("subscription_App_Config_update")
+			appConfigDescription := core.StringPtr("Subscription update for App Configuration")
+			updateAppConfigSubscriptionOptions := &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        appConfigName,
+				Description: appConfigDescription,
+				ID:          core.StringPtr(subscriptionID22),
+				Attributes:  subscriptionUpdateAppConfigAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateAppConfigSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID22)))
+			Expect(subscription.Name).To(Equal(appConfigName))
+			Expect(subscription.Description).To(Equal(appConfigDescription))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -4078,7 +4267,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSubscription(deleteSubscriptionOptions *DeleteSubscriptionOptions)`, func() {
 
-			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19, subscriptionID20, subscriptionID21} {
+			for _, ID := range []string{subscriptionID, subscriptionID2, subscriptionID4, subscriptionID5, subscriptionID6, subscriptionID8, subscriptionID9, subscriptionID10, subscriptionID11, subscriptionID12, subscriptionID13, subscriptionID14, subscriptionID15, subscriptionID16, subscriptionID17, subscriptionID18, subscriptionID19, subscriptionID20, subscriptionID21, subscriptionID22} {
 
 				deleteSubscriptionOptions := &eventnotificationsv1.DeleteSubscriptionOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -4151,7 +4340,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteTemplate(deleteTemplateOptions *DeleteTemplateOptions)`, func() {
 
-			for _, ID := range []string{templateInvitationID, templateNotificationID, slackTemplateID, webhookTemplateID, pdTemplateID, esTemplateID, cejobTemplateID, ceappTemplateID} {
+			for _, ID := range []string{templateInvitationID, templateNotificationID, slackTemplateID, webhookTemplateID, pdTemplateID, esTemplateID, cejobTemplateID, ceappTemplateID, acTemplateID} {
 
 				deleteTemplateOptions := &eventnotificationsv1.DeleteTemplateOptions{
 					InstanceID: core.StringPtr(instanceID),
@@ -4209,7 +4398,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteDestination(deleteDestinationOptions *DeleteDestinationOptions)`, func() {
 
-			for _, ID := range []string{destinationID, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19, destinationID20} {
+			for _, ID := range []string{destinationID, destinationID4, destinationID5, destinationID6, destinationID8, destinationID9, destinationID10, destinationID11, destinationID12, destinationID13, destinationID14, destinationID15, destinationID16, destinationID17, destinationID18, destinationID19, destinationID21} {
 				deleteDestinationOptions := &eventnotificationsv1.DeleteDestinationOptions{
 					InstanceID: core.StringPtr(instanceID),
 					ID:         core.StringPtr(ID),

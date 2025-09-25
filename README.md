@@ -705,7 +705,28 @@ createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
 templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
 ```
 
-For code engine template supported template type value: ibmcejob.notification and ibmceapp.notificationF
+For code engine template supported template type value: ibmcejob.notification and ibmceapp.notification
+
+#### App Configuration Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+createTemplateOptions := &eventnotificationsv1.CreateTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.CreateTemplate(createTemplateOptions)
+```
+
+For app configuration template supported template type value: ibmcejob.notification and app_configuration.notification
 
 ### List Templates
 
@@ -856,6 +877,27 @@ templateResponse, response, err := eventNotificationsService.ReplaceTemplate(rep
 
 For code engine template supported template type value: ibmcejob.notification and ibmceapp.notification
 
+#### Update App Configuration Template
+
+```go
+templateConfig := &eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig{
+	Body:    core.StringPtr(<base 64 encoded json body>),
+}
+
+replaceTemplateOptions := &eventnotificationsv1.ReplaceTemplateOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<template-id>),
+	Name:        core.StringPtr(<name>),
+	Type:        core.StringPtr(<template-type>),
+	Description: core.StringPtr(<description>),
+	Params:      templateConfig,
+}
+
+templateResponse, response, err := eventNotificationsService.ReplaceTemplate(replaceTemplateOptions)
+```
+
+For code engine template supported template type value: app_configuration.notifications
+
 ### Delete Template
 
 ```go
@@ -969,6 +1011,32 @@ if err != nil {
 
 b, _ := json.MarshalIndent(subscription, "", "  ")
 fmt.Println(string(b))
+```
+
+### :warning: Special Consideration for App Configuration Destination
+
+When creating or updating a subscription for an **App Configuration** destination, the `attributes` object has a specific rule:  
+- You must include **either** `feature_flag_enabled` **or** `template_id_notification`  
+- You **cannot** include both properties together  
+This ensures that a subscription is created for the correct use case — either **feature flag evaluation** or **notification templating**, but not both at once.
+#### :white_check_mark: Valid Example (Feature Flag Evaluation)
+```go
+subscriptionCreateAppConfigAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes{
+				TemplateIDNotification: core.StringPtr(acTemplateID),
+}
+```
+#### :white_check_mark: Valid Example (Feature Flag Evaluation)
+```go
+subscriptionCreateAppConfigAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes{
+				FeatureFlagEnabled: core.BoolPtr(true),
+}
+```
+#### :x: Invalid Example (Not Allowed)
+```go
+subscriptionCreateAppConfigAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes{
+	         TemplateIDNotification: core.StringPtr(acTemplateID),
+		     FeatureFlagEnabled: core.BoolPtr(true),
+}
 ```
 
 ### List Subscriptions
@@ -1478,6 +1546,10 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_CODE_ENGINE_JOB_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_CODE_ENGINE_APP_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_APP_CONFIGURATION_INSTANCE_CRN` - app configuration instance CRN
+- `EVENT_NOTIFICATIONS_APP_CONFIGURATION_ENVIRONMENT_ID` - app configuration environment ID
+- `EVENT_NOTIFICATIONS_APP_CONFIGURATION_FEATURE_ID` - app configuration feature ID
+- `EVENT_NOTIFICATIONS_APP_CONFIGURATION_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 
