@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.19.0...v0.20.0) (2025-09-25)
+
+
+### Features
+
+* appconfiguration destination support ([#76](https://github.com/IBM/event-notifications-go-admin-sdk/issues/76)) ([f042ab0](https://github.com/IBM/event-notifications-go-admin-sdk/commit/f042ab06df2cd608c3dc86c150a367df0c829eb4))
+
 # [0.19.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.18.0...v0.19.0) (2025-09-04)
 
 
