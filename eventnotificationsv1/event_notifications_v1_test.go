@@ -14681,6 +14681,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateVerifySMTPOptionsModel.Type).To(Equal(core.StringPtr("testString")))
 				Expect(updateVerifySMTPOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewDestinationConfigOneOfAppConfigurationDestinationConfig successfully`, func() {
+				typeVar := "features"
+				crn := "testString"
+				environmentID := "testString"
+				featureID := "testString"
+				_model, err := eventNotificationsService.NewDestinationConfigOneOfAppConfigurationDestinationConfig(typeVar, crn, environmentID, featureID)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewDestinationConfigOneOfChromeDestinationConfig successfully`, func() {
 				apiKey := "testString"
 				websiteURL := "testString"
@@ -14843,6 +14852,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewTemplateConfigOneOfAppConfigurationTemplateConfig successfully`, func() {
+				body := "testString"
+				_model, err := eventNotificationsService.NewTemplateConfigOneOfAppConfigurationTemplateConfig(body)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig successfully`, func() {
 				body := "testString"
 				_model, err := eventNotificationsService.NewTemplateConfigOneOfCodeEngineApplicationTemplateConfig(body)
@@ -14920,6 +14935,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				model.Channels = nil
 				model.AssignedTo = core.StringPtr("testString")
 				model.AssignmentGroup = core.StringPtr("testString")
+				model.FeatureFlagEnabled = core.BoolPtr(true)
 
 				b, err := json.Marshal(model)
 				Expect(err).To(BeNil())
@@ -14952,6 +14968,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				model.Channels = nil
 				model.AssignedTo = core.StringPtr("testString")
 				model.AssignmentGroup = core.StringPtr("testString")
+				model.FeatureFlagEnabled = core.BoolPtr(true)
 
 				b, err := json.Marshal(model)
 				Expect(err).To(BeNil())
@@ -15036,6 +15053,27 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				var result *eventnotificationsv1.UpdateAttributesUnsubscribed
 				err = eventnotificationsv1.UnmarshalUpdateAttributesUnsubscribed(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfAppConfigurationDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfAppConfigurationDestinationConfig)
+				model.Type = core.StringPtr("features")
+				model.CRN = core.StringPtr("testString")
+				model.EnvironmentID = core.StringPtr("testString")
+				model.FeatureID = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfAppConfigurationDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfAppConfigurationDestinationConfig(raw, &result)
 				Expect(err).To(BeNil())
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
@@ -15374,6 +15412,25 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
 			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesAppConfigurationAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes)
+				model.FeatureFlagEnabled = core.BoolPtr(true)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesAppConfigurationAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesAppConfigurationAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
 			It(`Invoke UnmarshalSubscriptionCreateAttributesCodeEngineAttributes successfully`, func() {
 				// Construct an instance of the model.
 				model := new(eventnotificationsv1.SubscriptionCreateAttributesCodeEngineAttributes)
@@ -15604,6 +15661,25 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
 			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesAppConfigurationAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesAppConfigurationAttributes)
+				model.FeatureFlagEnabled = core.BoolPtr(true)
+				model.TemplateIDNotification = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesAppConfigurationAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesAppConfigurationAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
 			It(`Invoke UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes successfully`, func() {
 				// Construct an instance of the model.
 				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes)
@@ -15821,6 +15897,24 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				var result *eventnotificationsv1.SubscriptionUpdateAttributesWebhookAttributes
 				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesWebhookAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalTemplateConfigOneOfAppConfigurationTemplateConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig)
+				model.Body = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.TemplateConfigOneOfAppConfigurationTemplateConfig
+				err = eventnotificationsv1.UnmarshalTemplateConfigOneOfAppConfigurationTemplateConfig(raw, &result)
 				Expect(err).To(BeNil())
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
