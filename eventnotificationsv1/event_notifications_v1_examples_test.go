@@ -140,6 +140,7 @@ var (
 	appConfigFeatureID        string
 	appConfigTemplateBody     string
 	acTemplateID              string
+	smtpcloneconfigID         string
 )
 
 func shouldSkipTest() {
@@ -379,6 +380,12 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Skip("Unable to load appConfigTemplateBody configuration property, skipping tests")
 			}
 			fmt.Printf("APP_CONFIGURATION_TEMPLATE_BODY: %s\n", appConfigTemplateBody)
+
+			smtpcloneconfigID = config["SMTP_CLONE_CONFIG_ID"]
+			if smtpcloneconfigID == "" {
+				Skip("Unable to load smtpcloneconfigID configuration property, skipping tests")
+			}
+			fmt.Printf("SMTP_CLONE_CONFIG_ID: %s\n", smtpcloneconfigID)
 
 			configLoaded = len(config) > 0
 		})
@@ -3773,6 +3780,28 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 			user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
 			// end-create_smtp_user
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(user.Domain).ToNot(BeNil())
+			Expect(user.Username).ToNot(BeNil())
+			Expect(user.Password).ToNot(BeNil())
+			Expect(user.SMTPConfigID).ToNot(BeNil())
+			Expect(user.Description).To(Equal(core.StringPtr(description)))
+			smtpUserID = *user.ID
+		})
+
+		It(`CreateCloneSMTPUser(createSMTPUserOptions *CreateSMTPUserOptions)`, func() {
+			// begin-clone_smtp_user
+			description := "clone smtp user"
+			createSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
+				InstanceID:      core.StringPtr(instanceID),
+				ID:              core.StringPtr(smtpcloneconfigID),
+				Description:     core.StringPtr(description),
+				UsernameToClone: core.StringPtr(smtpUserID),
+			}
+
+			user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
+			// end-clone_smtp_user
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(201))
 			Expect(user.Domain).ToNot(BeNil())

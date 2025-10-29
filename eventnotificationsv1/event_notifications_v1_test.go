@@ -11133,6 +11133,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.URL.Query()["username_to_clone"]).To(Equal([]string{"testString"}))
 					// Sleep a short time to support a timeout test
 					time.Sleep(100 * time.Millisecond)
 
@@ -11156,6 +11157,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.UsernameToClone = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -11208,6 +11210,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					}
 					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
 
+					Expect(req.URL.Query()["username_to_clone"]).To(Equal([]string{"testString"}))
+
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
@@ -11233,6 +11237,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.UsernameToClone = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -11255,6 +11260,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.UsernameToClone = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -11298,6 +11304,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.UsernameToClone = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -13584,11 +13591,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.SetInstanceID("testString")
 				createSMTPUserOptionsModel.SetID("testString")
 				createSMTPUserOptionsModel.SetDescription("testString")
+				createSMTPUserOptionsModel.SetUsernameToClone("testString")
 				createSMTPUserOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createSMTPUserOptionsModel).ToNot(BeNil())
 				Expect(createSMTPUserOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(createSMTPUserOptionsModel.ID).To(Equal(core.StringPtr("testString")))
 				Expect(createSMTPUserOptionsModel.Description).To(Equal(core.StringPtr("testString")))
+				Expect(createSMTPUserOptionsModel.UsernameToClone).To(Equal(core.StringPtr("testString")))
 				Expect(createSMTPUserOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateSourcesOptions successfully`, func() {

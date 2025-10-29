@@ -3447,6 +3447,10 @@ func (eventNotifications *EventNotificationsV1) CreateSMTPUserWithContext(ctx co
 	builder.AddHeader("Accept", "application/json")
 	builder.AddHeader("Content-Type", "application/json")
 
+	if createSMTPUserOptions.UsernameToClone != nil {
+		builder.AddQuery("username_to_clone", fmt.Sprint(*createSMTPUserOptions.UsernameToClone))
+	}
+
 	body := make(map[string]interface{})
 	if createSMTPUserOptions.Description != nil {
 		body["description"] = createSMTPUserOptions.Description
@@ -4652,6 +4656,9 @@ type CreateSMTPUserOptions struct {
 	// The description of SMTP configuration.
 	Description *string `json:"description,omitempty"`
 
+	// provide name of the user to clone.
+	UsernameToClone *string `json:"username_to_clone,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -4679,6 +4686,12 @@ func (_options *CreateSMTPUserOptions) SetID(id string) *CreateSMTPUserOptions {
 // SetDescription : Allow user to set Description
 func (_options *CreateSMTPUserOptions) SetDescription(description string) *CreateSMTPUserOptions {
 	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetUsernameToClone : Allow user to set UsernameToClone
+func (_options *CreateSMTPUserOptions) SetUsernameToClone(usernameToClone string) *CreateSMTPUserOptions {
+	_options.UsernameToClone = core.StringPtr(usernameToClone)
 	return _options
 }
 
@@ -5519,6 +5532,7 @@ func UnmarshalDestinationConfig(m map[string]json.RawMessage, result interface{}
 // - DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
 // - DestinationConfigOneOfHuaweiDestinationConfig
 // - DestinationConfigOneOfEventStreamsDestinationConfig
+// - DestinationConfigOneOfAppConfigurationDestinationConfig
 type DestinationConfigOneOf struct {
 	// Email Domain.
 	Domain *string `json:"domain,omitempty"`

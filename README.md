@@ -168,6 +168,7 @@ SDK Methods to consume
 - [SMTP Configurations](#SMTPConfigurations)
   - [Create SMTP Configuration](#create-smtp-configuration)
   - [Create SMTP User](#create-smtp-user)
+  - [Clone SMTP User](#clone-smtp-user)
   - [Get SMTP Configuration](#get-smtp-configuration)
   - [Get SMTP User](#get-smtp-user)
   - [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
@@ -1233,6 +1234,20 @@ user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOp
 
 ```
 
+### Clone SMTP User
+
+```go
+createSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
+	InstanceID:  core.StringPtr(<instance-id>),
+	ID:          core.StringPtr(<smtp-Config-id)>,
+	Description: core.StringPtr(<description),
+	UsernameToClone: core.StringPtr(<smtp-user-id>),
+}
+
+user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
+
+```
+
 ### Get SMTP Configuration
 
 ```go
@@ -1550,6 +1565,8 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_ENVIRONMENT_ID` - app configuration environment ID
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_FEATURE_ID` - app configuration feature ID
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_SMTP_CLONE_CONFIG_ID` - SMTP Configuration ID where SMTP User needs to be cloned
+
 
 ## Questions
 
