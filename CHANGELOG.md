@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.20.0...v0.21.0) (2025-10-29)
+
+
+### Features
+
+* support for clone smtp user credentials ([#77](https://github.com/IBM/event-notifications-go-admin-sdk/issues/77)) ([7c489ea](https://github.com/IBM/event-notifications-go-admin-sdk/commit/7c489ea97fac9cc2aaddbeb920a4f8a86c674d9a))
+
 # [0.20.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.19.0...v0.20.0) (2025-09-25)
 
 
