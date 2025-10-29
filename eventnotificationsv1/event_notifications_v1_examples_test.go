@@ -140,7 +140,8 @@ var (
 	appConfigFeatureID        string
 	appConfigTemplateBody     string
 	acTemplateID              string
-	smtpcloneconfigID         string
+	smtpUserToClone           string
+	clonesmtpUserID           string
 )
 
 func shouldSkipTest() {
@@ -381,11 +382,11 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			}
 			fmt.Printf("APP_CONFIGURATION_TEMPLATE_BODY: %s\n", appConfigTemplateBody)
 
-			smtpcloneconfigID = config["SMTP_CLONE_CONFIG_ID"]
-			if smtpcloneconfigID == "" {
-				Skip("Unable to load smtpcloneconfigID configuration property, skipping tests")
+			smtpUserToClone = config["SMTP_USER_TO_CLONE"]
+			if smtpUserToClone == "" {
+				Skip("Unable to load smtpUserToClone configuration property, skipping tests")
 			}
-			fmt.Printf("SMTP_CLONE_CONFIG_ID: %s\n", smtpcloneconfigID)
+			fmt.Printf("SMTP_USER_TO_CLONE: %s\n", smtpUserToClone)
 
 			configLoaded = len(config) > 0
 		})
@@ -3795,9 +3796,9 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			description := "clone smtp user"
 			createSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
 				InstanceID:      core.StringPtr(instanceID),
-				ID:              core.StringPtr(smtpcloneconfigID),
+				ID:              core.StringPtr(smtpConfigID),
 				Description:     core.StringPtr(description),
-				UsernameToClone: core.StringPtr(smtpUserID),
+				UsernameToClone: core.StringPtr(smtpUserToClone),
 			}
 
 			user, response, err := eventNotificationsService.CreateSMTPUser(createSMTPUserOptions)
@@ -3809,7 +3810,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(user.Password).ToNot(BeNil())
 			Expect(user.SMTPConfigID).ToNot(BeNil())
 			Expect(user.Description).To(Equal(core.StringPtr(description)))
-			smtpUserID = *user.ID
+			clonesmtpUserID = *user.ID
 		})
 
 		It(`ListSMTPConfigurations request example`, func() {
@@ -3987,7 +3988,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		It(`DeleteSMTPUser request example`, func() {
 
-			for _, ID := range []string{smtpUserID} {
+			for _, ID := range []string{smtpUserID, clonesmtpUserID} {
 				// begin-delete_smtp_user
 				deleteSMTPUserOptions := &eventnotificationsv1.DeleteSMTPUserOptions{
 					InstanceID: core.StringPtr(instanceID),

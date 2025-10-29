@@ -154,9 +154,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		appConfigFeatureID        string
 		appConfigTemplateBody     string
 		acTemplateID              string
-		smtpcloneconfigID         string
+		smtpUserToClone           string
 		clonesmtpUserID           string
-		smtpUser                  string
 	)
 
 	var shouldSkipTest = func() {
@@ -422,11 +421,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			}
 			fmt.Printf("APP_CONFIGURATION_TEMPLATE_BODY: %s\n", appConfigTemplateBody)
 
-			smtpcloneconfigID = config["SMTP_CLONE_CONFIG_ID"]
-			if smtpcloneconfigID == "" {
-				Skip("Unable to load smtpcloneconfigID configuration property, skipping tests")
+			smtpUserToClone = config["SMTP_USER_TO_CLONE"]
+			if smtpUserToClone == "" {
+				Skip("Unable to load smtpUserToClone configuration property, skipping tests")
 			}
-			fmt.Printf("SMTP_CLONE_CONFIG_ID: %s\n", smtpcloneconfigID)
+			fmt.Printf("SMTP_USER_TO_CLONE: %s\n", smtpUserToClone)
 
 			shouldSkipTest = func() {}
 		})
@@ -4117,7 +4116,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(user.Password).ToNot(BeNil())
 			Expect(user.SMTPConfigID).ToNot(BeNil())
 			Expect(user.Description).To(Equal(core.StringPtr(description)))
-			smtpUser = *user.Username
 			smtpUserID = *user.ID
 		})
 	})
@@ -4131,9 +4129,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			description := "clone smtp user"
 			createcloneSMTPUserOptions := &eventnotificationsv1.CreateSMTPUserOptions{
 				InstanceID:      core.StringPtr(instanceID),
-				ID:              core.StringPtr(smtpcloneconfigID),
+				ID:              core.StringPtr(smtpConfigID),
 				Description:     core.StringPtr(description),
-				UsernameToClone: core.StringPtr(smtpUser),
+				UsernameToClone: core.StringPtr(smtpUserToClone),
 			}
 
 			cloneduser, response, err := eventNotificationsService.CreateSMTPUser(createcloneSMTPUserOptions)

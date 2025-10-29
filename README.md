@@ -1565,7 +1565,7 @@ Find [event_notifications_v1.env.hide](https://github.com/IBM/event-notification
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_ENVIRONMENT_ID` - app configuration environment ID
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_FEATURE_ID` - app configuration feature ID
 - `EVENT_NOTIFICATIONS_APP_CONFIGURATION_TEMPLATE_BODY` - base 64 encoded json body
-- `EVENT_NOTIFICATIONS_SMTP_CLONE_CONFIG_ID` - SMTP Configuration ID where SMTP User needs to be cloned
+- `SMTP_USER_TO_CLONE` - SMTP username to be cloned
 
 
 ## Questions
