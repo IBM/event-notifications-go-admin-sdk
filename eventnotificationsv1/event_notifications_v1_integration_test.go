@@ -155,6 +155,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		appConfigTemplateBody     string
 		acTemplateID              string
 		smtpcloneconfigID         string
+		clonesmtpUserID           string
+		smtpUser                  string
 	)
 
 	var shouldSkipTest = func() {
@@ -4115,7 +4117,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(user.Password).ToNot(BeNil())
 			Expect(user.SMTPConfigID).ToNot(BeNil())
 			Expect(user.Description).To(Equal(core.StringPtr(description)))
-			smtpUserID = *user.Username
+			smtpUser = *user.Username
+			smtpUserID = *user.ID
 		})
 	})
 
@@ -4130,7 +4133,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				InstanceID:      core.StringPtr(instanceID),
 				ID:              core.StringPtr(smtpcloneconfigID),
 				Description:     core.StringPtr(description),
-				UsernameToClone: core.StringPtr(smtpUserID),
+				UsernameToClone: core.StringPtr(smtpUser),
 			}
 
 			cloneduser, response, err := eventNotificationsService.CreateSMTPUser(createcloneSMTPUserOptions)
@@ -4141,7 +4144,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(cloneduser.Password).ToNot(BeNil())
 			Expect(cloneduser.SMTPConfigID).ToNot(BeNil())
 			Expect(cloneduser.Description).To(Equal(core.StringPtr(description)))
-			smtpUserID = *cloneduser.ID
+			clonesmtpUserID = *cloneduser.ID
 		})
 	})
 
@@ -4330,7 +4333,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 		It(`DeleteSMTPUser(deleteSMTPUserOptions *DeleteSMTPUserOptions)`, func() {
 
-			for _, ID := range []string{smtpUserID} {
+			for _, ID := range []string{smtpUserID, clonesmtpUserID} {
 
 				deleteSMTPUserOptions := &eventnotificationsv1.DeleteSMTPUserOptions{
 					InstanceID: core.StringPtr(instanceID),
