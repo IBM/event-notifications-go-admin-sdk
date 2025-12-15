@@ -261,6 +261,103 @@ func (eventNotifications *EventNotificationsV1) GetMetricsWithContext(ctx contex
 	return
 }
 
+// GetBounceMetrics : Get bounce metrics
+// Get bounce metrics.
+func (eventNotifications *EventNotificationsV1) GetBounceMetrics(getBounceMetricsOptions *GetBounceMetricsOptions) (result *BounceMetrics, response *core.DetailedResponse, err error) {
+	result, response, err = eventNotifications.GetBounceMetricsWithContext(context.Background(), getBounceMetricsOptions)
+	err = core.RepurposeSDKProblem(err, "")
+	return
+}
+
+// GetBounceMetricsWithContext is an alternate form of the GetBounceMetrics method which supports a Context parameter
+func (eventNotifications *EventNotificationsV1) GetBounceMetricsWithContext(ctx context.Context, getBounceMetricsOptions *GetBounceMetricsOptions) (result *BounceMetrics, response *core.DetailedResponse, err error) {
+	err = core.ValidateNotNil(getBounceMetricsOptions, "getBounceMetricsOptions cannot be nil")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "unexpected-nil-param", common.GetComponentInfo())
+		return
+	}
+	err = core.ValidateStruct(getBounceMetricsOptions, "getBounceMetricsOptions")
+	if err != nil {
+		err = core.SDKErrorf(err, "", "struct-validation-error", common.GetComponentInfo())
+		return
+	}
+
+	pathParamsMap := map[string]string{
+		"instance_id": *getBounceMetricsOptions.InstanceID,
+	}
+
+	builder := core.NewRequestBuilder(core.GET)
+	builder = builder.WithContext(ctx)
+	builder.EnableGzipCompression = eventNotifications.GetEnableGzipCompression()
+	_, err = builder.ResolveRequestURL(eventNotifications.Service.Options.URL, `/v1/instances/{instance_id}/metrics/bounce`, pathParamsMap)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "url-resolve-error", common.GetComponentInfo())
+		return
+	}
+
+	for headerName, headerValue := range getBounceMetricsOptions.Headers {
+		builder.AddHeader(headerName, headerValue)
+	}
+
+	sdkHeaders := common.GetSdkHeaders("event_notifications", "V1", "GetBounceMetrics")
+	for headerName, headerValue := range sdkHeaders {
+		builder.AddHeader(headerName, headerValue)
+	}
+	builder.AddHeader("Accept", "application/json")
+
+	builder.AddQuery("destination_type", fmt.Sprint(*getBounceMetricsOptions.DestinationType))
+	builder.AddQuery("gte", fmt.Sprint(*getBounceMetricsOptions.Gte))
+	builder.AddQuery("lte", fmt.Sprint(*getBounceMetricsOptions.Lte))
+	if getBounceMetricsOptions.DestinationID != nil {
+		builder.AddQuery("destination_id", fmt.Sprint(*getBounceMetricsOptions.DestinationID))
+	}
+	if getBounceMetricsOptions.SubscriptionID != nil {
+		builder.AddQuery("subscription_id", fmt.Sprint(*getBounceMetricsOptions.SubscriptionID))
+	}
+	if getBounceMetricsOptions.SourceID != nil {
+		builder.AddQuery("source_id", fmt.Sprint(*getBounceMetricsOptions.SourceID))
+	}
+	if getBounceMetricsOptions.EmailTo != nil {
+		builder.AddQuery("email_to", fmt.Sprint(*getBounceMetricsOptions.EmailTo))
+	}
+	if getBounceMetricsOptions.NotificationID != nil {
+		builder.AddQuery("notification_id", fmt.Sprint(*getBounceMetricsOptions.NotificationID))
+	}
+	if getBounceMetricsOptions.Subject != nil {
+		builder.AddQuery("subject", fmt.Sprint(*getBounceMetricsOptions.Subject))
+	}
+	if getBounceMetricsOptions.Limit != nil {
+		builder.AddQuery("limit", fmt.Sprint(*getBounceMetricsOptions.Limit))
+	}
+	if getBounceMetricsOptions.Offset != nil {
+		builder.AddQuery("offset", fmt.Sprint(*getBounceMetricsOptions.Offset))
+	}
+
+	request, err := builder.Build()
+	if err != nil {
+		err = core.SDKErrorf(err, "", "build-error", common.GetComponentInfo())
+		return
+	}
+
+	var rawResponse map[string]json.RawMessage
+	response, err = eventNotifications.Service.Request(request, &rawResponse)
+	if err != nil {
+		core.EnrichHTTPProblem(err, "get_bounce_metrics", getServiceComponentInfo())
+		err = core.SDKErrorf(err, "", "http-request-err", common.GetComponentInfo())
+		return
+	}
+	if rawResponse != nil {
+		err = core.UnmarshalModel(rawResponse, "", &result, UnmarshalBounceMetrics)
+		if err != nil {
+			err = core.SDKErrorf(err, "", "unmarshal-resp-error", common.GetComponentInfo())
+			return
+		}
+		response.Result = result
+	}
+
+	return
+}
+
 // SendNotifications : Send a notification
 // Send Notifications body from the instance. For more information about Event Notifications payload, see
 // [here](https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-spec-payload).
@@ -4209,6 +4306,90 @@ func getServiceComponentInfo() *core.ProblemComponent {
 	return core.NewProblemComponent(DefaultServiceName, "1.0")
 }
 
+// BounceMetricItem : Bounce metric object.
+type BounceMetricItem struct {
+	// Email address.
+	EmailAddress *string `json:"email_address" validate:"required"`
+
+	// Subject.
+	Subject *string `json:"subject" validate:"required"`
+
+	// Error message.
+	ErrorMessage *string `json:"error_message" validate:"required"`
+
+	// IP address.
+	IPAddress *string `json:"ip_address,omitempty"`
+
+	// Subscription ID.
+	SubscriptionID *string `json:"subscription_id,omitempty"`
+
+	// Bounced at.
+	Timestamp *strfmt.DateTime `json:"timestamp" validate:"required"`
+}
+
+// UnmarshalBounceMetricItem unmarshals an instance of BounceMetricItem from the specified map of raw messages.
+func UnmarshalBounceMetricItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(BounceMetricItem)
+	err = core.UnmarshalPrimitive(m, "email_address", &obj.EmailAddress)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "email_address-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "subject", &obj.Subject)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "subject-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "error_message", &obj.ErrorMessage)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "error_message-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "ip_address", &obj.IPAddress)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "ip_address-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "subscription_id", &obj.SubscriptionID)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "subscription_id-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "timestamp", &obj.Timestamp)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "timestamp-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// BounceMetrics : Payload describing bounce metrics.
+type BounceMetrics struct {
+	// array of bounce metrics.
+	Metrics []BounceMetricItem `json:"metrics" validate:"required"`
+
+	// total number of bounce metrics.
+	TotalCount *int64 `json:"total_count" validate:"required"`
+}
+
+// UnmarshalBounceMetrics unmarshals an instance of BounceMetrics from the specified map of raw messages.
+func UnmarshalBounceMetrics(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(BounceMetrics)
+	err = core.UnmarshalModel(m, "metrics", &obj.Metrics, UnmarshalBounceMetricItem)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "metrics-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "total_count", &obj.TotalCount)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "total_count-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
 // Buckets : Bucket object.
 type Buckets struct {
 	// Total count.
@@ -6353,6 +6534,142 @@ func UnmarshalEventScheduleFilterAttributes(m map[string]json.RawMessage, result
 	return
 }
 
+// GetBounceMetricsOptions : The GetBounceMetrics options.
+type GetBounceMetricsOptions struct {
+	// Unique identifier for IBM Cloud Event Notifications instance.
+	InstanceID *string `json:"instance_id" validate:"required,ne="`
+
+	// Destination type. Allowed values are [smtp_custom].
+	DestinationType *string `json:"destination_type" validate:"required"`
+
+	// GTE (greater than equal), start timestamp in UTC.
+	Gte *string `json:"gte" validate:"required"`
+
+	// LTE (less than equal), end timestamp in UTC.
+	Lte *string `json:"lte" validate:"required"`
+
+	// Unique identifier for Destination.
+	DestinationID *string `json:"destination_id,omitempty"`
+
+	// Unique identifier for Subscription.
+	SubscriptionID *string `json:"subscription_id,omitempty"`
+
+	// Unique identifier for Source.
+	SourceID *string `json:"source_id,omitempty"`
+
+	// Receiver email id.
+	EmailTo *string `json:"email_to,omitempty"`
+
+	// Notification Id.
+	NotificationID *string `json:"notification_id,omitempty"`
+
+	// Email subject.
+	Subject *string `json:"subject,omitempty"`
+
+	// Page limit for paginated results.
+	Limit *int64 `json:"limit,omitempty"`
+
+	// offset for paginated results.
+	Offset *int64 `json:"offset,omitempty"`
+
+	// Allows users to set headers on API requests
+	Headers map[string]string
+}
+
+// Constants associated with the GetBounceMetricsOptions.DestinationType property.
+// Destination type. Allowed values are [smtp_custom].
+const (
+	GetBounceMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
+)
+
+// NewGetBounceMetricsOptions : Instantiate GetBounceMetricsOptions
+func (*EventNotificationsV1) NewGetBounceMetricsOptions(instanceID string, destinationType string, gte string, lte string) *GetBounceMetricsOptions {
+	return &GetBounceMetricsOptions{
+		InstanceID:      core.StringPtr(instanceID),
+		DestinationType: core.StringPtr(destinationType),
+		Gte:             core.StringPtr(gte),
+		Lte:             core.StringPtr(lte),
+	}
+}
+
+// SetInstanceID : Allow user to set InstanceID
+func (_options *GetBounceMetricsOptions) SetInstanceID(instanceID string) *GetBounceMetricsOptions {
+	_options.InstanceID = core.StringPtr(instanceID)
+	return _options
+}
+
+// SetDestinationType : Allow user to set DestinationType
+func (_options *GetBounceMetricsOptions) SetDestinationType(destinationType string) *GetBounceMetricsOptions {
+	_options.DestinationType = core.StringPtr(destinationType)
+	return _options
+}
+
+// SetGte : Allow user to set Gte
+func (_options *GetBounceMetricsOptions) SetGte(gte string) *GetBounceMetricsOptions {
+	_options.Gte = core.StringPtr(gte)
+	return _options
+}
+
+// SetLte : Allow user to set Lte
+func (_options *GetBounceMetricsOptions) SetLte(lte string) *GetBounceMetricsOptions {
+	_options.Lte = core.StringPtr(lte)
+	return _options
+}
+
+// SetDestinationID : Allow user to set DestinationID
+func (_options *GetBounceMetricsOptions) SetDestinationID(destinationID string) *GetBounceMetricsOptions {
+	_options.DestinationID = core.StringPtr(destinationID)
+	return _options
+}
+
+// SetSubscriptionID : Allow user to set SubscriptionID
+func (_options *GetBounceMetricsOptions) SetSubscriptionID(subscriptionID string) *GetBounceMetricsOptions {
+	_options.SubscriptionID = core.StringPtr(subscriptionID)
+	return _options
+}
+
+// SetSourceID : Allow user to set SourceID
+func (_options *GetBounceMetricsOptions) SetSourceID(sourceID string) *GetBounceMetricsOptions {
+	_options.SourceID = core.StringPtr(sourceID)
+	return _options
+}
+
+// SetEmailTo : Allow user to set EmailTo
+func (_options *GetBounceMetricsOptions) SetEmailTo(emailTo string) *GetBounceMetricsOptions {
+	_options.EmailTo = core.StringPtr(emailTo)
+	return _options
+}
+
+// SetNotificationID : Allow user to set NotificationID
+func (_options *GetBounceMetricsOptions) SetNotificationID(notificationID string) *GetBounceMetricsOptions {
+	_options.NotificationID = core.StringPtr(notificationID)
+	return _options
+}
+
+// SetSubject : Allow user to set Subject
+func (_options *GetBounceMetricsOptions) SetSubject(subject string) *GetBounceMetricsOptions {
+	_options.Subject = core.StringPtr(subject)
+	return _options
+}
+
+// SetLimit : Allow user to set Limit
+func (_options *GetBounceMetricsOptions) SetLimit(limit int64) *GetBounceMetricsOptions {
+	_options.Limit = core.Int64Ptr(limit)
+	return _options
+}
+
+// SetOffset : Allow user to set Offset
+func (_options *GetBounceMetricsOptions) SetOffset(offset int64) *GetBounceMetricsOptions {
+	_options.Offset = core.Int64Ptr(offset)
+	return _options
+}
+
+// SetHeaders : Allow user to set Headers
+func (options *GetBounceMetricsOptions) SetHeaders(param map[string]string) *GetBounceMetricsOptions {
+	options.Headers = param
+	return options
+}
+
 // GetDestinationOptions : The GetDestination options.
 type GetDestinationOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
@@ -6484,6 +6801,9 @@ type GetMetricsOptions struct {
 	// Unique identifier for Destination.
 	DestinationID *string `json:"destination_id,omitempty"`
 
+	// Unique identifier for Subscription.
+	SubscriptionID *string `json:"subscription_id,omitempty"`
+
 	// Unique identifier for Source.
 	SourceID *string `json:"source_id,omitempty"`
 
@@ -6543,6 +6863,12 @@ func (_options *GetMetricsOptions) SetLte(lte string) *GetMetricsOptions {
 // SetDestinationID : Allow user to set DestinationID
 func (_options *GetMetricsOptions) SetDestinationID(destinationID string) *GetMetricsOptions {
 	_options.DestinationID = core.StringPtr(destinationID)
+	return _options
+}
+
+// SetSubscriptionID : Allow user to set SubscriptionID
+func (_options *GetMetricsOptions) SetSubscriptionID(subscriptionID string) *GetMetricsOptions {
+	_options.SubscriptionID = core.StringPtr(subscriptionID)
 	return _options
 }
 
@@ -9495,7 +9821,7 @@ type SMTPUserResponse struct {
 	// SMTP user name.
 	Username *string `json:"username" validate:"required"`
 
-	// password.
+	// Password for SMTP user; Cloned SMTP user response do not include a password.
 	Password *string `json:"password" validate:"required"`
 
 	// Created time.

@@ -3712,7 +3712,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 		})
 
 		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
-			// begin-metrics
+			// begin-get-metrics
 			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 				InstanceID:      core.StringPtr(instanceID),
 				DestinationType: core.StringPtr("smtp_custom"),
@@ -3720,15 +3720,39 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				Lte:             core.StringPtr("2024-08-02T11:55:22Z"),
 				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
 				DestinationID:   core.StringPtr(destinationID16),
+				SubscriptionID:  core.StringPtr(subscriptionID6),
+				SourceID:        core.StringPtr(sourceID),
 				NotificationID:  core.StringPtr(notificationID),
 				Subject:         core.StringPtr("Test Metrics Subject"),
 			}
 
 			metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
-			// end-metrics
+			// end-get-metrics
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(metrics).ToNot(BeNil())
+		})
+
+		It(`GetMetrics(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
+			// begin-get-bounce-metrics
+			getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+				InstanceID:      core.StringPtr(instanceID),
+				DestinationType: core.StringPtr("smtp_custom"),
+				Gte:             core.StringPtr("2024-08-01T17:18:43Z"),
+				Lte:             core.StringPtr("2024-08-02T11:55:22Z"),
+				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
+				DestinationID:   core.StringPtr(destinationID16),
+				SubscriptionID:  core.StringPtr(subscriptionID6),
+				SourceID:        core.StringPtr(sourceID),
+				NotificationID:  core.StringPtr(notificationID),
+				Subject:         core.StringPtr("Test Metrics Subject"),
+			}
+
+			bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
+			// end-get-bounce-metrics
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(bouncemetrics).ToNot(BeNil())
 		})
 
 		It(`CreateSMTPConfiguration request example`, func() {
