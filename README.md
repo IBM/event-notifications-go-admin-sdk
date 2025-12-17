@@ -181,6 +181,7 @@ SDK Methods to consume
   - [Verify SMTP](#verify-smtp)
 - [Metrics](#Metrics)
   - [Get Metrics](#get-metrics)
+  - [Get Bounce Metrics](#get-bounce-metrics)   
 - [Send Notifications](#send-notifications)
 
 ## Source
@@ -1384,12 +1385,31 @@ getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 	Gte:             core.StringPtr(<gte-timestamp>),
 	Lte:             core.StringPtr(<lte-timestamp>),
 	EmailTo:         core.StringPtr(<email-to>),
-	DestinationID:              core.StringPtr(<destination-id>),
+	DestinationID:   core.StringPtr(<destination-id>),
 	NotificationID:  core.StringPtr(<notification-id>),
+	SubscriptionID:  core.StringPtr(<subscription-id>),
 	Subject:         core.StringPtr(<subject>),
 }
 
 metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+```
+
+### Get Bounce Metrics
+
+```go
+getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+	InstanceID:      core.StringPtr(<instance-id>),
+	DestinationType: core.StringPtr("smtp_custom"),
+	Gte:             core.StringPtr(<gte-timestamp>),
+	Lte:             core.StringPtr(<lte-timestamp>),
+	EmailTo:         core.StringPtr(<email-to>),
+	DestinationID:   core.StringPtr(<destination-id>),
+	NotificationID:  core.StringPtr(<notification-id>),
+	SubscriptionID:  core.StringPtr(<subscription-id>),
+	Subject:         core.StringPtr(<subject>),
+}
+
+bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
 ```
 
 ## Send Notifications

@@ -175,6 +175,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
@@ -183,42 +184,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 					fmt.Fprint(res, `} this is not valid json {`)
 				}))
-			})
-			It(`Invoke GetMetrics with error: Operation response processing error`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-
-				// Construct an instance of the GetMetricsOptions model
-				getMetricsOptionsModel := new(eventnotificationsv1.GetMetricsOptions)
-				getMetricsOptionsModel.InstanceID = core.StringPtr("testString")
-				getMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
-				getMetricsOptionsModel.Gte = core.StringPtr("testString")
-				getMetricsOptionsModel.Lte = core.StringPtr("testString")
-				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
-				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
-				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
-				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
-				getMetricsOptionsModel.Subject = core.StringPtr("testString")
-				getMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-				// Expect response parsing to fail since we are receiving a text/plain response
-				result, response, operationErr := eventNotificationsService.GetMetrics(getMetricsOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-
-				// Enable retries and test again
-				eventNotificationsService.EnableRetries(0, 0)
-				result, response, operationErr = eventNotificationsService.GetMetrics(getMetricsOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).To(BeNil())
-			})
-			AfterEach(func() {
-				testServer.Close()
 			})
 		})
 	})
@@ -237,6 +202,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
@@ -249,49 +215,6 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 					fmt.Fprintf(res, "%s", `{"metrics": [{"key": "bounced", "doc_count": 8, "histogram": {"buckets": [{"doc_count": 8, "key_as_string": "2019-01-01T12:00:00.000Z"}]}}]}`)
 				}))
-			})
-			It(`Invoke GetMetrics successfully with retries`, func() {
-				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
-					URL:           testServer.URL,
-					Authenticator: &core.NoAuthAuthenticator{},
-				})
-				Expect(serviceErr).To(BeNil())
-				Expect(eventNotificationsService).ToNot(BeNil())
-				eventNotificationsService.EnableRetries(0, 0)
-
-				// Construct an instance of the GetMetricsOptions model
-				getMetricsOptionsModel := new(eventnotificationsv1.GetMetricsOptions)
-				getMetricsOptionsModel.InstanceID = core.StringPtr("testString")
-				getMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
-				getMetricsOptionsModel.Gte = core.StringPtr("testString")
-				getMetricsOptionsModel.Lte = core.StringPtr("testString")
-				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
-				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
-				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
-				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
-				getMetricsOptionsModel.Subject = core.StringPtr("testString")
-				getMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
-
-				// Invoke operation with a Context to test a timeout error
-				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc()
-				_, _, operationErr := eventNotificationsService.GetMetricsWithContext(ctx, getMetricsOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
-
-				// Disable retries and test again
-				eventNotificationsService.DisableRetries()
-				result, response, operationErr := eventNotificationsService.GetMetrics(getMetricsOptionsModel)
-				Expect(operationErr).To(BeNil())
-				Expect(response).ToNot(BeNil())
-				Expect(result).ToNot(BeNil())
-
-				// Re-test the timeout error with retries disabled
-				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
-				defer cancelFunc2()
-				_, _, operationErr = eventNotificationsService.GetMetricsWithContext(ctx, getMetricsOptionsModel)
-				Expect(operationErr).ToNot(BeNil())
-				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
 			})
 			AfterEach(func() {
 				testServer.Close()
@@ -369,6 +292,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				getMetricsOptionsModel.Gte = core.StringPtr("testString")
 				getMetricsOptionsModel.Lte = core.StringPtr("testString")
 				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
 				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
 				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
 				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
@@ -418,6 +342,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				getMetricsOptionsModel.Gte = core.StringPtr("testString")
 				getMetricsOptionsModel.Lte = core.StringPtr("testString")
 				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
 				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
 				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
 				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
@@ -426,6 +351,306 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := eventNotificationsService.GetMetrics(getMetricsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetBounceMetrics(getBounceMetricsOptions *GetBounceMetricsOptions) - Operation response error`, func() {
+		getBounceMetricsPath := "/v1/instances/testString/metrics/bounce"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getBounceMetricsPath))
+					Expect(req.Method).To(Equal("GET"))
+					Expect(req.URL.Query()["destination_type"]).To(Equal([]string{"smtp_custom"}))
+					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subject"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke GetBounceMetrics with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetBounceMetricsOptions model
+				getBounceMetricsOptionsModel := new(eventnotificationsv1.GetBounceMetricsOptions)
+				getBounceMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getBounceMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				getBounceMetricsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getBounceMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`GetBounceMetrics(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
+		getBounceMetricsPath := "/v1/instances/testString/metrics/bounce"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getBounceMetricsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					Expect(req.URL.Query()["destination_type"]).To(Equal([]string{"smtp_custom"}))
+					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subject"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}`)
+				}))
+			})
+			It(`Invoke GetBounceMetrics successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetBounceMetricsOptions model
+				getBounceMetricsOptionsModel := new(eventnotificationsv1.GetBounceMetricsOptions)
+				getBounceMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getBounceMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				getBounceMetricsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getBounceMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetBounceMetricsWithContext(ctx, getBounceMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetBounceMetricsWithContext(ctx, getBounceMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(getBounceMetricsPath))
+					Expect(req.Method).To(Equal("GET"))
+
+					Expect(req.URL.Query()["destination_type"]).To(Equal([]string{"smtp_custom"}))
+					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subject"]).To(Equal([]string{"testString"}))
+					// TODO: Add check for limit query parameter
+					// TODO: Add check for offset query parameter
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}`)
+				}))
+			})
+			It(`Invoke GetBounceMetrics successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.GetBounceMetrics(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the GetBounceMetricsOptions model
+				getBounceMetricsOptionsModel := new(eventnotificationsv1.GetBounceMetricsOptions)
+				getBounceMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getBounceMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				getBounceMetricsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getBounceMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke GetBounceMetrics with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetBounceMetricsOptions model
+				getBounceMetricsOptionsModel := new(eventnotificationsv1.GetBounceMetricsOptions)
+				getBounceMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getBounceMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				getBounceMetricsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getBounceMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the GetBounceMetricsOptions model with no property values
+				getBounceMetricsOptionsModelNew := new(eventnotificationsv1.GetBounceMetricsOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke GetBounceMetrics successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetBounceMetricsOptions model
+				getBounceMetricsOptionsModel := new(eventnotificationsv1.GetBounceMetricsOptions)
+				getBounceMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getBounceMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getBounceMetricsOptionsModel.Limit = core.Int64Ptr(int64(10))
+				getBounceMetricsOptionsModel.Offset = core.Int64Ptr(int64(0))
+				getBounceMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
@@ -475,10 +700,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -816,10 +1043,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -13858,6 +14087,41 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_, err := eventNotificationsService.NewDestinationConfig(params)
 				Expect(err).ToNot(BeNil())
 			})
+			It(`Invoke NewGetBounceMetricsOptions successfully`, func() {
+				// Construct an instance of the GetBounceMetricsOptions model
+				instanceID := "testString"
+				destinationType := "smtp_custom"
+				gte := "testString"
+				lte := "testString"
+				getBounceMetricsOptionsModel := eventNotificationsService.NewGetBounceMetricsOptions(instanceID, destinationType, gte, lte)
+				getBounceMetricsOptionsModel.SetInstanceID("testString")
+				getBounceMetricsOptionsModel.SetDestinationType("smtp_custom")
+				getBounceMetricsOptionsModel.SetGte("testString")
+				getBounceMetricsOptionsModel.SetLte("testString")
+				getBounceMetricsOptionsModel.SetDestinationID("testString")
+				getBounceMetricsOptionsModel.SetSubscriptionID("testString")
+				getBounceMetricsOptionsModel.SetSourceID("testString")
+				getBounceMetricsOptionsModel.SetEmailTo("testString")
+				getBounceMetricsOptionsModel.SetNotificationID("testString")
+				getBounceMetricsOptionsModel.SetSubject("testString")
+				getBounceMetricsOptionsModel.SetLimit(int64(10))
+				getBounceMetricsOptionsModel.SetOffset(int64(0))
+				getBounceMetricsOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(getBounceMetricsOptionsModel).ToNot(BeNil())
+				Expect(getBounceMetricsOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.DestinationType).To(Equal(core.StringPtr("smtp_custom")))
+				Expect(getBounceMetricsOptionsModel.Gte).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.Lte).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.DestinationID).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.SubscriptionID).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.SourceID).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.EmailTo).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.NotificationID).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.Subject).To(Equal(core.StringPtr("testString")))
+				Expect(getBounceMetricsOptionsModel.Limit).To(Equal(core.Int64Ptr(int64(10))))
+				Expect(getBounceMetricsOptionsModel.Offset).To(Equal(core.Int64Ptr(int64(0))))
+				Expect(getBounceMetricsOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewGetDestinationOptions successfully`, func() {
 				// Construct an instance of the GetDestinationOptions model
 				instanceID := "testString"
@@ -14384,6 +14648,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -14415,6 +14680,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmenhtmlbody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Subject).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmenmms).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Ibmenmarkdown).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Data).To(Equal(map[string]interface{}{"anyKey": "anyValue"}))
 				Expect(notificationCreateModel.Datacontenttype).To(Equal(core.StringPtr("application/json")))
 				Expect(notificationCreateModel.Ibmenpushto).To(Equal(core.StringPtr(`{"platforms":["push_android"]}`)))

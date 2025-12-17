@@ -4032,6 +4032,8 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 				Lte:             core.StringPtr(lteTime),
 				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
 				DestinationID:   core.StringPtr(destinationID16),
+				SubscriptionID:  core.StringPtr(subscriptionID16),
+				SourceID:        core.StringPtr(sourceID),
 				NotificationID:  core.StringPtr(notificationID),
 				Subject:         core.StringPtr("Test Metrics Subject"),
 			}
@@ -4041,6 +4043,42 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(err).To(BeNil())
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(metrics).ToNot(BeNil())
+		})
+	})
+
+	Describe(`GeBouncetMetrics - GetBounceMetrics`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+
+		It(`GetMetrics(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
+
+			currentTime := time.Now().UTC()
+
+			ltime := currentTime.AddDate(0, 0, -1)
+			lteTime := ltime.Format("2006-01-02T15:04:05.000Z")
+
+			gTime := currentTime.AddDate(0, 0, -2)
+			gteTime := gTime.Format("2006-01-02T15:04:05.000Z")
+
+			getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+				InstanceID:      core.StringPtr(instanceID),
+				DestinationType: core.StringPtr("smtp_custom"),
+				Gte:             core.StringPtr(gteTime),
+				Lte:             core.StringPtr(lteTime),
+				EmailTo:         core.StringPtr("mobileb@us.ibm.com"),
+				DestinationID:   core.StringPtr(destinationID16),
+				SubscriptionID:  core.StringPtr(subscriptionID16),
+				SourceID:        core.StringPtr(sourceID),
+				NotificationID:  core.StringPtr(notificationID),
+				Subject:         core.StringPtr("Test Metrics Subject"),
+			}
+
+			bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(bouncemetrics).ToNot(BeNil())
 		})
 	})
 
