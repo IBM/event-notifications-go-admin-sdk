@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.21.0...v0.22.0) (2025-12-17)
+
+
+### Features
+
+* support bounce metrics ([#78](https://github.com/IBM/event-notifications-go-admin-sdk/issues/78)) ([db846dc](https://github.com/IBM/event-notifications-go-admin-sdk/commit/db846dc459ab9d2f4ac325c4a3ae232e300ce1d0))
+
 # [0.21.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.20.0...v0.21.0) (2025-10-29)
 
 
