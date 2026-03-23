@@ -1168,6 +1168,8 @@ integrationResponse, response, err := eventNotificationsService.ListIntegrations
 
 ### Update Integration
 
+> **⚠️ DEPRECATION WARNING**: The `hs-crypto` integration type is deprecated and will be removed in a future release. Please migrate to alternative encryption solutions.
+
 For kms/hs-crypto-
 
 ```go
@@ -1180,7 +1182,7 @@ integrationMetadata := &eventnotificationsv1.IntegrationMetadata{
 replaceIntegrationsOptions := &eventnotificationsv1.ReplaceIntegrationOptions{
 	InstanceID: core.StringPtr(instanceID),
 	ID:         core.StringPtr(integrationId),
-	Type:       core.StringPtr("kms/hs-crypto"),
+	Type:       core.StringPtr("kms"),
 	Metadata:   integrationMetadata,
 }
 

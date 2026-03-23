@@ -7502,7 +7502,7 @@ type IntegrationGetResponse struct {
 	// ID of the integration.
 	ID *strfmt.UUID `json:"id" validate:"required"`
 
-	// Integration type. Allowed values are kms and hs-crypto.
+	// Integration type. Allowed values are kms, hs-crypto (deprecated) and collect_failed_events.
 	Type *string `json:"type" validate:"required"`
 
 	// Integration Metadata object.
@@ -7639,7 +7639,7 @@ type IntegrationListItem struct {
 	// ID of the integration.
 	ID *strfmt.UUID `json:"id" validate:"required"`
 
-	// Integration type. Allowed values are kms and hs-crypto.
+	// Integration type. Allowed values are kms, hs-crypto (deprecated) and collect_failed_events.
 	Type *string `json:"type" validate:"required"`
 
 	// Integration Metadata object.
@@ -9067,7 +9067,7 @@ type ReplaceIntegrationOptions struct {
 	// Unique identifier for integration.
 	ID *string `json:"id" validate:"required,ne="`
 
-	// Integration type. Allowed values are kms, hs-crypto and collect_failed_events.
+	// Integration type. Allowed values are kms, hs-crypto (deprecated) and collect_failed_events.
 	Type *string `json:"type" validate:"required"`
 
 	// Integration Metadata object.
@@ -13294,7 +13294,7 @@ type DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig struct {
 	// Instance Id of Cloud Object Storage.
 	InstanceID *string `json:"instance_id" validate:"required"`
 
-	// End Point of Cloud Object Storage.
+	// Endpoint of Cloud Object Storage.
 	Endpoint *string `json:"endpoint" validate:"required"`
 }
 
