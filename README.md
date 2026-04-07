@@ -195,6 +195,7 @@ createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
 		<source-description>,
 	)
 createSourcesOptions.SetEnabled(false)
+createSourceOptions.SetStoreNotifications(false)
 
 sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
 ```
@@ -244,6 +245,7 @@ updateSourceOptions := eventNotificationsService.NewUpdateSourceOptions(
 updateSourceOptions.SetName(*core.StringPtr(<source-updated-name>))
 updateSourceOptions.SetDescription(*core.StringPtr(<source-updated-description>))
 updateSourceOptions.SetEnabled(true)
+updateSourceOptions.SetStoreNotifications(true)
 
 source, response, err := eventNotificationsService.UpdateSource(updateSourceOptions)
 ```
@@ -421,6 +423,26 @@ b, _ := json.MarshalIndent(destination, "", "  ")
 fmt.Println(string(b))
 ```
 
+#### Create Custom Email Sandbox Destination
+
+Custom Email Sandbox destinations allow you to test email notifications in a controlled environment before moving to production.
+
+```go
+
+createDestinationOptions := eventNotificationsService.NewCreateDestinationOptions(
+	<instance-id>,
+	<destination-name>,
+	<destination-type>,
+)
+
+destination, response, err := eventNotificationsService.CreateDestination(createDestinationOptions)
+```
+
+**Parameters:**
+- **type** - Must be set to `"smtp_custom_sandbox"` for Custom Email Sandbox destinations
+- **domain** - Not required during creation; can be set later using the Update Sandbox Destination API
+
+
 Among the supported destinations, if you need to create Push Notification destinations, you have the additional option of choosing a destination of production type or pre-production type.
 Set `pre_prod` boolean parameter to _true_ to configure destination as pre-production destination else set the value as _false_.
 Supported destinations are Android, iOS, Chrome, Firefox and Safari.
@@ -574,6 +596,29 @@ if err != nil {
 	panic(err)
 }
 ```
+
+### Update Custom Email Sandbox Destination
+
+Update the domain for a Custom Email Sandbox destination. This allows you to configure the email domain used for sandbox testing.
+
+```go
+customEmailSandboxDestinationUpdateOptions :=&eventnotificationsv1.UpdateEmailSandboxDestinationOptions{
+	InstanceID: core.StringPtr(<instance-id>),       // Event notifications service instance GUID
+	ID:         core.StringPtr(<destination-id>),	 // Event notifications service instance Destination ID
+	Domain:       core.StringPtr(<domain>),          // Production Domain
+}
+
+result, response, err := eventNotificationsService.UpdateEmailSandboxDestination(customEmailSandboxDestinationUpdateOptions)
+
+```
+
+**Parameters:**
+- **instanceId** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
+- **id** (_string_) - Unique identifier for the Custom Email Sandbox Destination.
+- **domain** (_string_) - Email domain to be used for the sandbox destination (e.g., "example.com").
+
+**Note:** Custom Email Sandbox destinations are used for testing email notifications in a controlled environment before moving to production with a verified custom domain.
+
 
 ## Templates
 
@@ -1015,6 +1060,42 @@ b, _ := json.MarshalIndent(subscription, "", "  ")
 fmt.Println(string(b))
 ```
 
+#### Create Subscription for Custom Email Sandbox Destination
+
+When creating a subscription for a **Custom Email Sandbox** (`smtp_custom_sandbox`) destination, you need to specify email-specific attributes including reply-to information and optional template IDs.
+
+```go
+// Create email attributes with invited recipients
+subscriptionCreateEmailSandboxAttributesModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomEmailSandboxAttributes{
+	            Invited:                []string{user1@example.com},
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("support@example.com"),
+				ReplyToName:            core.StringPtr("Support Team"),
+}
+
+createSubscriptionOptions := eventNotificationsService.NewCreateSubscriptionOptions(
+	<instance-id>,	// Event notifications service instance GUID
+	<subscription-name>, 
+	<subscription-description>, 
+	<destination-id>, // Event notifications service instance Destination ID
+	<topic-id>,  // Event notifications service instance Topic ID
+	subscriptionCreateEmailSandboxAttributesModel,
+)
+
+createSubscriptionOptions.SetDescription(<subscription-description>)
+
+subscription, response, err := eventNotificationsService.CreateSubscription(createSubscriptionOptions)
+
+```
+
+**Email Sandbox Attributes Parameters:**
+- **invited** (required) - List of email addresses to receive notifications
+- **addNotificationPayload** (required) - Whether to include the notification payload in the email body
+- **replyToMail** (required) - Email address where replies should be directed (can be the same as the sending address)
+- **replyToName** (required) - Display name for the reply-to address
+- **templateIdNotification** (optional) - Template ID for notification emails
+- **templateIdInvitation** (optional) - Template ID for invitation emails
+
 ### :warning: Special Consideration for App Configuration Destination
 
 When creating or updating a subscription for an **App Configuration** destination, the `attributes` object has a specific rule:  
@@ -1104,6 +1185,41 @@ b, _ := json.MarshalIndent(subscription, "", "  ")
 fmt.Println(string(b))
 
 ```
+
+#### Update Subscription for Custom Email Sandbox Destination
+
+When updating a subscription for a **Custom Email Sandbox** destination, you can modify email-specific attributes such as recipients and reply-to settings.
+
+```go
+updateSubscriptionOptions := eventNotificationsService.NewUpdateSubscriptionOptions(
+	<instance-id>,	// Event notifications service instance GUID
+	<subscription-id>,	// Event notifications service instance Subscription ID
+)
+
+subscriptionUpdateEmailSandboxAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes{
+	AddNotificationPayload: core.BoolPtr(true),
+	ReplyToMail:            core.StringPtr("newsupport@example.com"),
+	ReplyToName:            core.StringPtr("New Support Team"),
+}
+
+updateSubscriptionOptions.SetAttributes(subscriptionUpdateEmailSandboxAttributesModel)
+updateSubscriptionOptions.SetDescription(<subscription-update-description>)
+updateSubscriptionOptions.SetName(<subscription-update-name>)
+
+subscription, response, err := eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+```
+
+**Custom Email Sandbox Update Attributes Parameters:**
+- **invited** (optional) - Update the list of email recipients (add/remove emails)
+- **addNotificationPayload** (required) - Whether to include the notification payload in the email body
+- **replyToMail** (required) - Email address where replies should be directed (can be the same as the sending address)
+- **replyToName** (required) - Display name for the reply-to address
+- **subscribed** (optional) - Manage subscribed email addresses
+- **unsubscribed** (optional) - Manage unsubscribed email addresses
+- **templateIdNotification** (optional) - Template ID for notification emails
+- **templateIdInvitation** (optional) - Template ID for invitation emails
+
+**Note:** The `replyToMail` can be set to the same email address as your sending address if you want replies to go back to the sender.
 
 ### Delete Subscription
 
@@ -1434,6 +1550,12 @@ typeValue := "<notification-type>"
 notificationsSouce := "<notification-source>"
 specVersion := "1.0"
 
+emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+emailAttachmentModel.Content = core.StringPtr("VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQK")
+emailAttachmentModel.Filename = core.StringPtr("test.txt")
+emailAttachmentModel.ContentType = core.StringPtr("text/plain")
+emailAttachmentModel.Disposition = core.StringPtr("attachment")
+
 notificationDevicesModel := "{\"user_ids\": [\"userId\"]}"
 notificationFcmBodyModel := "{\"message\": {\"android\": {\"notification\": {\"title\": \"Alert message\",\"body\": \"Bob wants to play Poker\"},\"data\": {\"name\": \"Willie Greenholt\",\"description\": \"notification for the Poker\"}}}}"
 notificationAPNsBodyModel := "{\"alert\": \"Game Request\", \"badge\": 5 }"
@@ -1473,6 +1595,7 @@ notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
 notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
 notificationCreateModel.Ibmenmarkdown = &markdown
+notificationCreateModel.EmailAttachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
 
 sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 sendNotificationsOptionsModel.InstanceID = &instanceID
@@ -1526,6 +1649,11 @@ if err != nil {
   - **specversion\*** (_string_) - Spec version of the Event Notifications. Default value is `1.0`.
   - **ibmenhtmlbody** (_string_) - The html body of notification for email.
   - **ibmenmailto** (_Array of string_) - Array of email ids to which the notification to be sent.
+  - **attachments** (_Array of EmailAttachment_) - Array of email attachments to be sent with the notification. Each attachment should contain:
+    - **content** (_string_) - Base64 encoded file content.
+    - **filename** (_string_) - Name of the attachment file.
+    - **contentType** (_string_) - MIME type of the attachment (e.g., text/plain, application/json, text/csv, application/pdf).
+    - **disposition** (_string_) - Content disposition, typically "attachment".
   - **ibmensmsto** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
   - **ibmenslackto** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
   - **ibmentemplates** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.

@@ -81,6 +81,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		destinationID19           string
 		destinationID20           string
 		destinationID21           string
+		destinationID22           string
 		subscriptionID            string
 		subscriptionID1           string
 		subscriptionID2           string
@@ -102,6 +103,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		subscriptionID20          string
 		subscriptionID21          string
 		subscriptionID22          string
+		subscriptionID23          string
 		fcmServerKey              string
 		fcmSenderId               string
 		integrationId             string
@@ -553,10 +555,11 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`CreateSources(createSourcesOptions *CreateSourcesOptions)`, func() {
 
 			createSourcesOptions := &eventnotificationsv1.CreateSourcesOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				Name:        core.StringPtr("Event Notification Create Source Acme"),
-				Description: core.StringPtr("This source is used for Acme Bank"),
-				Enabled:     core.BoolPtr(true),
+				InstanceID:         core.StringPtr(instanceID),
+				Name:               core.StringPtr("Event Notification Create Source Acme"),
+				Description:        core.StringPtr("This source is used for Acme Bank"),
+				Enabled:            core.BoolPtr(true),
+				StoreNotifications: core.BoolPtr(false),
 			}
 
 			sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
@@ -647,11 +650,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`UpdateSource(updateSourceOptions *UpdateSourceOptions)`, func() {
 
 			updateSourceOptions := &eventnotificationsv1.UpdateSourceOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				ID:          core.StringPtr(sourceID),
-				Name:        core.StringPtr("Event Notification update Source Acme"),
-				Description: core.StringPtr("This source is used for updated Acme Bank"),
-				Enabled:     core.BoolPtr(true),
+				InstanceID:         core.StringPtr(instanceID),
+				ID:                 core.StringPtr(sourceID),
+				Name:               core.StringPtr("Event Notification update Source Acme"),
+				Description:        core.StringPtr("This source is used for updated Acme Bank"),
+				Enabled:            core.BoolPtr(true),
+				StoreNotifications: core.BoolPtr(true),
 			}
 
 			source, response, err := eventNotificationsService.UpdateSource(updateSourceOptions)
@@ -1459,7 +1463,28 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destinationResponse).ToNot(BeNil())
 
 			destinationID21 = *destinationResponse.ID
-			//
+
+			sandboxName := "custom_email_sandbox_destination_sdk"
+			sandboxtypeVal := eventnotificationsv1.CreateDestinationOptionsTypeSMTPCustomSandboxConst
+			sandboxDescription := "sandbox_custom_email Destination"
+			sandboxEmailCreateDestinationOptions := &eventnotificationsv1.CreateDestinationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        core.StringPtr(sandboxName),
+				Type:        core.StringPtr(sandboxtypeVal),
+				Description: core.StringPtr(sandboxDescription),
+			}
+
+			destinationResponse, response, err = eventNotificationsService.CreateDestination(sandboxEmailCreateDestinationOptions)
+			if err != nil {
+				panic(err)
+			}
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(destinationResponse).ToNot(BeNil())
+
+			destinationID22 = *destinationResponse.ID
+			fmt.Println(destinationID22)
+
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
 			//
@@ -2355,6 +2380,19 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(dkimResult).ToNot(BeNil())
 
+			sandboxdomain := "test.event-notifications.test.cloud.ibm.com"
+			sandboxUpdateDestinationOptions := &eventnotificationsv1.UpdateEmailSandboxDestinationOptions{
+				InstanceID: core.StringPtr(instanceID),
+				ID:         core.StringPtr(destinationID22),
+				Domain:     core.StringPtr(sandboxdomain),
+			}
+
+			sandboxDestination, response, err := eventNotificationsService.UpdateEmailSandboxDestination(sandboxUpdateDestinationOptions)
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(sandboxDestination).ToNot(BeNil())
+			Expect(sandboxDestination.ID).To(Equal(core.StringPtr(destinationID22)))
+
 			customSMSName := "custom_sms_destination update"
 			customSMSDescription := "custom sms Destination updated"
 			customSMSUpdateDestinationOptions := &eventnotificationsv1.UpdateDestinationOptions{
@@ -2486,7 +2524,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(destination.Name).To(Equal(core.StringPtr(appConfigName)))
 			Expect(destination.Description).To(Equal(core.StringPtr(appConfigDescription)))
 
-			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
 			//
@@ -3226,6 +3263,33 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription).ToNot(BeNil())
 			subscriptionID22 = string(*subscription.ID)
 
+			subscriptionCreateAttributesSandboxDestinationModel := &eventnotificationsv1.SubscriptionCreateAttributesCustomEmailSandboxAttributes{
+				Invited:                []string{"testuser@in.ibm.com"},
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("testuser@in.ibm.com"),
+				ReplyToName:            core.StringPtr("rester_reply"),
+			}
+			sandboxEmailName := core.StringPtr("subscription_sandbox_custom_email")
+			sandboxEmailDescription := core.StringPtr("Subscription for custom email sandbox destination")
+			createSandboxEmailSubscriptionOptions := &eventnotificationsv1.CreateSubscriptionOptions{
+				InstanceID:    core.StringPtr(instanceID),
+				Name:          sandboxEmailName,
+				Description:   sandboxEmailDescription,
+				DestinationID: core.StringPtr(destinationID22),
+				TopicID:       core.StringPtr(topicID),
+				Attributes:    subscriptionCreateAttributesSandboxDestinationModel,
+			}
+
+			subscription, response, err = eventNotificationsService.CreateSubscription(createSandboxEmailSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.Attributes).ToNot(BeNil())
+			Expect(subscription.Description).To(Equal(sandboxEmailDescription))
+			Expect(subscription.Name).To(Equal(sandboxEmailName))
+			subscriptionID23 = *subscription.ID
+
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
 			//
@@ -3864,6 +3928,30 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(subscription.Name).To(Equal(appConfigName))
 			Expect(subscription.Description).To(Equal(appConfigDescription))
 
+			subscriptionUpdateCustomEmailSandboxAttributesModel := &eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes{
+				AddNotificationPayload: core.BoolPtr(true),
+				ReplyToMail:            core.StringPtr("testuser@in.ibm.com"),
+				ReplyToName:            core.StringPtr("tester_reply"),
+			}
+			customEmailSandboxName := core.StringPtr("subscription_custom_email_sandbox_update")
+			CustomEmailSandboxDescription := core.StringPtr("Subscription update for custom email sandbox")
+			updateSubscriptionOptions = &eventnotificationsv1.UpdateSubscriptionOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Name:        customEmailSandboxName,
+				Description: CustomEmailSandboxDescription,
+				ID:          core.StringPtr(subscriptionID23),
+				Attributes:  subscriptionUpdateCustomEmailSandboxAttributesModel,
+			}
+
+			subscription, response, err = eventNotificationsService.UpdateSubscription(updateSubscriptionOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(subscription).ToNot(BeNil())
+			Expect(subscription.ID).To(Equal(core.StringPtr(subscriptionID16)))
+			Expect(subscription.Name).To(Equal(customEmailSandboxName))
+			Expect(subscription.Description).To(Equal(CustomEmailSandboxDescription))
+
 			//
 			// The following status codes aren't covered by tests.
 			// Please provide integration tests for these too.
@@ -3924,6 +4012,12 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			htmlBody := "\"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to <a href=\"https: //cloud.ibm.com/security-compliance/dashboard\">Security and Complaince dashboard</a> to find more information<br/>\""
 			markdown := "**Event Summary** \n\n**Toolchain ID:** `4414af34-a5c7-47d3-8f05-add4af6d78a6`  \n**Content Type:** `application/json`\n\n---\n\n *Pipeline Run Details*\n\n- **Namespace:** `PR`\n- **Trigger Name:** `manual`\n- **Triggered By:** `nitish.kulkarni3@ibm.com`\n- **Build Number:** `343`\n- **Pipeline Link:** [View Pipeline Run](https://cloud.ibm.com/devops/pipelines/tekton/e9cd5aa3-a3f2-4776-8acc-26a35922386e/runs/f29ac6f5-bd2f-4a26-abb8-4249be8dbab7?env_id=ibm:yp:us-south)"
 
+			emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+			emailAttachmentModel.Content = core.StringPtr("eyJ0eXBlIjoidGVzdCIsIm1lc3NhZ2UiOiJTYW1wbGUgSlNPTiBhdHRhY2htZW50IiwidGltZXN0YW1wIjoiMjAyNi0wMy0yNFQxNTo0ODoyOS40NTJaIn0=")
+			emailAttachmentModel.Filename = core.StringPtr("data.json")
+			emailAttachmentModel.ContentType = core.StringPtr("application/json")
+			emailAttachmentModel.Disposition = core.StringPtr("attachment")
+
 			notificationSeverity := "MEDIUM"
 			typeValue := "com.acme.offer:new"
 			notificationsSouce := "1234-1234-sdfs-234:test"
@@ -3952,6 +4046,7 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			notificationCreateModel.Ibmenhtmlbody = core.StringPtr(htmlBody)
 			notificationCreateModel.Ibmendefaultshort = core.StringPtr("Alert message")
 			notificationCreateModel.Ibmendefaultlong = core.StringPtr("Alert message on expiring offer")
+			notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
 
 			sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
 			sendNotificationsOptionsModel.InstanceID = &instanceID
