@@ -185,6 +185,43 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					fmt.Fprint(res, `} this is not valid json {`)
 				}))
 			})
+			It(`Invoke GetMetrics with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the GetMetricsOptions model
+				getMetricsOptionsModel := new(eventnotificationsv1.GetMetricsOptions)
+				getMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.GetMetrics(getMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.GetMetrics(getMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
 		})
 	})
 	Describe(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
@@ -216,6 +253,50 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					fmt.Fprintf(res, "%s", `{"metrics": [{"key": "bounced", "doc_count": 8, "histogram": {"buckets": [{"doc_count": 8, "key_as_string": "2019-01-01T12:00:00.000Z"}]}}]}`)
 				}))
 			})
+			It(`Invoke GetMetrics successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the GetMetricsOptions model
+				getMetricsOptionsModel := new(eventnotificationsv1.GetMetricsOptions)
+				getMetricsOptionsModel.InstanceID = core.StringPtr("testString")
+				getMetricsOptionsModel.DestinationType = core.StringPtr("smtp_custom")
+				getMetricsOptionsModel.Gte = core.StringPtr("testString")
+				getMetricsOptionsModel.Lte = core.StringPtr("testString")
+				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
+				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
+				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
+				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
+				getMetricsOptionsModel.Subject = core.StringPtr("testString")
+				getMetricsOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.GetMetricsWithContext(ctx, getMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.GetMetrics(getMetricsOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.GetMetricsWithContext(ctx, getMetricsOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
 			AfterEach(func() {
 				testServer.Close()
 			})
@@ -233,6 +314,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					Expect(req.URL.Query()["gte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["lte"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["destination_id"]).To(Equal([]string{"testString"}))
+					Expect(req.URL.Query()["subscription_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["source_id"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["email_to"]).To(Equal([]string{"testString"}))
 					Expect(req.URL.Query()["notification_id"]).To(Equal([]string{"testString"}))
@@ -264,6 +346,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				getMetricsOptionsModel.Gte = core.StringPtr("testString")
 				getMetricsOptionsModel.Lte = core.StringPtr("testString")
 				getMetricsOptionsModel.DestinationID = core.StringPtr("testString")
+				getMetricsOptionsModel.SubscriptionID = core.StringPtr("testString")
 				getMetricsOptionsModel.SourceID = core.StringPtr("testString")
 				getMetricsOptionsModel.EmailTo = core.StringPtr("testString")
 				getMetricsOptionsModel.NotificationID = core.StringPtr("testString")
@@ -457,7 +540,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}`)
+					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0, "offset": 6, "limit": 5}`)
 				}))
 			})
 			It(`Invoke GetBounceMetrics successfully with retries`, func() {
@@ -533,7 +616,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}`)
+					fmt.Fprintf(res, "%s", `{"metrics": [{"email_address": "EmailAddress", "subject": "Subject", "error_message": "ErrorMessage", "ip_address": "IPAddress", "subscription_id": "SubscriptionID", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0, "offset": 6, "limit": 5}`)
 				}))
 			})
 			It(`Invoke GetBounceMetrics successfully`, func() {
@@ -685,6 +768,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EmailAttachment model
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
+
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				notificationCreateModel.Specversion = core.StringPtr("1.0")
@@ -718,6 +808,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 
 				// Construct an instance of the SendNotificationsOptions model
@@ -776,7 +867,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(202)
-					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID"}`)
+					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID", "email_attachments": [{"content": "Content", "filename": "Filename", "content_type": "ContentType", "disposition": "attachment"}]}`)
 				}))
 			})
 			It(`Invoke SendNotifications successfully with retries`, func() {
@@ -787,6 +878,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 				eventNotificationsService.EnableRetries(0, 0)
+
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
@@ -803,10 +900,12 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmentemplates = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmailto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenslackto = core.StringPtr("testString")
+				notificationCreateModel.Ibmensmstext = core.StringPtr("testString")
 				notificationCreateModel.Ibmensmsto = core.StringPtr("testString")
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -819,7 +918,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
+				notificationCreateModel.SetProperty("foo", "testString")
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -880,7 +980,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(202)
-					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID"}`)
+					fmt.Fprintf(res, "%s", `{"notification_id": "NotificationID", "email_attachments": [{"content": "Content", "filename": "Filename", "content_type": "ContentType", "disposition": "attachment"}]}`)
 				}))
 			})
 			It(`Invoke SendNotifications successfully`, func() {
@@ -896,6 +996,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(operationErr).NotTo(BeNil())
 				Expect(response).To(BeNil())
 				Expect(result).To(BeNil())
+
+				// Construct an instance of the EmailAttachment model
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
 
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
@@ -917,6 +1024,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -929,7 +1037,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
+				notificationCreateModel.SetProperty("foo", "testString")
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -952,6 +1061,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EmailAttachment model
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
+
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				notificationCreateModel.Specversion = core.StringPtr("1.0")
@@ -972,6 +1088,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenhtmlbody = core.StringPtr("testString")
 				notificationCreateModel.Subject = core.StringPtr("testString")
 				notificationCreateModel.Ibmenmms = core.StringPtr("testString")
+				notificationCreateModel.Ibmenmarkdown = core.StringPtr("testString")
 				notificationCreateModel.Data = map[string]interface{}{"anyKey": "anyValue"}
 				notificationCreateModel.Datacontenttype = core.StringPtr("application/json")
 				notificationCreateModel.Ibmenpushto = core.StringPtr(`{"platforms":["push_android"]}`)
@@ -984,7 +1101,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
+				notificationCreateModel.SetProperty("foo", "testString")
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -1028,6 +1146,13 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EmailAttachment model
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
+
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				notificationCreateModel.Specversion = core.StringPtr("1.0")
@@ -1061,7 +1186,8 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
-				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
+				notificationCreateModel.SetProperty("foo", "testString")
 
 				// Construct an instance of the SendNotificationsOptions model
 				sendNotificationsOptionsModel := new(eventnotificationsv1.SendNotificationsOptions)
@@ -1111,6 +1237,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.Name = core.StringPtr("testString")
 				createSourcesOptionsModel.Description = core.StringPtr("testString")
 				createSourcesOptionsModel.Enabled = core.BoolPtr(true)
+				createSourcesOptionsModel.StoreNotifications = core.BoolPtr(false)
 				createSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.CreateSources(createSourcesOptionsModel)
@@ -1163,7 +1290,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateSources successfully with retries`, func() {
@@ -1181,6 +1308,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.Name = core.StringPtr("testString")
 				createSourcesOptionsModel.Description = core.StringPtr("testString")
 				createSourcesOptionsModel.Enabled = core.BoolPtr(true)
+				createSourcesOptionsModel.StoreNotifications = core.BoolPtr(false)
 				createSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -1236,7 +1364,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "created_at": "2019-01-01T12:00:00.000Z"}`)
 				}))
 			})
 			It(`Invoke CreateSources successfully`, func() {
@@ -1259,6 +1387,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.Name = core.StringPtr("testString")
 				createSourcesOptionsModel.Description = core.StringPtr("testString")
 				createSourcesOptionsModel.Enabled = core.BoolPtr(true)
+				createSourcesOptionsModel.StoreNotifications = core.BoolPtr(false)
 				createSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -1282,6 +1411,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.Name = core.StringPtr("testString")
 				createSourcesOptionsModel.Description = core.StringPtr("testString")
 				createSourcesOptionsModel.Enabled = core.BoolPtr(true)
+				createSourcesOptionsModel.StoreNotifications = core.BoolPtr(false)
 				createSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -1326,6 +1456,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.Name = core.StringPtr("testString")
 				createSourcesOptionsModel.Description = core.StringPtr("testString")
 				createSourcesOptionsModel.Enabled = core.BoolPtr(true)
+				createSourcesOptionsModel.StoreNotifications = core.BoolPtr(false)
 				createSourcesOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -1412,7 +1543,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "store_notifications": true, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSources successfully with retries`, func() {
@@ -1472,7 +1603,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
+					fmt.Fprintf(res, "%s", `{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "ID", "name": "Name", "description": "Description", "type": "Type", "enabled": false, "store_notifications": true, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "Href"}, "previous": {"href": "Href"}, "next": {"href": "Href"}}`)
 				}))
 			})
 			It(`Invoke ListSources successfully`, func() {
@@ -1630,9 +1761,9 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					res.WriteHeader(200)
 					requestNumber++
 					if requestNumber == 1 {
-						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
+						fmt.Fprintf(res, "%s", `{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"store_notifications":true,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
 					} else if requestNumber == 2 {
-						fmt.Fprintf(res, "%s", `{"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
+						fmt.Fprintf(res, "%s", `{"sources":[{"id":"ID","name":"Name","description":"Description","type":"Type","enabled":false,"store_notifications":true,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}`)
 					} else {
 						res.WriteHeader(400)
 					}
@@ -1753,7 +1884,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 10, "topic_names": ["TopicNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0, "topic_names": ["TopicNames"]}`)
 				}))
 			})
 			It(`Invoke GetSource successfully with retries`, func() {
@@ -1808,7 +1939,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 10, "topic_names": ["TopicNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0, "topic_names": ["TopicNames"]}`)
 				}))
 			})
 			It(`Invoke GetSource successfully`, func() {
@@ -2007,6 +2138,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.Name = core.StringPtr("testString")
 				updateSourceOptionsModel.Description = core.StringPtr("testString")
 				updateSourceOptionsModel.Enabled = core.BoolPtr(true)
+				updateSourceOptionsModel.StoreNotifications = core.BoolPtr(false)
 				updateSourceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.UpdateSource(updateSourceOptionsModel)
@@ -2059,7 +2191,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 10, "topic_names": ["TopicNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0, "topic_names": ["TopicNames"]}`)
 				}))
 			})
 			It(`Invoke UpdateSource successfully with retries`, func() {
@@ -2078,6 +2210,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.Name = core.StringPtr("testString")
 				updateSourceOptionsModel.Description = core.StringPtr("testString")
 				updateSourceOptionsModel.Enabled = core.BoolPtr(true)
+				updateSourceOptionsModel.StoreNotifications = core.BoolPtr(false)
 				updateSourceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with a Context to test a timeout error
@@ -2133,7 +2266,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 10, "topic_names": ["TopicNames"]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "enabled": false, "store_notifications": true, "type": "Type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0, "topic_names": ["TopicNames"]}`)
 				}))
 			})
 			It(`Invoke UpdateSource successfully`, func() {
@@ -2157,6 +2290,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.Name = core.StringPtr("testString")
 				updateSourceOptionsModel.Description = core.StringPtr("testString")
 				updateSourceOptionsModel.Enabled = core.BoolPtr(true)
+				updateSourceOptionsModel.StoreNotifications = core.BoolPtr(false)
 				updateSourceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation with valid options model (positive test)
@@ -2181,6 +2315,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.Name = core.StringPtr("testString")
 				updateSourceOptionsModel.Description = core.StringPtr("testString")
 				updateSourceOptionsModel.Enabled = core.BoolPtr(true)
+				updateSourceOptionsModel.StoreNotifications = core.BoolPtr(false)
 				updateSourceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Invoke operation with empty URL (negative test)
 				err := eventNotificationsService.SetServiceURL("")
@@ -2226,6 +2361,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.Name = core.StringPtr("testString")
 				updateSourceOptionsModel.Description = core.StringPtr("testString")
 				updateSourceOptionsModel.Enabled = core.BoolPtr(true)
+				updateSourceOptionsModel.StoreNotifications = core.BoolPtr(false)
 				updateSourceOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 
 				// Invoke operation
@@ -2264,11 +2400,18 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(serviceErr).To(BeNil())
 				Expect(eventNotificationsService).ToNot(BeNil())
 
+				// Construct an instance of the EventScheduleFilterAttributes model
+				eventScheduleFilterAttributesModel := new(eventnotificationsv1.EventScheduleFilterAttributes)
+				eventScheduleFilterAttributesModel.StartsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.EndsAt = CreateMockDateTime("2019-01-01T12:00:00.000Z")
+				eventScheduleFilterAttributesModel.Expression = core.StringPtr("testString")
+
 				// Construct an instance of the Rules model
 				rulesModel := new(eventnotificationsv1.Rules)
 				rulesModel.Enabled = core.BoolPtr(true)
 				rulesModel.EventTypeFilter = core.StringPtr("$.notification_event_info.event_type == 'cert_manager'")
 				rulesModel.NotificationFilter = core.StringPtr("$.notification.findings[0].severity == 'MODERATE'")
+				rulesModel.EventScheduleFilter = eventScheduleFilterAttributesModel
 
 				// Construct an instance of the SourcesItems model
 				sourcesItemsModel := new(eventnotificationsv1.SourcesItems)
@@ -2998,7 +3141,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 11, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 17, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 0, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "Expression"}, "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 0, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
 			It(`Invoke GetTopic successfully with retries`, func() {
@@ -3055,7 +3198,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 11, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 17, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 0, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "Expression"}, "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 0, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
 			It(`Invoke GetTopic successfully`, func() {
@@ -3257,7 +3400,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 11, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 17, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 0, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "Expression"}, "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 0, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
 			It(`Invoke ReplaceTopic successfully with retries`, func() {
@@ -3349,7 +3492,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Set mock response
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(200)
-					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 11, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 17, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "description": "Description", "name": "Name", "updated_at": "UpdatedAt", "source_count": 0, "sources": [{"id": "ID", "name": "Name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "NotificationFilter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "Expression"}, "updated_at": "UpdatedAt", "id": "ID"}]}], "subscription_count": 0, "subscriptions": [{"id": "ID", "name": "Name", "description": "Description", "destination_id": "DestinationID", "destination_name": "DestinationName", "destination_type": "sms_ibm", "topic_id": "TopicID", "topic_name": "TopicName", "updated_at": "2019-01-01T12:00:00.000Z"}]}`)
 				}))
 			})
 			It(`Invoke ReplaceTopic successfully`, func() {
@@ -7295,6 +7438,260 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				// Invoke operation
 				result, response, operationErr := eventNotificationsService.TestDestination(testDestinationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+
+				// Verify a nil result
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateSandboxDestination(updateSandboxDestinationOptions *UpdateSandboxDestinationOptions) - Operation response error`, func() {
+		updateSandboxDestinationPath := "/v1/instances/testString/destinations/testString/upgrade"
+		Context(`Using mock server endpoint with invalid JSON response`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateSandboxDestinationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprint(res, `} this is not valid json {`)
+				}))
+			})
+			It(`Invoke UpdateEmailSandboxDestination with error: Operation response processing error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				updateEmailSandboxDestinationOptionsModel := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				updateEmailSandboxDestinationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.ID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Domain = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Expect response parsing to fail since we are receiving a text/plain response
+				result, response, operationErr := eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+
+				// Enable retries and test again
+				eventNotificationsService.EnableRetries(0, 0)
+				result, response, operationErr = eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+	})
+	Describe(`UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptions *UpdateEmailSandboxDestinationOptions)`, func() {
+		updateEmailSandboxDestinationPath := "/v1/instances/testString/destinations/testString/upgrade"
+		Context(`Using mock server endpoint with timeout`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateEmailSandboxDestinationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Sleep a short time to support a timeout test
+					time.Sleep(100 * time.Millisecond)
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "collect_failed_events": false, "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateEmailSandboxDestination successfully with retries`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+				eventNotificationsService.EnableRetries(0, 0)
+
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				updateEmailSandboxDestinationOptionsModel := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				updateEmailSandboxDestinationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.ID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Domain = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with a Context to test a timeout error
+				ctx, cancelFunc := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc()
+				_, _, operationErr := eventNotificationsService.UpdateEmailSandboxDestinationWithContext(ctx, updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+
+				// Disable retries and test again
+				eventNotificationsService.DisableRetries()
+				result, response, operationErr := eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+				// Re-test the timeout error with retries disabled
+				ctx, cancelFunc2 := context.WithTimeout(context.Background(), 80*time.Millisecond)
+				defer cancelFunc2()
+				_, _, operationErr = eventNotificationsService.UpdateEmailSandboxDestinationWithContext(ctx, updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring("deadline exceeded"))
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Verify the contents of the request
+					Expect(req.URL.EscapedPath()).To(Equal(updateEmailSandboxDestinationPath))
+					Expect(req.Method).To(Equal("PATCH"))
+
+					// For gzip-disabled operation, verify Content-Encoding is not set.
+					Expect(req.Header.Get("Content-Encoding")).To(BeEmpty())
+
+					// If there is a body, then make sure we can read it
+					bodyBuf := new(bytes.Buffer)
+					if req.Header.Get("Content-Encoding") == "gzip" {
+						body, err := core.NewGzipDecompressionReader(req.Body)
+						Expect(err).To(BeNil())
+						_, err = bodyBuf.ReadFrom(body)
+						Expect(err).To(BeNil())
+					} else {
+						_, err := bodyBuf.ReadFrom(req.Body)
+						Expect(err).To(BeNil())
+					}
+					fmt.Fprintf(GinkgoWriter, "  Request body: %s", bodyBuf.String())
+
+					// Set mock response
+					res.Header().Set("Content-type", "application/json")
+					res.WriteHeader(200)
+					fmt.Fprintf(res, "%s", `{"id": "ID", "name": "Name", "description": "Description", "type": "webhook", "collect_failed_events": false, "config": {"params": {"domain": "Domain", "dkim": {"public_key": "PublicKey", "selector": "Selector", "verification": "Verification"}, "spf": {"txt_name": "TxtName", "txt_value": "TxtValue", "verification": "Verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}`)
+				}))
+			})
+			It(`Invoke UpdateEmailSandboxDestination successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Invoke operation with nil options model (negative test)
+				result, response, operationErr := eventNotificationsService.UpdateEmailSandboxDestination(nil)
+				Expect(operationErr).NotTo(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				updateEmailSandboxDestinationOptionsModel := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				updateEmailSandboxDestinationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.ID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Domain = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation with valid options model (positive test)
+				result, response, operationErr = eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).To(BeNil())
+				Expect(response).ToNot(BeNil())
+				Expect(result).ToNot(BeNil())
+
+			})
+			It(`Invoke UpdateEmailSandboxDestination with error: Operation validation and request error`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				updateEmailSandboxDestinationOptionsModel := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				updateEmailSandboxDestinationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.ID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Domain = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+				// Invoke operation with empty URL (negative test)
+				err := eventNotificationsService.SetServiceURL("")
+				Expect(err).To(BeNil())
+				result, response, operationErr := eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(operationErr.Error()).To(ContainSubstring(core.ERRORMSG_SERVICE_URL_MISSING))
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+				// Construct a second instance of the UpdateEmailSandboxDestinationOptions model with no property values
+				updateEmailSandboxDestinationOptionsModelNew := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				// Invoke operation with invalid model (negative test)
+				result, response, operationErr = eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModelNew)
+				Expect(operationErr).ToNot(BeNil())
+				Expect(response).To(BeNil())
+				Expect(result).To(BeNil())
+			})
+			AfterEach(func() {
+				testServer.Close()
+			})
+		})
+		Context(`Using mock server endpoint with missing response body`, func() {
+			BeforeEach(func() {
+				testServer = httptest.NewServer(http.HandlerFunc(func(res http.ResponseWriter, req *http.Request) {
+					defer GinkgoRecover()
+
+					// Set success status code with no respoonse body
+					res.WriteHeader(200)
+				}))
+			})
+			It(`Invoke UpdateEmailSandboxDestination successfully`, func() {
+				eventNotificationsService, serviceErr := eventnotificationsv1.NewEventNotificationsV1(&eventnotificationsv1.EventNotificationsV1Options{
+					URL:           testServer.URL,
+					Authenticator: &core.NoAuthAuthenticator{},
+				})
+				Expect(serviceErr).To(BeNil())
+				Expect(eventNotificationsService).ToNot(BeNil())
+
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				updateEmailSandboxDestinationOptionsModel := new(eventnotificationsv1.UpdateEmailSandboxDestinationOptions)
+				updateEmailSandboxDestinationOptionsModel.InstanceID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.ID = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Domain = core.StringPtr("testString")
+				updateEmailSandboxDestinationOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
+
+				// Invoke operation
+				result, response, operationErr := eventNotificationsService.UpdateEmailSandboxDestination(updateEmailSandboxDestinationOptionsModel)
 				Expect(operationErr).To(BeNil())
 				Expect(response).ToNot(BeNil())
 
@@ -11298,6 +11695,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 					// Verify the contents of the request
 					Expect(req.URL.EscapedPath()).To(Equal(createSMTPUserPath))
 					Expect(req.Method).To(Equal("POST"))
+					Expect(req.URL.Query()["username_to_clone"]).To(Equal([]string{"testString"}))
 					res.Header().Set("Content-type", "application/json")
 					res.WriteHeader(201)
 					fmt.Fprint(res, `} this is not valid json {`)
@@ -11316,6 +11714,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSMTPUserOptionsModel.InstanceID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.ID = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Description = core.StringPtr("testString")
+				createSMTPUserOptionsModel.UsernameToClone = core.StringPtr("testString")
 				createSMTPUserOptionsModel.Headers = map[string]string{"x-custom-header": "x-custom-value"}
 				// Expect response parsing to fail since we are receiving a text/plain response
 				result, response, operationErr := eventNotificationsService.CreateSMTPUser(createSMTPUserOptionsModel)
@@ -13839,12 +14238,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				createSourcesOptionsModel.SetName("testString")
 				createSourcesOptionsModel.SetDescription("testString")
 				createSourcesOptionsModel.SetEnabled(true)
+				createSourcesOptionsModel.SetStoreNotifications(false)
 				createSourcesOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(createSourcesOptionsModel).ToNot(BeNil())
 				Expect(createSourcesOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
 				Expect(createSourcesOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(createSourcesOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(createSourcesOptionsModel.Enabled).To(Equal(core.BoolPtr(true)))
+				Expect(createSourcesOptionsModel.StoreNotifications).To(Equal(core.BoolPtr(false)))
 				Expect(createSourcesOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewCreateSubscriptionOptions successfully`, func() {
@@ -14087,6 +14488,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				_, err := eventNotificationsService.NewDestinationConfig(params)
 				Expect(err).ToNot(BeNil())
 			})
+			It(`Invoke NewEmailAttachment successfully`, func() {
+				content := "testString"
+				filename := "testString"
+				contentType := "testString"
+				disposition := "attachment"
+				_model, err := eventNotificationsService.NewEmailAttachment(content, filename, contentType, disposition)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewGetBounceMetricsOptions successfully`, func() {
 				// Construct an instance of the GetBounceMetricsOptions model
 				instanceID := "testString"
@@ -14173,6 +14583,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				getMetricsOptionsModel.SetGte("testString")
 				getMetricsOptionsModel.SetLte("testString")
 				getMetricsOptionsModel.SetDestinationID("testString")
+				getMetricsOptionsModel.SetSubscriptionID("testString")
 				getMetricsOptionsModel.SetSourceID("testString")
 				getMetricsOptionsModel.SetEmailTo("testString")
 				getMetricsOptionsModel.SetNotificationID("testString")
@@ -14184,6 +14595,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(getMetricsOptionsModel.Gte).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.Lte).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.DestinationID).To(Equal(core.StringPtr("testString")))
+				Expect(getMetricsOptionsModel.SubscriptionID).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.SourceID).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.EmailTo).To(Equal(core.StringPtr("testString")))
 				Expect(getMetricsOptionsModel.NotificationID).To(Equal(core.StringPtr("testString")))
@@ -14627,6 +15039,17 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(replaceTopicOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewSendNotificationsOptions successfully`, func() {
+				// Construct an instance of the EmailAttachment model
+				emailAttachmentModel := new(eventnotificationsv1.EmailAttachment)
+				Expect(emailAttachmentModel).ToNot(BeNil())
+				emailAttachmentModel.Content = core.StringPtr("testString")
+				emailAttachmentModel.Filename = core.StringPtr("testString")
+				emailAttachmentModel.ContentType = core.StringPtr("testString")
+				emailAttachmentModel.Disposition = core.StringPtr("attachment")
+				Expect(emailAttachmentModel.Content).To(Equal(core.StringPtr("testString")))
+				Expect(emailAttachmentModel.Filename).To(Equal(core.StringPtr("testString")))
+				Expect(emailAttachmentModel.ContentType).To(Equal(core.StringPtr("testString")))
+				Expect(emailAttachmentModel.Disposition).To(Equal(core.StringPtr("attachment")))
 				// Construct an instance of the NotificationCreate model
 				notificationCreateModel := new(eventnotificationsv1.NotificationCreate)
 				Expect(notificationCreateModel).ToNot(BeNil())
@@ -14661,6 +15084,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				notificationCreateModel.Ibmenfirefoxheaders = core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)
 				notificationCreateModel.Ibmenhuaweibody = core.StringPtr("testString")
 				notificationCreateModel.Ibmensafaribody = core.StringPtr("testString")
+				notificationCreateModel.Attachments = []eventnotificationsv1.EmailAttachment{*emailAttachmentModel}
 				notificationCreateModel.SetProperty("foo", core.StringPtr("testString"))
 				Expect(notificationCreateModel.Specversion).To(Equal(core.StringPtr("1.0")))
 				Expect(notificationCreateModel.Time).To(Equal(CreateMockDateTime("2019-01-01T12:00:00.000Z")))
@@ -14693,6 +15117,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(notificationCreateModel.Ibmenfirefoxheaders).To(Equal(core.StringPtr(`{"TTL":3600,"Topic":"test","Urgency":"high"}`)))
 				Expect(notificationCreateModel.Ibmenhuaweibody).To(Equal(core.StringPtr("testString")))
 				Expect(notificationCreateModel.Ibmensafaribody).To(Equal(core.StringPtr("testString")))
+				Expect(notificationCreateModel.Attachments).To(Equal([]eventnotificationsv1.EmailAttachment{*emailAttachmentModel}))
 				Expect(notificationCreateModel.GetProperties()).ToNot(BeEmpty())
 				Expect(notificationCreateModel.GetProperty("foo")).To(Equal(core.StringPtr("testString")))
 
@@ -14821,6 +15246,22 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateDestinationOptionsModel.Icon128x1282xContentType).To(Equal(core.StringPtr("testString")))
 				Expect(updateDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
+			It(`Invoke NewUpdateEmailSandboxDestinationOptions successfully`, func() {
+				// Construct an instance of the UpdateEmailSandboxDestinationOptions model
+				instanceID := "testString"
+				id := "testString"
+				updateEmailSandboxDestinationOptionsDomain := "testString"
+				updateEmailSandboxDestinationOptionsModel := eventNotificationsService.NewUpdateEmailSandboxDestinationOptions(instanceID, id, updateEmailSandboxDestinationOptionsDomain)
+				updateEmailSandboxDestinationOptionsModel.SetInstanceID("testString")
+				updateEmailSandboxDestinationOptionsModel.SetID("testString")
+				updateEmailSandboxDestinationOptionsModel.SetDomain("testString")
+				updateEmailSandboxDestinationOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
+				Expect(updateEmailSandboxDestinationOptionsModel).ToNot(BeNil())
+				Expect(updateEmailSandboxDestinationOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
+				Expect(updateEmailSandboxDestinationOptionsModel.ID).To(Equal(core.StringPtr("testString")))
+				Expect(updateEmailSandboxDestinationOptionsModel.Domain).To(Equal(core.StringPtr("testString")))
+				Expect(updateEmailSandboxDestinationOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
+			})
 			It(`Invoke NewUpdateSMTPConfigurationOptions successfully`, func() {
 				// Construct an instance of the UpdateSMTPConfigurationOptions model
 				instanceID := "testString"
@@ -14866,6 +15307,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				updateSourceOptionsModel.SetName("testString")
 				updateSourceOptionsModel.SetDescription("testString")
 				updateSourceOptionsModel.SetEnabled(true)
+				updateSourceOptionsModel.SetStoreNotifications(false)
 				updateSourceOptionsModel.SetHeaders(map[string]string{"foo": "bar"})
 				Expect(updateSourceOptionsModel).ToNot(BeNil())
 				Expect(updateSourceOptionsModel.InstanceID).To(Equal(core.StringPtr("testString")))
@@ -14873,6 +15315,7 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(updateSourceOptionsModel.Name).To(Equal(core.StringPtr("testString")))
 				Expect(updateSourceOptionsModel.Description).To(Equal(core.StringPtr("testString")))
 				Expect(updateSourceOptionsModel.Enabled).To(Equal(core.BoolPtr(true)))
+				Expect(updateSourceOptionsModel.StoreNotifications).To(Equal(core.BoolPtr(false)))
 				Expect(updateSourceOptionsModel.Headers).To(Equal(map[string]string{"foo": "bar"}))
 			})
 			It(`Invoke NewUpdateSubscriptionOptions successfully`, func() {
@@ -15086,6 +15529,15 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
+			It(`Invoke NewSubscriptionCreateAttributesCustomEmailSandboxAttributes successfully`, func() {
+				invited := []string{"testString"}
+				addNotificationPayload := false
+				replyToMail := "testString"
+				replyToName := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesCustomEmailSandboxAttributes(invited, addNotificationPayload, replyToMail, replyToName)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
 			It(`Invoke NewSubscriptionCreateAttributesCustomSmsAttributes successfully`, func() {
 				invited := []string{"testString"}
 				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesCustomSmsAttributes(invited)
@@ -15105,6 +15557,14 @@ var _ = Describe(`EventNotificationsV1`, func() {
 			It(`Invoke NewSubscriptionCreateAttributesSmsAttributes successfully`, func() {
 				invited := []string{"testString"}
 				_model, err := eventNotificationsService.NewSubscriptionCreateAttributesSmsAttributes(invited)
+				Expect(_model).ToNot(BeNil())
+				Expect(err).To(BeNil())
+			})
+			It(`Invoke NewSubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes successfully`, func() {
+				addNotificationPayload := false
+				replyToMail := "testString"
+				replyToName := "testString"
+				_model, err := eventNotificationsService.NewSubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes(addNotificationPayload, replyToMail, replyToName)
 				Expect(_model).ToNot(BeNil())
 				Expect(err).To(BeNil())
 			})
@@ -15414,6 +15874,26 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				var result *eventnotificationsv1.DestinationConfigOneOfCustomDomainEmailDestinationConfig
 				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfCustomDomainEmailDestinationConfig(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalDestinationConfigOneOfCustomEmailSandboxDestinationConfig successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.DestinationConfigOneOfCustomEmailSandboxDestinationConfig)
+				model.Domain = core.StringPtr("testString")
+				model.Dkim = nil
+				model.Spf = nil
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.DestinationConfigOneOfCustomEmailSandboxDestinationConfig
+				err = eventnotificationsv1.UnmarshalDestinationConfigOneOfCustomEmailSandboxDestinationConfig(raw, &result)
 				Expect(err).To(BeNil())
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
@@ -15749,6 +16229,29 @@ var _ = Describe(`EventNotificationsV1`, func() {
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
 			})
+			It(`Invoke UnmarshalSubscriptionCreateAttributesCustomEmailSandboxAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionCreateAttributesCustomEmailSandboxAttributes)
+				model.Invited = []string{"testString"}
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionCreateAttributesCustomEmailSandboxAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionCreateAttributesCustomEmailSandboxAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
 			It(`Invoke UnmarshalSubscriptionCreateAttributesCustomSmsAttributes successfully`, func() {
 				// Construct an instance of the model.
 				model := new(eventnotificationsv1.SubscriptionCreateAttributesCustomSmsAttributes)
@@ -15969,6 +16472,31 @@ var _ = Describe(`EventNotificationsV1`, func() {
 
 				var result *eventnotificationsv1.SubscriptionUpdateAttributesCodeEngineAttributes
 				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesCodeEngineAttributes(raw, &result)
+				Expect(err).To(BeNil())
+				Expect(result).ToNot(BeNil())
+				Expect(result).To(Equal(model))
+			})
+			It(`Invoke UnmarshalSubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes successfully`, func() {
+				// Construct an instance of the model.
+				model := new(eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes)
+				model.Invited = nil
+				model.AddNotificationPayload = core.BoolPtr(false)
+				model.ReplyToMail = core.StringPtr("testString")
+				model.ReplyToName = core.StringPtr("testString")
+				model.Subscribed = nil
+				model.Unsubscribed = nil
+				model.TemplateIDNotification = core.StringPtr("testString")
+				model.TemplateIDInvitation = core.StringPtr("testString")
+
+				b, err := json.Marshal(model)
+				Expect(err).To(BeNil())
+
+				var raw map[string]json.RawMessage
+				err = json.Unmarshal(b, &raw)
+				Expect(err).To(BeNil())
+
+				var result *eventnotificationsv1.SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes
+				err = eventnotificationsv1.UnmarshalSubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes(raw, &result)
 				Expect(err).To(BeNil())
 				Expect(result).ToNot(BeNil())
 				Expect(result).To(Equal(model))
