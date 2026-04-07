@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.23.0...v0.24.0) (2026-04-07)
+
+
+### Features
+
+* support for sandbox view payload and attachment ([#80](https://github.com/IBM/event-notifications-go-admin-sdk/issues/80)) ([83c7694](https://github.com/IBM/event-notifications-go-admin-sdk/commit/83c76943630db250482f8de42b02283904dc8e46))
+
 # [0.23.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.22.0...v0.23.0) (2026-03-23)
 
 
