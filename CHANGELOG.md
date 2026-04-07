@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.22.0...v0.23.0) (2026-03-23)
+
+
+### Features
+
+* hpcs deprecation update ([#79](https://github.com/IBM/event-notifications-go-admin-sdk/issues/79)) ([c2061c1](https://github.com/IBM/event-notifications-go-admin-sdk/commit/c2061c11f1b0bb9d67f4def5a625c20a707a8843))
+
 # [0.22.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.21.0...v0.22.0) (2025-12-17)
 
 
