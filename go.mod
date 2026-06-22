@@ -1,8 +1,6 @@
 module github.com/IBM/event-notifications-go-admin-sdk
 
-go 1.24.0
-
-toolchain go1.24.11
+go 1.25.11
 
 require (
 	github.com/IBM/go-sdk-core/v5 v5.21.2
@@ -29,7 +27,7 @@ require (
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	go.mongodb.org/mongo-driver v1.17.6 // indirect
+	go.mongodb.org/mongo-driver v1.17.7 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	golang.org/x/crypto v0.45.0 // indirect
 	golang.org/x/net v0.47.0 // indirect

@@ -173,8 +173,8 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 	eventNotifications.Service.DisableRetries()
 }
 
-// GetMetrics : Get metrics
-// Get metrics.
+// Get metrics. **Required**: Either `destination_type` (for custom email destination) OR `smtp_config_id` (for SMTP
+// interface) must be provided.
 func (eventNotifications *EventNotificationsV1) GetMetrics(getMetricsOptions *GetMetricsOptions) (result *Metrics, response *core.DetailedResponse, err error) {
 	result, response, err = eventNotifications.GetMetricsWithContext(context.Background(), getMetricsOptions)
 	err = core.RepurposeSDKProblem(err, "")
@@ -217,9 +217,14 @@ func (eventNotifications *EventNotificationsV1) GetMetricsWithContext(ctx contex
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	builder.AddQuery("destination_type", fmt.Sprint(*getMetricsOptions.DestinationType))
 	builder.AddQuery("gte", fmt.Sprint(*getMetricsOptions.Gte))
 	builder.AddQuery("lte", fmt.Sprint(*getMetricsOptions.Lte))
+	if getMetricsOptions.SMTPConfigID != nil {
+		builder.AddQuery("smtp_config_id", fmt.Sprint(*getMetricsOptions.SMTPConfigID))
+	}
+	if getMetricsOptions.DestinationType != nil {
+		builder.AddQuery("destination_type", fmt.Sprint(*getMetricsOptions.DestinationType))
+	}
 	if getMetricsOptions.DestinationID != nil {
 		builder.AddQuery("destination_id", fmt.Sprint(*getMetricsOptions.DestinationID))
 	}
@@ -308,9 +313,14 @@ func (eventNotifications *EventNotificationsV1) GetBounceMetricsWithContext(ctx 
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	builder.AddQuery("destination_type", fmt.Sprint(*getBounceMetricsOptions.DestinationType))
 	builder.AddQuery("gte", fmt.Sprint(*getBounceMetricsOptions.Gte))
 	builder.AddQuery("lte", fmt.Sprint(*getBounceMetricsOptions.Lte))
+	if getBounceMetricsOptions.SMTPConfigID != nil {
+		builder.AddQuery("smtp_config_id", fmt.Sprint(*getBounceMetricsOptions.SMTPConfigID))
+	}
+	if getBounceMetricsOptions.DestinationType != nil {
+		builder.AddQuery("destination_type", fmt.Sprint(*getBounceMetricsOptions.DestinationType))
+	}
 	if getBounceMetricsOptions.DestinationID != nil {
 		builder.AddQuery("destination_id", fmt.Sprint(*getBounceMetricsOptions.DestinationID))
 	}
@@ -6724,14 +6734,17 @@ type GetBounceMetricsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Destination type. Allowed values are [smtp_custom].
-	DestinationType *string `json:"destination_type" validate:"required"`
-
 	// GTE (greater than equal), start timestamp in UTC.
 	Gte *string `json:"gte" validate:"required"`
 
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
+
+	// SMTP config id. Allowed values are [smtp_config_id].
+	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
+
+	// Destination type. Allowed values are [smtp_custom].
+	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
 	DestinationID *string `json:"destination_id,omitempty"`
@@ -6768,24 +6781,17 @@ const (
 )
 
 // NewGetBounceMetricsOptions : Instantiate GetBounceMetricsOptions
-func (*EventNotificationsV1) NewGetBounceMetricsOptions(instanceID string, destinationType string, gte string, lte string) *GetBounceMetricsOptions {
+func (*EventNotificationsV1) NewGetBounceMetricsOptions(instanceID string, gte string, lte string) *GetBounceMetricsOptions {
 	return &GetBounceMetricsOptions{
-		InstanceID:      core.StringPtr(instanceID),
-		DestinationType: core.StringPtr(destinationType),
-		Gte:             core.StringPtr(gte),
-		Lte:             core.StringPtr(lte),
+		InstanceID: core.StringPtr(instanceID),
+		Gte:        core.StringPtr(gte),
+		Lte:        core.StringPtr(lte),
 	}
 }
 
 // SetInstanceID : Allow user to set InstanceID
 func (_options *GetBounceMetricsOptions) SetInstanceID(instanceID string) *GetBounceMetricsOptions {
 	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetDestinationType : Allow user to set DestinationType
-func (_options *GetBounceMetricsOptions) SetDestinationType(destinationType string) *GetBounceMetricsOptions {
-	_options.DestinationType = core.StringPtr(destinationType)
 	return _options
 }
 
@@ -6798,6 +6804,18 @@ func (_options *GetBounceMetricsOptions) SetGte(gte string) *GetBounceMetricsOpt
 // SetLte : Allow user to set Lte
 func (_options *GetBounceMetricsOptions) SetLte(lte string) *GetBounceMetricsOptions {
 	_options.Lte = core.StringPtr(lte)
+	return _options
+}
+
+// SetSMTPConfigID : Allow user to set SMTPConfigID
+func (_options *GetBounceMetricsOptions) SetSMTPConfigID(smtpConfigID string) *GetBounceMetricsOptions {
+	_options.SMTPConfigID = core.StringPtr(smtpConfigID)
+	return _options
+}
+
+// SetDestinationType : Allow user to set DestinationType
+func (_options *GetBounceMetricsOptions) SetDestinationType(destinationType string) *GetBounceMetricsOptions {
+	_options.DestinationType = core.StringPtr(destinationType)
 	return _options
 }
 
@@ -6974,14 +6992,17 @@ type GetMetricsOptions struct {
 	// Unique identifier for IBM Cloud Event Notifications instance.
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
-	// Destination type. Allowed values are [smtp_custom].
-	DestinationType *string `json:"destination_type" validate:"required"`
-
 	// GTE (greater than equal), start timestamp in UTC.
 	Gte *string `json:"gte" validate:"required"`
 
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
+
+	// SMTP config id. Allowed values are [smtp_config_id].
+	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
+
+	// Destination type. Allowed values are [smtp_custom].
+	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
 	DestinationID *string `json:"destination_id,omitempty"`
@@ -7012,24 +7033,17 @@ const (
 )
 
 // NewGetMetricsOptions : Instantiate GetMetricsOptions
-func (*EventNotificationsV1) NewGetMetricsOptions(instanceID string, destinationType string, gte string, lte string) *GetMetricsOptions {
+func (*EventNotificationsV1) NewGetMetricsOptions(instanceID string, gte string, lte string) *GetMetricsOptions {
 	return &GetMetricsOptions{
-		InstanceID:      core.StringPtr(instanceID),
-		DestinationType: core.StringPtr(destinationType),
-		Gte:             core.StringPtr(gte),
-		Lte:             core.StringPtr(lte),
+		InstanceID: core.StringPtr(instanceID),
+		Gte:        core.StringPtr(gte),
+		Lte:        core.StringPtr(lte),
 	}
 }
 
 // SetInstanceID : Allow user to set InstanceID
 func (_options *GetMetricsOptions) SetInstanceID(instanceID string) *GetMetricsOptions {
 	_options.InstanceID = core.StringPtr(instanceID)
-	return _options
-}
-
-// SetDestinationType : Allow user to set DestinationType
-func (_options *GetMetricsOptions) SetDestinationType(destinationType string) *GetMetricsOptions {
-	_options.DestinationType = core.StringPtr(destinationType)
 	return _options
 }
 
@@ -7042,6 +7056,18 @@ func (_options *GetMetricsOptions) SetGte(gte string) *GetMetricsOptions {
 // SetLte : Allow user to set Lte
 func (_options *GetMetricsOptions) SetLte(lte string) *GetMetricsOptions {
 	_options.Lte = core.StringPtr(lte)
+	return _options
+}
+
+// SetSMTPConfigID : Allow user to set SMTPConfigID
+func (_options *GetMetricsOptions) SetSMTPConfigID(smtpConfigID string) *GetMetricsOptions {
+	_options.SMTPConfigID = core.StringPtr(smtpConfigID)
+	return _options
+}
+
+// SetDestinationType : Allow user to set DestinationType
+func (_options *GetMetricsOptions) SetDestinationType(destinationType string) *GetMetricsOptions {
+	_options.DestinationType = core.StringPtr(destinationType)
 	return _options
 }
 

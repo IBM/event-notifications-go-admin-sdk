@@ -3807,7 +3807,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 
 		})
 
-		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
+		It(`GetMetrics with DestinationType(getMetricsOptions *GetMetricsOptions)`, func() {
 			// begin-get-metrics
 			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 				InstanceID:      core.StringPtr(instanceID),
@@ -3829,7 +3829,28 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(metrics).ToNot(BeNil())
 		})
 
-		It(`GetMetrics(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
+		It(`GetMetrics with SMTPConfigID(getMetricsOptions *GetMetricsOptions)`, func() {
+			// begin-get-metrics
+			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+				InstanceID:     core.StringPtr(instanceID),
+				Gte:            core.StringPtr("2024-08-01T17:18:43Z"),
+				Lte:            core.StringPtr("2024-08-02T11:55:22Z"),
+				SMTPConfigID:   core.StringPtr(smtpConfigID),
+				EmailTo:        core.StringPtr("mobileb@us.ibm.com"),
+				SubscriptionID: core.StringPtr(subscriptionID6),
+				SourceID:       core.StringPtr(sourceID),
+				NotificationID: core.StringPtr(notificationID),
+				Subject:        core.StringPtr("Test Metrics Subject"),
+			}
+
+			metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+			// end-get-metrics
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(metrics).ToNot(BeNil())
+		})
+
+		It(`GetMetrics with Destination Type(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
 			// begin-get-bounce-metrics
 			getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
 				InstanceID:      core.StringPtr(instanceID),
@@ -3842,6 +3863,27 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 				SourceID:        core.StringPtr(sourceID),
 				NotificationID:  core.StringPtr(notificationID),
 				Subject:         core.StringPtr("Test Metrics Subject"),
+			}
+
+			bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
+			// end-get-bounce-metrics
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(bouncemetrics).ToNot(BeNil())
+		})
+
+		It(`GetMetrics with Smtp config id(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
+			// begin-get-bounce-metrics
+			getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+				InstanceID:     core.StringPtr(instanceID),
+				Gte:            core.StringPtr("2024-08-01T17:18:43Z"),
+				Lte:            core.StringPtr("2024-08-02T11:55:22Z"),
+				EmailTo:        core.StringPtr("mobileb@us.ibm.com"),
+				SMTPConfigID:   core.StringPtr(smtpConfigID),
+				SubscriptionID: core.StringPtr(subscriptionID6),
+				SourceID:       core.StringPtr(sourceID),
+				NotificationID: core.StringPtr(notificationID),
+				Subject:        core.StringPtr("Test Metrics Subject"),
 			}
 
 			bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
