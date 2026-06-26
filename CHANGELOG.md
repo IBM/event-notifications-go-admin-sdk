@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.24.0...v0.24.1) (2026-06-26)
+
+
+### Bug Fixes
+
+* adding the smtp config id for metrics api ([#83](https://github.com/IBM/event-notifications-go-admin-sdk/issues/83)) ([3ce1be5](https://github.com/IBM/event-notifications-go-admin-sdk/commit/3ce1be5df1ca4df0527e1452690845496a89afe1))
+
 # [0.24.0](https://github.com/IBM/event-notifications-go-admin-sdk/compare/v0.23.0...v0.24.0) (2026-04-07)
 
 
