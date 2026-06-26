@@ -180,8 +180,10 @@ SDK Methods to consume
   - [Delete SMTP Configuration](#delete-smtp-user)
   - [Verify SMTP](#verify-smtp)
 - [Metrics](#Metrics)
-  - [Get Metrics](#get-metrics)
-  - [Get Bounce Metrics](#get-bounce-metrics)   
+  - [Get Metrics With Destination Type](#get-metrics)
+  - [Get Metrics With SMTP Config ID](#get-metrics)
+  - [Get Bounce Metrics With Destination Type](#get-bounce-metrics)
+  - [Get Bounce Metrics With SMTP Config ID](#get-bounce-metrics)
 - [Send Notifications](#send-notifications)
 
 ## Source
@@ -1494,7 +1496,7 @@ supported verification types are dkim,spf and en_authorization.
 
 ## Metrics
 
-### Get Metrics
+### Get Metrics With Destination Type
 
 ```go
 getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
@@ -1512,7 +1514,24 @@ getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
 metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
 ```
 
-### Get Bounce Metrics
+### Get Metrics With SMTP Config ID
+
+```go
+getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+	InstanceID:      core.StringPtr(<instance-id>),
+	SMTPConfigID:    core.StringPtr(<smtp-Config-id>),
+	Gte:             core.StringPtr(<gte-timestamp>),
+	Lte:             core.StringPtr(<lte-timestamp>),
+	EmailTo:         core.StringPtr(<email-to>),
+	NotificationID:  core.StringPtr(<notification-id>),
+	SubscriptionID:  core.StringPtr(<subscription-id>),
+	Subject:         core.StringPtr(<subject>),
+}
+
+metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+```
+
+### Get Bounce Metrics With Destination Type
 
 ```go
 getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
@@ -1529,6 +1548,24 @@ getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
 
 bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
 ```
+
+### Get Bounce Metrics With SMTP Config ID
+
+```go
+getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+	InstanceID:      core.StringPtr(<instance-id>),
+	SMTPConfigID:    core.StringPtr(<smtp-Config-id>),
+	Gte:             core.StringPtr(<gte-timestamp>),
+	Lte:             core.StringPtr(<lte-timestamp>),
+	EmailTo:         core.StringPtr(<email-to>),
+	NotificationID:  core.StringPtr(<notification-id>),
+	SubscriptionID:  core.StringPtr(<subscription-id>),
+	Subject:         core.StringPtr(<subject>),
+}
+
+bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
+```
+
 
 ## Send Notifications
 

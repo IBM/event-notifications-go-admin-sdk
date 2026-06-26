@@ -4105,7 +4105,39 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GetMetrics - GetMetrics`, func() {
+	Describe(`CreateSMTPConfiguration - Create SMTP Configuration`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+		It(`CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions)`, func() {
+
+			name := "SMTP configuration"
+			description := "SMTP configuration description"
+			domain := "mailx.event-notifications.test.cloud.ibm.com"
+
+			createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
+				InstanceID:  core.StringPtr(instanceID),
+				Domain:      core.StringPtr(domain),
+				Description: core.StringPtr(description),
+				Name:        core.StringPtr(name),
+			}
+
+			smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(201))
+			Expect(smtpConfig).ToNot(BeNil())
+			Expect(smtpConfig.Name).To(Equal(core.StringPtr(name)))
+			Expect(smtpConfig.Description).To(Equal(core.StringPtr(description)))
+			Expect(smtpConfig.Domain).To(Equal(core.StringPtr(domain)))
+			Expect(smtpConfig.Config.Dkim).ToNot(BeNil())
+			Expect(smtpConfig.Config.Spf).ToNot(BeNil())
+			Expect(smtpConfig.Config.EnAuthorization).ToNot(BeNil())
+			smtpConfigID = *smtpConfig.ID
+		})
+	})
+
+	Describe(`GetMetrics - GetMetrics with destination type`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -4141,7 +4173,42 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		})
 	})
 
-	Describe(`GeBouncetMetrics - GetBounceMetrics`, func() {
+	Describe(`GetMetrics - GetMetrics with smtp config id`, func() {
+		BeforeEach(func() {
+			shouldSkipTest()
+		})
+
+		It(`GetMetrics(getMetricsOptions *GetMetricsOptions)`, func() {
+
+			currentTime := time.Now().UTC()
+
+			ltime := currentTime.AddDate(0, 0, -1)
+			lteTime := ltime.Format("2006-01-02T15:04:05.000Z")
+
+			gTime := currentTime.AddDate(0, 0, -2)
+			gteTime := gTime.Format("2006-01-02T15:04:05.000Z")
+
+			getMetricsOptions := &eventnotificationsv1.GetMetricsOptions{
+				InstanceID:     core.StringPtr(instanceID),
+				SMTPConfigID:   core.StringPtr(smtpConfigID),
+				Gte:            core.StringPtr(gteTime),
+				Lte:            core.StringPtr(lteTime),
+				EmailTo:        core.StringPtr("mobileb@us.ibm.com"),
+				SubscriptionID: core.StringPtr(subscriptionID16),
+				SourceID:       core.StringPtr(sourceID),
+				NotificationID: core.StringPtr(notificationID),
+				Subject:        core.StringPtr("Test Metrics Subject"),
+			}
+
+			metrics, response, err := eventNotificationsService.GetMetrics(getMetricsOptions)
+
+			Expect(err).To(BeNil())
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(metrics).ToNot(BeNil())
+		})
+	})
+
+	Describe(`GeBouncetMetrics - GetBounceMetrics with destination type`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
@@ -4176,36 +4243,38 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 			Expect(bouncemetrics).ToNot(BeNil())
 		})
 	})
-
-	Describe(`CreateSMTPConfiguration - Create SMTP Configuration`, func() {
+	Describe(`GeBouncetMetrics - GetBounceMetrics with smtp cofnig id`, func() {
 		BeforeEach(func() {
 			shouldSkipTest()
 		})
-		It(`CreateSMTPConfiguration(createSMTPConfigurationOptions *CreateSMTPConfigurationOptions)`, func() {
 
-			name := "SMTP configuration"
-			description := "SMTP configuration description"
-			domain := "mailx.event-notifications.test.cloud.ibm.com"
+		It(`GetMetrics(getBounceMetricsOptions *GetBounceMetricsOptions)`, func() {
 
-			createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
-				InstanceID:  core.StringPtr(instanceID),
-				Domain:      core.StringPtr(domain),
-				Description: core.StringPtr(description),
-				Name:        core.StringPtr(name),
+			currentTime := time.Now().UTC()
+
+			ltime := currentTime.AddDate(0, 0, -1)
+			lteTime := ltime.Format("2006-01-02T15:04:05.000Z")
+
+			gTime := currentTime.AddDate(0, 0, -2)
+			gteTime := gTime.Format("2006-01-02T15:04:05.000Z")
+
+			getBounceMetricsOptions := &eventnotificationsv1.GetBounceMetricsOptions{
+				InstanceID:     core.StringPtr(instanceID),
+				SMTPConfigID:   core.StringPtr(smtpConfigID),
+				Gte:            core.StringPtr(gteTime),
+				Lte:            core.StringPtr(lteTime),
+				EmailTo:        core.StringPtr("mobileb@us.ibm.com"),
+				SubscriptionID: core.StringPtr(subscriptionID16),
+				SourceID:       core.StringPtr(sourceID),
+				NotificationID: core.StringPtr(notificationID),
+				Subject:        core.StringPtr("Test Metrics Subject"),
 			}
 
-			smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
+			bouncemetrics, response, err := eventNotificationsService.GetBounceMetrics(getBounceMetricsOptions)
 
 			Expect(err).To(BeNil())
-			Expect(response.StatusCode).To(Equal(201))
-			Expect(smtpConfig).ToNot(BeNil())
-			Expect(smtpConfig.Name).To(Equal(core.StringPtr(name)))
-			Expect(smtpConfig.Description).To(Equal(core.StringPtr(description)))
-			Expect(smtpConfig.Domain).To(Equal(core.StringPtr(domain)))
-			Expect(smtpConfig.Config.Dkim).ToNot(BeNil())
-			Expect(smtpConfig.Config.Spf).ToNot(BeNil())
-			Expect(smtpConfig.Config.EnAuthorization).ToNot(BeNil())
-			smtpConfigID = *smtpConfig.ID
+			Expect(response.StatusCode).To(Equal(200))
+			Expect(bouncemetrics).ToNot(BeNil())
 		})
 	})
 
