@@ -3898,12 +3898,14 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			name := "SMTP configuration"
 			description := "SMTP configuration description"
 			domain := "mailx.event-notifications.test.cloud.ibm.com"
+			adminEmails := []string{"admin1@example.com", "admin2@example.com"}
 
 			createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				Domain:      core.StringPtr(domain),
 				Description: core.StringPtr(description),
 				Name:        core.StringPtr(name),
+				AdminEmails: adminEmails,
 			}
 
 			smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
@@ -3914,6 +3916,7 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(smtpConfig.Name).To(Equal(core.StringPtr(name)))
 			Expect(smtpConfig.Description).To(Equal(core.StringPtr(description)))
 			Expect(smtpConfig.Domain).To(Equal(core.StringPtr(domain)))
+			Expect(smtpConfig.AdminEmails).To(Equal(adminEmails))
 			smtpConfigID = *smtpConfig.ID
 		})
 
@@ -4059,12 +4062,14 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			// begin-update_smtp_configuration
 			name := "SMTP configuration name update"
 			description := "SMTP configuration description update"
+			adminEmails := []string{"admin1@example.com", "admin2@example.com"}
 
 			updateSMTPConfigurationOptions := &eventnotificationsv1.UpdateSMTPConfigurationOptions{
 				InstanceID:  core.StringPtr(instanceID),
 				ID:          core.StringPtr(smtpConfigID),
 				Name:        core.StringPtr(name),
 				Description: core.StringPtr(description),
+				AdminEmails: adminEmails,
 			}
 
 			updateSMTPConfiguration, response, err := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptions)
@@ -4073,6 +4078,8 @@ var _ = Describe(`EventNotificationsV1 Examples Tests`, func() {
 			Expect(response.StatusCode).To(Equal(200))
 			Expect(updateSMTPConfiguration.Name).To(Equal(core.StringPtr(name)))
 			Expect(updateSMTPConfiguration.Description).To(Equal(core.StringPtr(description)))
+			Expect(updateSMTPConfiguration.AdminEmails).To(Equal(adminEmails))
+
 		})
 
 		It(`UpdateSMTPUser request example`, func() {
