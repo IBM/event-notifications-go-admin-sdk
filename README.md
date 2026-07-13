@@ -198,6 +198,7 @@ createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
 	)
 createSourcesOptions.SetEnabled(false)
 createSourceOptions.SetStoreNotifications(false)
+createSourcesOptions.SetSource(<source-crn>) // optional: VPC source CRN
 
 sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
 ```
@@ -1331,11 +1332,13 @@ integrationResponse, response, err := eventNotificationsService.ReplaceIntegrati
 ### Create SMTP Configuration
 
 ```go
+adminEmails:=[]string{"admin1@example.com","admin2@example.com"}
 createSMTPConfigurationOptions := &eventnotificationsv1.CreateSMTPConfigurationOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	Domain:      core.StringPtr(<domain-name>),
 	Description: core.StringPtr(<description>),
 	Name:        core.StringPtr(<name>),
+	AdminEmails: adminEmails,
 }
 
 smtpConfig, response, err := eventNotificationsService.CreateSMTPConfiguration(createSMTPConfigurationOptions)
@@ -1434,11 +1437,14 @@ smtpUsers, response, err := eventNotificationsService.ListSMTPUsers(listSMTPUser
 ### Update SMTP Configuration
 
 ```go
+adminEmails:=[]string{"admin1@example.com","admin2@example.com"}
 updateSMTPConfigurationOptions := &eventnotificationsv1.UpdateSMTPConfigurationOptions{
 	InstanceID:  core.StringPtr(<instance-id>),
 	ID:          core.StringPtr(<smtp-Config-id)>,
 	Name:        core.StringPtr(<name>),
 	Description: core.StringPtr(<description>),
+	AdminEmails: adminEmails,
+	
 }
 
 updateSMTPConfiguration, response, err := eventNotificationsService.UpdateSMTPConfiguration(updateSMTPConfigurationOptions)

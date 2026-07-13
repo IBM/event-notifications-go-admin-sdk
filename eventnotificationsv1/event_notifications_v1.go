@@ -508,6 +508,9 @@ func (eventNotifications *EventNotificationsV1) CreateSourcesWithContext(ctx con
 	if createSourcesOptions.StoreNotifications != nil {
 		body["store_notifications"] = createSourcesOptions.StoreNotifications
 	}
+	if createSourcesOptions.Source != nil {
+		body["source"] = createSourcesOptions.Source
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
@@ -3488,6 +3491,9 @@ func (eventNotifications *EventNotificationsV1) CreateSMTPConfigurationWithConte
 	if createSMTPConfigurationOptions.Description != nil {
 		body["description"] = createSMTPConfigurationOptions.Description
 	}
+	if createSMTPConfigurationOptions.AdminEmails != nil {
+		body["admin_emails"] = createSMTPConfigurationOptions.AdminEmails
+	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "set-json-body-error", common.GetComponentInfo())
@@ -3885,6 +3891,9 @@ func (eventNotifications *EventNotificationsV1) UpdateSMTPConfigurationWithConte
 	}
 	if updateSMTPConfigurationOptions.Description != nil {
 		body["description"] = updateSMTPConfigurationOptions.Description
+	}
+	if updateSMTPConfigurationOptions.AdminEmails != nil {
+		body["admin_emails"] = updateSMTPConfigurationOptions.AdminEmails
 	}
 	_, err = builder.SetBodyContentJSON(body)
 	if err != nil {
@@ -4900,6 +4909,9 @@ type CreateSMTPConfigurationOptions struct {
 	// The description of SMTP configuration.
 	Description *string `json:"description,omitempty"`
 
+	// Admin email addresses.
+	AdminEmails []string `json:"admin_emails,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -4934,6 +4946,12 @@ func (_options *CreateSMTPConfigurationOptions) SetDomain(domain string) *Create
 // SetDescription : Allow user to set Description
 func (_options *CreateSMTPConfigurationOptions) SetDescription(description string) *CreateSMTPConfigurationOptions {
 	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetAdminEmails : Allow user to set AdminEmails
+func (_options *CreateSMTPConfigurationOptions) SetAdminEmails(adminEmails []string) *CreateSMTPConfigurationOptions {
+	_options.AdminEmails = adminEmails
 	return _options
 }
 
@@ -5016,6 +5034,9 @@ type CreateSourcesOptions struct {
 	// enable to view the payload of incoming events for troubleshooting.
 	StoreNotifications *bool `json:"store_notifications,omitempty"`
 
+	// The source CRN. This field is applicable only for VPC sources.
+	Source *string `json:"source,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -5056,6 +5077,12 @@ func (_options *CreateSourcesOptions) SetEnabled(enabled bool) *CreateSourcesOpt
 // SetStoreNotifications : Allow user to set StoreNotifications
 func (_options *CreateSourcesOptions) SetStoreNotifications(storeNotifications bool) *CreateSourcesOptions {
 	_options.StoreNotifications = core.BoolPtr(storeNotifications)
+	return _options
+}
+
+// SetSource : Allow user to set Source
+func (_options *CreateSourcesOptions) SetSource(source string) *CreateSourcesOptions {
+	_options.Source = core.StringPtr(source)
 	return _options
 }
 
@@ -6740,10 +6767,11 @@ type GetBounceMetricsOptions struct {
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
 
-	// SMTP config id. Allowed values are [smtp_config_id].
+	// SMTP configuration ID. Required when querying metrics for SMTP interface destinations.
 	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
 
-	// Destination type. Allowed values are [smtp_custom].
+	// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+	// custom email destinations.
 	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
@@ -6775,7 +6803,8 @@ type GetBounceMetricsOptions struct {
 }
 
 // Constants associated with the GetBounceMetricsOptions.DestinationType property.
-// Destination type. Allowed values are [smtp_custom].
+// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+// custom email destinations.
 const (
 	GetBounceMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
 )
@@ -6998,10 +7027,11 @@ type GetMetricsOptions struct {
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
 
-	// SMTP config id. Allowed values are [smtp_config_id].
+	// SMTP configuration ID. Required when querying metrics for SMTP interface destinations.
 	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
 
-	// Destination type. Allowed values are [smtp_custom].
+	// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+	// custom email destinations.
 	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
@@ -7027,7 +7057,8 @@ type GetMetricsOptions struct {
 }
 
 // Constants associated with the GetMetricsOptions.DestinationType property.
-// Destination type. Allowed values are [smtp_custom].
+// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+// custom email destinations.
 const (
 	GetMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
 )
@@ -9747,6 +9778,9 @@ type SMTPConfiguration struct {
 	// Domain Name.
 	Domain *string `json:"domain" validate:"required"`
 
+	// Admin email addresses.
+	AdminEmails []string `json:"admin_emails,omitempty"`
+
 	// Payload describing a SMTP configuration.
 	Config *SMTPConfig `json:"config" validate:"required"`
 
@@ -9775,6 +9809,11 @@ func UnmarshalSMTPConfiguration(m map[string]json.RawMessage, result interface{}
 	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "domain-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "admin_emails", &obj.AdminEmails)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "admin_emails-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "config", &obj.Config, UnmarshalSMTPConfig)
@@ -9892,6 +9931,9 @@ type SMTPCreateResponse struct {
 	// Domain Name.
 	Domain *string `json:"domain" validate:"required"`
 
+	// Admin email addresses.
+	AdminEmails []string `json:"admin_emails,omitempty"`
+
 	// Payload describing a SMTP configuration.
 	Config *SMTPConfig `json:"config" validate:"required"`
 
@@ -9920,6 +9962,11 @@ func UnmarshalSMTPCreateResponse(m map[string]json.RawMessage, result interface{
 	err = core.UnmarshalPrimitive(m, "domain", &obj.Domain)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "domain-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "admin_emails", &obj.AdminEmails)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "admin_emails-error", common.GetComponentInfo())
 		return
 	}
 	err = core.UnmarshalModel(m, "config", &obj.Config, UnmarshalSMTPConfig)
@@ -12745,6 +12792,9 @@ type UpdateSMTPConfigurationOptions struct {
 	// SMTP description.
 	Description *string `json:"description,omitempty"`
 
+	// Admin email addresses.
+	AdminEmails []string `json:"admin_emails,omitempty"`
+
 	// Allows users to set headers on API requests
 	Headers map[string]string
 }
@@ -12778,6 +12828,12 @@ func (_options *UpdateSMTPConfigurationOptions) SetName(name string) *UpdateSMTP
 // SetDescription : Allow user to set Description
 func (_options *UpdateSMTPConfigurationOptions) SetDescription(description string) *UpdateSMTPConfigurationOptions {
 	_options.Description = core.StringPtr(description)
+	return _options
+}
+
+// SetAdminEmails : Allow user to set AdminEmails
+func (_options *UpdateSMTPConfigurationOptions) SetAdminEmails(adminEmails []string) *UpdateSMTPConfigurationOptions {
+	_options.AdminEmails = adminEmails
 	return _options
 }
 
