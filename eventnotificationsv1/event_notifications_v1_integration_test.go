@@ -555,11 +555,9 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 		It(`CreateSources(createSourcesOptions *CreateSourcesOptions)`, func() {
 
 			createSourcesOptions := &eventnotificationsv1.CreateSourcesOptions{
-				InstanceID:         core.StringPtr(instanceID),
-				Name:               core.StringPtr("Event Notification Create Source Acme"),
-				Description:        core.StringPtr("This source is used for Acme Bank"),
-				Enabled:            core.BoolPtr(true),
-				StoreNotifications: core.BoolPtr(false),
+				InstanceID: core.StringPtr(instanceID),
+				Name:       core.StringPtr("Event Notification Create Source Acme"),
+				Enabled:    core.BoolPtr(true),
 			}
 
 			sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
@@ -3380,8 +3378,6 @@ var _ = Describe(`EventNotificationsV1 Integration Tests`, func() {
 
 			listpredefinedtemplatesOptions := &eventnotificationsv1.ListPreDefinedTemplatesOptions{
 				InstanceID: core.StringPtr(instanceID),
-				Source:     core.StringPtr("logs"),
-				Type:       core.StringPtr("slack.notification"),
 				Offset:     core.Int64Ptr(int64(0)),
 				Limit:      core.Int64Ptr(int64(1)),
 				Search:     core.StringPtr(search),
