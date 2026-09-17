@@ -194,9 +194,9 @@ SDK Methods to consume
 createSourcesOptions := eventNotificationsService.NewCreateSourcesOptions(
 	    <instance-id>, // Event notifications service instance GUID
 		<source-name>,
-		<source-description>,
+		<enabled>,
 	)
-createSourcesOptions.SetEnabled(false)
+createSourcesOptions.SetDescription("test description")
 createSourceOptions.SetStoreNotifications(false)
 
 sourceResponse, response, err := eventNotificationsService.CreateSources(createSourcesOptions)
@@ -963,8 +963,6 @@ response, err := eventNotificationsService.DeleteTemplate(deleteTemplateOptions)
 ```go
 listpredefinedtemplatesOptions := &eventnotificationsv1.ListPreDefinedTemplatesOptions{
 				InstanceID: core.StringPtr(instanceID),
-				Source:     core.StringPtr(<source-type>),
-				Type:       core.StringPtr(<destination-template-type>),
 				Offset:     core.Int64Ptr(int64(0)),
 				Limit:      core.Int64Ptr(int64(1)),
 				Search:     core.StringPtr(search),

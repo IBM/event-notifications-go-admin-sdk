@@ -173,8 +173,8 @@ func (eventNotifications *EventNotificationsV1) DisableRetries() {
 	eventNotifications.Service.DisableRetries()
 }
 
-// Get metrics. **Required**: Either `destination_type` (for custom email destination) OR `smtp_config_id` (for SMTP
-// interface) must be provided.
+// GetMetrics : Get metrics
+// Get metrics.
 func (eventNotifications *EventNotificationsV1) GetMetrics(getMetricsOptions *GetMetricsOptions) (result *Metrics, response *core.DetailedResponse, err error) {
 	result, response, err = eventNotifications.GetMetricsWithContext(context.Background(), getMetricsOptions)
 	err = core.RepurposeSDKProblem(err, "")
@@ -499,11 +499,11 @@ func (eventNotifications *EventNotificationsV1) CreateSourcesWithContext(ctx con
 	if createSourcesOptions.Name != nil {
 		body["name"] = createSourcesOptions.Name
 	}
-	if createSourcesOptions.Description != nil {
-		body["description"] = createSourcesOptions.Description
-	}
 	if createSourcesOptions.Enabled != nil {
 		body["enabled"] = createSourcesOptions.Enabled
+	}
+	if createSourcesOptions.Description != nil {
+		body["description"] = createSourcesOptions.Description
 	}
 	if createSourcesOptions.StoreNotifications != nil {
 		body["store_notifications"] = createSourcesOptions.StoreNotifications
@@ -1436,8 +1436,12 @@ func (eventNotifications *EventNotificationsV1) ListPreDefinedTemplatesWithConte
 	}
 	builder.AddHeader("Accept", "application/json")
 
-	builder.AddQuery("source", fmt.Sprint(*listPreDefinedTemplatesOptions.Source))
-	builder.AddQuery("type", fmt.Sprint(*listPreDefinedTemplatesOptions.Type))
+	if listPreDefinedTemplatesOptions.Source != nil {
+		builder.AddQuery("source", fmt.Sprint(*listPreDefinedTemplatesOptions.Source))
+	}
+	if listPreDefinedTemplatesOptions.Type != nil {
+		builder.AddQuery("type", fmt.Sprint(*listPreDefinedTemplatesOptions.Type))
+	}
 	if listPreDefinedTemplatesOptions.Limit != nil {
 		builder.AddQuery("limit", fmt.Sprint(*listPreDefinedTemplatesOptions.Limit))
 	}
@@ -5007,11 +5011,11 @@ type CreateSourcesOptions struct {
 	// Name of the source.
 	Name *string `json:"name" validate:"required"`
 
-	// Description of the source.
-	Description *string `json:"description" validate:"required"`
-
 	// Whether the source is enabled or not.
-	Enabled *bool `json:"enabled,omitempty"`
+	Enabled *bool `json:"enabled" validate:"required"`
+
+	// Description of the source.
+	Description *string `json:"description,omitempty"`
 
 	// enable to view the payload of incoming events for troubleshooting.
 	StoreNotifications *bool `json:"store_notifications,omitempty"`
@@ -5021,11 +5025,11 @@ type CreateSourcesOptions struct {
 }
 
 // NewCreateSourcesOptions : Instantiate CreateSourcesOptions
-func (*EventNotificationsV1) NewCreateSourcesOptions(instanceID string, name string, description string) *CreateSourcesOptions {
+func (*EventNotificationsV1) NewCreateSourcesOptions(instanceID string, name string, enabled bool) *CreateSourcesOptions {
 	return &CreateSourcesOptions{
-		InstanceID:  core.StringPtr(instanceID),
-		Name:        core.StringPtr(name),
-		Description: core.StringPtr(description),
+		InstanceID: core.StringPtr(instanceID),
+		Name:       core.StringPtr(name),
+		Enabled:    core.BoolPtr(enabled),
 	}
 }
 
@@ -5041,15 +5045,15 @@ func (_options *CreateSourcesOptions) SetName(name string) *CreateSourcesOptions
 	return _options
 }
 
-// SetDescription : Allow user to set Description
-func (_options *CreateSourcesOptions) SetDescription(description string) *CreateSourcesOptions {
-	_options.Description = core.StringPtr(description)
-	return _options
-}
-
 // SetEnabled : Allow user to set Enabled
 func (_options *CreateSourcesOptions) SetEnabled(enabled bool) *CreateSourcesOptions {
 	_options.Enabled = core.BoolPtr(enabled)
+	return _options
+}
+
+// SetDescription : Allow user to set Description
+func (_options *CreateSourcesOptions) SetDescription(description string) *CreateSourcesOptions {
+	_options.Description = core.StringPtr(description)
 	return _options
 }
 
@@ -6740,10 +6744,11 @@ type GetBounceMetricsOptions struct {
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
 
-	// SMTP config id. Allowed values are [smtp_config_id].
+	// SMTP configuration ID. Required when querying metrics for SMTP interface destinations.
 	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
 
-	// Destination type. Allowed values are [smtp_custom].
+	// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+	// custom email destinations.
 	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
@@ -6775,7 +6780,8 @@ type GetBounceMetricsOptions struct {
 }
 
 // Constants associated with the GetBounceMetricsOptions.DestinationType property.
-// Destination type. Allowed values are [smtp_custom].
+// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+// custom email destinations.
 const (
 	GetBounceMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
 )
@@ -6998,10 +7004,11 @@ type GetMetricsOptions struct {
 	// LTE (less than equal), end timestamp in UTC.
 	Lte *string `json:"lte" validate:"required"`
 
-	// SMTP config id. Allowed values are [smtp_config_id].
+	// SMTP configuration ID. Required when querying metrics for SMTP interface destinations.
 	SMTPConfigID *string `json:"smtp_config_id,omitempty"`
 
-	// Destination type. Allowed values are [smtp_custom].
+	// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+	// custom email destinations.
 	DestinationType *string `json:"destination_type,omitempty"`
 
 	// Unique identifier for Destination.
@@ -7027,7 +7034,8 @@ type GetMetricsOptions struct {
 }
 
 // Constants associated with the GetMetricsOptions.DestinationType property.
-// Destination type. Allowed values are [smtp_custom].
+// Destination type for which metrics are requested. Supported value: smtp_custom. Required when querying metrics for
+// custom email destinations.
 const (
 	GetMetricsOptionsDestinationTypeSMTPCustomConst = "smtp_custom"
 )
@@ -8066,10 +8074,10 @@ type ListPreDefinedTemplatesOptions struct {
 	InstanceID *string `json:"instance_id" validate:"required,ne="`
 
 	// Source type.
-	Source *string `json:"source" validate:"required"`
+	Source *string `json:"source,omitempty"`
 
 	// Destination type.
-	Type *string `json:"type" validate:"required"`
+	Type *string `json:"type,omitempty"`
 
 	// Page limit for paginated results.
 	Limit *int64 `json:"limit,omitempty"`
@@ -8085,11 +8093,9 @@ type ListPreDefinedTemplatesOptions struct {
 }
 
 // NewListPreDefinedTemplatesOptions : Instantiate ListPreDefinedTemplatesOptions
-func (*EventNotificationsV1) NewListPreDefinedTemplatesOptions(instanceID string, source string, typeVar string) *ListPreDefinedTemplatesOptions {
+func (*EventNotificationsV1) NewListPreDefinedTemplatesOptions(instanceID string) *ListPreDefinedTemplatesOptions {
 	return &ListPreDefinedTemplatesOptions{
 		InstanceID: core.StringPtr(instanceID),
-		Source:     core.StringPtr(source),
-		Type:       core.StringPtr(typeVar),
 	}
 }
 
@@ -8661,19 +8667,20 @@ type NotificationCreate struct {
 	// The subject of the notification.
 	Ibmensubject *string `json:"ibmensubject,omitempty"`
 
-	// The template id Array of string.
+	// A stringified JSON array containing one or more valid template ids.
 	Ibmentemplates *string `json:"ibmentemplates,omitempty"`
 
-	// The email id string.
+	// A stringified JSON array containing one or more valid email addresses.A maximum of 50 email addresses can be
+	// specified in a single API call.
 	Ibmenmailto *string `json:"ibmenmailto,omitempty"`
 
-	// The slack channel id/member id stringified array.
+	// A stringified JSON array containing one or more valid slack channel id/member id.
 	Ibmenslackto *string `json:"ibmenslackto,omitempty"`
 
 	// The SMS text.
 	Ibmensmstext *string `json:"ibmensmstext,omitempty"`
 
-	// The SMS number string.
+	// A stringified JSON array containing one or more valid SMS numbers.
 	Ibmensmsto *string `json:"ibmensmsto,omitempty"`
 
 	// The html body of notification.
@@ -8880,7 +8887,6 @@ func (o *NotificationCreate) MarshalJSON() (buffer []byte, err error) {
 	if o.Attachments != nil {
 		m["attachments"] = o.Attachments
 	}
-
 	buffer, err = json.Marshal(m)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "model-marshal", common.GetComponentInfo())
@@ -10912,14 +10918,14 @@ func UnmarshalSubscription(m map[string]json.RawMessage, result interface{}) (er
 // - SubscriptionAttributesCodeEngineAttributesResponse
 // - SubscriptionAttributesAppConfigurationAttributesResponse
 type SubscriptionAttributes struct {
-	// The subscribed list.
-	Subscribed []SmsAttributesItems `json:"subscribed,omitempty"`
-
 	// The unsubscribe list.
-	Unsubscribed []SmsAttributesItems `json:"unsubscribed,omitempty"`
+	Subscribed []SubscriptionAttributesSubscribedItem `json:"subscribed,omitempty"`
 
-	// The SMS numder string.
-	Invited []SmsInviteAttributesItems `json:"invited,omitempty"`
+	// The subscribed list.
+	Unsubscribed []SubscriptionAttributesUnsubscribedItem `json:"unsubscribed,omitempty"`
+
+	// The email id string.
+	Invited []SubscriptionAttributesInvitedItem `json:"invited,omitempty"`
 
 	// Whether to add the notification payload to the email.
 	AddNotificationPayload *bool `json:"add_notification_payload,omitempty"`
@@ -11068,19 +11074,19 @@ func (o *SubscriptionAttributes) MarshalJSON() (buffer []byte, err error) {
 // UnmarshalSubscriptionAttributes unmarshals an instance of SubscriptionAttributes from the specified map of raw messages.
 func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interface{}) (err error) {
 	obj := new(SubscriptionAttributes)
-	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalSmsAttributesItems)
+	err = core.UnmarshalModel(m, "subscribed", &obj.Subscribed, UnmarshalSubscriptionAttributesSubscribedItem)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "subscribed-error", common.GetComponentInfo())
 		return
 	}
 	delete(m, "subscribed")
-	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSmsAttributesItems)
+	err = core.UnmarshalModel(m, "unsubscribed", &obj.Unsubscribed, UnmarshalSubscriptionAttributesUnsubscribedItem)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "unsubscribed-error", common.GetComponentInfo())
 		return
 	}
 	delete(m, "unsubscribed")
-	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSmsInviteAttributesItems)
+	err = core.UnmarshalModel(m, "invited", &obj.Invited, UnmarshalSubscriptionAttributesInvitedItem)
 	if err != nil {
 		err = core.SDKErrorf(err, "", "invited-error", common.GetComponentInfo())
 		return
@@ -11172,6 +11178,116 @@ func UnmarshalSubscriptionAttributes(m map[string]json.RawMessage, result interf
 			return
 		}
 		obj.SetProperty(k, v)
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesInvitedItem : The email/sms attributes.
+type SubscriptionAttributesInvitedItem struct {
+	// Phone number.
+	PhoneNumber *string `json:"phone_number,omitempty"`
+
+	// last updated time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// time of expiration.
+	ExpiresAt *strfmt.DateTime `json:"expires_at,omitempty"`
+
+	// email address.
+	Email *string `json:"email,omitempty"`
+}
+
+// UnmarshalSubscriptionAttributesInvitedItem unmarshals an instance of SubscriptionAttributesInvitedItem from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesInvitedItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesInvitedItem)
+	err = core.UnmarshalPrimitive(m, "phone_number", &obj.PhoneNumber)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "phone_number-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "expires_at", &obj.ExpiresAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "expires_at-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "email-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesSubscribedItem : The email/sms attributes.
+type SubscriptionAttributesSubscribedItem struct {
+	// Phone number.
+	PhoneNumber *string `json:"phone_number,omitempty"`
+
+	// last updated time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// email address.
+	Email *string `json:"email,omitempty"`
+}
+
+// UnmarshalSubscriptionAttributesSubscribedItem unmarshals an instance of SubscriptionAttributesSubscribedItem from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesSubscribedItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesSubscribedItem)
+	err = core.UnmarshalPrimitive(m, "phone_number", &obj.PhoneNumber)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "phone_number-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "email-error", common.GetComponentInfo())
+		return
+	}
+	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
+	return
+}
+
+// SubscriptionAttributesUnsubscribedItem : The sms attributes.
+type SubscriptionAttributesUnsubscribedItem struct {
+	// Phone number.
+	PhoneNumber *string `json:"phone_number,omitempty"`
+
+	// last updated time.
+	UpdatedAt *strfmt.DateTime `json:"updated_at,omitempty"`
+
+	// email address.
+	Email *string `json:"email,omitempty"`
+}
+
+// UnmarshalSubscriptionAttributesUnsubscribedItem unmarshals an instance of SubscriptionAttributesUnsubscribedItem from the specified map of raw messages.
+func UnmarshalSubscriptionAttributesUnsubscribedItem(m map[string]json.RawMessage, result interface{}) (err error) {
+	obj := new(SubscriptionAttributesUnsubscribedItem)
+	err = core.UnmarshalPrimitive(m, "phone_number", &obj.PhoneNumber)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "phone_number-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "updated_at", &obj.UpdatedAt)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "updated_at-error", common.GetComponentInfo())
+		return
+	}
+	err = core.UnmarshalPrimitive(m, "email", &obj.Email)
+	if err != nil {
+		err = core.SDKErrorf(err, "", "email-error", common.GetComponentInfo())
+		return
 	}
 	reflect.ValueOf(result).Elem().Set(reflect.ValueOf(obj))
 	return
@@ -13824,7 +13940,7 @@ type DestinationConfigOneOfPagerDutyDestinationConfig struct {
 }
 
 // NewDestinationConfigOneOfPagerDutyDestinationConfig : Instantiate DestinationConfigOneOfPagerDutyDestinationConfig (Generic Model Constructor)
-func (*EventNotificationsV1) NewDestinationConfigOneOfPagerDutyDestinationConfig(apiKey string, routingKey string) (_model *DestinationConfigOneOfPagerDutyDestinationConfig, err error) {
+func (*EventNotificationsV1) NewDestinationConfigOneOfPagerDutyDestinationConfig(routingKey string) (_model *DestinationConfigOneOfPagerDutyDestinationConfig, err error) {
 	_model = &DestinationConfigOneOfPagerDutyDestinationConfig{
 		RoutingKey: core.StringPtr(routingKey),
 	}
